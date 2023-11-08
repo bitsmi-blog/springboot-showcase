@@ -1,0 +1,25 @@
+# Ignore Eclipse project files
+org.eclipse.jdt.core.prefs
+**/.settings/
+**/.project
+**/.classpath
+
+# Ignore idea project files
+**/.idea/
+
+# Ignore working directories
+**/dist/
+**/bin/
+**/build/
+**/target/
+**/generated/
+**/log/
+**/bin/
+**/test-workspace/
+**/test-output/
+**/node/
+**/node_modules/
+**/local_modules/
+
+# Ignore private files
+**/private/
