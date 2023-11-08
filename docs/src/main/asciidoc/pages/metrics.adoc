@@ -1,0 +1,13 @@
+# Metrics
+
+## Endpoints
+
+- http://localhost:8080/actuator
+- http://localhost:8080/actuator/health
+- http://localhost:8080/actuator/metrics
+- http://localhost:8080/actuator/metrics/userApiController
+- http://localhost:8080/actuator/metrics/userApiController?tag=error%3AIllegalStateException
+
+## References
+
+- https://docs.spring.io/spring-boot/docs/3.2.x/actuator-api/htmlsingle/#overview

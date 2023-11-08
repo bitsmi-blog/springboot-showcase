@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration>
+
+	<springProfile name="PRO">
+		<property name="LOG_LEVEL" value="info" />
+	</springProfile>
+
+	<!-- APPENDERS -->
+	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+			<!-- Deny all events with a level below WARN in order to make easier configure alerts -->
+    		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+      			<level>WARN</level>
+    		</filter>
+            <encoder>
+            	<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+            </encoder>
+	</appender>
+	
+	<appender name="general" class="ch.qos.logback.core.rolling.RollingFileAppender">    
+            <file>log/general.log</file>
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                    <!-- Daily Rollover -->
+                    <fileNamePattern>log/general.%d{yyyy-MM-dd}.log</fileNamePattern>
+                    <!-- 30 days file history -->                    
+                    <maxHistory>30</maxHistory>
+            </rollingPolicy>
+            <encoder>
+                    <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%X{traceId:-MAIN}, %X{spanId:-MAIN}][%thread] %-5level %logger{36} - %msg%n</pattern>
+            </encoder>
+  	</appender>
+	
+	<appender name="application" class="ch.qos.logback.core.rolling.RollingFileAppender">    
+            <file>log/application.log</file>
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                    <!-- Daily Rollover -->
+                    <fileNamePattern>log/application.%d{yyyy-MM-dd}.log</fileNamePattern>
+                    <!-- 30 days file history -->
+                    <maxHistory>30</maxHistory>
+            </rollingPolicy>
+            <encoder>
+                    <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [TRACE_ID=%X{traceId:-}, SPAN_ID=%X{spanId:-}][%thread] %-5level %logger{36} - %msg%n</pattern>
+            </encoder>
+  	</appender>
+  	
+  	<!-- LOGGERS -->
+	<logger name="com.bitsmi" level="${LOG_LEVEL:-debug}">
+        <appender-ref ref="application" />
+  	</logger>
+  	<!-- Console only logger -->
+  	<logger name="alert" level="${LOG_LEVEL:-debug}" additivity="false">
+        <appender-ref ref="console" />
+  	</logger>
+        
+    <root level="${LOG_LEVEL:-debug}">
+    	<!-- console logger is filtered at WARN level. General log file will contain all traces -->
+    	<appender-ref ref="console"/>        
+        <appender-ref ref="general"/>
+	</root>
+</configuration>
+
