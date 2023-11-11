@@ -85,7 +85,7 @@ public class WebSecurityConfig
     private void authorizeHttpRequestsDefault(AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry configurer)
     {
         configurer
-                .requestMatchers(HttpMethod.GET, "/application/**").anonymous()
+                .requestMatchers(HttpMethod.GET, "/api/application/**").anonymous()
                 .anyRequest().authenticated();
     }
 

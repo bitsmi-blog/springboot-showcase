@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.17.xsd">
+    <!-- v1.0.0 -->
+    <changeSet author="aarchilla (generated)" id="1.0/CH1">
+        <createTable tableName="APP_USER">
+            <column name="ID" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_USER"/>
+            </column>
+            <column name="VERSION" type="BIGINT"/>
+            <column name="USERNAME" type="VARCHAR(255)"/>
+            <column name="PASSWORD" type="VARCHAR(255)"/>
+            <column name="COMPLETE_NAME" type="VARCHAR(255)"/>
+            <column defaultValueBoolean="true" name="ACTIVE" type="BOOLEAN"/>
+            <column name="CREATION_DATE" type="TIMESTAMP"/>
+            <column name="LAST_UPDATED" type="TIMESTAMP"/>
+        </createTable>
+
+        <!-- SEQUENCES -->
+        <createSequence sequenceName="SEQ_APP_USER"
+                        startValue="1"
+                        incrementBy="1"
+                        cycle="false"/>
+    </changeSet>
+
+    <!-- For testing purposes -->
+    <changeSet author="aarchilla (generated)" id="1.0/CH2">
+        <insert tableName="APP_USER">
+            <column name="ID" valueSequenceNext="SEQ_APP_USER"/>
+            <column name="VERSION" valueNumeric="1"/>
+            <column name="USERNAME" value="john.doe"/>
+            <column name="PASSWORD" value=""/>
+            <column name="COMPLETE_NAME" value="John Doe"/>
+            <column name="ACTIVE" valueBoolean="true"/>
+            <column name="CREATION_DATE" valueComputed="${current_timestamp}"/>
+            <column name="LAST_UPDATED" valueComputed="${current_timestamp}"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
