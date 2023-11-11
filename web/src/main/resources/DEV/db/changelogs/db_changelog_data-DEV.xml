@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.17.xsd">
+    <changeSet author="aarchilla (generated)" id="1.0/DATA-1">
+        <insert tableName="APP_USER">
+            <column name="ID" valueSequenceNext="SEQ_APP_USER"/>
+            <column name="VERSION" valueNumeric="1"/>
+            <column name="USERNAME" value="john.doe"/>
+            <!-- password = test -->
+            <column name="PASSWORD" value="{bcrypt}$2a$10$I2NL2EwOcbl9PIhgPiF/XeVXQ.yfErH11UQemNW21LBk.iaIpa44."/>
+            <column name="COMPLETE_NAME" value="John Doe"/>
+            <column name="ACTIVE" valueBoolean="true"/>
+            <column name="CREATION_DATE" valueComputed="${current_timestamp}"/>
+            <column name="LAST_UPDATED" valueComputed="${current_timestamp}"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

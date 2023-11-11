@@ -1,5 +1,6 @@
 package com.bitsmi.springbootshowcase.web.common.service.dto;
 
+import com.bitsmi.springbootshowcase.core.common.domain.User;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Collection;
@@ -7,13 +8,11 @@ import java.util.Collections;
 
 public class UserDetails implements org.springframework.security.core.userdetails.UserDetails
 {
-    private final String username;
-    private final String password;
+    private User user;
 
-    public UserDetails(String username, String password)
+    public UserDetails(User user)
     {
-        this.username = username;
-        this.password = password;
+        this.user = user;
     }
 
     @Override
@@ -25,13 +24,13 @@ public class UserDetails implements org.springframework.security.core.userdetail
     @Override
     public String getPassword()
     {
-        return password;
+        return user.password();
     }
 
     @Override
     public String getUsername()
     {
-        return username;
+        return user.username();
     }
 
     @Override

@@ -1,11 +1,11 @@
 package com.bitsmi.springbootshowcase.core.common.repository;
 
-import com.bitsmi.springbootshowcase.core.common.domain.User;
+import com.bitsmi.springbootshowcase.core.common.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-public interface IUserRepository extends JpaRepository<User, Long>
+public interface IUserRepository extends JpaRepository<UserEntity, Long>
 {
-    Optional<User> findByUsername(String username);
+    Optional<UserEntity> findByUsername(String username);
 }

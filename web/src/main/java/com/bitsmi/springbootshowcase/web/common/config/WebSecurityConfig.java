@@ -46,9 +46,7 @@ public class WebSecurityConfig
 
     @Bean
     @Order(1)
-    public SecurityFilterChain securityFilterChainBasic(final HttpSecurity http,
-                                                        final Environment environment,
-                                                        final UserDetailsService userDetailsService) throws Exception
+    public SecurityFilterChain securityFilterChainBasic(final HttpSecurity http) throws Exception
     {
         http.securityMatcher("/auth/**", "/actuator/**")
                 .authorizeHttpRequests(this::authorizeHttpRequestsBasic)
@@ -66,7 +64,8 @@ public class WebSecurityConfig
                                                           final Environment environment,
                                                           final UserDetailsService userDetailsService) throws Exception
     {
-        http.authorizeHttpRequests(this::authorizeHttpRequestsDefault)
+        http.securityMatcher("/api/**")
+                .authorizeHttpRequests(this::authorizeHttpRequestsDefault)
                 .csrf(this::csrf)
                 .exceptionHandling(this::exceptionHandlingDefault)
                 .addFilterBefore(new JWTAuthorizationFilter(authenticationManager(userDetailsService, passwordEncoder()),
@@ -115,7 +114,7 @@ public class WebSecurityConfig
             {
                 String requestURI = request.getRequestURI();
 
-                LOGGER.warn("[AuthenticationEntryPoint] Forbidden access for request ({})", requestURI);
+                LOGGER.warn("[authenticationEntryPointDefault] Forbidden access for request ({})", requestURI);
 
                 ProblemDetail problemDetail = ProblemDetailBuilder.forStatus(HttpServletResponse.SC_FORBIDDEN)
                         .asError()

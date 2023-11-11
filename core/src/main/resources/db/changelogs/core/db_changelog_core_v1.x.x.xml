@@ -23,18 +23,4 @@
                         incrementBy="1"
                         cycle="false"/>
     </changeSet>
-
-    <!-- For testing purposes -->
-    <changeSet author="aarchilla (generated)" id="1.0/CH2">
-        <insert tableName="APP_USER">
-            <column name="ID" valueSequenceNext="SEQ_APP_USER"/>
-            <column name="VERSION" valueNumeric="1"/>
-            <column name="USERNAME" value="john.doe"/>
-            <column name="PASSWORD" value=""/>
-            <column name="COMPLETE_NAME" value="John Doe"/>
-            <column name="ACTIVE" valueBoolean="true"/>
-            <column name="CREATION_DATE" valueComputed="${current_timestamp}"/>
-            <column name="LAST_UPDATED" valueComputed="${current_timestamp}"/>
-        </insert>
-    </changeSet>
 </databaseChangeLog>
