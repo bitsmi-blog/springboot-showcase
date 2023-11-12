@@ -5,6 +5,7 @@ import com.bitsmi.springbootshowcase.web.user.controller.dto.response.UserDetail
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +46,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         "file:./application-test.properties"
 })
 @WithUserDetails("john.doe")
-public class UserApiControllerTests
+@Tag("IntegrationTest")
+public class UserApiControllerIntTests
 {
     @Autowired
     private WebApplicationContext context;

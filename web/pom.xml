@@ -141,6 +141,13 @@
 			</plugin>
 
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+			</plugin>
+
+			<!-- Integration tests of final artifact -->
+<!--
+			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<executions>
@@ -167,7 +174,6 @@
 					<layout>ZIP</layout>
 				</configuration>
 			</plugin>
-
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-failsafe-plugin</artifactId>
@@ -175,6 +181,7 @@
 					<classesDirectory>${project.build.outputDirectory}/${artifactId}.${version}.jar</classesDirectory>
 				</configuration>
 			</plugin>
+-->
 
 			<!-- DOCS -->
 			<plugin>

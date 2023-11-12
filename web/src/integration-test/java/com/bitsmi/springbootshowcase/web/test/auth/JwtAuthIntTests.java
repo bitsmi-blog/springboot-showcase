@@ -8,6 +8,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +55,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         "classpath:application.properties",
         "file:./application-test.properties"
 })
-public class JwtAuthTests
+@Tag("IntegrationTest")
+public class JwtAuthIntTests
 {
     @Autowired
     private WebApplicationContext context;

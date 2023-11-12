@@ -175,6 +175,7 @@
                     <artifactId>jacoco-maven-plugin</artifactId>
                     <version>0.8.10</version>
                     <executions>
+                        <!-- Unit tests -->
                         <execution>
                             <goals>
                                 <goal>prepare-agent</goal>
@@ -185,10 +186,34 @@
                             <phase>prepare-package</phase>
                             <goals>
                                 <!-- Used instead "report" to support multi module aggregate coverage -->
+                                <goal>report</goal>
+                            </goals>
+                            <configuration>
+                                <outputDirectory>${project.reporting.outputDirectory}/jacoco</outputDirectory>
+                            </configuration>
+                        </execution>
+                        <!-- Integration tests -->
+                        <execution>
+                            <id>integration-test</id>
+                            <goals>
+                                <goal>prepare-agent</goal>
+                            </goals>
+                            <phase>pre-integration-test</phase>
+                            <configuration>
+                                <!-- Override exec file -->
+                                <append>false</append>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>report-integration-test</id>
+                            <phase>post-integration-test</phase>
+                            <goals>
+                                <!-- Used instead "report" to support multi module aggregate coverage -->
                                 <goal>report-aggregate</goal>
                             </goals>
                             <configuration>
                                 <includeCurrentProject>true</includeCurrentProject>
+                                <outputDirectory>${project.reporting.outputDirectory}/jacoco-it</outputDirectory>
                             </configuration>
                         </execution>
                     </executions>
@@ -202,19 +227,24 @@
 
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-failsafe-plugin</artifactId>
+                    <artifactId>maven-surefire-plugin</artifactId>
                     <version>3.2.1</version>
                     <executions>
                         <execution>
-                            <goals>
-                                <goal>integration-test</goal>
-                                <goal>verify</goal>
-                            </goals>
+                            <id>default-test</id>
                             <configuration>
-                                <includes>
-                                    <include>**/*IT</include>
-                                    <include>**/*ITCase</include>
-                                </includes>
+                                <excludedGroups>IntegrationTest</excludedGroups>
+                            </configuration>
+                        </execution>
+                        <!-- Additional execution for integration tests -->
+                        <execution>
+                            <id>integration-test</id>
+                            <goals>
+                                <goal>test</goal>
+                            </goals>
+                            <phase>integration-test</phase>
+                            <configuration>
+                                <groups>IntegrationTest</groups>
                             </configuration>
                         </execution>
                     </executions>

@@ -8,7 +8,5 @@ services:
     environment:
       - POSTGRES_USER=showcase-db
       - POSTGRES_PASSWORD=showcase-db
-    volumes:
-      - ./test-workspace/db:/var/lib/postgresql/data
     labels:
       org.springframework.boot.service-connection: postgres
