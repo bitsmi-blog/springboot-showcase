@@ -1,8 +1,11 @@
 package com.bitsmi.springbootshowcase.api.client.openfeign.test;
 
-import com.bitsmi.springbootshowcase.api.client.openfeign.application.IApplicationApiClient;
+import com.bitsmi.springbootshowcase.api.client.openfeign.user.IUserApiClient;
+import com.bitsmi.springbootshowcase.api.user.response.UserDetailsResponse;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.client.WireMock;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,41 +30,56 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ContextConfiguration(loader = AnnotationConfigContextLoader.class)
 @ImportAutoConfiguration({ FeignAutoConfiguration.class, HttpMessageConvertersAutoConfiguration.class })
 @TestPropertySource(properties = {
-        "web.api.client.url = http://localhost:8080"
+        "web.api.client.url = http://localhost:8081"
 })
-public class ApplicationApiClientTest
+public class UserApiClientTest
 {
     @Autowired
-    private IApplicationApiClient applicationApiClient;
+    private IUserApiClient userApiClient;
 
     @Autowired
     private WireMockServer wireMockServer;
 
+    private ObjectMapper objectMapper;
+
     @Test
-    @DisplayName("getHelloTest should return greetings from server")
-    public void getHelloTest1()
+    @DisplayName("getDetails should return current user details")
+    public void getDetailsTest1() throws Exception
     {
-        wireMockServer.stubFor(WireMock.get("/api/application/hello")
+        final UserDetailsResponse expectedResponse = UserDetailsResponse.builder()
+                .username("john.doe")
+                .build();
+
+        wireMockServer.stubFor(WireMock.get("/api/user/details")
                 .willReturn(WireMock.aResponse()
-                        .withHeader("Content-Type", MediaType.TEXT_PLAIN_VALUE)
-                        .withBody("Hello from SpringBoot Showcase application")
+                        .withHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)
+                        .withBody(objectMapper.writeValueAsString(expectedResponse))
                 )
         );
 
-        String message = applicationApiClient.getHello();
-        assertThat(message).isEqualTo("Hello from SpringBoot Showcase application");
+        UserDetailsResponse response = userApiClient.getDetails();
+        assertThat(response)
+                .usingRecursiveComparison()
+                .isEqualTo(expectedResponse);
     }
 
     /*---------------------------*
      * SETUP AND HELPERS
      *---------------------------*/
+    @BeforeEach
+    public void setUp()
+    {
+        objectMapper = new ObjectMapper();
+    }
+
     @TestConfiguration
-    @EnableFeignClients(basePackageClasses = { IApplicationApiClient.class })
+    @EnableFeignClients(basePackageClasses = { IUserApiClient.class })
     static class TestConfig
     {
         @Bean(initMethod = "start", destroyMethod = "stop")
         public WireMockServer mockServer() {
-            return new WireMockServer(8080);
+            // Random port
+            return new WireMockServer(8081);
         }
     }
 }

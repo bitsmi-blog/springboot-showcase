@@ -2,8 +2,8 @@ package com.bitsmi.springbootshowcase.web.test.auth;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.bitsmi.springbootshowcase.api.user.response.UserDetailsResponse;
 import com.bitsmi.springbootshowcase.web.IMainPackage;
-import com.bitsmi.springbootshowcase.web.user.controller.dto.response.UserDetailsResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.junit.jupiter.api.BeforeEach;

@@ -1,7 +1,7 @@
 package com.bitsmi.springbootshowcase.web.test.user;
 
+import com.bitsmi.springbootshowcase.api.user.response.UserDetailsResponse;
 import com.bitsmi.springbootshowcase.web.IMainPackage;
-import com.bitsmi.springbootshowcase.web.user.controller.dto.response.UserDetailsResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

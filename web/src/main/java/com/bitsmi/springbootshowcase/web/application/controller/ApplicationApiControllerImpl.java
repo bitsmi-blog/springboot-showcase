@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+@RestController
 @RequestMapping(value = "/api/application", produces = MediaType.APPLICATION_JSON_VALUE)
 @ResponseBody
-@RestController
 @Observed(name = "application.api")
 public class ApplicationApiControllerImpl implements IApplicationApiController
 {
