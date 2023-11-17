@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.ProblemDetail;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.ErrorResponseException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -39,6 +40,13 @@ public class RestControllerExceptionHandler
 	{
 		LOGGER.error("[methodValidationErrorHandler] Error message: {}", e.getMessage(), e);
 		return ProblemDetailBuilder.forException("Validation error", e);
+	}
+
+	@ExceptionHandler(value = AccessDeniedException.class)
+	public ProblemDetail accessDeniedErrorHandler(HttpServletRequest request, HttpServletResponse response, AccessDeniedException e) throws IOException
+	{
+		LOGGER.error("[accessDeniedErrorHandler] Error message: {}", e.getMessage(), e);
+		return ProblemDetailBuilder.forStatus(403).build();
 	}
 
 	@ExceptionHandler(value = ErrorResponseException.class)
