@@ -17,8 +17,126 @@
             <column name="LAST_UPDATED" type="TIMESTAMP"/>
         </createTable>
 
+        <createTable tableName="APP_USER_GROUP">
+            <column name="ID" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_USER_GROUP"/>
+            </column>
+            <column name="VERSION" type="BIGINT"/>
+            <column name="NAME" type="VARCHAR(255)"/>
+            <column name="DESCRIPTION" type="VARCHAR(255)"/>
+            <column defaultValueBoolean="true" name="ACTIVE" type="BOOLEAN"/>
+            <column name="CREATION_DATE" type="TIMESTAMP"/>
+            <column name="LAST_UPDATED" type="TIMESTAMP"/>
+        </createTable>
+
+        <createTable tableName="APP_AUTHORITY">
+            <column name="ID" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_AUTHORITY"/>
+            </column>
+            <column name="VERSION" type="BIGINT"/>
+            <column name="NAME" type="VARCHAR(255)"/>
+            <column name="DESCRIPTION" type="VARCHAR(255)"/>
+            <column name="CREATION_DATE" type="TIMESTAMP"/>
+            <column name="LAST_UPDATED" type="TIMESTAMP"/>
+        </createTable>
+
+        <createTable tableName="APP_USER_GROUP_AUTH">
+            <column name="ID" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_USER_GROUP_AUTH"/>
+            </column>
+            <column name="VERSION" type="BIGINT"/>
+            <column name="GROUP_ID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="AUTHORITY_ID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CREATION_DATE" type="TIMESTAMP"/>
+            <column name="LAST_UPDATED" type="TIMESTAMP"/>
+        </createTable>
+
+        <createTable tableName="APP_USER_GROUP_MEMBER">
+            <column name="ID" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_USER_GROUP_MEMBER"/>
+            </column>
+            <column name="VERSION" type="BIGINT"/>
+            <column name="GROUP_ID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="USER_ID" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CREATION_DATE" type="TIMESTAMP"/>
+            <column name="LAST_UPDATED" type="TIMESTAMP"/>
+        </createTable>
+
+        <addUniqueConstraint tableName="APP_AUTHORITY" columnNames="NAME" constraintName="C_AUTH_NAME"/>
+        <addUniqueConstraint tableName="APP_USER_GROUP" columnNames="NAME" constraintName="C_USER_GROUP_NAME"/>
+        <addUniqueConstraint tableName="APP_USER_GROUP_AUTH" columnNames="GROUP_ID, AUTHORITY_ID" constraintName="C_USER_GROUP_AUTH"/>
+        <addUniqueConstraint tableName="APP_USER_GROUP_MEMBER" columnNames="GROUP_ID, USER_ID" constraintName="C_USER_GROUP_MEMBER"/>
+
+        <addForeignKeyConstraint baseColumnNames="GROUP_ID"
+                                 baseTableName="APP_USER_GROUP_AUTH"
+                                 constraintName="FK_USER_GROUP_AUTH_GROUP"
+                                 deferrable="false"
+                                 initiallyDeferred="false"
+                                 onDelete="NO ACTION"
+                                 onUpdate="NO ACTION"
+                                 referencedColumnNames="ID"
+                                 referencedTableName="APP_USER_GROUP"
+                                 referencesUniqueColumn="true"/>
+
+        <addForeignKeyConstraint baseColumnNames="AUTHORITY_ID"
+                                 baseTableName="APP_USER_GROUP_AUTH"
+                                 constraintName="FK_USER_GROUP_AUTH_AUTH"
+                                 deferrable="false"
+                                 initiallyDeferred="false"
+                                 onDelete="NO ACTION"
+                                 onUpdate="NO ACTION"
+                                 referencedColumnNames="ID"
+                                 referencedTableName="APP_AUTHORITY"
+                                 referencesUniqueColumn="true"/>
+
+        <addForeignKeyConstraint baseColumnNames="GROUP_ID"
+                                 baseTableName="APP_USER_GROUP_MEMBER"
+                                 constraintName="FK_USER_GROUP_MEMBER_GROUP"
+                                 deferrable="false"
+                                 initiallyDeferred="false"
+                                 onDelete="NO ACTION"
+                                 onUpdate="NO ACTION"
+                                 referencedColumnNames="ID"
+                                 referencedTableName="APP_USER_GROUP"
+                                 referencesUniqueColumn="true"/>
+
+        <addForeignKeyConstraint baseColumnNames="USER_ID"
+                                 baseTableName="APP_USER_GROUP_MEMBER"
+                                 constraintName="FK_USER_GROUP_MEMBER_USER"
+                                 deferrable="false"
+                                 initiallyDeferred="false"
+                                 onDelete="NO ACTION"
+                                 onUpdate="NO ACTION"
+                                 referencedColumnNames="ID"
+                                 referencedTableName="APP_USER"
+                                 referencesUniqueColumn="true"/>
+
         <!-- SEQUENCES -->
         <createSequence sequenceName="SEQ_APP_USER"
+                        startValue="1"
+                        incrementBy="1"
+                        cycle="false"/>
+        <createSequence sequenceName="SEQ_APP_USER_GROUP"
+                        startValue="1"
+                        incrementBy="1"
+                        cycle="false"/>
+        <createSequence sequenceName="SEQ_APP_AUTHORITY"
+                        startValue="1"
+                        incrementBy="1"
+                        cycle="false"/>
+        <createSequence sequenceName="SEQ_APP_USER_GROUP_AUTH"
+                        startValue="1"
+                        incrementBy="1"
+                        cycle="false"/>
+        <createSequence sequenceName="SEQ_APP_USER_GROUP_MEMBER"
                         startValue="1"
                         incrementBy="1"
                         cycle="false"/>

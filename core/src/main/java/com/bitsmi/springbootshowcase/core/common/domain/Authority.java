@@ -5,16 +5,12 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
-import java.util.Set;
 
 @Builder(toBuilder = true, builderClassName = "Builder")
-public record User(
+public record Authority(
         Long id,
-        String username,
-        String password,
-        String completeName,
-        Boolean active,
-        Set<UserGroup> groups,
+        String name,
+        String description,
         LocalDateTime creationDate,
         LocalDateTime lastUpdated
 )
@@ -24,11 +20,8 @@ public record User(
     {
         return new ToStringBuilder(this)
                 .append("id", id)
-                .append("username", username)
-                .append("password", password)
-                .append("completeName", completeName)
-                .append("active", active)
-                .append("groups", groups)
+                .append("name", name)
+                .append("description", description)
                 .append("creationDate", creationDate)
                 .append("lastUpdated", lastUpdated)
                 .build();
@@ -44,13 +37,13 @@ public record User(
             return false;
         }
 
-        User other = (User) o;
-        return Objects.equals(username, other.username);
+        Authority other = (Authority) o;
+        return Objects.equals(name, other.name);
     }
 
     @Override
     public int hashCode()
     {
-        return Objects.hash(username);
+        return Objects.hash(name);
     }
 }

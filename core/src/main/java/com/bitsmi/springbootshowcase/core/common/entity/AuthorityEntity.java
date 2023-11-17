@@ -1,15 +1,10 @@
 package com.bitsmi.springbootshowcase.core.common.entity;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.SequenceGenerator;
@@ -25,44 +20,30 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
-import java.util.Set;
 
-@SequenceGenerator(name="USER_ID_GENERATOR",
-        sequenceName="SEQ_APP_USER",
+@SequenceGenerator(name="AUTHORITY_ID_GENERATOR",
+        sequenceName="SEQ_APP_AUTHORITY",
         allocationSize=1)
 @Entity
-@Table(name="APP_USER")
+@Table(name="APP_AUTHORITY")
 @Getter
 @Setter
 @Builder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserEntity implements Serializable
+public class AuthorityEntity implements Serializable
 {
     @Id
-    @GeneratedValue(strategy= GenerationType.SEQUENCE, generator="USER_ID_GENERATOR")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="AUTHORITY_ID_GENERATOR")
     private Long id;
 
     @Version
     private Long version;
 
     @Column(unique=true)
-    private String username;
+    private String name;
 
-    private String password;
-
-    private String completeName;
-
-    @Column(columnDefinition="Boolean default true")
-    private Boolean active;
-
-    @ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "APP_USER_GROUP_MEMBER",
-            joinColumns = { @JoinColumn(name = "USER_ID") },
-            inverseJoinColumns = { @JoinColumn(name = "GROUP_ID") }
-    )
-    private Set<UserGroupEntity> groups;
+    private String description;
 
     @Column
     private LocalDateTime creationDate;
@@ -86,11 +67,8 @@ public class UserEntity implements Serializable
         return new ToStringBuilder(this)
                 .append("id", id)
                 .append("version", version)
-                .append("username", username)
-                .append("password", password)
-                .append("completeName", completeName)
-                .append("active", active)
-                .append("groups", groups)
+                .append("name", name)
+                .append("description", description)
                 .append("creationDate", creationDate)
                 .append("lastUpdated", lastUpdated)
                 .build();
@@ -106,13 +84,13 @@ public class UserEntity implements Serializable
             return false;
         }
 
-        UserEntity other = (UserEntity) o;
-        return Objects.equals(username, other.username);
+        AuthorityEntity other = (AuthorityEntity) o;
+        return Objects.equals(name, other.name);
     }
 
     @Override
     public int hashCode()
     {
-        return Objects.hash(username);
+        return Objects.hash(name);
     }
 }

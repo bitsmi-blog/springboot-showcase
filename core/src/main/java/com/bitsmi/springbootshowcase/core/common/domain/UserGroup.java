@@ -8,13 +8,11 @@ import java.util.Objects;
 import java.util.Set;
 
 @Builder(toBuilder = true, builderClassName = "Builder")
-public record User(
+public record UserGroup(
         Long id,
-        String username,
-        String password,
-        String completeName,
-        Boolean active,
-        Set<UserGroup> groups,
+        String name,
+        String description,
+        Set<Authority> authorities,
         LocalDateTime creationDate,
         LocalDateTime lastUpdated
 )
@@ -24,11 +22,9 @@ public record User(
     {
         return new ToStringBuilder(this)
                 .append("id", id)
-                .append("username", username)
-                .append("password", password)
-                .append("completeName", completeName)
-                .append("active", active)
-                .append("groups", groups)
+                .append("name", name)
+                .append("description", description)
+                .append("authorities", authorities)
                 .append("creationDate", creationDate)
                 .append("lastUpdated", lastUpdated)
                 .build();
@@ -44,13 +40,13 @@ public record User(
             return false;
         }
 
-        User other = (User) o;
-        return Objects.equals(username, other.username);
+        UserGroup other = (UserGroup) o;
+        return Objects.equals(name, other.name);
     }
 
     @Override
     public int hashCode()
     {
-        return Objects.hash(username);
+        return Objects.hash(name);
     }
 }

@@ -27,42 +27,37 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.Set;
 
-@SequenceGenerator(name="USER_ID_GENERATOR",
-        sequenceName="SEQ_APP_USER",
+@SequenceGenerator(name="USER_GROUP_ID_GENERATOR",
+        sequenceName="SEQ_APP_USER_GROUP",
         allocationSize=1)
 @Entity
-@Table(name="APP_USER")
+@Table(name="APP_USER_GROUP")
 @Getter
 @Setter
 @Builder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserEntity implements Serializable
+public class UserGroupEntity implements Serializable
 {
     @Id
-    @GeneratedValue(strategy= GenerationType.SEQUENCE, generator="USER_ID_GENERATOR")
+    @GeneratedValue(strategy= GenerationType.SEQUENCE, generator="USER_GROUP_ID_GENERATOR")
     private Long id;
 
     @Version
     private Long version;
 
     @Column(unique=true)
-    private String username;
+    private String name;
 
-    private String password;
-
-    private String completeName;
-
-    @Column(columnDefinition="Boolean default true")
-    private Boolean active;
+    private String description;
 
     @ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
     @JoinTable(
-            name = "APP_USER_GROUP_MEMBER",
-            joinColumns = { @JoinColumn(name = "USER_ID") },
-            inverseJoinColumns = { @JoinColumn(name = "GROUP_ID") }
+            name = "APP_USER_GROUP_AUTH",
+            joinColumns = { @JoinColumn(name = "GROUP_ID") },
+            inverseJoinColumns = { @JoinColumn(name = "AUTHORITY_ID") }
     )
-    private Set<UserGroupEntity> groups;
+    private Set<AuthorityEntity> authorities;
 
     @Column
     private LocalDateTime creationDate;
@@ -86,11 +81,9 @@ public class UserEntity implements Serializable
         return new ToStringBuilder(this)
                 .append("id", id)
                 .append("version", version)
-                .append("username", username)
-                .append("password", password)
-                .append("completeName", completeName)
-                .append("active", active)
-                .append("groups", groups)
+                .append("name", name)
+                .append("description", description)
+                .append("authorities", authorities)
                 .append("creationDate", creationDate)
                 .append("lastUpdated", lastUpdated)
                 .build();
@@ -106,13 +99,13 @@ public class UserEntity implements Serializable
             return false;
         }
 
-        UserEntity other = (UserEntity) o;
-        return Objects.equals(username, other.username);
+        UserGroupEntity other = (UserGroupEntity) o;
+        return Objects.equals(name, other.name);
     }
 
     @Override
     public int hashCode()
     {
-        return Objects.hash(username);
+        return Objects.hash(name);
     }
 }

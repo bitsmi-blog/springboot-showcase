@@ -1,16 +1,18 @@
 package com.bitsmi.springbootshowcase.web.common.service.dto;
 
+import com.bitsmi.springbootshowcase.core.common.domain.Authority;
 import com.bitsmi.springbootshowcase.core.common.domain.User;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.Collection;
-import java.util.Collections;
+import java.util.stream.Collectors;
 
 public class UserDetails implements org.springframework.security.core.userdetails.UserDetails
 {
-    private User user;
+    private final User user;
 
-    public UserDetails(User user)
+    public UserDetails(final User user)
     {
         this.user = user;
     }
@@ -18,7 +20,11 @@ public class UserDetails implements org.springframework.security.core.userdetail
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities()
     {
-        return Collections.emptyList();
+        return user.groups().stream()
+                .flatMap(group -> group.authorities().stream())
+                .map(auth -> "ROLE_" + auth.name())
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toSet());
     }
 
     @Override
@@ -54,6 +60,6 @@ public class UserDetails implements org.springframework.security.core.userdetail
     @Override
     public boolean isEnabled()
     {
-        return true;
+        return user.active();
     }
 }

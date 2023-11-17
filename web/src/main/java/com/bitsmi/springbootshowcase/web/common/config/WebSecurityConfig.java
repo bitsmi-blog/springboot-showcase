@@ -48,7 +48,7 @@ public class WebSecurityConfig
     @Order(1)
     public SecurityFilterChain securityFilterChainBasic(final HttpSecurity http) throws Exception
     {
-        http.securityMatcher("/auth/**", "/actuator/**")
+        http.securityMatcher("/auth/**", "/actuator/**", "/api/admin")
                 .authorizeHttpRequests(this::authorizeHttpRequestsBasic)
                 .csrf(this::csrf)
                 .httpBasic(Customizer.withDefaults())
