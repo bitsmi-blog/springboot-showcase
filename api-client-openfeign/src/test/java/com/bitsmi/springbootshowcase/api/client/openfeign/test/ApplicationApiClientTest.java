@@ -3,10 +3,12 @@ package com.bitsmi.springbootshowcase.api.client.openfeign.test;
 import com.bitsmi.springbootshowcase.api.client.openfeign.application.IApplicationApiClient;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.client.WireMock;
+import org.apache.commons.lang3.RandomUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.boot.autoconfigure.http.HttpMessageConvertersAutoConfiguration;
@@ -16,7 +18,8 @@ import org.springframework.cloud.openfeign.FeignAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
@@ -26,9 +29,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootConfiguration
 @ContextConfiguration(loader = AnnotationConfigContextLoader.class)
 @ImportAutoConfiguration({ FeignAutoConfiguration.class, HttpMessageConvertersAutoConfiguration.class })
-@TestPropertySource(properties = {
-        "web.api.client.url = http://localhost:8080"
-})
 public class ApplicationApiClientTest
 {
     @Autowired
@@ -60,8 +60,18 @@ public class ApplicationApiClientTest
     static class TestConfig
     {
         @Bean(initMethod = "start", destroyMethod = "stop")
-        public WireMockServer mockServer() {
-            return new WireMockServer(8080);
+        public WireMockServer mockServer(@Value("${web.api.client.port}") int port) {
+            return new WireMockServer(port);
         }
+    }
+
+    @DynamicPropertySource
+    static void registerWebApiClientProperties(DynamicPropertyRegistry registry)
+    {
+        final int port = RandomUtils.nextInt(8_000, 10_000);
+        final String url = "http://localhost:" + port;
+
+        registry.add("web.api.client.port", () -> port);
+        registry.add("web.api.client.url", () -> url);
     }
 }
