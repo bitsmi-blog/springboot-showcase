@@ -141,4 +141,26 @@
                         incrementBy="1"
                         cycle="false"/>
     </changeSet>
+
+    <changeSet author="aarchilla (generated)" id="1.0/CH2">
+        <!-- USER GROUPS -->
+        <insert tableName="APP_USER_GROUP">
+            <column name="ID" valueSequenceNext="SEQ_APP_USER_GROUP"/>
+            <column name="VERSION" valueNumeric="1"/>
+            <column name="NAME" value="ADMIN"/>
+            <column name="DESCRIPTION" value="Administrator group"/>
+            <column name="ACTIVE" valueBoolean="true"/>
+            <column name="CREATION_DATE" valueComputed="${current_timestamp}"/>
+            <column name="LAST_UPDATED" valueComputed="${current_timestamp}"/>
+        </insert>
+        <insert tableName="APP_USER_GROUP">
+            <column name="ID" valueSequenceNext="SEQ_APP_USER_GROUP"/>
+            <column name="VERSION" valueNumeric="1"/>
+            <column name="NAME" value="USER"/>
+            <column name="DESCRIPTION" value="Common user group"/>
+            <column name="ACTIVE" valueBoolean="true"/>
+            <column name="CREATION_DATE" valueComputed="${current_timestamp}"/>
+            <column name="LAST_UPDATED" valueComputed="${current_timestamp}"/>
+        </insert>
+    </changeSet>
 </databaseChangeLog>

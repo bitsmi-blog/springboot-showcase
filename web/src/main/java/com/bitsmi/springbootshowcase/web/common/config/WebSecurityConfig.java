@@ -48,7 +48,10 @@ public class WebSecurityConfig
     @Order(1)
     public SecurityFilterChain securityFilterChainBasic(final HttpSecurity http) throws Exception
     {
-        http.securityMatcher("/auth/**", "/actuator/**", "/api/admin")
+        http.securityMatcher("/auth/**",
+                        "/actuator/**",
+                        "/api/setup/**",
+                        "/api/admin")
                 .authorizeHttpRequests(this::authorizeHttpRequestsBasic)
                 .csrf(this::csrf)
                 .httpBasic(Customizer.withDefaults())
@@ -84,7 +87,8 @@ public class WebSecurityConfig
     private void authorizeHttpRequestsDefault(AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry configurer)
     {
         configurer
-                .requestMatchers(HttpMethod.GET, "/api/application/**").anonymous()
+                .requestMatchers(HttpMethod.GET, "/api/application/**").permitAll()
+                .requestMatchers("/api/setup/**").permitAll()
                 .anyRequest().authenticated();
     }
 

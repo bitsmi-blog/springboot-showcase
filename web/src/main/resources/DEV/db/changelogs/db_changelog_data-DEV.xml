@@ -44,22 +44,20 @@
             <column name="LAST_UPDATED" valueComputed="${current_timestamp}"/>
         </insert>
 
-        <!-- USER GROUPS -->
-        <insert tableName="APP_USER_GROUP">
-            <column name="ID" valueSequenceNext="SEQ_APP_USER_GROUP"/>
+        <!-- GROUP AUTHORITIES -->
+        <insert tableName="APP_USER_GROUP_AUTH">
+            <column name="ID" valueSequenceNext="SEQ_APP_USER_GROUP_AUTH"/>
             <column name="VERSION" valueNumeric="1"/>
-            <column name="NAME" value="ADMIN"/>
-            <column name="DESCRIPTION" value="Administrator group"/>
-            <column name="ACTIVE" valueBoolean="true"/>
+            <column name="GROUP_ID" valueComputed="(select ID from APP_USER_GROUP where NAME='ADMIN')"/>
+            <column name="AUTHORITY_ID" valueComputed="(select ID from APP_AUTHORITY where NAME='admin.authority1')"/>
             <column name="CREATION_DATE" valueComputed="${current_timestamp}"/>
             <column name="LAST_UPDATED" valueComputed="${current_timestamp}"/>
         </insert>
-        <insert tableName="APP_USER_GROUP">
-            <column name="ID" valueSequenceNext="SEQ_APP_USER_GROUP"/>
+        <insert tableName="APP_USER_GROUP_AUTH">
+            <column name="ID" valueSequenceNext="SEQ_APP_USER_GROUP_AUTH"/>
             <column name="VERSION" valueNumeric="1"/>
-            <column name="NAME" value="USER"/>
-            <column name="DESCRIPTION" value="Grup d'usuaris genèrics de la plataforma"/>
-            <column name="ACTIVE" valueBoolean="true"/>
+            <column name="GROUP_ID" valueComputed="(select ID from APP_USER_GROUP where NAME='USER')"/>
+            <column name="AUTHORITY_ID" valueComputed="(select ID from APP_AUTHORITY where NAME='user.authority1')"/>
             <column name="CREATION_DATE" valueComputed="${current_timestamp}"/>
             <column name="LAST_UPDATED" valueComputed="${current_timestamp}"/>
         </insert>
@@ -86,24 +84,6 @@
             <column name="VERSION" valueNumeric="1"/>
             <column name="GROUP_ID" valueComputed="(select ID from APP_USER_GROUP where NAME='USER')"/>
             <column name="USER_ID" valueComputed="(select ID from APP_USER where USERNAME='john.doe')"/>
-            <column name="CREATION_DATE" valueComputed="${current_timestamp}"/>
-            <column name="LAST_UPDATED" valueComputed="${current_timestamp}"/>
-        </insert>
-
-        <!-- GROUP AUTHORITIES -->
-        <insert tableName="APP_USER_GROUP_AUTH">
-            <column name="ID" valueSequenceNext="SEQ_APP_USER_GROUP_AUTH"/>
-            <column name="VERSION" valueNumeric="1"/>
-            <column name="GROUP_ID" valueComputed="(select ID from APP_USER_GROUP where NAME='ADMIN')"/>
-            <column name="AUTHORITY_ID" valueComputed="(select ID from APP_AUTHORITY where NAME='admin.authority1')"/>
-            <column name="CREATION_DATE" valueComputed="${current_timestamp}"/>
-            <column name="LAST_UPDATED" valueComputed="${current_timestamp}"/>
-        </insert>
-        <insert tableName="APP_USER_GROUP_AUTH">
-            <column name="ID" valueSequenceNext="SEQ_APP_USER_GROUP_AUTH"/>
-            <column name="VERSION" valueNumeric="1"/>
-            <column name="GROUP_ID" valueComputed="(select ID from APP_USER_GROUP where NAME='USER')"/>
-            <column name="AUTHORITY_ID" valueComputed="(select ID from APP_AUTHORITY where NAME='user.authority1')"/>
             <column name="CREATION_DATE" valueComputed="${current_timestamp}"/>
             <column name="LAST_UPDATED" valueComputed="${current_timestamp}"/>
         </insert>
