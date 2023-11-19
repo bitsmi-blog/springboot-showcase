@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-public interface IUserApiController
+public interface IUserApi
 {
     @GetMapping("/details")
     @ResponseStatus(HttpStatus.OK)

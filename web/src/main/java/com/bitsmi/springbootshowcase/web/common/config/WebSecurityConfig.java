@@ -50,7 +50,6 @@ public class WebSecurityConfig
     {
         http.securityMatcher("/auth/**",
                         "/actuator/**",
-                        "/api/setup/**",
                         "/api/admin")
                 .authorizeHttpRequests(this::authorizeHttpRequestsBasic)
                 .csrf(this::csrf)
@@ -88,7 +87,7 @@ public class WebSecurityConfig
     {
         configurer
                 .requestMatchers(HttpMethod.GET, "/api/application/**").permitAll()
-                .requestMatchers("/api/setup/**").permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/setup/**").permitAll()
                 .anyRequest().authenticated();
     }
 

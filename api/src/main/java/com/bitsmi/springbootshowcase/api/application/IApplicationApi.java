@@ -4,7 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-public interface IApplicationApiController
+public interface IApplicationApi
 {
     @GetMapping(value = "/hello", produces = "text/plain")
     @ResponseStatus(HttpStatus.OK)

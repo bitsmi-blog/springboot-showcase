@@ -1,6 +1,6 @@
 package com.bitsmi.springbootshowcase.web.application.controller;
 
-import com.bitsmi.springbootshowcase.api.application.IApplicationApiController;
+import com.bitsmi.springbootshowcase.api.application.IApplicationApi;
 import io.micrometer.observation.annotation.Observed;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/api/application", produces = MediaType.APPLICATION_JSON_VALUE)
 @ResponseBody
 @Observed(name = "application.api")
-public class ApplicationApiControllerImpl implements IApplicationApiController
+public class ApplicationApiControllerImpl implements IApplicationApi
 {
     private static final Logger LOGGER = LoggerFactory.getLogger(ApplicationApiControllerImpl.class);
 

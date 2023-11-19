@@ -1,6 +1,6 @@
 package com.bitsmi.springbootshowcase.web.user.controller;
 
-import com.bitsmi.springbootshowcase.api.user.IUserApiController;
+import com.bitsmi.springbootshowcase.api.user.IUserApi;
 import com.bitsmi.springbootshowcase.api.user.response.UserDetailsResponse;
 import com.bitsmi.springbootshowcase.web.common.service.IAuthenticationPrincipalService;
 import io.micrometer.observation.annotation.Observed;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/api/user", produces = MediaType.APPLICATION_JSON_VALUE)
 @ResponseBody
 @Observed(name = "user.api")
-public class UserApiControllerImpl implements IUserApiController
+public class UserApiControllerImpl implements IUserApi
 {
     @Autowired
     private IAuthenticationPrincipalService authenticationPrincipalService;

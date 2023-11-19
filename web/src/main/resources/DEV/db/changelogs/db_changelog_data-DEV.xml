@@ -20,7 +20,7 @@
             <column name="USERNAME" value="admin"/>
             <!-- password = test -->
             <column name="PASSWORD" value="{bcrypt}$2a$10$I2NL2EwOcbl9PIhgPiF/XeVXQ.yfErH11UQemNW21LBk.iaIpa44."/>
-            <column name="COMPLETE_NAME" value="John Doe"/>
+            <column name="COMPLETE_NAME" value="Administrator"/>
             <column name="ACTIVE" valueBoolean="true"/>
             <column name="CREATION_DATE" valueComputed="${current_timestamp}"/>
             <column name="LAST_UPDATED" valueComputed="${current_timestamp}"/>
