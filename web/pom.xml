@@ -140,8 +140,6 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 			</plugin>
 
-			<!-- Integration tests of final artifact -->
-<!--
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
@@ -151,32 +149,8 @@
 							<goal>repackage</goal>
 						</goals>
 					</execution>
-					<execution>
-						<id>pre-integration-test</id>
-						<goals>
-							<goal>start</goal>
-						</goals>
-					</execution>
-					<execution>
-						<id>post-integration-test</id>
-						<goals>
-							<goal>stop</goal>
-						</goals>
-					</execution>
 				</executions>
-				<configuration>
-					<mainClass>com.bitsmi.springbootshowcase.web.MainProgram</mainClass>
-					<layout>ZIP</layout>
-				</configuration>
 			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-failsafe-plugin</artifactId>
-				<configuration>
-					<classesDirectory>${project.build.outputDirectory}/${artifactId}.${version}.jar</classesDirectory>
-				</configuration>
-			</plugin>
--->
 
 			<!-- DOCS -->
 			<plugin>

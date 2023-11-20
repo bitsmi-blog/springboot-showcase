@@ -11,14 +11,15 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @Configuration
 @Import({ CoreConfig.class })
 @EnableJpaRepositories(basePackageClasses = {
-        ICorePackage.class,
+    ICorePackage.class,
 })
 @EntityScan(basePackageClasses = {
-        ICorePackage.class
+    ICorePackage.class
 })
 @PropertySource(value = {
         "file:conf/application.properties"
-    }
+    },
+    ignoreResourceNotFound = true
 )
 public class AppConfig
 {
