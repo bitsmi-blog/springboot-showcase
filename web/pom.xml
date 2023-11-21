@@ -101,6 +101,7 @@
 	</dependencies>
 
 	<build>
+		<finalName>springboot-showcase</finalName>
 		<resources>
 			<resource>
 				<directory>${basedir}/src/main/resources</directory>
@@ -108,6 +109,7 @@
 				<excludes>
 					<exclude>application.properties</exclude>
 					<exclude>DEV/</exclude>
+					<exclude>PRO/</exclude>
 				</excludes>
 			</resource>
 			<resource>
@@ -143,6 +145,12 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<mainClass>com.bitsmi.springbootshowcase.web.MainProgram</mainClass>
+					<layers>
+						<enabled>true</enabled>
+					</layers>
+				</configuration>
 				<executions>
 					<execution>
 						<goals>
@@ -165,4 +173,38 @@
 			</plugin>
 		</plugins>
 	</build>
+
+	<profiles>
+		<profile>
+			<id>DOCKER</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>exec-maven-plugin</artifactId>
+						<executions>
+							<execution>
+								<goals>
+									<goal>exec</goal>
+								</goals>
+								<phase>package</phase>
+								<configuration>
+									<!-- docker build -f src/main/docker/Dockerfile . -t springboot-showcase-web:1.0.0 -->
+									<executable>docker</executable>
+									<arguments>
+										<argument>build</argument>
+										<argument>-f</argument>
+										<argument>src/docker/Dockerfile</argument>
+										<argument>--tag</argument>
+										<argument>${project.artifactId}:${project.version}</argument>
+										<argument>.</argument>
+									</arguments>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 </project>

@@ -267,6 +267,12 @@
                     </executions>
                 </plugin>
 
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>exec-maven-plugin</artifactId>
+                    <version>3.1.1</version>
+                </plugin>
+
                 <!-- DOCS -->
                 <!-- Disable default docs generation through site plugin -->
                 <plugin>
@@ -388,9 +394,6 @@
             <properties>
                 <application.profile>PRO</application.profile>
             </properties>
-            <build>
-                <finalName>springboot-showcase</finalName>
-            </build>
         </profile>
         <profile>
             <id>DEV</id>
