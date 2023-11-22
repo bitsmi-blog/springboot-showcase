@@ -10,4 +10,8 @@ public interface IUserApi
     @GetMapping("/details")
     @ResponseStatus(HttpStatus.OK)
     UserDetailsResponse getDetails();
+
+    @GetMapping("/admin/details")
+    @ResponseStatus(HttpStatus.OK)
+    UserDetailsResponse getAdminDetails();
 }

@@ -63,6 +63,27 @@ public class UserApiClientTest
                 .isEqualTo(expectedResponse);
     }
 
+    @Test
+    @DisplayName("getAdminDetails should return current user details given an admin user")
+    public void getAdminDetailsTest1() throws Exception
+    {
+        final UserDetailsResponse expectedResponse = UserDetailsResponse.builder()
+                .username("admin")
+                .build();
+
+        wireMockServer.stubFor(WireMock.get("/api/user/admin/details")
+                .willReturn(WireMock.aResponse()
+                        .withHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)
+                        .withBody(objectMapper.writeValueAsString(expectedResponse))
+                )
+        );
+
+        UserDetailsResponse response = userApiClient.getAdminDetails();
+        assertThat(response)
+                .usingRecursiveComparison()
+                .isEqualTo(expectedResponse);
+    }
+
     /*---------------------------*
      * SETUP AND HELPERS
      *---------------------------*/
@@ -70,6 +91,7 @@ public class UserApiClientTest
     public void setUp()
     {
         objectMapper = new ObjectMapper();
+        wireMockServer.resetAll();
     }
 
     @TestConfiguration

@@ -6,6 +6,7 @@ import com.bitsmi.springbootshowcase.web.common.service.IAuthenticationPrincipal
 import io.micrometer.observation.annotation.Observed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -20,7 +21,19 @@ public class UserApiControllerImpl implements IUserApi
     @Autowired
     private IAuthenticationPrincipalService authenticationPrincipalService;
 
+    @Override
     public UserDetailsResponse getDetails()
+    {
+        final UserDetails userDetails = authenticationPrincipalService.getAuthenticationPrincipal();
+
+        return UserDetailsResponse.builder()
+                .username(userDetails.getUsername())
+                .build();
+    }
+
+    @Override
+    @PreAuthorize("hasRole('admin.authority1')")
+    public UserDetailsResponse getAdminDetails()
     {
         final UserDetails userDetails = authenticationPrincipalService.getAuthenticationPrincipal();
 

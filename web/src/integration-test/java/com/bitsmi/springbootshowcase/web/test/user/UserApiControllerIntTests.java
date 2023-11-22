@@ -85,6 +85,32 @@ public class UserApiControllerIntTests
                 .andExpect(status().isForbidden());
     }
 
+    @Test
+    @DisplayName("getAdminDetails should return admin message when user has the required role")
+    @WithUserDetails("admin")
+    public void getAdminDetailsTest1() throws Exception
+    {
+        final String username = "admin";
+        final UserDetailsResponse expectedResponse = UserDetailsResponse.builder()
+                .username(username)
+                .build();
+
+        this.mockMvc.perform(get("/api/user/admin/details")
+                        .with(testSecurityContext()))
+                .andExpect(status().isOk())
+                .andExpect(content().json(jsonMapper.writeValueAsString(expectedResponse)));
+    }
+
+    @Test
+    @DisplayName("getAdminDetails should return access denied error when user doesn't have the required role")
+    @WithUserDetails("john.doe")
+    public void getAdminDetailsTest2() throws Exception
+    {
+        this.mockMvc.perform(get("/api/user/admin/details")
+                        .with(testSecurityContext()))
+                .andExpect(status().isForbidden());
+    }
+
     /*---------------------------*
      * SETUP AND HELPERS
      *---------------------------*/
@@ -99,11 +125,10 @@ public class UserApiControllerIntTests
             InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
             manager.createUser(User.withUsername("john.doe")
                     .password(encoder.encode("foobar"))
-                    .roles("USER")
                     .build());
             manager.createUser(User.withUsername("admin")
                     .password(encoder.encode("barfoo"))
-                    .roles("USER", "ADMIN")
+                    .roles("admin.authority1")
                     .build());
 
             return manager;

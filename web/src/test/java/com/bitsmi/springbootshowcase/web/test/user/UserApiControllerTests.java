@@ -39,4 +39,20 @@ public class UserApiControllerTests
 
         assertThat(response.username()).isEqualTo(expectedUsername);
     }
+
+    @Test
+    @DisplayName("getAdminDetails should return current username")
+    public void getAdminDetailsTest1()
+    {
+        final String expectedUsername = "admin";
+
+        final UserDetails userDetails = mock(UserDetails.class);
+        when(userDetails.getUsername()).thenReturn(expectedUsername);
+        when(authenticationPrincipalService.getAuthenticationPrincipal())
+                .thenReturn(userDetails);
+
+        UserDetailsResponse response = userApiController.getDetails();
+
+        assertThat(response.username()).isEqualTo(expectedUsername);
+    }
 }

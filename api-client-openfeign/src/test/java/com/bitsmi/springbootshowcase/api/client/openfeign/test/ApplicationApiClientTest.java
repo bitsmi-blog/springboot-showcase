@@ -4,6 +4,7 @@ import com.bitsmi.springbootshowcase.api.client.openfeign.application.IApplicati
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.client.WireMock;
 import org.apache.commons.lang3.RandomUtils;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -55,6 +56,12 @@ public class ApplicationApiClientTest
     /*---------------------------*
      * SETUP AND HELPERS
      *---------------------------*/
+    @BeforeEach
+    public void setUp()
+    {
+        wireMockServer.resetAll();
+    }
+
     @TestConfiguration
     @EnableFeignClients(basePackageClasses = { IApplicationApiClient.class })
     static class TestConfig
