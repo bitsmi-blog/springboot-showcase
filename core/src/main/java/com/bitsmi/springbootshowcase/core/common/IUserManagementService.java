@@ -1,6 +1,6 @@
 package com.bitsmi.springbootshowcase.core.common;
 
-import com.bitsmi.springbootshowcase.core.common.domain.User;
+import com.bitsmi.springbootshowcase.core.common.model.User;
 import jakarta.validation.constraints.NotNull;
 
 import java.util.List;

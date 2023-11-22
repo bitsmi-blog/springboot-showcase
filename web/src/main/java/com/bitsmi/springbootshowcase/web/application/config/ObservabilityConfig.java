@@ -1,4 +1,4 @@
-package com.bitsmi.springbootshowcase.web.common.config;
+package com.bitsmi.springbootshowcase.web.application.config;
 
 import io.micrometer.observation.ObservationRegistry;
 import io.micrometer.observation.aop.ObservedAspect;

@@ -1,4 +1,4 @@
-package com.bitsmi.springbootshowcase.core.common.domain;
+package com.bitsmi.springbootshowcase.core.common.model;
 
 import lombok.Builder;
 import org.apache.commons.lang3.builder.ToStringBuilder;

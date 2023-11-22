@@ -1,4 +1,4 @@
-package com.bitsmi.springbootshowcase.web.common.config;
+package com.bitsmi.springbootshowcase.web.application.config;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;

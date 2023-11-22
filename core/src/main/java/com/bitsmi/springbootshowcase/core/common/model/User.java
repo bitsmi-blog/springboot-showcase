@@ -1,4 +1,4 @@
-package com.bitsmi.springbootshowcase.core.common.domain;
+package com.bitsmi.springbootshowcase.core.common.model;
 
 import lombok.Builder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -8,11 +8,13 @@ import java.util.Objects;
 import java.util.Set;
 
 @Builder(toBuilder = true, builderClassName = "Builder")
-public record UserGroup(
+public record User(
         Long id,
-        String name,
-        String description,
-        Set<Authority> authorities,
+        String username,
+        String password,
+        String completeName,
+        Boolean active,
+        Set<UserGroup> groups,
         LocalDateTime creationDate,
         LocalDateTime lastUpdated
 )
@@ -22,9 +24,11 @@ public record UserGroup(
     {
         return new ToStringBuilder(this)
                 .append("id", id)
-                .append("name", name)
-                .append("description", description)
-                .append("authorities", authorities)
+                .append("username", username)
+                .append("password", password)
+                .append("completeName", completeName)
+                .append("active", active)
+                .append("groups", groups)
                 .append("creationDate", creationDate)
                 .append("lastUpdated", lastUpdated)
                 .build();
@@ -40,13 +44,13 @@ public record UserGroup(
             return false;
         }
 
-        UserGroup other = (UserGroup) o;
-        return Objects.equals(name, other.name);
+        User other = (User) o;
+        return Objects.equals(username, other.username);
     }
 
     @Override
     public int hashCode()
     {
-        return Objects.hash(name);
+        return Objects.hash(username);
     }
 }

@@ -1,4 +1,4 @@
-package com.bitsmi.springbootshowcase.web.common.config;
+package com.bitsmi.springbootshowcase.web.application.config;
 
 import com.bitsmi.springbootshowcase.web.common.controller.ProblemDetailBuilder;
 import com.fasterxml.jackson.databind.ObjectMapper;

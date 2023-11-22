@@ -1,9 +1,8 @@
 package com.bitsmi.springbootshowcase.core.common.impl;
 
 import com.bitsmi.springbootshowcase.core.common.IUserManagementService;
-import com.bitsmi.springbootshowcase.core.common.domain.User;
+import com.bitsmi.springbootshowcase.core.common.model.User;
 import com.bitsmi.springbootshowcase.core.common.entity.UserEntity;
-import com.bitsmi.springbootshowcase.core.common.mapper.IUserGroupMapper;
 import com.bitsmi.springbootshowcase.core.common.mapper.IUserMapper;
 import com.bitsmi.springbootshowcase.core.common.repository.IUserGroupRepository;
 import com.bitsmi.springbootshowcase.core.common.repository.IUserRepository;

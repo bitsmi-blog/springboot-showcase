@@ -1,7 +1,6 @@
 package com.bitsmi.springbootshowcase.web.common.service.dto;
 
-import com.bitsmi.springbootshowcase.core.common.domain.Authority;
-import com.bitsmi.springbootshowcase.core.common.domain.User;
+import com.bitsmi.springbootshowcase.core.common.model.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
