@@ -13,10 +13,10 @@ public class ElementNotFoundException extends RuntimeException
     private final String type;
     private final String id;
 
-    public ElementNotFoundException(String type, String id)
+    public ElementNotFoundException(String type, Object id)
     {
         this.type = type;
-        this.id = id;
+        this.id = id!=null ? id.toString() : null;
     }
 
     public String getType()
