@@ -3,14 +3,15 @@ package com.bitsmi.springbootshowcase.core.test.content;
 import com.bitsmi.springbootshowcase.core.common.exception.ElementAlreadyExistsException;
 import com.bitsmi.springbootshowcase.core.common.exception.ElementNotFoundException;
 import com.bitsmi.springbootshowcase.core.content.IItemSchemaManagementService;
-import com.bitsmi.springbootshowcase.core.content.dto.ItemSchemaDto;
-import com.bitsmi.springbootshowcase.core.content.dto.ItemSchemaFieldDto;
 import com.bitsmi.springbootshowcase.core.content.entity.ItemSchemaEntity;
+import com.bitsmi.springbootshowcase.core.content.model.DataType;
 import com.bitsmi.springbootshowcase.core.content.model.ItemSchema;
+import com.bitsmi.springbootshowcase.core.content.model.ItemSchemaField;
 import com.bitsmi.springbootshowcase.core.content.repository.IItemSchemaRepository;
-import com.bitsmi.springbootshowcase.core.test.content.support.ItemSchemaDtoTestDataBuilder;
-import com.bitsmi.springbootshowcase.core.test.content.support.ItemSchemaFieldDtoTestDataBuilder;
+import com.bitsmi.springbootshowcase.core.test.content.support.ItemSchemaFieldTestDataBuilder;
+import com.bitsmi.springbootshowcase.core.test.content.support.ItemSchemaTestDataBuilder;
 import com.bitsmi.springbootshowcase.core.test.util.ServiceIntegrationTest;
+import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -27,6 +28,7 @@ import org.springframework.test.context.TestPropertySource;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
@@ -96,11 +98,10 @@ public class ItemSchemaManagementServiceIntTests
     @DisplayName("createSchema should create a new Schema")
     public void createSchemaTest1()
     {
-        final ItemSchemaDto schema = ItemSchemaDtoTestDataBuilder.builder()
-                .emptySchema1()
+        final ItemSchema schema = ItemSchema.builder()
                 .externalId("test-schema")
                 .name("Test schema")
-                .defaultFields()
+                .fields(Set.of(ItemSchemaFieldTestDataBuilder.stringField(), ItemSchemaFieldTestDataBuilder.numericField()))
                 .build();
 
         ItemSchema createdSchema = itemSchemaManagementService.createSchema(schema);
@@ -112,7 +113,7 @@ public class ItemSchemaManagementServiceIntTests
     @DisplayName("createSchema should throw an ElementAlreadyExistsException when schema already exists")
     public void createSchemaTest2()
     {
-        final ItemSchemaDto schema = ItemSchemaDtoTestDataBuilder.schema1();
+        final ItemSchema schema = ItemSchemaTestDataBuilder.schema1();
 
         assertThatExceptionOfType(ElementAlreadyExistsException.class)
                 .isThrownBy(() -> {
@@ -121,14 +122,14 @@ public class ItemSchemaManagementServiceIntTests
     }
 
     @Test
-    @DisplayName("createSchema should throw an ElementAlreadyExistsException given incomplete input data")
+    @DisplayName("createSchema should throw an ConstraintViolationException given incomplete input data")
     public void createSchemaTest3()
     {
-        final ItemSchemaDto schema = ItemSchemaDtoTestDataBuilder.builder()
-                .emptySchema1()
-                .name(null)
-                .fields(List.of(
-                        ItemSchemaFieldDtoTestDataBuilder.builder().stringField().name(null).dataType(null).build()
+        final ItemSchema schema = ItemSchema.builder()
+                .externalId(null)
+                .name("Test schema")
+                .fields(Set.of(
+                        ItemSchemaFieldTestDataBuilder.builder().stringField().name(null).dataType(null).build()
                     )
                 )
                 .build();
@@ -139,7 +140,9 @@ public class ItemSchemaManagementServiceIntTests
 
         assertThat(e).isNotNull();
         // externalId, field[0].name; field[0].dataType
-        assertThat(e.getConstraintViolations()).hasSize(3);
+        assertThat(e.getConstraintViolations()).hasSize(3)
+                .map(ConstraintViolation::getMessageTemplate)
+                .allMatch("{jakarta.validation.constraints.NotNull.message}"::equals);;
     }
 
     /*---------------------------*
@@ -149,18 +152,18 @@ public class ItemSchemaManagementServiceIntTests
     @DisplayName("updateSchema should update an existing Schema")
     public void updateSchemaTest1()
     {
-        final ItemSchemaDto schema = ItemSchemaDtoTestDataBuilder.builder()
+        final ItemSchema schema = ItemSchemaTestDataBuilder.builder()
                 .emptySchema1()
-                .name("Modified schema")
-                .fields(List.of(
+                .fields(Set.of(
                         // Field1 removed
-                        ItemSchemaFieldDtoTestDataBuilder.builder().numericField().name("field2").comments("Sample field comment").build(),
-                        ItemSchemaFieldDtoTestDataBuilder.builder().stringField().name("field3").build()
+                        ItemSchemaField.builder().dataType(DataType.NUMBER).name("field2").comments("Sample field comment").build(),
+                        ItemSchemaField.builder().dataType(DataType.STRING).name("field3").build()
                     )
                 )
                 .build();
 
-        ItemSchema createdSchema = itemSchemaManagementService.updateSchema(1001L, schema);
+
+        ItemSchema createdSchema = itemSchemaManagementService.updateSchema(schema);
 
         assertItemSchema(createdSchema, schema);
     }
@@ -169,35 +172,70 @@ public class ItemSchemaManagementServiceIntTests
     @DisplayName("updateSchema should throw an ElementNotFoundException when schema doesn't exists")
     public void updateSchemaTest2()
     {
-        final ItemSchemaDto schema = ItemSchemaDtoTestDataBuilder.schema1();
+        final ItemSchema schema = ItemSchemaTestDataBuilder.builder()
+                .emptySchema1()
+                .defaultFields()
+                .id(9999L)
+                .build();
 
         assertThatExceptionOfType(ElementNotFoundException.class)
                 .isThrownBy(() -> {
                     // Non existing ID = 9999L
-                    itemSchemaManagementService.updateSchema(9999L, schema);
+                    itemSchemaManagementService.updateSchema(schema);
                 });
     }
 
     @Test
-    @DisplayName("updateSchema should throw an ElementAlreadyExistsException given incomplete input data")
+    @DisplayName("updateSchema should throw an ConstraintViolationException given incomplete input data")
     public void updateSchemaTest3()
     {
-        final ItemSchemaDto schema = ItemSchemaDtoTestDataBuilder.builder()
+        final ItemSchema schema = ItemSchemaTestDataBuilder.builder()
                 .emptySchema1()
-                .name(null)
-                .fields(List.of(
-                        ItemSchemaFieldDtoTestDataBuilder.builder().stringField().name(null).dataType(null).build()
+                .externalId(null)
+                .name("Modified schema")
+                .fields(Set.of(
+                        // Field1 removed
+                        ItemSchemaField.builder().comments("Sample field comment").build(),
+                        ItemSchemaField.builder().dataType(DataType.STRING).name("field3").build()
                     )
                 )
                 .build();
 
         ConstraintViolationException e = catchThrowableOfType(() -> {
-            itemSchemaManagementService.updateSchema(1001L, schema);
+            itemSchemaManagementService.updateSchema(schema);
         }, ConstraintViolationException.class);
 
         assertThat(e).isNotNull();
         // externalId, field[0].name; field[0].dataType
-        assertThat(e.getConstraintViolations()).hasSize(3);
+        assertThat(e.getConstraintViolations()).hasSize(3)
+                .map(ConstraintViolation::getMessageTemplate)
+                .allMatch("{jakarta.validation.constraints.NotNull.message}"::equals);
+    }
+
+    @Test
+    @DisplayName("updateSchema should throw an ConstraintViolationException given missing update data")
+    public void updateSchemaTest4()
+    {
+        final ItemSchema schema = ItemSchemaTestDataBuilder.builder()
+                .emptySchema1()
+                .id(null)
+                .name("Modified schema")
+                .fields(Set.of(
+                        // Field1 removed
+                        ItemSchemaField.builder().dataType(DataType.NUMBER).name("field2").comments("Sample field comment").build(),
+                        ItemSchemaField.builder().dataType(DataType.STRING).name("field3").build()
+                    )
+                )
+                .build();
+
+        ConstraintViolationException e = catchThrowableOfType(() -> {
+            itemSchemaManagementService.updateSchema(schema);
+        }, ConstraintViolationException.class);
+
+        assertThat(e).isNotNull();
+        assertThat(e.getConstraintViolations()).hasSize(1)
+                .map(ConstraintViolation::getMessageTemplate)
+                .containsExactly("ID not specified");
     }
 
     /*---------------------------*
@@ -218,7 +256,7 @@ public class ItemSchemaManagementServiceIntTests
 
     }
 
-    private void assertItemSchema(ItemSchema current, ItemSchemaDto expected)
+    private void assertItemSchema(ItemSchema current, ItemSchema expected)
     {
         assertThat(current.id()).isNotNull();
         assertThat(current.creationDate()).isNotNull();
@@ -233,7 +271,7 @@ public class ItemSchemaManagementServiceIntTests
                 );
 
         assertThat(current.fields()).hasSize(expected.fields().size());
-        for(ItemSchemaFieldDto expectedField:expected.fields()) {
+        for(ItemSchemaField expectedField:expected.fields()) {
             assertThat(current.fields()).filteredOn(field -> expectedField.name().equals(field.name()))
                     .allSatisfy(currentField -> {
                         assertThat(currentField.id()).isNotNull();

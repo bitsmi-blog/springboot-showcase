@@ -1,5 +1,8 @@
 package com.bitsmi.springbootshowcase.core.content.model;
 
+import com.bitsmi.springbootshowcase.core.common.util.IUpdateValidationSupport;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
@@ -10,13 +13,21 @@ import java.util.Set;
 @Builder(toBuilder = true, builderClassName = "Builder")
 public record ItemSchema(
         Long id,
+        @NotNull
         String externalId,
+        @NotNull
         String name,
-        Set<ItemSchemaField> fields,
+        Set<@Valid ItemSchemaField> fields,
         LocalDateTime creationDate,
         LocalDateTime lastUpdated
-)
+) implements IUpdateValidationSupport
 {
+    @Override
+    public Long getId()
+    {
+        return id();
+    }
+
     @Override
     public String toString()
     {

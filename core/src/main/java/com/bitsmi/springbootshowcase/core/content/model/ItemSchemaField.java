@@ -1,5 +1,6 @@
 package com.bitsmi.springbootshowcase.core.content.model;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
@@ -9,7 +10,9 @@ import java.util.Objects;
 @Builder(toBuilder = true, builderClassName = "Builder")
 public record ItemSchemaField(
         Long id,
+        @NotNull
         String name,
+        @NotNull
         DataType dataType,
         String comments,
         LocalDateTime creationDate,
@@ -44,6 +47,6 @@ public record ItemSchemaField(
         }
 
         ItemSchemaField other = (ItemSchemaField) o;
-        return Objects.equals(id, other.id);
+        return Objects.equals(name, other.name);
     }
 }

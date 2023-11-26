@@ -1,18 +1,18 @@
 package com.bitsmi.springbootshowcase.core.test.content.support;
 
-import com.bitsmi.springbootshowcase.core.content.dto.DataType;
-import com.bitsmi.springbootshowcase.core.content.dto.ItemSchemaFieldDto;
+import com.bitsmi.springbootshowcase.core.content.model.DataType;
+import com.bitsmi.springbootshowcase.core.content.model.ItemSchemaField;
 
-public class ItemSchemaFieldDtoTestDataBuilder
+public class ItemSchemaFieldTestDataBuilder
 {
-    public static ItemSchemaFieldDto stringField()
+    public static ItemSchemaField stringField()
     {
         return builder()
                 .stringField()
                 .build();
     }
 
-    public static ItemSchemaFieldDto numericField()
+    public static ItemSchemaField numericField()
     {
         return builder()
                 .numericField()
@@ -26,7 +26,7 @@ public class ItemSchemaFieldDtoTestDataBuilder
 
     public static final class Builder
     {
-        private final ItemSchemaFieldDto.Builder delegate = ItemSchemaFieldDto.builder();
+        private final ItemSchemaField.Builder delegate = ItemSchemaField.builder();
 
         public Builder stringField()
         {
@@ -62,7 +62,7 @@ public class ItemSchemaFieldDtoTestDataBuilder
             return this;
         }
 
-        public ItemSchemaFieldDto build()
+        public ItemSchemaField build()
         {
             return delegate.build();
         }

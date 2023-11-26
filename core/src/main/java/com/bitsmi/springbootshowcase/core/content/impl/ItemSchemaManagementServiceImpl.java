@@ -2,8 +2,8 @@ package com.bitsmi.springbootshowcase.core.content.impl;
 
 import com.bitsmi.springbootshowcase.core.common.exception.ElementAlreadyExistsException;
 import com.bitsmi.springbootshowcase.core.common.exception.ElementNotFoundException;
+import com.bitsmi.springbootshowcase.core.common.util.ValidToUpdate;
 import com.bitsmi.springbootshowcase.core.content.IItemSchemaManagementService;
-import com.bitsmi.springbootshowcase.core.content.dto.ItemSchemaDto;
 import com.bitsmi.springbootshowcase.core.content.entity.DataType;
 import com.bitsmi.springbootshowcase.core.content.entity.ItemSchemaEntity;
 import com.bitsmi.springbootshowcase.core.content.entity.ItemSchemaFieldEntity;
@@ -57,17 +57,17 @@ public class ItemSchemaManagementServiceImpl implements IItemSchemaManagementSer
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public ItemSchema createSchema(@Valid ItemSchemaDto itemSchemaDto)
+    public ItemSchema createSchema(@Valid ItemSchema itemSchema)
     {
-        if(itemSchemaRepository.existsByExternalId(itemSchemaDto.externalId())) {
-            throw new ElementAlreadyExistsException(ItemSchemaDto.class.getSimpleName(), "externalId:" + itemSchemaDto.externalId());
+        if(itemSchemaRepository.existsByExternalId(itemSchema.externalId())) {
+            throw new ElementAlreadyExistsException(ItemSchema.class.getSimpleName(), "externalId:" + itemSchema.externalId());
         }
 
         final ItemSchemaEntity schemaEntity = ItemSchemaEntity.builder()
-                .externalId(itemSchemaDto.externalId())
-                .name(itemSchemaDto.name())
+                .externalId(itemSchema.externalId())
+                .name(itemSchema.name())
                 .build();
-        schemaEntity.setFields(itemSchemaDto.fields().stream()
+        schemaEntity.setFields(itemSchema.fields().stream()
                 .map(fieldDto -> ItemSchemaFieldEntity.builder()
                         .schema(schemaEntity)
                         .name(fieldDto.name())
@@ -83,18 +83,18 @@ public class ItemSchemaManagementServiceImpl implements IItemSchemaManagementSer
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public ItemSchema updateSchema(@NotNull Long id, @Valid ItemSchemaDto itemSchemaDto)
+    public ItemSchema updateSchema(@Valid @ValidToUpdate ItemSchema itemSchema)
     {
-        ItemSchemaEntity schemaEntity = itemSchemaRepository.findById(id)
-                .orElseThrow(() -> new ElementNotFoundException(ItemSchemaDto.class.getSimpleName(), "externalId:" + itemSchemaDto.externalId()));
+        ItemSchemaEntity schemaEntity = itemSchemaRepository.findById(itemSchema.id())
+                .orElseThrow(() -> new ElementNotFoundException(ItemSchema.class.getSimpleName(), "externalId:" + itemSchema.externalId()));
 
-        schemaEntity.setExternalId(itemSchemaDto.externalId());
-        schemaEntity.setName(itemSchemaDto.name());
+        schemaEntity.setExternalId(itemSchema.externalId());
+        schemaEntity.setName(itemSchema.name());
 
         Map<String, ItemSchemaFieldEntity> idxCurrentEntityFields = schemaEntity.getFields().stream()
                 .collect(Collectors.toMap(ItemSchemaFieldEntity::getName, Function.identity()));
 
-        itemSchemaDto.fields()
+        itemSchema.fields()
                 .forEach(fieldDto -> {
                     ItemSchemaFieldEntity fieldEntity = idxCurrentEntityFields.get(fieldDto.name());
                     if(fieldEntity==null) {
