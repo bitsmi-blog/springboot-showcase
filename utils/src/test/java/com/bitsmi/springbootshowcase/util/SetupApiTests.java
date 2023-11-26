@@ -15,9 +15,9 @@ import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
 @Tag("ManualTest")
-public class SetupTests
+public class SetupApiTests
 {
-    private static final Logger LOGGER = LoggerFactory.getLogger(SetupTests.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SetupApiTests.class);
 
     private static final String HOST = "http://localhost:8080";
     public static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
@@ -38,20 +38,6 @@ public class SetupTests
         Request request = new Request.Builder()
                 .url(HOST + "/api/setup/user")
                 .post(body)
-                .build();
-
-        try(Response response = client.newCall(request).execute()) {
-            var responseBody = response.body()!=null ? response.body().string() : null;
-            LOGGER.info("status: {}; message: {}", response.code(), responseBody);
-        }
-    }
-
-    @Test
-    public void applicationHello() throws Exception
-    {
-        Request request = new Request.Builder()
-                .url(HOST + "/api/application/hello")
-                .get()
                 .build();
 
         try(Response response = client.newCall(request).execute()) {
