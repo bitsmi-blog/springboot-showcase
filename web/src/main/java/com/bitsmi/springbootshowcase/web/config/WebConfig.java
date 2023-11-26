@@ -1,4 +1,4 @@
-package com.bitsmi.springbootshowcase.web.application.config;
+package com.bitsmi.springbootshowcase.web.config;
 
 import org.apache.catalina.connector.Connector;
 import org.springframework.boot.autoconfigure.web.servlet.TomcatServletWebServerFactoryCustomizer;

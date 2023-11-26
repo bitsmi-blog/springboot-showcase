@@ -1,4 +1,4 @@
-package com.bitsmi.springbootshowcase.web.application.config;
+package com.bitsmi.springbootshowcase.web.config;
 
 import com.bitsmi.springbootshowcase.core.ICorePackage;
 import com.bitsmi.springbootshowcase.core.common.config.CoreConfig;
