@@ -1,18 +1,18 @@
 package com.bitsmi.springbootshowcase.util;
 
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
+import java.util.Map;
 
 @Tag("ManualTest")
 public class SetupApiTests
@@ -20,47 +20,42 @@ public class SetupApiTests
     private static final Logger LOGGER = LoggerFactory.getLogger(SetupApiTests.class);
 
     private static final String HOST = "http://localhost:8080";
-    public static final MediaType JSON = MediaType.get("application/json; charset=utf-8");
 
-    private OkHttpClient client;
+    private WebClient client;
 
     @Test
-    public void createAdminUser() throws Exception
+    public void createAdminUser()
     {
-        String payload = """
-                    {
-                        "username": "admin",
-                        "password": "test"
-                    }
-                """;
+        Map<String, String> payload = Map.ofEntries(
+                Map.entry("username", "admin"),
+                Map.entry("password", "test")
+        );
 
-        RequestBody body = RequestBody.create(payload, JSON);
-        Request request = new Request.Builder()
-                .url(HOST + "/api/setup/user")
-                .post(body)
-                .build();
+        ResponseEntity<Void> response = client.post()
+                .uri("/api/setup/user")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(payload)
+                .retrieve()
+                .onRawStatus(httpStatusCode -> httpStatusCode==404, clientResponse -> Mono.empty())
+                .toBodilessEntity()
+                .block();
 
-        try(Response response = client.newCall(request).execute()) {
-            var responseBody = response.body()!=null ? response.body().string() : null;
-            LOGGER.info("status: {}; message: {}", response.code(), responseBody);
-        }
+        LOGGER.info("status: {}", response.getStatusCode().value());
     }
 
     @Test
-    public void auth() throws Exception
+    public void auth()
     {
         var basicAuth = new String(Base64.getEncoder().encode("admin:test".getBytes(StandardCharsets.UTF_8)));
 
-        Request request = new Request.Builder()
-                .url(HOST + "/auth")
+        ResponseEntity<String> response = client.post()
+                .uri("/auth")
                 .header("Authorization", "Basic " + basicAuth)
-                .post(RequestBody.create(null, ""))
-                .build();
+                .retrieve()
+                .toEntity(String.class)
+                .block();
 
-        try(Response response = client.newCall(request).execute()) {
-            var responseBody = response.body()!=null ? response.body().string() : null;
-            LOGGER.info("status: {}; message: {}", response.code(), responseBody);
-        }
+        LOGGER.info("status: {}; message: {}", response.getStatusCode().value(), response.getBody());
     }
 
     /*---------------------------*
@@ -69,6 +64,8 @@ public class SetupApiTests
     @BeforeEach
     public void setUp()
     {
-        client = new OkHttpClient();
+        client = WebClient.builder()
+                .baseUrl(HOST)
+                .build();
     }
 }

@@ -12,10 +12,9 @@
 	</parent>
 
 	<dependencies>
-		<!-- From springboot dependencies -->
 		<dependency>
-			<groupId>com.squareup.okhttp3</groupId>
-			<artifactId>okhttp</artifactId>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-webflux</artifactId>
 		</dependency>
 
 		<dependency>
