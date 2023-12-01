@@ -13,6 +13,9 @@ import com.bitsmi.springbootshowcase.core.content.repository.IItemSchemaReposito
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
@@ -33,12 +36,26 @@ public class ItemSchemaManagementServiceImpl implements IItemSchemaManagementSer
     private IItemSchemaMapper itemSchemaMapper;
 
     @Override
-    public List<ItemSchema> findAllSchemas()
+    public Page<ItemSchema> findAllSchemas(@NotNull Pageable pageable)
     {
-        return itemSchemaRepository.findAll()
-                .stream()
+        Page<ItemSchemaEntity> entityPage = itemSchemaRepository.findAll(pageable);
+        return mapPage(entityPage);
+    }
+
+    @Override
+    public Page<ItemSchema> findSchemasByNameStartWith(@NotNull String namePrefix, @NotNull Pageable pageable)
+    {
+        Page<ItemSchemaEntity> entityPage = itemSchemaRepository.findByNameStartsWithIgnoreCase(namePrefix, pageable);
+        return mapPage(entityPage);
+    }
+
+    private Page<ItemSchema> mapPage(Page<ItemSchemaEntity> entityPage)
+    {
+        List<ItemSchema> results = entityPage.stream()
                 .map(itemSchemaMapper::fromEntity)
                 .toList();
+
+        return new PageImpl<>(results, entityPage.getPageable(), entityPage.getTotalElements());
     }
 
     @Override
@@ -52,6 +69,13 @@ public class ItemSchemaManagementServiceImpl implements IItemSchemaManagementSer
     public Optional<ItemSchema> findSchemaByExternalId(@NotNull String externalId)
     {
         return itemSchemaRepository.findByExternalId(externalId)
+                .map(itemSchemaMapper::fromEntity);
+    }
+
+    @Override
+    public Optional<ItemSchema> findSchemaByName(@NotNull String name)
+    {
+        return itemSchemaRepository.findByName(name)
                 .map(itemSchemaMapper::fromEntity);
     }
 

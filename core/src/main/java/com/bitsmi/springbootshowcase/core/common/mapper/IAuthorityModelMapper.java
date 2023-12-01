@@ -4,8 +4,8 @@ import com.bitsmi.springbootshowcase.core.common.model.Authority;
 import com.bitsmi.springbootshowcase.core.common.entity.AuthorityEntity;
 import org.mapstruct.Mapper;
 
-@Mapper(componentModel = "spring", implementationName = "AuthorityMapperImpl")
-public interface IAuthorityMapper
+@Mapper(componentModel = "spring", implementationName = "AuthorityModelMapperImpl")
+public interface IAuthorityModelMapper
 {
     Authority fromEntity(AuthorityEntity entity);
 }

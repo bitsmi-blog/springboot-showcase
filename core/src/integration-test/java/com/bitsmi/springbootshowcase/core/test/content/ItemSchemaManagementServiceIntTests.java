@@ -14,7 +14,6 @@ import com.bitsmi.springbootshowcase.core.test.util.ServiceIntegrationTest;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -22,6 +21,11 @@ import org.springframework.boot.autoconfigure.validation.ValidationAutoConfigura
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Order;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.test.context.TestPropertySource;
 
@@ -38,7 +42,6 @@ import static org.assertj.core.api.Assertions.catchThrowableOfType;
 @TestPropertySource(properties = {
         "spring.liquibase.change-log=classpath:db/changelogs/core/test/content/item_schema_management_service_tests.xml"
 })
-@Tag("IntegrationTest")
 public class ItemSchemaManagementServiceIntTests
 {
     @Autowired
@@ -51,16 +54,54 @@ public class ItemSchemaManagementServiceIntTests
     @DisplayName("findSchemaById should return all schemas data")
     public void findAllSchemasTest1()
     {
-        final List<ItemSchema> schemas = itemSchemaManagementService.findAllSchemas();
+        final List<ItemSchema> schemas = itemSchemaManagementService.findAllSchemas(Pageable.unpaged())
+                .toList();
 
-        assertThat(schemas).hasSize(1).allSatisfy(schema -> {
-            assertThat(schema.id()).isEqualTo(1001L);
-            assertThat(schema.externalId()).isEqualTo("schema-1");
-            assertThat(schema.name()).isEqualTo("Dummy Schema 1");
+        assertThat(schemas).hasSize(11).allSatisfy(schema -> {
+            assertThat(schema.id()).isNotNull();
+            assertThat(schema.externalId()).startsWith("schema-");
+            assertThat(schema.name()).startsWith("Dummy Schema");
             assertThat(schema.creationDate()).isEqualTo(LocalDateTime.of(2023, 1, 1, 0, 0));
             assertThat(schema.lastUpdated()).isEqualTo(LocalDateTime.of(2023, 1, 1, 0, 0));
             assertThat(schema.fields()).hasSize(2);
         });
+    }
+
+    /*---------------------------*
+     * FIND SCHEMAS BY NAME
+     *---------------------------*/
+    @Test
+    @DisplayName("findSchemasByNameStartWith should return first page results")
+    public void findSchemasByNameStartWithTest1()
+    {
+        // Case in-sensitive
+        Page<ItemSchema> schemasPage = itemSchemaManagementService.findSchemasByNameStartWith("dummy",
+                PageRequest.of(0, 5, Sort.by(Order.desc("externalId"))));
+
+        assertThat(schemasPage.getTotalPages()).isEqualTo(3);
+        assertThat(schemasPage.getTotalElements()).isEqualTo(11);
+        assertThat(schemasPage.getNumberOfElements()).isEqualTo(5);
+        assertThat(schemasPage.hasPrevious()).isFalse();
+        assertThat(schemasPage.hasNext()).isTrue();
+        assertThat(schemasPage.stream()
+                    .map(ItemSchema::externalId)
+                    .toList())
+                .containsExactly("schema-9", "schema-8", "schema-7", "schema-6", "schema-5");
+
+    }
+
+    @Test
+    @DisplayName("findSchemasByNameStartWith should return last page results")
+    public void findSchemasByNameStartWithTest2()
+    {
+        // Case in-sensitive
+        Page<ItemSchema> schemasPage = itemSchemaManagementService.findSchemasByNameStartWith("DUMMY", PageRequest.of(2, 5));
+
+        assertThat(schemasPage.getTotalPages()).isEqualTo(3);
+        assertThat(schemasPage.getTotalElements()).isEqualTo(11);
+        assertThat(schemasPage.getNumberOfElements()).isEqualTo(1);
+        assertThat(schemasPage.hasPrevious()).isTrue();
+        assertThat(schemasPage.hasNext()).isFalse();
     }
 
     /*---------------------------*

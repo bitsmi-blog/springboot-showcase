@@ -5,12 +5,12 @@ import com.bitsmi.springbootshowcase.core.common.entity.UserGroupEntity;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring",
-        implementationName = "UserGroupMapperImpl",
+        implementationName = "UserGroupModelMapperImpl",
         uses = {
-            IAuthorityMapper.class
+            IAuthorityModelMapper.class
         }
 )
-public interface IUserGroupMapper
+public interface IUserGroupModelMapper
 {
     UserGroup fromEntity(UserGroupEntity entity);
 }

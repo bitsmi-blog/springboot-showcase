@@ -3,7 +3,7 @@ package com.bitsmi.springbootshowcase.core.common.impl;
 import com.bitsmi.springbootshowcase.core.common.IUserManagementService;
 import com.bitsmi.springbootshowcase.core.common.model.User;
 import com.bitsmi.springbootshowcase.core.common.entity.UserEntity;
-import com.bitsmi.springbootshowcase.core.common.mapper.IUserMapper;
+import com.bitsmi.springbootshowcase.core.common.mapper.IUserModelMapper;
 import com.bitsmi.springbootshowcase.core.common.repository.IUserGroupRepository;
 import com.bitsmi.springbootshowcase.core.common.repository.IUserRepository;
 import jakarta.validation.constraints.NotNull;
@@ -22,7 +22,7 @@ public class UserManagementServiceImpl implements IUserManagementService
     @Autowired
     private IUserGroupRepository userGroupRepository;
     @Autowired
-    private IUserMapper userMapper;
+    private IUserModelMapper userMapper;
 
     @Override
     public boolean existUsers()

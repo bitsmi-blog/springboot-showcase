@@ -1,5 +1,6 @@
 package com.bitsmi.springbootshowcase.core.test.util;
 
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.autoconfigure.core.AutoConfigureCache;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -32,6 +33,7 @@ import java.lang.annotation.Target;
 @AutoConfigureDataJpa
 @AutoConfigureTestDatabase
 @AutoConfigureTestEntityManager
+@Tag("IntegrationTest")
 public @interface ServiceIntegrationTest
 {
 

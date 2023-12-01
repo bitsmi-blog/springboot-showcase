@@ -78,6 +78,14 @@
 		</dependency>
 
 		<!-- TEST -->
+		<dependency>
+			<groupId>com.bitsmi.springboot-showcase</groupId>
+			<artifactId>springboot-showcase-core</artifactId>
+			<classifier>tests</classifier>
+			<type>test-jar</type>
+			<version>1.0.0-SNAPSHOT</version>
+			<scope>test</scope>
+		</dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>

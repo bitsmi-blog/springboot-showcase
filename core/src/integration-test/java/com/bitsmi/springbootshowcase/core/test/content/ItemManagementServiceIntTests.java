@@ -28,7 +28,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 @TestPropertySource(properties = {
         "spring.liquibase.change-log=classpath:db/changelogs/core/test/content/item_management_service_tests.xml"
 })
-@org.junit.jupiter.api.Tag("IntegrationTest")
 public class ItemManagementServiceIntTests
 {
     @Autowired
