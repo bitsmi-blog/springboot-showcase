@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.17.xsd">
+
+    <changeSet author="aarchilla (generated)" id="USER_BASE_1">
+        <loadData file="db/changelogs/core/test/common/user_base.csv"
+                  relativeToChangelogFile="false"
+                  encoding="UTF-8"
+                  quotchar="'"
+                  separator=";"
+                  tableName="APP_USER">
+            <column header="ID" name="ID" type="NUMERIC"/>
+            <column header="VERSION" name="VERSION" type="NUMERIC"/>
+            <column header="USERNAME" name="USERNAME" type="STRING"/>
+            <column header="PASSWORD" name="PASSWORD" type="STRING"/>
+            <column header="COMPLETE_NAME" name="COMPLETE_NAME" type="STRING"/>
+            <column header="ACTIVE" name="ACTIVE" type="BOOLEAN"/>
+            <column header="CREATION_DATE" name="CREATION_DATE" type="TIMESTAMP"/>
+            <column header="LAST_UPDATED" name="LAST_UPDATED" type="TIMESTAMP"/>
+        </loadData>
+    </changeSet>
+
+</databaseChangeLog>

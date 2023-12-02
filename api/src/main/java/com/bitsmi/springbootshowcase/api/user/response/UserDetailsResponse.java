@@ -6,7 +6,8 @@ import java.util.Objects;
 
 @Builder(toBuilder = true, builderClassName = "Builder")
 public record UserDetailsResponse(
-        String username
+        String username,
+        String completeName
 )
 {
     @Override

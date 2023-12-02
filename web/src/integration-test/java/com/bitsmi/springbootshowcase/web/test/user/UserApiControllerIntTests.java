@@ -41,10 +41,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ContextConfiguration(loader = AnnotationConfigWebContextLoader.class)
 @AutoConfigureMockMvc
 @AutoConfigureTestDatabase
-@TestPropertySource({
+@TestPropertySource(locations = {
         "classpath:application.properties",
         "file:./application-test.properties"
-})
+    },
+    properties = {
+        "spring.liquibase.change-log=classpath:db/changelogs/core/test/common/user_management_service_tests.xml"
+    }
+)
 @WithUserDetails("john.doe")
 @Tag("IntegrationTest")
 public class UserApiControllerIntTests
@@ -64,9 +68,9 @@ public class UserApiControllerIntTests
     @DisplayName("Get user details should return user details when user is logged")
     public void getUserDetailsTest1() throws Exception
     {
-        final String username = "john.doe";
         final UserDetailsResponse expectedResponse = UserDetailsResponse.builder()
-                .username(username)
+                .username("john.doe")
+                .completeName("John Doe")
                 .build();
 
         this.mockMvc.perform(get("/api/user/details")

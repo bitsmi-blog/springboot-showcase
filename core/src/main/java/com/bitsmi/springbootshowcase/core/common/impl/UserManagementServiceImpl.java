@@ -1,6 +1,7 @@
 package com.bitsmi.springbootshowcase.core.common.impl;
 
 import com.bitsmi.springbootshowcase.core.common.IUserManagementService;
+import com.bitsmi.springbootshowcase.core.common.entity.IUserSummaryProjection;
 import com.bitsmi.springbootshowcase.core.common.model.User;
 import com.bitsmi.springbootshowcase.core.common.entity.UserEntity;
 import com.bitsmi.springbootshowcase.core.common.mapper.IUserModelMapper;
@@ -35,6 +36,12 @@ public class UserManagementServiceImpl implements IUserManagementService
     {
         return userRepository.findByUsername(username)
                 .map(userMapper::fromEntity);
+    }
+
+    @Override
+    public Optional<IUserSummaryProjection> findUserSummaryByUsername(@NotNull String username)
+    {
+        return userRepository.findProjectedByUsername(username);
     }
 
     @Override
