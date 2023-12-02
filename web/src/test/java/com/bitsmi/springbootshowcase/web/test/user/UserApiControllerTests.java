@@ -2,7 +2,7 @@ package com.bitsmi.springbootshowcase.web.test.user;
 
 import com.bitsmi.springbootshowcase.api.user.response.UserDetailsResponse;
 import com.bitsmi.springbootshowcase.core.common.IUserManagementService;
-import com.bitsmi.springbootshowcase.core.common.entity.IUserSummaryProjection;
+import com.bitsmi.springbootshowcase.core.common.model.UserSummary;
 import com.bitsmi.springbootshowcase.web.common.service.IAuthenticationPrincipalService;
 import com.bitsmi.springbootshowcase.web.user.controller.UserApiControllerImpl;
 import org.junit.jupiter.api.DisplayName;
@@ -38,9 +38,11 @@ public class UserApiControllerTests
         final String expectedCompleteName = "John Doe";
 
         final UserDetails userDetails = mock(UserDetails.class);
-        final IUserSummaryProjection userSummary = mock(IUserSummaryProjection.class);
+        final UserSummary userSummary = UserSummary.builder()
+                .username(expectedUsername)
+                .completeName(expectedCompleteName)
+                .build();
         when(userDetails.getUsername()).thenReturn(expectedUsername);
-        when(userSummary.getCompleteName()).thenReturn(expectedCompleteName);
         when(authenticationPrincipalService.getAuthenticationPrincipal())
                 .thenReturn(userDetails);
         when(userManagementService.findUserSummaryByUsername(expectedUsername)).thenReturn(Optional.of(userSummary));

@@ -1,10 +1,11 @@
 package com.bitsmi.springbootshowcase.core.common.impl;
 
 import com.bitsmi.springbootshowcase.core.common.IUserManagementService;
-import com.bitsmi.springbootshowcase.core.common.entity.IUserSummaryProjection;
-import com.bitsmi.springbootshowcase.core.common.model.User;
 import com.bitsmi.springbootshowcase.core.common.entity.UserEntity;
 import com.bitsmi.springbootshowcase.core.common.mapper.IUserModelMapper;
+import com.bitsmi.springbootshowcase.core.common.mapper.IUserSummaryModelMapper;
+import com.bitsmi.springbootshowcase.core.common.model.User;
+import com.bitsmi.springbootshowcase.core.common.model.UserSummary;
 import com.bitsmi.springbootshowcase.core.common.repository.IUserGroupRepository;
 import com.bitsmi.springbootshowcase.core.common.repository.IUserRepository;
 import jakarta.validation.constraints.NotNull;
@@ -24,6 +25,8 @@ public class UserManagementServiceImpl implements IUserManagementService
     private IUserGroupRepository userGroupRepository;
     @Autowired
     private IUserModelMapper userMapper;
+    @Autowired
+    private IUserSummaryModelMapper userSummaryMapper;
 
     @Override
     public boolean existUsers()
@@ -39,9 +42,10 @@ public class UserManagementServiceImpl implements IUserManagementService
     }
 
     @Override
-    public Optional<IUserSummaryProjection> findUserSummaryByUsername(@NotNull String username)
+    public Optional<UserSummary> findUserSummaryByUsername(@NotNull String username)
     {
-        return userRepository.findProjectedByUsername(username);
+        return userRepository.findProjectedByUsername(username)
+                .map(userSummaryMapper::fromProjection);
     }
 
     @Override
