@@ -4,18 +4,14 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.bitsmi.springbootshowcase.api.user.response.UserDetailsResponse;
 import com.bitsmi.springbootshowcase.web.IMainPackage;
+import com.bitsmi.springbootshowcase.web.test.util.ControllerIntegrationTest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Tags;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -25,11 +21,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.FilterChainProxy;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.context.web.AnnotationConfigWebContextLoader;
-import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
@@ -46,16 +38,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@ExtendWith({SpringExtension.class})
-@WebAppConfiguration
-@AutoConfigureMockMvc
-@ContextConfiguration(loader = AnnotationConfigWebContextLoader.class)
-@AutoConfigureTestDatabase
-@TestPropertySource({
-        "classpath:application.properties",
-        "file:./application-test.properties"
-})
-@Tag("IntegrationTest")
+@ControllerIntegrationTest
+@TestPropertySource(
+        properties = {
+                "spring.liquibase.change-log=classpath:db/changelogs/core/test/common/user_management_service_tests.xml"
+        }
+)
 public class JwtAuthIntTests
 {
     @Autowired
@@ -117,6 +105,7 @@ public class JwtAuthIntTests
 
         final UserDetailsResponse expectedResponse = UserDetailsResponse.builder()
                 .username(expectedUsername)
+                .completeName("John Doe")
                 .build();
 
         this.mockMvc.perform(get("/api/user/details")

@@ -40,7 +40,6 @@ public class UserApiControllerTests
         final UserDetails userDetails = mock(UserDetails.class);
         final IUserSummaryProjection userSummary = mock(IUserSummaryProjection.class);
         when(userDetails.getUsername()).thenReturn(expectedUsername);
-        when(userSummary.getUsername()).thenReturn(expectedUsername);
         when(userSummary.getCompleteName()).thenReturn(expectedCompleteName);
         when(authenticationPrincipalService.getAuthenticationPrincipal())
                 .thenReturn(userDetails);
@@ -50,21 +49,5 @@ public class UserApiControllerTests
 
         assertThat(response.username()).isEqualTo(expectedUsername);
         assertThat(response.completeName()).isEqualTo(expectedCompleteName);
-    }
-
-    @Test
-    @DisplayName("getAdminDetails should return current username")
-    public void getAdminDetailsTest1()
-    {
-        final String expectedUsername = "admin";
-
-        final UserDetails userDetails = mock(UserDetails.class);
-        when(userDetails.getUsername()).thenReturn(expectedUsername);
-        when(authenticationPrincipalService.getAuthenticationPrincipal())
-                .thenReturn(userDetails);
-
-        UserDetailsResponse response = userApiController.getDetails();
-
-        assertThat(response.username()).isEqualTo(expectedUsername);
     }
 }

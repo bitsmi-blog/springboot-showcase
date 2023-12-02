@@ -2,15 +2,12 @@ package com.bitsmi.springbootshowcase.web.test.user;
 
 import com.bitsmi.springbootshowcase.api.user.response.UserDetailsResponse;
 import com.bitsmi.springbootshowcase.web.IMainPackage;
+import com.bitsmi.springbootshowcase.web.test.util.ControllerIntegrationTest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -22,11 +19,7 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.security.web.FilterChainProxy;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.context.web.AnnotationConfigWebContextLoader;
-import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
@@ -36,21 +29,13 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@ExtendWith({SpringExtension.class})
-@WebAppConfiguration
-@ContextConfiguration(loader = AnnotationConfigWebContextLoader.class)
-@AutoConfigureMockMvc
-@AutoConfigureTestDatabase
-@TestPropertySource(locations = {
-        "classpath:application.properties",
-        "file:./application-test.properties"
-    },
+@ControllerIntegrationTest
+@TestPropertySource(
     properties = {
         "spring.liquibase.change-log=classpath:db/changelogs/core/test/common/user_management_service_tests.xml"
     }
 )
 @WithUserDetails("john.doe")
-@Tag("IntegrationTest")
 public class UserApiControllerIntTests
 {
     @Autowired
