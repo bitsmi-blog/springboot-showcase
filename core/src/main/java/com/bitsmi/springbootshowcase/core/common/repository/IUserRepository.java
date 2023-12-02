@@ -10,5 +10,5 @@ public interface IUserRepository extends JpaRepository<UserEntity, Long>
 {
     Optional<UserEntity> findByUsername(String username);
 
-    Optional<IUserSummaryProjection> findProjectedByUsername(String username);
+    Optional<IUserSummaryProjection> findSummaryProjectionByUsername(String username);
 }

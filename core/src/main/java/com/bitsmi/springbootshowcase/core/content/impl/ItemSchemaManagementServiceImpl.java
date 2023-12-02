@@ -8,7 +8,9 @@ import com.bitsmi.springbootshowcase.core.content.entity.DataType;
 import com.bitsmi.springbootshowcase.core.content.entity.ItemSchemaEntity;
 import com.bitsmi.springbootshowcase.core.content.entity.ItemSchemaFieldEntity;
 import com.bitsmi.springbootshowcase.core.content.mapper.IItemSchemaMapper;
+import com.bitsmi.springbootshowcase.core.content.mapper.IItemSchemaSummaryModelMapper;
 import com.bitsmi.springbootshowcase.core.content.model.ItemSchema;
+import com.bitsmi.springbootshowcase.core.content.model.ItemSchemaSummary;
 import com.bitsmi.springbootshowcase.core.content.repository.IItemSchemaRepository;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -34,6 +36,8 @@ public class ItemSchemaManagementServiceImpl implements IItemSchemaManagementSer
     private IItemSchemaRepository itemSchemaRepository;
     @Autowired
     private IItemSchemaMapper itemSchemaMapper;
+    @Autowired
+    private IItemSchemaSummaryModelMapper itemSchemaSummaryMapper;
 
     @Override
     public Page<ItemSchema> findAllSchemas(@NotNull Pageable pageable)
@@ -77,6 +81,13 @@ public class ItemSchemaManagementServiceImpl implements IItemSchemaManagementSer
     {
         return itemSchemaRepository.findByName(name)
                 .map(itemSchemaMapper::fromEntity);
+    }
+
+    @Override
+    public Optional<ItemSchemaSummary> findSchemaSummaryByExternalId(@NotNull String externalId)
+    {
+        return itemSchemaRepository.findSummaryProjectionByExternalId(externalId)
+                .map(itemSchemaSummaryMapper::fromProjection);
     }
 
     @Transactional(rollbackFor = Exception.class)

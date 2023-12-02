@@ -7,6 +7,7 @@ import com.bitsmi.springbootshowcase.core.content.entity.ItemSchemaEntity;
 import com.bitsmi.springbootshowcase.core.content.model.DataType;
 import com.bitsmi.springbootshowcase.core.content.model.ItemSchema;
 import com.bitsmi.springbootshowcase.core.content.model.ItemSchemaField;
+import com.bitsmi.springbootshowcase.core.content.model.ItemSchemaSummary;
 import com.bitsmi.springbootshowcase.core.content.repository.IItemSchemaRepository;
 import com.bitsmi.springbootshowcase.core.test.content.support.ItemSchemaFieldTestDataBuilder;
 import com.bitsmi.springbootshowcase.core.test.content.support.ItemSchemaTestDataBuilder;
@@ -130,6 +131,22 @@ public class ItemSchemaManagementServiceIntTests
         final Optional<ItemSchema> optSchema = itemSchemaManagementService.findSchemaById(9999L);
 
         assertThat(optSchema).isNotPresent();
+    }
+
+    /*---------------------------*
+     * FIND SUMMARY
+     *---------------------------*/
+    @Test
+    @DisplayName("findSchemaSummaryByExternalId should return data given id when it exists")
+    public void findSchemaSummaryByExternalIdTest1()
+    {
+        final Optional<ItemSchemaSummary> optSchema = itemSchemaManagementService.findSchemaSummaryByExternalId("schema-1");
+
+        assertThat(optSchema).isPresent().hasValueSatisfying(schema -> {
+            assertThat(schema.externalId()).isEqualTo("schema-1");
+            assertThat(schema.name()).isEqualTo("Dummy Schema 1");
+            assertThat(schema.fieldsCount()).isEqualTo(2);
+        });
     }
 
     /*---------------------------*

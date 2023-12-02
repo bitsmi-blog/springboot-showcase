@@ -44,7 +44,7 @@ public class UserManagementServiceImpl implements IUserManagementService
     @Override
     public Optional<UserSummary> findUserSummaryByUsername(@NotNull String username)
     {
-        return userRepository.findProjectedByUsername(username)
+        return userRepository.findSummaryProjectionByUsername(username)
                 .map(userSummaryMapper::fromProjection);
     }
 

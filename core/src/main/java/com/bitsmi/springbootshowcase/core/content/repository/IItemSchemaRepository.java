@@ -1,9 +1,12 @@
 package com.bitsmi.springbootshowcase.core.content.repository;
 
+import com.bitsmi.springbootshowcase.core.content.entity.IItemSchemaSummaryProjection;
 import com.bitsmi.springbootshowcase.core.content.entity.ItemSchemaEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.Optional;
 
@@ -29,6 +32,14 @@ public interface IItemSchemaRepository extends JpaRepository<ItemSchemaEntity, L
     Optional<ItemSchemaEntity> findByExternalId(String externalId);
 
     Optional<ItemSchemaEntity> findByName(String name);
+
+    @Query("""
+            SELECT s.externalId as externalId, s.name as name, count(f) as fieldsCount
+            FROM ItemSchemaEntity s
+                JOIN s.fields f
+            WHERE s.externalId = :externalId
+            """)
+    Optional<IItemSchemaSummaryProjection> findSummaryProjectionByExternalId(@Param("externalId") String externalId);
 
     boolean existsByExternalId(String externalId);
 }
