@@ -10,7 +10,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.Optional;
 
-public interface IItemSchemaRepository extends JpaRepository<ItemSchemaEntity, Long>
+public interface IItemSchemaRepository extends JpaRepository<ItemSchemaEntity, Long>, ItemSchemaExtRepository
 {
     /**
      * name like 'namePrefix%'

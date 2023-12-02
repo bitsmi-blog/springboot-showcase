@@ -149,6 +149,19 @@ public class ItemSchemaManagementServiceIntTests
         });
     }
 
+    @Test
+    @DisplayName("findSchemaSummaryUsingQueryByExternalId should return data given id when it exists")
+    public void findSchemaSummaryUsingQueryByExternalIdTest1()
+    {
+        final Optional<ItemSchemaSummary> optSchema = itemSchemaManagementService.findSchemaSummaryUsingQueryByExternalId("schema-1");
+
+        assertThat(optSchema).isPresent().hasValueSatisfying(schema -> {
+            assertThat(schema.externalId()).isEqualTo("schema-1");
+            assertThat(schema.name()).isEqualTo("Dummy Schema 1");
+            assertThat(schema.fieldsCount()).isEqualTo(2);
+        });
+    }
+
     /*---------------------------*
      * CREATE SCHEMA
      *---------------------------*/

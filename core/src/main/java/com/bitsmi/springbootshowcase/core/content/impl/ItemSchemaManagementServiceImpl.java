@@ -90,6 +90,13 @@ public class ItemSchemaManagementServiceImpl implements IItemSchemaManagementSer
                 .map(itemSchemaSummaryMapper::fromProjection);
     }
 
+    @Override
+    public Optional<ItemSchemaSummary> findSchemaSummaryUsingQueryByExternalId(@NotNull String externalId)
+    {
+        return itemSchemaRepository.findSummaryProjectionUsingQueryByExternalId(externalId)
+                .map(itemSchemaSummaryMapper::fromProjection);
+    }
+
     @Transactional(rollbackFor = Exception.class)
     @Override
     public ItemSchema createSchema(@Valid ItemSchema itemSchema)

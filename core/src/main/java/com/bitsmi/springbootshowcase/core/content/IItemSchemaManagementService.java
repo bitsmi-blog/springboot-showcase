@@ -20,6 +20,7 @@ public interface IItemSchemaManagementService
     Optional<ItemSchema> findSchemaByName(@NotNull String name);
 
     Optional<ItemSchemaSummary> findSchemaSummaryByExternalId(@NotNull String externalId);
+    Optional<ItemSchemaSummary> findSchemaSummaryUsingQueryByExternalId(@NotNull String externalId);
 
     ItemSchema createSchema(@Valid ItemSchema itemSchema);
     ItemSchema updateSchema(@Valid @ValidToUpdate ItemSchema itemSchema);
