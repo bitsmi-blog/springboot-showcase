@@ -8,5 +8,5 @@ import java.util.Optional;
 @NoRepositoryBean
 public interface ICustomBaseRepository<T, ID> extends JpaRepository<T, ID>
 {
-    Optional<T> findThroughExternalId(String externalId);
+    Optional<T> findByField(String fieldName, Object value);
 }

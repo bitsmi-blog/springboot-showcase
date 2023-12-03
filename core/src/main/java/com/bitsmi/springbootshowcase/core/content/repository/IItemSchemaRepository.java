@@ -1,8 +1,8 @@
 package com.bitsmi.springbootshowcase.core.content.repository;
 
 import com.bitsmi.springbootshowcase.core.common.repository.ICustomBaseRepository;
-import com.bitsmi.springbootshowcase.core.content.projection.IItemSchemaSummaryProjection;
 import com.bitsmi.springbootshowcase.core.content.entity.ItemSchemaEntity;
+import com.bitsmi.springbootshowcase.core.content.projection.IItemSchemaSummaryProjection;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
@@ -10,7 +10,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.Optional;
 
-public interface IItemSchemaRepository extends ICustomBaseRepository<ItemSchemaEntity, Long>, ItemSchemaExtRepository
+public interface IItemSchemaRepository extends ICustomBaseRepository<ItemSchemaEntity, Long>, IExternalIdSupportRepository, ItemSchemaExtRepository
 {
     /**
      * name like 'namePrefix%'
@@ -30,6 +30,11 @@ public interface IItemSchemaRepository extends ICustomBaseRepository<ItemSchemaE
     Page<ItemSchemaEntity> findByNameLikeIgnoreCase(String expression, Pageable pageable);
 
     Optional<ItemSchemaEntity> findByName(String name);
+
+    default Optional<ItemSchemaEntity> findThroughExternalId(String externalId)
+    {
+        return this.findThroughExternalId(ItemSchemaEntity.class, externalId);
+    }
 
     @Query("""
             SELECT s.externalId as externalId, s.name as name, count(f) as fieldsCount

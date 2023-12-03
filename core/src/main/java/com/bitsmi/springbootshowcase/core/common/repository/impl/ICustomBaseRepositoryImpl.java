@@ -2,7 +2,6 @@ package com.bitsmi.springbootshowcase.core.common.repository.impl;
 
 import com.bitsmi.springbootshowcase.core.common.repository.ICustomBaseRepository;
 import jakarta.persistence.EntityManager;
-import org.springframework.data.jpa.repository.query.QueryUtils;
 import org.springframework.data.jpa.repository.support.JpaEntityInformationSupport;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.data.repository.NoRepositoryBean;
@@ -23,13 +22,14 @@ public class ICustomBaseRepositoryImpl<T, ID> extends SimpleJpaRepository<T, ID>
     }
 
     @Override
-    public Optional<T> findThroughExternalId(String externalId)
+    public Optional<T> findByField(String fieldName, Object value)
     {
-        String queryString = QueryUtils.getQueryString("SELECT e FROM %s e WHERE e.externalId = ?1",
-                this.entityInformation.getEntityName());
+        String queryString = String.format("SELECT e FROM %s e WHERE e.%s = ?1",
+                this.entityInformation.getEntityName(),
+                fieldName);
 
         T result = entityManager.createQuery(queryString, this.entityInformation.getJavaType())
-                .setParameter(1, externalId)
+                .setParameter(1, value)
                 .getSingleResult();
 
         return Optional.ofNullable(result);
