@@ -1,6 +1,6 @@
 package com.bitsmi.springbootshowcase.core.common.repository;
 
-import com.bitsmi.springbootshowcase.core.common.entity.IUserSummaryProjection;
+import com.bitsmi.springbootshowcase.core.common.projection.IUserSummaryProjection;
 import com.bitsmi.springbootshowcase.core.common.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 

@@ -1,7 +1,7 @@
 package com.bitsmi.springbootshowcase.core.content.repository.impl;
 
-import com.bitsmi.springbootshowcase.core.content.entity.IItemSchemaSummaryProjection;
-import com.bitsmi.springbootshowcase.core.content.entity.ItemSchemaSummaryProjectionImpl;
+import com.bitsmi.springbootshowcase.core.content.projection.IItemSchemaSummaryProjection;
+import com.bitsmi.springbootshowcase.core.content.projection.ItemSchemaSummaryProjectionImpl;
 import com.bitsmi.springbootshowcase.core.content.repository.ItemSchemaExtRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;

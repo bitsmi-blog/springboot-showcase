@@ -1,4 +1,4 @@
-package com.bitsmi.springbootshowcase.core.content.entity;
+package com.bitsmi.springbootshowcase.core.content.projection;
 
 public interface IItemSchemaSummaryProjection
 {

@@ -7,6 +7,7 @@ import com.bitsmi.springbootshowcase.core.content.IItemSchemaManagementService;
 import com.bitsmi.springbootshowcase.core.content.model.ItemSchema;
 import com.bitsmi.springbootshowcase.web.content.mapper.IItemSchemaApiMapper;
 import io.micrometer.observation.annotation.Observed;
+import jakarta.annotation.Nullable;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

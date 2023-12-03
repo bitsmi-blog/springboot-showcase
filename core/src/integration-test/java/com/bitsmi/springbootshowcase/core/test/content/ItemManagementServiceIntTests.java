@@ -1,5 +1,6 @@
 package com.bitsmi.springbootshowcase.core.test.content;
 
+import com.bitsmi.springbootshowcase.core.common.repository.impl.ICustomBaseRepositoryImpl;
 import com.bitsmi.springbootshowcase.core.content.IItemManagementService;
 import com.bitsmi.springbootshowcase.core.content.entity.ItemEntity;
 import com.bitsmi.springbootshowcase.core.content.model.Item;
@@ -84,7 +85,9 @@ public class ItemManagementServiceIntTests
     @ComponentScan(basePackageClasses = IItemManagementService.class)
     @EnableJpaRepositories(basePackageClasses = {
             IItemRepository.class
-    })
+        },
+        repositoryBaseClass = ICustomBaseRepositoryImpl.class
+    )
     @EntityScan(basePackageClasses = {
             // content
             ItemEntity.class

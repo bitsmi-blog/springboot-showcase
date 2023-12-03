@@ -1,4 +1,4 @@
-package com.bitsmi.springbootshowcase.core.common.entity;
+package com.bitsmi.springbootshowcase.core.common.projection;
 
 public interface IUserSummaryProjection
 {

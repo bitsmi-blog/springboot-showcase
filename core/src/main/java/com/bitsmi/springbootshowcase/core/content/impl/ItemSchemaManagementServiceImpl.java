@@ -72,7 +72,7 @@ public class ItemSchemaManagementServiceImpl implements IItemSchemaManagementSer
     @Override
     public Optional<ItemSchema> findSchemaByExternalId(@NotNull String externalId)
     {
-        return itemSchemaRepository.findByExternalId(externalId)
+        return itemSchemaRepository.findThroughExternalId(externalId)
                 .map(itemSchemaMapper::fromEntity);
     }
 

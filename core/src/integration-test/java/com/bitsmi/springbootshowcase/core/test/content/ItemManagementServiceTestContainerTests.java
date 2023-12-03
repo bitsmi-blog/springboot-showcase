@@ -1,11 +1,13 @@
 package com.bitsmi.springbootshowcase.core.test.content;
 
+import com.bitsmi.springbootshowcase.core.common.repository.impl.ICustomBaseRepositoryImpl;
 import com.bitsmi.springbootshowcase.core.content.IItemManagementService;
 import com.bitsmi.springbootshowcase.core.content.entity.ItemEntity;
 import com.bitsmi.springbootshowcase.core.content.model.Item;
 import com.bitsmi.springbootshowcase.core.content.model.ItemStatus;
 import com.bitsmi.springbootshowcase.core.content.model.Tag;
 import com.bitsmi.springbootshowcase.core.content.repository.IItemRepository;
+import com.bitsmi.springbootshowcase.core.content.repository.IItemSchemaRepository;
 import com.bitsmi.springbootshowcase.core.content.repository.ITagRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -110,7 +112,9 @@ public class ItemManagementServiceTestContainerTests
     @ComponentScan(basePackageClasses = IItemManagementService.class)
     @EnableJpaRepositories(basePackageClasses = {
             IItemRepository.class
-    })
+        },
+        repositoryBaseClass = ICustomBaseRepositoryImpl.class
+    )
     @EntityScan(basePackageClasses = {
             // content
             ItemEntity.class

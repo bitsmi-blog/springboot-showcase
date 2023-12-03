@@ -2,6 +2,7 @@ package com.bitsmi.springbootshowcase.core.test.content;
 
 import com.bitsmi.springbootshowcase.core.common.exception.ElementAlreadyExistsException;
 import com.bitsmi.springbootshowcase.core.common.exception.ElementNotFoundException;
+import com.bitsmi.springbootshowcase.core.common.repository.impl.ICustomBaseRepositoryImpl;
 import com.bitsmi.springbootshowcase.core.content.IItemSchemaManagementService;
 import com.bitsmi.springbootshowcase.core.content.entity.ItemSchemaEntity;
 import com.bitsmi.springbootshowcase.core.content.model.DataType;
@@ -69,7 +70,7 @@ public class ItemSchemaManagementServiceIntTests
     }
 
     /*---------------------------*
-     * FIND SCHEMAS BY NAME
+     * FIND SCHEMAS BY NAME LIKE
      *---------------------------*/
     @Test
     @DisplayName("findSchemasByNameStartWith should return first page results")
@@ -131,6 +132,26 @@ public class ItemSchemaManagementServiceIntTests
         final Optional<ItemSchema> optSchema = itemSchemaManagementService.findSchemaById(9999L);
 
         assertThat(optSchema).isNotPresent();
+    }
+
+    /*---------------------------*
+     * FIND SCHEMAS BY EXTERNAL ID
+     *---------------------------*/
+    @Test
+    @DisplayName("findSchemaByExternalId should return first page results")
+    public void findSchemaByExternalIdTest1()
+    {
+        // Case in-sensitive
+        Optional<ItemSchema> optSchema = itemSchemaManagementService.findSchemaByExternalId("schema-1");
+
+        assertThat(optSchema).isPresent().hasValueSatisfying(schema -> {
+            assertThat(schema.id()).isEqualTo(1001L);
+            assertThat(schema.externalId()).isEqualTo("schema-1");
+            assertThat(schema.name()).isEqualTo("Dummy Schema 1");
+            assertThat(schema.creationDate()).isEqualTo(LocalDateTime.of(2023, 1, 1, 0, 0));
+            assertThat(schema.lastUpdated()).isEqualTo(LocalDateTime.of(2023, 1, 1, 0, 0));
+            assertThat(schema.fields()).hasSize(2);
+        });
     }
 
     /*---------------------------*
@@ -317,7 +338,9 @@ public class ItemSchemaManagementServiceIntTests
     @ComponentScan(basePackageClasses = IItemSchemaManagementService.class)
     @EnableJpaRepositories(basePackageClasses = {
             IItemSchemaRepository.class
-    })
+        },
+        repositoryBaseClass = ICustomBaseRepositoryImpl.class
+    )
     @EntityScan(basePackageClasses = {
             // content
             ItemSchemaEntity.class
