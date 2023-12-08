@@ -1,6 +1,6 @@
-package com.bitsmi.springbootshowcase.core.sample.impl;
+package com.bitsmi.springbootshowcase.core.dummy.impl;
 
-import com.bitsmi.springbootshowcase.core.sample.ISampleService;
+import com.bitsmi.springbootshowcase.core.dummy.ISampleService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 

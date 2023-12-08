@@ -1,6 +1,6 @@
 package com.bitsmi.springbootshowcase.core.test.sample;
 
-import com.bitsmi.springbootshowcase.core.sample.ISampleService;
+import com.bitsmi.springbootshowcase.core.dummy.ISampleService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;

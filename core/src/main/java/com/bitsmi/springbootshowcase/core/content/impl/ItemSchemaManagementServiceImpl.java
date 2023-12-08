@@ -1,5 +1,6 @@
 package com.bitsmi.springbootshowcase.core.content.impl;
 
+import com.bitsmi.springbootshowcase.core.CoreConstants;
 import com.bitsmi.springbootshowcase.core.common.exception.ElementAlreadyExistsException;
 import com.bitsmi.springbootshowcase.core.common.exception.ElementNotFoundException;
 import com.bitsmi.springbootshowcase.core.common.util.ValidToUpdate;
@@ -15,6 +16,9 @@ import com.bitsmi.springbootshowcase.core.content.repository.IItemSchemaReposito
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -39,6 +43,7 @@ public class ItemSchemaManagementServiceImpl implements IItemSchemaManagementSer
     @Autowired
     private IItemSchemaSummaryModelMapper itemSchemaSummaryMapper;
 
+    @Cacheable(cacheNames = CoreConstants.CACHE_ALL_SCHEMAS, key = "#pageable.pageNumber")
     @Override
     public Page<ItemSchema> findAllSchemas(@NotNull Pageable pageable)
     {
@@ -62,6 +67,7 @@ public class ItemSchemaManagementServiceImpl implements IItemSchemaManagementSer
         return new PageImpl<>(results, entityPage.getPageable(), entityPage.getTotalElements());
     }
 
+    @Cacheable(cacheNames = CoreConstants.CACHE_SCHEMA_BY_ID)
     @Override
     public Optional<ItemSchema> findSchemaById(@NotNull Long id)
     {
@@ -98,6 +104,7 @@ public class ItemSchemaManagementServiceImpl implements IItemSchemaManagementSer
     }
 
     @Transactional(rollbackFor = Exception.class)
+    @CacheEvict(cacheNames = CoreConstants.CACHE_ALL_SCHEMAS, allEntries = true)
     @Override
     public ItemSchema createSchema(@Valid ItemSchema itemSchema)
     {
@@ -124,6 +131,10 @@ public class ItemSchemaManagementServiceImpl implements IItemSchemaManagementSer
     }
 
     @Transactional(rollbackFor = Exception.class)
+    @Caching(evict = {
+            @CacheEvict(cacheNames = CoreConstants.CACHE_ALL_SCHEMAS, allEntries = true),
+            @CacheEvict(cacheNames = CoreConstants.CACHE_SCHEMA_BY_ID, key = "#itemSchema.id")
+    })
     @Override
     public ItemSchema updateSchema(@Valid @ValidToUpdate ItemSchema itemSchema)
     {

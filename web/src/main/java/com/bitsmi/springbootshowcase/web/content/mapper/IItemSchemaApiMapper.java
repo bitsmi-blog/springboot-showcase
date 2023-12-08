@@ -1,5 +1,6 @@
 package com.bitsmi.springbootshowcase.web.content.mapper;
 
+import com.bitsmi.springbootshowcase.api.content.request.CreateItemSchemaRequest;
 import com.bitsmi.springbootshowcase.api.content.response.ItemSchema;
 import org.mapstruct.Mapper;
 
@@ -11,5 +12,6 @@ import org.mapstruct.Mapper;
 )
 public interface IItemSchemaApiMapper
 {
-    ItemSchema fromModel(com.bitsmi.springbootshowcase.core.content.model.ItemSchema model);
+    ItemSchema mapResponseFromModel(com.bitsmi.springbootshowcase.core.content.model.ItemSchema model);
+    com.bitsmi.springbootshowcase.core.content.model.ItemSchema mapModelFromRequest(CreateItemSchemaRequest request);
 }

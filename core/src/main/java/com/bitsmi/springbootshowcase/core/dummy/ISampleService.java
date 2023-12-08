@@ -1,4 +1,4 @@
-package com.bitsmi.springbootshowcase.core.sample;
+package com.bitsmi.springbootshowcase.core.dummy;
 
 public interface ISampleService
 {

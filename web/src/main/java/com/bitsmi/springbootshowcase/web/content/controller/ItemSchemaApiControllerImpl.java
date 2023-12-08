@@ -3,19 +3,25 @@ package com.bitsmi.springbootshowcase.web.content.controller;
 import com.bitsmi.springbootshowcase.api.common.request.PageRequest;
 import com.bitsmi.springbootshowcase.api.common.response.PagedResponse;
 import com.bitsmi.springbootshowcase.api.content.IItemSchemaApi;
+import com.bitsmi.springbootshowcase.api.content.request.CreateItemSchemaRequest;
+import com.bitsmi.springbootshowcase.core.common.exception.ElementAlreadyExistsException;
 import com.bitsmi.springbootshowcase.core.content.IItemSchemaManagementService;
 import com.bitsmi.springbootshowcase.core.content.model.ItemSchema;
 import com.bitsmi.springbootshowcase.web.content.mapper.IItemSchemaApiMapper;
 import io.micrometer.observation.annotation.Observed;
-import jakarta.annotation.Nullable;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.HttpClientErrorException;
+
+import java.nio.charset.StandardCharsets;
 
 @RestController
 @RequestMapping(value = "/api/content/schema", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -40,11 +46,28 @@ public class ItemSchemaApiControllerImpl implements IItemSchemaApi
         return PagedResponse.<com.bitsmi.springbootshowcase.api.content.response.ItemSchema>builder()
                 .content(results.getContent()
                         .stream()
-                        .map(itemSchemaMapper::fromModel)
+                        .map(itemSchemaMapper::mapResponseFromModel)
                         .toList())
                 .pageSize(results.getSize())
                 .totalElements(results.getTotalElements())
                 .totalPages(results.getTotalPages())
                 .build();
+    }
+
+    @Override
+    public com.bitsmi.springbootshowcase.api.content.response.ItemSchema createSchema(@RequestBody @Valid CreateItemSchemaRequest request)
+    {
+        try {
+            ItemSchema inputItemSchema = itemSchemaMapper.mapModelFromRequest(request);
+            ItemSchema createdItemSchema = itemSchemaManagementService.createSchema(inputItemSchema);
+            return itemSchemaMapper.mapResponseFromModel(createdItemSchema);
+        }
+        catch(ElementAlreadyExistsException e) {
+            throw HttpClientErrorException.create(HttpStatus.BAD_REQUEST,
+                    e.getMessage(),
+                    null,
+                    null,
+                    StandardCharsets.UTF_8);
+        }
     }
 }
