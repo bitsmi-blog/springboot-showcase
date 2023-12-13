@@ -31,6 +31,10 @@
 			<artifactId>yggdrasil-commons</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>io.micrometer</groupId>
+			<artifactId>micrometer-core</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
 		</dependency>

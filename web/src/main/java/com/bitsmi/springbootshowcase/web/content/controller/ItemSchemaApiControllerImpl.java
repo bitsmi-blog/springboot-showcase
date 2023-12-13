@@ -8,6 +8,8 @@ import com.bitsmi.springbootshowcase.core.common.exception.ElementAlreadyExistsE
 import com.bitsmi.springbootshowcase.core.content.IItemSchemaManagementService;
 import com.bitsmi.springbootshowcase.core.content.model.ItemSchema;
 import com.bitsmi.springbootshowcase.web.content.mapper.IItemSchemaApiMapper;
+import io.micrometer.observation.Observation;
+import io.micrometer.observation.ObservationRegistry;
 import io.micrometer.observation.annotation.Observed;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +35,8 @@ public class ItemSchemaApiControllerImpl implements IItemSchemaApi
     private IItemSchemaManagementService itemSchemaManagementService;
     @Autowired
     private IItemSchemaApiMapper itemSchemaMapper;
+    @Autowired
+    private ObservationRegistry observationRegistry;
 
     @Override
     public PagedResponse<com.bitsmi.springbootshowcase.api.content.response.ItemSchema> getSchemas(@Valid final PageRequest pageRequest)
@@ -60,9 +64,17 @@ public class ItemSchemaApiControllerImpl implements IItemSchemaApi
         try {
             ItemSchema inputItemSchema = itemSchemaMapper.mapModelFromRequest(request);
             ItemSchema createdItemSchema = itemSchemaManagementService.createSchema(inputItemSchema);
+
+            // Event bound to the observation
+            observationRegistry.getCurrentObservation()
+                    .event(Observation.Event.of("user.created.event", "User created event"));
+
+
             return itemSchemaMapper.mapResponseFromModel(createdItemSchema);
         }
         catch(ElementAlreadyExistsException e) {
+            observationRegistry.getCurrentObservation().error(e);
+
             throw HttpClientErrorException.create(HttpStatus.BAD_REQUEST,
                     e.getMessage(),
                     null,
