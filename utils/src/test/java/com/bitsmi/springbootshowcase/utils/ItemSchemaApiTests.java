@@ -1,4 +1,4 @@
-package com.bitsmi.springbootshowcase.util;
+package com.bitsmi.springbootshowcase.utils;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Tag;
