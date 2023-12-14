@@ -49,22 +49,11 @@
             </dependency>
 
             <dependency>
-                <groupId>com.bitsmi.yggdrasil</groupId>
-                <artifactId>yggdrasil-commons</artifactId>
-                <version>2.1.0-FINAL</version>
-            </dependency>
-
-            <dependency>
                 <groupId>com.auth0</groupId>
                 <artifactId>java-jwt</artifactId>
                 <version>4.4.0</version>
             </dependency>
 
-            <dependency>
-                <groupId>org.mapstruct</groupId>
-                <artifactId>mapstruct</artifactId>
-                <version>${mapstruct.version}</version>
-            </dependency>
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
@@ -77,16 +66,15 @@
                 <version>${lombok-mapstruct-binding.version}</version>
                 <scope>provided</scope>
             </dependency>
-
             <dependency>
-                <groupId>com.squareup.retrofit2</groupId>
-                <artifactId>retrofit</artifactId>
-                <version>${retrofit.version}</version>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct</artifactId>
+                <version>${mapstruct.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.squareup.retrofit2</groupId>
-                <artifactId>converter-gson</artifactId>
-                <version>${retrofit.version}</version>
+                <groupId>com.bitsmi.yggdrasil</groupId>
+                <artifactId>yggdrasil-commons</artifactId>
+                <version>2.1.0-FINAL</version>
             </dependency>
 
             <!-- TEST -->
@@ -94,12 +82,6 @@
                 <groupId>org.testcontainers</groupId>
                 <artifactId>junit-jupiter</artifactId>
                 <version>1.19.1</version>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.wiremock</groupId>
-                <artifactId>wiremock</artifactId>
-                <version>3.3.1</version>
                 <scope>test</scope>
             </dependency>
             <dependency>
@@ -113,6 +95,12 @@
                 <artifactId>postgresql</artifactId>
                 <version>42.6.0</version>
                 <scope>runtime</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.wiremock</groupId>
+                <artifactId>wiremock</artifactId>
+                <version>3.3.1</version>
+                <scope>test</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
