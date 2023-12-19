@@ -2,9 +2,9 @@ package com.bitsmi.springbootshowcase.web.auth.controller;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.bitsmi.springbootshowcase.web.config.JWTProperties;
 import io.micrometer.observation.annotation.Observed;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -33,18 +33,16 @@ public class JwtAuthController
     @Autowired
     private UserDetailsService userDetailsService;
 
-    @Value("${jwt.secret}")
-    private byte[] jwtSecret;
-    @Value("${jwt.expirationTime}")
-    private Long expirationTime;
+    @Autowired
+    private JWTProperties jwtProperties;
 
     @PostMapping(produces = MediaType.TEXT_PLAIN_VALUE)
     public ResponseEntity<String> postAuth(@AuthenticationPrincipal UserDetails userDetails)
     {
         String token = JWT.create()
                 .withSubject(userDetails.getUsername())
-                .withExpiresAt(Instant.now().plus(expirationTime, ChronoUnit.MILLIS))
-                .sign(Algorithm.HMAC512(jwtSecret));
+                .withExpiresAt(Instant.now().plus(jwtProperties.getExpirationTime(), ChronoUnit.MILLIS))
+                .sign(Algorithm.HMAC512(jwtProperties.getSecret()));
 
         return ResponseEntity.ok(token);
     }
