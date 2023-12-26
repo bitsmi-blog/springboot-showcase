@@ -26,6 +26,10 @@
                 <configuration>
                     <attributes>
                         <!-- Allow references to source code in the docs -->
+                        <api-sourcedir>${project.basedir}/../api/src</api-sourcedir>
+                        <api-client-openfeign-sourcedir>${project.basedir}/../api-client-openfeign/src</api-client-openfeign-sourcedir>
+                        <core-sourcedir>${project.basedir}/../core/src</core-sourcedir>
+                        <utils-sourcedir>${project.basedir}/../utils/src</utils-sourcedir>
                         <web-sourcedir>${project.basedir}/../web/src</web-sourcedir>
                     </attributes>
                 </configuration>

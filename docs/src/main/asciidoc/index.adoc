@@ -1,5 +1,15 @@
 = SpringBoot Showcase
 
-xref:pages/metrics.adoc[Metrics]
+== Examples index
 
-xref:pages/development.adoc[Development Tips]
+xref:pages/examples/aop.adoc[AOP]
+
+== Spring reference
+
+xref:pages/spring/actuators.adoc[Actuators]
+
+xref:pages/spring/spring_data.adoc[Spring Data]
+
+== Tips & tricks
+
+xref:pages/tips_and_tricks/test_tips.adoc[Test Tips]

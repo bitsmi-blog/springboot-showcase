@@ -48,20 +48,4 @@
             <scope>test</scope>
         </dependency>		
 	</dependencies>
-
-	<build>
-		<plugins>
-			<!-- DOCS -->
-			<plugin>
-				<groupId>org.asciidoctor</groupId>
-				<artifactId>asciidoctor-maven-plugin</artifactId>
-				<configuration>
-					<attributes>
-						<!-- Allow references to source code in the docs -->
-						<web-api-sourcedir>${project.basedir}/../api/src</web-api-sourcedir>
-					</attributes>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
 </project>

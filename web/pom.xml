@@ -175,18 +175,6 @@
 					</execution>
 				</executions>
 			</plugin>
-
-			<!-- DOCS -->
-			<plugin>
-				<groupId>org.asciidoctor</groupId>
-				<artifactId>asciidoctor-maven-plugin</artifactId>
-				<configuration>
-					<attributes>
-						<!-- Allow references to source code in the docs -->
-						<web-sourcedir>${project.basedir}/../web/src</web-sourcedir>
-					</attributes>
-				</configuration>
-			</plugin>
 		</plugins>
 	</build>
 

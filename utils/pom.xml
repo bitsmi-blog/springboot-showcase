@@ -59,18 +59,6 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
 			</plugin>
-
-			<!-- DOCS -->
-			<plugin>
-				<groupId>org.asciidoctor</groupId>
-				<artifactId>asciidoctor-maven-plugin</artifactId>
-				<configuration>
-					<attributes>
-						<!-- Allow references to source code in the docs -->
-						<utils-sourcedir>${project.basedir}/../utils/src</utils-sourcedir>
-					</attributes>
-				</configuration>
-			</plugin>
 		</plugins>
 	</build>
 </project>

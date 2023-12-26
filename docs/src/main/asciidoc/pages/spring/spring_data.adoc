@@ -1,4 +1,4 @@
-# Development Tips
+# Spring Data
 :toc:
 
 ## Spring JPA
@@ -35,64 +35,3 @@
 | False | findByActiveFalse() | ... where x.active = false
 | IgnoreCase | findByFirstnameIgnoreCase | ... where UPPER(x.firstname) = UPPER(?1)
 |===
-
-## Test
-
-### Review database status after test
-
-Change test class annotations.
-
-* Replace `@Rollback` annotation with `@Commit`
-* Remove `@AutoConfigureTestDatabase`
-
-Create `test/resources/application.properties` with the DB connection details:
-
-```properties
-spring.datasource.url=jdbc:h2:file:./test-workspace/workspace/database/store
-spring.datasource.username=sa
-spring.datasource.password=
-spring.datasource.driver-class-name=org.h2.Driver
-```
-
-Add the `@PropertySource` annotation to test configuration pointing to the new `application.properties` file.
-
-Once the test is executed, you can access to the resulting DB with a SQL client (DBeaver, SQuirreL SQL...)
-
-**Test class example:**
-
-```java
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(loader = AnnotationConfigContextLoader.class)
-@Transactional
-@Commit
-@AutoConfigureCache
-@AutoConfigureDataJpa
-@AutoConfigureTestEntityManager
-@TestPropertySource(properties = {
-        "spring.liquibase.change-log=classpath:db/changelogs/core/test/content/item_management_service_tests.xml"
-})
-public class ItemManagementServiceTests
-{
-    // . . .
-
-    /*---------------------------*
-     * SETUP AND HELPERS
-     *---------------------------*/
-    @TestConfiguration
-    @ComponentScan(basePackageClasses = ICorePackage.class)
-    @EnableJpaRepositories(basePackageClasses = {
-            IItemRepository.class,
-            IH2DbRepository.class
-    })
-    @EntityScan(basePackageClasses = {
-            // content
-            Item.class
-    })
-    @PropertySource("application.properties")
-    static class TestConfig
-    {
-
-    }
-}
-```
-

@@ -117,18 +117,6 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>			
-
-			<!-- DOCS -->
-			<plugin>
-				<groupId>org.asciidoctor</groupId>
-				<artifactId>asciidoctor-maven-plugin</artifactId>
-				<configuration>
-					<attributes>
-						<!-- Allow references to source code in the docs -->
-						<core-sourcedir>${project.basedir}/../core/src</core-sourcedir>
-					</attributes>
-				</configuration>
-			</plugin>
 		</plugins>
 	</build>
 </project>
