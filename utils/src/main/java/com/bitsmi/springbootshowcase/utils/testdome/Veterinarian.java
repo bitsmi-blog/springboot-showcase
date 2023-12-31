@@ -1,7 +1,6 @@
-package com.bitsmi.springbootshowcase.core.test.sample;
+package com.bitsmi.springbootshowcase.utils.testdome;
 
 import java.util.LinkedList;
-import java.util.Queue;
 
 public class Veterinarian {
     private LinkedList<String> queue = new LinkedList<>();

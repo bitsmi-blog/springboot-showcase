@@ -1,4 +1,4 @@
-package com.bitsmi.springbootshowcase.core.test.sample;
+package com.bitsmi.springbootshowcase.utils.testdome;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +24,7 @@ public class Platformer {
     }
 
     public void jumpRight() {
-        int newPosition = position + 2;
+        int newPosition = position + 1;
         if(newPosition < tiles.size()) {
             tiles.remove(position);
             position = newPosition;
