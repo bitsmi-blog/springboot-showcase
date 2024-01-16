@@ -42,10 +42,6 @@
 			<groupId>io.micrometer</groupId>
 			<artifactId>micrometer-core</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>com.bitsmi.yggdrasil</groupId>
-			<artifactId>yggdrasil-commons</artifactId>
-		</dependency>
 
 		<!-- TEST -->
         <dependency>
