@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -40,6 +41,9 @@ import java.io.IOException;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
+@EnableConfigurationProperties({
+        JWTProperties.class
+})
 public class WebSecurityConfig
 {
     private static final Logger LOGGER = LoggerFactory.getLogger(WebSecurityConfig.class);
@@ -50,7 +54,8 @@ public class WebSecurityConfig
     {
         http.securityMatcher("/auth/**",
                         "/actuator/**",
-                        "/api/admin")
+                        "/api/admin",
+                        "/api/user/**")
                 .authorizeHttpRequests(this::authorizeHttpRequestsBasic)
                 .csrf(this::csrf)
                 .httpBasic(Customizer.withDefaults())
