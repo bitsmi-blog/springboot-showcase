@@ -24,6 +24,7 @@
     <modules>
         <module>api</module>
         <module>domain</module>
+        <module>core</module>
         <module>application</module>
         <module>web</module>
         <module>main</module>

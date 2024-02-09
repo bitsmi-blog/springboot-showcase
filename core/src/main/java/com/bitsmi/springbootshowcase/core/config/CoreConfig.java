@@ -1,4 +1,4 @@
-package com.bitsmi.springbootshowcase.core.common.config;
+package com.bitsmi.springbootshowcase.core.config;
 
 import com.bitsmi.springbootshowcase.core.ICorePackage;
 import org.springframework.context.annotation.Bean;
@@ -10,12 +10,5 @@ import org.springframework.validation.beanvalidation.MethodValidationPostProcess
 @ComponentScan(basePackageClasses = { ICorePackage.class })
 public class CoreConfig
 {
-    /**
-     * Validator for bean method parameter
-     */
-    @Bean
-    public MethodValidationPostProcessor methodValidationPostProcessor()
-    {
-        return new MethodValidationPostProcessor();
-    }
+
 }

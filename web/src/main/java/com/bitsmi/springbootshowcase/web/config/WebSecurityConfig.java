@@ -55,6 +55,7 @@ public class WebSecurityConfig
         http.securityMatcher("/auth/**",
                         "/actuator/**",
                         "/api/admin",
+                        // TODO remove
                         "/api/user/**")
                 .authorizeHttpRequests(this::authorizeHttpRequestsBasic)
                 .csrf(this::csrf)
