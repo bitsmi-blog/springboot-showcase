@@ -22,14 +22,14 @@
     </properties>
 
     <modules>
-        <module>api</module>
         <module>domain</module>
         <module>core</module>
         <module>application</module>
+        <module>api</module>
+        <module>api-client-openfeign</module>
         <module>web</module>
         <module>main</module>
-<!--        <module>api-client-openfeign</module>-->
-<!--        <module>utils</module>-->
+        <module>utils</module>
         <module>docs</module>
     </modules>
 
