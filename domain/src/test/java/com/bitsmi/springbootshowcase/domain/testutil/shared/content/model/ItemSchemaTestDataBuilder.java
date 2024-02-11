@@ -1,4 +1,4 @@
-package com.bitsmi.springbootshowcase.domain.testutil.shared.content;
+package com.bitsmi.springbootshowcase.domain.testutil.shared.content.model;
 
 import com.bitsmi.springbootshowcase.domain.content.model.ItemSchema;
 import com.bitsmi.springbootshowcase.domain.content.model.ItemSchemaField;
