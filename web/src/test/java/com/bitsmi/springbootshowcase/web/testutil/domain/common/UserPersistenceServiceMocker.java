@@ -6,6 +6,7 @@ import com.bitsmi.springbootshowcase.domain.common.spi.IUserPersistenceService;
 import com.bitsmi.springbootshowcase.domain.testutil.shared.common.model.UserSummaryTestDataBuilder;
 import com.bitsmi.springbootshowcase.domain.testutil.shared.common.model.UserTestDataBuilder;
 import org.mockito.Mockito;
+import org.springframework.test.context.event.annotation.BeforeTestExecution;
 
 import java.util.Optional;
 import java.util.function.Consumer;
@@ -25,7 +26,6 @@ public class UserPersistenceServiceMocker
         }
 
         this.mockedService = serviceInstance;
-        reset();
     }
 
     public static UserPersistenceServiceMocker mocker()
@@ -38,6 +38,7 @@ public class UserPersistenceServiceMocker
         return new UserPersistenceServiceMocker(serviceInstance);
     }
 
+    @BeforeTestExecution
     public void reset()
     {
         this
