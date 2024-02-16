@@ -1,5 +1,9 @@
 = SpringBoot Showcase
 
+== Application
+
+xref:pages/application/architecture.adoc[Architecture]
+
 == Examples index
 
 xref:pages/examples/aop.adoc[AOP]

@@ -1,8 +1,10 @@
 package com.bitsmi.springbootshowcase.application.dummy.impl;
 
+import com.bitsmi.springbootshowcase.application.ApplicationConstants;
 import com.bitsmi.springbootshowcase.application.dummy.ISampleApplicationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
@@ -18,10 +20,10 @@ public class SampleOneApplicationServiceImpl implements ISampleApplicationServic
 //    @Autowired
 //    private MeterRegistry meterRegistry;
 
-//    @Cacheable(
-//            cacheManager = CoreConstants.CACHE_MANAGER_MEMOIZE,
-//            cacheNames = "sampleOne"
-//    )
+    @Cacheable(
+            cacheManager = ApplicationConstants.CACHE_MANAGER_MEMOIZE,
+            cacheNames = "sampleOne"
+    )
     @Override
     public String getSample()
     {
