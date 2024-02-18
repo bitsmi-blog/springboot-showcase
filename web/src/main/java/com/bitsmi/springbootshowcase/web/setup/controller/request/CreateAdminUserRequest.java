@@ -1,4 +1,4 @@
-package com.bitsmi.springbootshowcase.web.application.controller.request;
+package com.bitsmi.springbootshowcase.web.setup.controller.request;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;

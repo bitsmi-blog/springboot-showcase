@@ -75,6 +75,8 @@ E.G. Memoize cache provider implementing request scoped caches provided by Web m
 - Persistence support (JPA, Mongo...)
 - Configurations about transversal services like Caches, Observability...
 Each of this configurations should be made in a separate configuration so dependant modules can import them to used in, for example, integration tests
+- Configuration of Domain related managed beans E.G. make Domain Commands & Queries available to be injected in Application Flow components
+- Attach Domain SPI service interfaces to corresponding Core implementation
 
 === Domain
 
