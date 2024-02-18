@@ -2,6 +2,8 @@ package com.bitsmi.springbootshowcase.application.test.dummy;
 
 import com.bitsmi.springbootshowcase.application.config.ApplicationConfig;
 import com.bitsmi.springbootshowcase.application.dummy.ISampleApplicationCommand;
+import io.micrometer.core.instrument.MeterRegistry;
+import io.micrometer.core.instrument.simple.SimpleMeterRegistry;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -11,7 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -19,9 +21,6 @@ import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-/**
- * TODO Metrics configuration
- */
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = ApplicationConfig.class)
 @Tag("IntegrationTest")
@@ -63,10 +62,10 @@ public class SampleCommandTests
     @EnableAspectJAutoProxy
     static class TestConfig
     {
-//        @Bean
-//        public MeterRegistry meterRegistry()
-//        {
-//            return new SimpleMeterRegistry();
-//        }
+        @Bean
+        public MeterRegistry meterRegistry()
+        {
+            return new SimpleMeterRegistry();
+        }
     }
 }
