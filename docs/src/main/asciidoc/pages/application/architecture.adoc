@@ -79,8 +79,15 @@ Each of this configurations should be made in a separate configuration so depend
 - Attach Domain SPI service interfaces to corresponding Core implementation
 
 === Domain
+**Purpose**
 
-TODO
+`Domain` module implements applications business logic in an agnostic way, try to not be dependant of frameworks
+
+**What's inside**
+
+- Model classes
+- Query & Commands for different use cases involving domain model classes
+- SPI interfaces that will be implemented in `Core` module for infrastructure dependant components like persistence or event publishing
 
 === Web
 **Purpose**
@@ -92,6 +99,10 @@ TODO
 - Spring web configurations
 - Spring rest based controllers definition
 - Spring security configuration, including basic & JWT auth
+
+== Flows implementation
+
+TODO
 
 == Variations
 
