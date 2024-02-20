@@ -1,7 +1,7 @@
 package com.bitsmi.springbootshowcase.application.common.impl;
 
-import com.bitsmi.springbootshowcase.application.common.IUserCreationFlowCommand;
-import com.bitsmi.springbootshowcase.domain.common.IUserCreationCommand;
+import com.bitsmi.springbootshowcase.application.common.IUserCreationApplicationCommand;
+import com.bitsmi.springbootshowcase.domain.common.IUserCommandDomainService;
 import com.bitsmi.springbootshowcase.domain.common.model.User;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -11,13 +11,13 @@ import org.springframework.validation.annotation.Validated;
 
 @Component
 @Validated
-public class UserCreationFlowCommandImpl implements IUserCreationFlowCommand
+public class UserCreationApplicationCommandImpl implements IUserCreationApplicationCommand
 {
     @Autowired
-    private IUserCreationCommand userCreationCommand;
+    private IUserCommandDomainService userCommandDomainService;
 
     public User createAdminUser(@NotNull String username, @NotEmpty char[] password)
     {
-        return userCreationCommand.createAdminUser(username, password);
+        return userCommandDomainService.createAdminUser(username, password);
     }
 }

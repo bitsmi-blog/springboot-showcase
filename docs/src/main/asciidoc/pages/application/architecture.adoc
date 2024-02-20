@@ -19,7 +19,6 @@ application --> domain
 core --|> domain
 ----
 
-
 === Main
 **Purpose**
 
@@ -28,7 +27,9 @@ It configures which modules are assembled to build the application.
 This is done in `MainConfig` class through `@Import` statements of the corresponding modules that will form part of the application
 
 E.G.
-```java
+
+[source,java]
+----
 @Configuration
 @Import({
         WebConfig.class,
@@ -45,7 +46,7 @@ public class MainConfig
 
 }
 
-```
+----
 
 **What's inside**
 
@@ -55,15 +56,13 @@ public class MainConfig
 === Application
 **Purpose**
 
-`Application` module is used to define application flows so that every endpoint module such as `web`, `messaging`, etc.
-is able to access to the flow entry point.
+`Application` module is used to define application flows so that every endpoint module such as `web`, `messaging`, etc. is able to access to the flow entry point.
 
 **What's inside**
 
-- Entry point services to application flows. They should not implement business logic and delegate it to `domain` module components
+- Entry point services to application flows that coordinates application level activities. This layer should not implement business logic related to Domain. It should delegate it to `domain` module components
 - Implement top level transactionality when needed
-- Interfaces that top level modules (web, messaging...) should implement to provide specific functionality related to them.
-E.G. Memoize cache provider implementing request scoped caches provided by Web module
+- Interfaces that top level modules (web, messaging...) should implement to provide specific functionality related to them. E.G. Memoize cache provider implementing request scoped caches provided by Web module
 
 === Core
 **Purpose**
@@ -100,9 +99,44 @@ Each of this configurations should be made in a separate configuration so depend
 - Spring rest based controllers definition
 - Spring security configuration, including basic & JWT auth
 
-== Flows implementation
+== Component interaction
 
-TODO
+[plantuml]
+----
+rectangle Web {
+    rectangle Controller
+}
+
+rectangle Application {
+    rectangle ApplicationCommand
+    rectangle ApplicationQuery
+
+    ApplicationCommand -[hidden]d-> ApplicationQuery
+}
+
+rectangle Domain {
+    rectangle InputPorts as DomainInputPorts {
+        rectangle CommandDomainService
+        rectangle QueryDomainService
+    }
+
+    rectangle OutputPorts as DomainOutputPorts {
+        rectangle IPersistenceService
+    }
+
+    DomainInputPorts -[hidden]d-> DomainOutputPorts
+    CommandDomainService -[hidden]d-> QueryDomainService
+}
+
+rectangle Core {
+    rectangle PersistenceServiceImpl
+}
+
+Controller -> Application
+ApplicationCommand -> DomainInputPorts
+ApplicationQuery -u-> DomainInputPorts
+DomainOutputPorts <|-- Core
+----
 
 == Variations
 

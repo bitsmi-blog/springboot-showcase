@@ -1,4 +1,4 @@
-package com.bitsmi.springbootshowcase.application.content;
+package com.bitsmi.springbootshowcase.domain.content;
 
 import com.bitsmi.springbootshowcase.domain.common.dto.Page;
 import com.bitsmi.springbootshowcase.domain.common.dto.PagedData;
@@ -6,8 +6,8 @@ import com.bitsmi.springbootshowcase.domain.content.model.ItemSchema;
 
 import java.util.List;
 
-public interface IRetrieveItemSchemaFlowQuery
+public interface IItemSchemaQueryDomainService
 {
-    List<ItemSchema> retrieveAllItemSchemas();
-    PagedData<ItemSchema> retrieveAllItemSchemas(Page page);
+    List<ItemSchema> findAllItemSchemas();
+    PagedData<ItemSchema> findAllItemSchemas(Page page);
 }

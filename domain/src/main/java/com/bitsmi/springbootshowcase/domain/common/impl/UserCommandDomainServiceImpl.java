@@ -1,6 +1,6 @@
 package com.bitsmi.springbootshowcase.domain.common.impl;
 
-import com.bitsmi.springbootshowcase.domain.common.IUserCreationCommand;
+import com.bitsmi.springbootshowcase.domain.common.IUserCommandDomainService;
 import com.bitsmi.springbootshowcase.domain.common.UserConstants;
 import com.bitsmi.springbootshowcase.domain.common.exception.ElementAlreadyExistsException;
 import com.bitsmi.springbootshowcase.domain.common.model.User;
@@ -10,12 +10,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.nio.CharBuffer;
 import java.util.List;
 
-public class UserCreationCommandImpl implements IUserCreationCommand
+public class UserCommandDomainServiceImpl implements IUserCommandDomainService
 {
     private final IUserPersistenceService userPersistenceService;
     private final PasswordEncoder passwordEncoder;
 
-    public UserCreationCommandImpl(IUserPersistenceService userPersistenceService,
+    public UserCommandDomainServiceImpl(IUserPersistenceService userPersistenceService,
                                PasswordEncoder passwordEncoder)
     {
         this.userPersistenceService = userPersistenceService;

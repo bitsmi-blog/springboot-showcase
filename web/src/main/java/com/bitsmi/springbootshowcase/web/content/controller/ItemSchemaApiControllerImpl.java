@@ -4,7 +4,7 @@ import com.bitsmi.springbootshowcase.api.common.request.PageRequest;
 import com.bitsmi.springbootshowcase.api.common.response.PagedResponse;
 import com.bitsmi.springbootshowcase.api.content.IItemSchemaApi;
 import com.bitsmi.springbootshowcase.api.content.request.CreateItemSchemaRequest;
-import com.bitsmi.springbootshowcase.application.content.IRetrieveItemSchemaFlowQuery;
+import com.bitsmi.springbootshowcase.application.content.IRetrieveItemSchemaApplicationQuery;
 import com.bitsmi.springbootshowcase.domain.common.dto.Page;
 import com.bitsmi.springbootshowcase.domain.common.dto.PagedData;
 import com.bitsmi.springbootshowcase.domain.content.model.ItemSchema;
@@ -28,7 +28,7 @@ import java.util.List;
 public class ItemSchemaApiControllerImpl implements IItemSchemaApi
 {
     @Autowired
-    private IRetrieveItemSchemaFlowQuery retrieveItemSchemaFlowQuery;
+    private IRetrieveItemSchemaApplicationQuery retrieveItemSchemaFlowQuery;
     @Autowired
     private IItemSchemaApiMapper itemSchemaMapper;
     @Autowired
