@@ -43,7 +43,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Testcontainers
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @TestPropertySource(properties = {
-        "spring.liquibase.change-log=classpath:db/changelogs/core/test/content/item_management_service_tests.xml",
+        "spring.liquibase.change-log=classpath:db/changelogs/core/test/content/item_persistence_service_tests.xml",
         "spring.datasource.url = jdbc:tc:postgresql:16.0:///test-database",
         "spring.datasource.driver-class-name = org.testcontainers.jdbc.ContainerDatabaseDriver"
 })

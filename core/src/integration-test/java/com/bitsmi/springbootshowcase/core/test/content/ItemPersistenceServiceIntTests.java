@@ -23,9 +23,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @ServiceIntegrationTest
 @TestPropertySource(properties = {
-        "spring.liquibase.change-log=classpath:db/changelogs/core/test/content/item_management_service_tests.xml"
+        "spring.liquibase.change-log=classpath:db/changelogs/core/test/content/item_persistence_service_tests.xml"
 })
-public class ItemManagementServiceIntTests
+public class ItemPersistenceServiceIntTests
 {
     @Autowired
     private IItemPersistenceService itemPersistenceService;

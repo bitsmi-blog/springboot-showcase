@@ -5,9 +5,9 @@ import com.bitsmi.springbootshowcase.domain.content.model.ItemSchemaSummary;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring",
-        implementationName = "ItemSchemaSummaryModelMapperImpl"
+        implementationName = "ItemSchemaSummaryMapperImpl"
 )
-public interface IItemSchemaSummaryModelMapper
+public interface IItemSchemaSummaryMapper
 {
     ItemSchemaSummary fromProjection(IItemSchemaSummaryProjection projection);
 }
