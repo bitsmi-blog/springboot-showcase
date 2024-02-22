@@ -85,7 +85,7 @@ public class ItemSchemaPersistenceServiceImpl implements IItemSchemaPersistenceS
                         .map(itemSchemaMapper::fromEntity)
                         .toList())
                 .pageNumber(entityPage.getNumber())
-                .pageSize(entityPage.getSize())
+                .pageSize(entityPage.getNumberOfElements())
                 .totalElements(entityPage.getTotalElements())
                 .totalPages(entityPage.getTotalPages())
                 .build();

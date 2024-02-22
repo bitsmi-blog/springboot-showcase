@@ -1,20 +1,31 @@
 package com.bitsmi.springbootshowcase.core.test.content;
 
-import com.bitsmi.springbootshowcase.core.ICorePackage;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import com.bitsmi.springbootshowcase.core.common.util.IgnoreOnComponentScan;
+import com.bitsmi.springbootshowcase.core.config.CoreConfig;
 import com.bitsmi.springbootshowcase.core.content.repository.ITagRepository;
 import com.bitsmi.springbootshowcase.domain.content.model.Item;
 import com.bitsmi.springbootshowcase.domain.content.model.ItemStatus;
 import com.bitsmi.springbootshowcase.domain.content.model.Tag;
 import com.bitsmi.springbootshowcase.domain.content.spi.IItemPersistenceService;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.core.AutoConfigureCache;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
 import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Import;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
@@ -26,18 +37,12 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.Optional;
-
-import static org.assertj.core.api.Assertions.assertThat;
-
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(loader = AnnotationConfigContextLoader.class)
 @Transactional
 // Test-managed transaction should be rolled back after the test method has completed.
 @Rollback
+@EnableAutoConfiguration
 @AutoConfigureCache
 @AutoConfigureDataJpa
 @Testcontainers
@@ -104,9 +109,14 @@ public class ItemManagementServiceTestContainerTests
      * SETUP AND HELPERS
      *---------------------------*/
     @TestConfiguration
-    @ComponentScan(basePackageClasses = ICorePackage.class)
+    @Import({ CoreConfig.class })
+    @IgnoreOnComponentScan
     static class TestConfig
     {
-
+        @Bean
+        public PasswordEncoder passwordEncoder()
+        {
+            return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+        }
     }
 }

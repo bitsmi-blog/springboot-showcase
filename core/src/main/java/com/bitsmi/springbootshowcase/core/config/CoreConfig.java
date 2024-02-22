@@ -1,13 +1,16 @@
 package com.bitsmi.springbootshowcase.core.config;
 
 import com.bitsmi.springbootshowcase.core.ICorePackage;
-import org.springframework.context.annotation.Bean;
+import com.bitsmi.springbootshowcase.core.common.util.IgnoreOnComponentScan;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.validation.beanvalidation.MethodValidationPostProcessor;
+import org.springframework.context.annotation.FilterType;
 
 @Configuration
-@ComponentScan(basePackageClasses = { ICorePackage.class })
+@ComponentScan(
+    basePackageClasses = { ICorePackage.class },
+    excludeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION, classes = IgnoreOnComponentScan.class)
+)
 public class CoreConfig
 {
 

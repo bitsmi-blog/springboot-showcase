@@ -2,6 +2,7 @@ package com.bitsmi.springbootshowcase.core.testutil;
 
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.validation.ValidationAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.actuate.observability.AutoConfigureObservability;
 import org.springframework.boot.test.autoconfigure.core.AutoConfigureCache;
@@ -32,6 +33,7 @@ import java.lang.annotation.Target;
 @Transactional
 // Test-managed transaction should be rolled back after the test method has completed.
 @Rollback
+@EnableAutoConfiguration
 //In-memory database (H2). Entity auto-scan
 @AutoConfigureCache
 @AutoConfigureDataJpa

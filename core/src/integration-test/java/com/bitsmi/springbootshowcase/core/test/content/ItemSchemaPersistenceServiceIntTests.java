@@ -1,6 +1,11 @@
 package com.bitsmi.springbootshowcase.core.test.content;
 
-import com.bitsmi.springbootshowcase.core.ICorePackage;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.assertj.core.api.Assertions.catchThrowableOfType;
+
+import com.bitsmi.springbootshowcase.core.common.util.IgnoreOnComponentScan;
+import com.bitsmi.springbootshowcase.core.config.CoreConfig;
 import com.bitsmi.springbootshowcase.core.testutil.ServiceIntegrationTest;
 import com.bitsmi.springbootshowcase.domain.common.dto.Page;
 import com.bitsmi.springbootshowcase.domain.common.dto.PagedData;
@@ -13,31 +18,21 @@ import com.bitsmi.springbootshowcase.domain.content.model.ItemSchemaSummary;
 import com.bitsmi.springbootshowcase.domain.content.spi.IItemSchemaPersistenceService;
 import com.bitsmi.springbootshowcase.domain.testutil.shared.content.model.ItemSchemaFieldTestDataBuilder;
 import com.bitsmi.springbootshowcase.domain.testutil.shared.content.model.ItemSchemaTestDataBuilder;
-import io.micrometer.core.instrument.MeterRegistry;
-import io.micrometer.core.instrument.simple.SimpleMeterRegistry;
-import io.micrometer.observation.ObservationRegistry;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.actuate.metrics.cache.CacheMetricsRegistrar;
-import org.springframework.boot.actuate.metrics.cache.CaffeineCacheMeterBinderProvider;
-import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.test.context.TestPropertySource;
-
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
-import static org.assertj.core.api.Assertions.catchThrowableOfType;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Import;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.context.TestPropertySource;
 
 @ServiceIntegrationTest
 @TestPropertySource(properties = {
@@ -338,29 +333,10 @@ public class ItemSchemaPersistenceServiceIntTests
      * SETUP AND HELPERS
      *---------------------------*/
     @TestConfiguration
-    @ComponentScan(basePackageClasses = ICorePackage.class)
+    @Import({ CoreConfig.class })
+    @IgnoreOnComponentScan
     static class TestConfig
     {
-        /* TODO Check if this is needed in production code
-         */
-        @Bean
-        public MeterRegistry meterRegistry()
-        {
-            return new SimpleMeterRegistry();
-        }
-
-        @Bean
-        public ObservationRegistry observationRegistry()
-        {
-            return ObservationRegistry.create();
-        }
-
-        @Bean
-        public CacheMetricsRegistrar cacheMetricsRegistrar()
-        {
-            return new CacheMetricsRegistrar(meterRegistry(), List.of(new CaffeineCacheMeterBinderProvider()));
-        }
-
         @Bean
         public PasswordEncoder passwordEncoder()
         {
