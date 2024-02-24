@@ -1,14 +1,12 @@
 package com.bitsmi.springbootshowcase.core.test.content;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
-import static org.assertj.core.api.Assertions.catchThrowableOfType;
-
 import com.bitsmi.springbootshowcase.core.common.util.IgnoreOnComponentScan;
 import com.bitsmi.springbootshowcase.core.config.CoreConfig;
 import com.bitsmi.springbootshowcase.core.testutil.ServiceIntegrationTest;
-import com.bitsmi.springbootshowcase.domain.common.dto.Page;
 import com.bitsmi.springbootshowcase.domain.common.dto.PagedData;
+import com.bitsmi.springbootshowcase.domain.common.dto.Pagination;
+import com.bitsmi.springbootshowcase.domain.common.dto.Sort;
+import com.bitsmi.springbootshowcase.domain.common.dto.Sort.Order;
 import com.bitsmi.springbootshowcase.domain.common.exception.ElementAlreadyExistsException;
 import com.bitsmi.springbootshowcase.domain.common.exception.ElementNotFoundException;
 import com.bitsmi.springbootshowcase.domain.content.model.DataType;
@@ -20,10 +18,6 @@ import com.bitsmi.springbootshowcase.domain.testutil.shared.content.model.ItemSc
 import com.bitsmi.springbootshowcase.domain.testutil.shared.content.model.ItemSchemaTestDataBuilder;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +27,15 @@ import org.springframework.context.annotation.Import;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.TestPropertySource;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.assertj.core.api.Assertions.catchThrowableOfType;
 
 @ServiceIntegrationTest
 @TestPropertySource(properties = {
@@ -65,42 +68,46 @@ public class ItemSchemaPersistenceServiceIntTests
     /*---------------------------*
      * FIND SCHEMAS BY NAME LIKE
      *---------------------------*/
+    @Test
+    @DisplayName("findSchemasByNameStartWith should return first page results")
+    public void findSchemasByNameStartWithTest1()
+    {
+        // Case in-sensitive
+        PagedData<ItemSchema> schemasPage = itemSchemaPersistenceService.findSchemasByNameStartWith(
+                "dummy",
+                Pagination.of(0, 5, Sort.by(Order.desc("externalId")))
+        );
 
-    /* TODO
-     */
-//    @Test
-//    @DisplayName("findSchemasByNameStartWith should return first page results")
-//    public void findSchemasByNameStartWithTest1()
-//    {
-//        // Case in-sensitive
-//        PagedData<ItemSchema> schemasPage = itemSchemaPersistenceService.findSchemasByNameStartWith("dummy",
-//                PageRequest.of(0, 5, Sort.by(Order.desc("externalId"))));
-//
-//        assertThat(schemasPage.totalPages()).isEqualTo(3);
-//        assertThat(schemasPage.totalElements()).isEqualTo(11);
-//        assertThat(schemasPage.pageNumber()).isEqualTo(0);
-//        assertThat(schemasPage.pageSize()).isEqualTo(5);
-//        assertThat(schemasPage.isFirstPage()).isTrue();
-//        assertThat(schemasPage.isLastPage()).isFalse();
-//        assertThat(schemasPage.content()
-//                .stream()
-//                .map(ItemSchema::externalId)
-//                .toList())
-//                .containsExactly("schema-9", "schema-8", "schema-7", "schema-6", "schema-5");
-//
-//    }
+        assertThat(schemasPage.pageCount()).isEqualTo(5);
+        assertThat(schemasPage.totalPages()).isEqualTo(3);
+        assertThat(schemasPage.totalCount()).isEqualTo(11);
+        assertThat(schemasPage.pagination().pageNumber()).isEqualTo(0);
+        assertThat(schemasPage.pagination().pageSize()).isEqualTo(5);
+        assertThat(schemasPage.isFirstPage()).isTrue();
+        assertThat(schemasPage.isLastPage()).isFalse();
+        assertThat(schemasPage.content()
+                .stream()
+                .map(ItemSchema::externalId)
+                .toList())
+                .containsExactly("schema-9", "schema-8", "schema-7", "schema-6", "schema-5");
+
+    }
 
     @Test
     @DisplayName("findSchemasByNameStartWith should return last page results")
     public void findSchemasByNameStartWithTest2()
     {
         // Case in-sensitive
-        PagedData<ItemSchema> schemasPage = itemSchemaPersistenceService.findSchemasByNameStartWith("DUMMY", Page.of(2, 5));
+        PagedData<ItemSchema> schemasPage = itemSchemaPersistenceService.findSchemasByNameStartWith(
+                "DUMMY",
+                Pagination.of(2, 5, Sort.UNSORTED)
+        );
 
+        assertThat(schemasPage.pageCount()).isEqualTo(1);
         assertThat(schemasPage.totalPages()).isEqualTo(3);
-        assertThat(schemasPage.totalElements()).isEqualTo(11);
-        assertThat(schemasPage.pageNumber()).isEqualTo(2);
-        assertThat(schemasPage.pageSize()).isEqualTo(1);
+        assertThat(schemasPage.totalCount()).isEqualTo(11);
+        assertThat(schemasPage.pagination().pageNumber()).isEqualTo(2);
+        assertThat(schemasPage.pagination().pageSize()).isEqualTo(5);
         assertThat(schemasPage.isFirstPage()).isFalse();
         assertThat(schemasPage.isLastPage()).isTrue();
     }

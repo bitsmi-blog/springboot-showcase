@@ -1,6 +1,6 @@
 package com.bitsmi.springbootshowcase.domain.content.impl;
 
-import com.bitsmi.springbootshowcase.domain.common.dto.Page;
+import com.bitsmi.springbootshowcase.domain.common.dto.Pagination;
 import com.bitsmi.springbootshowcase.domain.common.dto.PagedData;
 import com.bitsmi.springbootshowcase.domain.content.IItemSchemaQueryDomainService;
 import com.bitsmi.springbootshowcase.domain.content.model.ItemSchema;
@@ -23,7 +23,7 @@ public class ItemSchemaQueryDomainServiceImpl implements IItemSchemaQueryDomainS
     }
 
     @Override
-    public PagedData<ItemSchema> findAllItemSchemas(Page page)
+    public PagedData<ItemSchema> findAllItemSchemas(Pagination page)
     {
         return itemSchemaPersistenceService.findAllItemSchemas(page);
     }

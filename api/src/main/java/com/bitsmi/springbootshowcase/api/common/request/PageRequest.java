@@ -2,6 +2,9 @@ package com.bitsmi.springbootshowcase.api.common.request;
 
 import lombok.Builder;
 
+/**
+ * TODO Add SORT
+ */
 @Builder(toBuilder = true, builderClassName = "Builder")
 public record PageRequest(
         int page,

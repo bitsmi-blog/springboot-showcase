@@ -1,6 +1,6 @@
 package com.bitsmi.springbootshowcase.domain.content.spi;
 
-import com.bitsmi.springbootshowcase.domain.common.dto.Page;
+import com.bitsmi.springbootshowcase.domain.common.dto.Pagination;
 import com.bitsmi.springbootshowcase.domain.common.dto.PagedData;
 import com.bitsmi.springbootshowcase.domain.common.util.ValidToUpdate;
 import com.bitsmi.springbootshowcase.domain.content.model.ItemSchema;
@@ -14,9 +14,9 @@ import java.util.Optional;
 public interface IItemSchemaPersistenceService
 {
     List<ItemSchema> findAllItemSchemas();
-    PagedData<ItemSchema> findAllItemSchemas(@NotNull Page page);
+    PagedData<ItemSchema> findAllItemSchemas(@NotNull Pagination pagination);
 
-    PagedData<ItemSchema> findSchemasByNameStartWith(@NotNull String namePrefix, @NotNull Page page);
+    PagedData<ItemSchema> findSchemasByNameStartWith(@NotNull String namePrefix, @NotNull Pagination pagination);
 
     Optional<ItemSchema> findItemSchemaById(@NotNull Long id);
 

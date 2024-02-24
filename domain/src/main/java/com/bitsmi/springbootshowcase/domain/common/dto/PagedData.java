@@ -7,19 +7,19 @@ import java.util.List;
 @Builder(toBuilder = true, builderClassName = "Builder")
 public record PagedData<T>(
         List<T> content,
-        int pageNumber,
-        int pageSize,
+        Pagination pagination,
+        int pageCount,
         int totalPages,
-        long totalElements
+        long totalCount
 )
 {
     public boolean isFirstPage()
     {
-        return pageNumber == 0;
+        return pagination.pageNumber() == 0;
     }
 
     public boolean isLastPage()
     {
-        return pageNumber == totalPages - 1;
+        return pagination.pageNumber() == totalPages - 1;
     }
 }

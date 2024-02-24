@@ -6,9 +6,11 @@ import com.bitsmi.springbootshowcase.core.content.entity.ItemSchemaEntity;
 import com.bitsmi.springbootshowcase.core.content.entity.ItemSchemaFieldEntity;
 import com.bitsmi.springbootshowcase.core.content.mapper.IItemSchemaMapper;
 import com.bitsmi.springbootshowcase.core.content.mapper.IItemSchemaSummaryMapper;
+import com.bitsmi.springbootshowcase.core.content.mapper.PageRequestMapper;
+import com.bitsmi.springbootshowcase.core.content.mapper.PagedDataMapper;
 import com.bitsmi.springbootshowcase.core.content.repository.IItemSchemaRepository;
-import com.bitsmi.springbootshowcase.domain.common.dto.Page;
 import com.bitsmi.springbootshowcase.domain.common.dto.PagedData;
+import com.bitsmi.springbootshowcase.domain.common.dto.Pagination;
 import com.bitsmi.springbootshowcase.domain.common.exception.ElementAlreadyExistsException;
 import com.bitsmi.springbootshowcase.domain.common.exception.ElementNotFoundException;
 import com.bitsmi.springbootshowcase.domain.common.util.ValidToUpdate;
@@ -21,7 +23,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,6 +44,10 @@ public class ItemSchemaPersistenceServiceImpl implements IItemSchemaPersistenceS
     private IItemSchemaMapper itemSchemaMapper;
     @Autowired
     private IItemSchemaSummaryMapper itemSchemaSummaryMapper;
+    @Autowired
+    private PageRequestMapper pageRequestMapper;
+    @Autowired
+    private PagedDataMapper pagedDataMapper;
 
     @Override
     public List<ItemSchema> findAllItemSchemas()
@@ -53,42 +58,25 @@ public class ItemSchemaPersistenceServiceImpl implements IItemSchemaPersistenceS
                 .toList();
     }
 
-    @Cacheable(cacheNames = CoreConstants.CACHE_ALL_SCHEMAS, key = "#page.number")
+    @Cacheable(cacheNames = CoreConstants.CACHE_ALL_SCHEMAS, key = "#pagination.pageNumber")
     @Override
-    public PagedData<ItemSchema> findAllItemSchemas(@NotNull Page page)
+    public PagedData<ItemSchema> findAllItemSchemas(@NotNull Pagination pagination)
     {
-        final Pageable pageable = PageRequest.of(page.number(), page.size());
+        final Pageable pageable = pageRequestMapper.fromPagination(pagination);
 
         final org.springframework.data.domain.Page<ItemSchemaEntity> entityPage = itemSchemaRepository.findAll(pageable);
 
-        return PagedData.<ItemSchema>builder()
-                .content(entityPage.getContent()
-                        .stream()
-                        .map(itemSchemaMapper::fromEntity)
-                        .toList())
-                .pageNumber(entityPage.getNumber())
-                .pageSize(entityPage.getSize())
-                .totalElements(entityPage.getTotalElements())
-                .totalPages(entityPage.getTotalPages())
-                .build();
+        return pagedDataMapper.fromPage(entityPage, itemSchemaMapper::fromEntity);
     }
 
     @Override
-    public PagedData<ItemSchema> findSchemasByNameStartWith(@NotNull String namePrefix, @NotNull Page page)
+    public PagedData<ItemSchema> findSchemasByNameStartWith(@NotNull String namePrefix, @NotNull Pagination pagination)
     {
-        final Pageable pageable = PageRequest.of(page.number(), page.size());
+        final Pageable pageable = pageRequestMapper.fromPagination(pagination);
 
         final org.springframework.data.domain.Page<ItemSchemaEntity> entityPage = itemSchemaRepository.findByNameStartsWithIgnoreCase(namePrefix, pageable);
-        return PagedData.<ItemSchema>builder()
-                .content(entityPage
-                        .stream()
-                        .map(itemSchemaMapper::fromEntity)
-                        .toList())
-                .pageNumber(entityPage.getNumber())
-                .pageSize(entityPage.getNumberOfElements())
-                .totalElements(entityPage.getTotalElements())
-                .totalPages(entityPage.getTotalPages())
-                .build();
+
+        return pagedDataMapper.fromPage(entityPage, itemSchemaMapper::fromEntity);
     }
 
     @Cacheable(cacheNames = CoreConstants.CACHE_SCHEMA_BY_ID)

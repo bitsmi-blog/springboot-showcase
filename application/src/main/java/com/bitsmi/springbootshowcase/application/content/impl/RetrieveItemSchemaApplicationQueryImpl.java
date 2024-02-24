@@ -1,7 +1,7 @@
 package com.bitsmi.springbootshowcase.application.content.impl;
 
 import com.bitsmi.springbootshowcase.application.content.IRetrieveItemSchemaApplicationQuery;
-import com.bitsmi.springbootshowcase.domain.common.dto.Page;
+import com.bitsmi.springbootshowcase.domain.common.dto.Pagination;
 import com.bitsmi.springbootshowcase.domain.common.dto.PagedData;
 import com.bitsmi.springbootshowcase.domain.content.IItemSchemaQueryDomainService;
 import com.bitsmi.springbootshowcase.domain.content.model.ItemSchema;
@@ -23,7 +23,7 @@ public class RetrieveItemSchemaApplicationQueryImpl implements IRetrieveItemSche
     }
 
     @Override
-    public PagedData<ItemSchema> retrieveAllItemSchemas(Page page)
+    public PagedData<ItemSchema> retrieveAllItemSchemas(Pagination page)
     {
         return itemSchemaQueryDomainService.findAllItemSchemas(page);
     }

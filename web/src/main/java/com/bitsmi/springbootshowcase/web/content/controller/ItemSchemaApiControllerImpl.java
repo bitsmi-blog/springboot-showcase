@@ -6,8 +6,9 @@ import com.bitsmi.springbootshowcase.api.content.IItemSchemaApi;
 import com.bitsmi.springbootshowcase.api.content.request.CreateItemSchemaRequest;
 import com.bitsmi.springbootshowcase.application.content.ICreateItemSchemaCommand;
 import com.bitsmi.springbootshowcase.application.content.IRetrieveItemSchemaApplicationQuery;
-import com.bitsmi.springbootshowcase.domain.common.dto.Page;
 import com.bitsmi.springbootshowcase.domain.common.dto.PagedData;
+import com.bitsmi.springbootshowcase.domain.common.dto.Pagination;
+import com.bitsmi.springbootshowcase.domain.common.dto.Sort;
 import com.bitsmi.springbootshowcase.domain.common.exception.ElementAlreadyExistsException;
 import com.bitsmi.springbootshowcase.domain.content.model.ItemSchema;
 import com.bitsmi.springbootshowcase.web.content.mapper.IItemSchemaApiMapper;
@@ -45,8 +46,8 @@ public class ItemSchemaApiControllerImpl implements IItemSchemaApi
     @Override
     public PagedResponse<com.bitsmi.springbootshowcase.api.content.response.ItemSchema> getSchemas(@Valid final PageRequest pageRequest)
     {
-        final Page page = pageRequest!=null
-                ? Page.of(pageRequest.page(), pageRequest.size())
+        final Pagination page = pageRequest!=null
+                ? Pagination.of(pageRequest.page(), pageRequest.size(), Sort.UNSORTED)
                 : null;
 
         if(pageRequest!=null) {
@@ -57,8 +58,9 @@ public class ItemSchemaApiControllerImpl implements IItemSchemaApi
                             .map(itemSchemaMapper::mapResponseFromModel)
                             .toList()
                     )
-                    .pageSize(results.pageSize())
-                    .totalElements(results.totalElements())
+                    .pagination(results.pagination())
+                    .pageCount(results.pageCount())
+                    .totalCount(results.totalCount())
                     .totalPages(results.totalPages())
                     .build();
         }
@@ -69,8 +71,9 @@ public class ItemSchemaApiControllerImpl implements IItemSchemaApi
                             .map(itemSchemaMapper::mapResponseFromModel)
                             .toList()
                     )
-                    .pageSize(results.size())
-                    .totalElements(results.size())
+                    .pagination(Pagination.of(0, results.size(), Sort.UNSORTED))
+                    .pageCount(results.size())
+                    .totalCount(results.size())
                     .totalPages(1)
                     .build();
         }
