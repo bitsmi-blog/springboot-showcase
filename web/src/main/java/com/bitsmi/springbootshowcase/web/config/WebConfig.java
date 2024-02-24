@@ -1,5 +1,6 @@
 package com.bitsmi.springbootshowcase.web.config;
 
+import com.bitsmi.springbootshowcase.domain.common.util.IgnoreOnComponentScan;
 import com.bitsmi.springbootshowcase.web.IWebPackage;
 import org.apache.catalina.connector.Connector;
 import org.springframework.boot.autoconfigure.web.servlet.TomcatServletWebServerFactoryCustomizer;
@@ -7,13 +8,17 @@ import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactor
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.FilterType;
 import org.springframework.web.servlet.config.annotation.AsyncSupportConfigurer;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.mvc.WebContentInterceptor;
 
 @Configuration
-@ComponentScan(basePackageClasses = IWebPackage.class)
+@ComponentScan(
+        basePackageClasses = { IWebPackage.class },
+        excludeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION, classes = IgnoreOnComponentScan.class)
+)
 public class WebConfig implements WebMvcConfigurer
 {
 	/**

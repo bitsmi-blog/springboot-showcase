@@ -15,6 +15,9 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+/**
+ * TODO Move to Domain module
+ */
 public class UserPersistenceServiceMocker
 {
     private final IUserPersistenceService mockedService;
@@ -41,8 +44,7 @@ public class UserPersistenceServiceMocker
     @BeforeTestExecution
     public void reset()
     {
-        this
-                .whenFindUserByUsernameGivenAnyUsernameThenReturnEmpty()
+        this.whenFindUserByUsernameGivenAnyUsernameThenReturnEmpty()
                 .whenFindUserByUsernameThenReturnUser(UserTestDataBuilder.USERNAME_USER1, UserTestDataBuilder.user1())
                 .whenFindUserSummaryByUsernameThenReturnUser(UserTestDataBuilder.USERNAME_USER1, UserSummaryTestDataBuilder.user1());
     }

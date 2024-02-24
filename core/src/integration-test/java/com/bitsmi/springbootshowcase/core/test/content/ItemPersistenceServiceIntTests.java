@@ -2,7 +2,7 @@ package com.bitsmi.springbootshowcase.core.test.content;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.bitsmi.springbootshowcase.core.common.util.IgnoreOnComponentScan;
+import com.bitsmi.springbootshowcase.domain.common.util.IgnoreOnComponentScan;
 import com.bitsmi.springbootshowcase.core.config.CoreConfig;
 import com.bitsmi.springbootshowcase.core.content.repository.ITagRepository;
 import com.bitsmi.springbootshowcase.core.testutil.ServiceIntegrationTest;

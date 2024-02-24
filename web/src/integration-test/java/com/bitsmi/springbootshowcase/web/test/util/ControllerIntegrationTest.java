@@ -1,6 +1,5 @@
 package com.bitsmi.springbootshowcase.web.test.util;
 
-import com.bitsmi.springbootshowcase.web.config.WebConfig;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -26,7 +25,7 @@ import java.lang.annotation.Target;
 
 @ExtendWith({SpringExtension.class})
 @WebAppConfiguration
-@ContextConfiguration(loader = AnnotationConfigWebContextLoader.class, classes = WebConfig.class)
+@ContextConfiguration(loader = AnnotationConfigWebContextLoader.class)
 @EnableAutoConfiguration
 @AutoConfigureMockMvc
 @AutoConfigureTestDatabase

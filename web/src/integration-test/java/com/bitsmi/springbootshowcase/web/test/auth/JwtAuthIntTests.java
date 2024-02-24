@@ -3,9 +3,8 @@ package com.bitsmi.springbootshowcase.web.test.auth;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.bitsmi.springbootshowcase.api.user.response.UserDetailsResponse;
-import com.bitsmi.springbootshowcase.web.IWebPackage;
 import com.bitsmi.springbootshowcase.web.config.WebConfig;
-import com.bitsmi.springbootshowcase.web.test.config.ServiceMockConfig;
+import com.bitsmi.springbootshowcase.web.test.config.ApplicationModuleMockConfig;
 import com.bitsmi.springbootshowcase.web.test.util.ControllerIntegrationTest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.tomcat.util.codec.binary.Base64;
@@ -16,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.core.userdetails.User;
@@ -130,7 +128,7 @@ public class JwtAuthIntTests
      * SETUP AND HELPERS
      *---------------------------*/
     @TestConfiguration()
-    @Import({ ServiceMockConfig.class })
+    @Import({ WebConfig.class, ApplicationModuleMockConfig.class })
     static class TestConfig
     {
         @Bean

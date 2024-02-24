@@ -1,7 +1,7 @@
 package com.bitsmi.springbootshowcase.core.config;
 
 import com.bitsmi.springbootshowcase.core.ICorePackage;
-import com.bitsmi.springbootshowcase.core.common.util.IgnoreOnComponentScan;
+import com.bitsmi.springbootshowcase.domain.common.util.IgnoreOnComponentScan;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.FilterType;

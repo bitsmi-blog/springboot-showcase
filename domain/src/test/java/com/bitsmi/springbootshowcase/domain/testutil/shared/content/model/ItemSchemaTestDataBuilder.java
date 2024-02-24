@@ -8,12 +8,22 @@ import java.util.Set;
 public class ItemSchemaTestDataBuilder
 {
     public static final Long ID_SCHEMA1 = 1001L;
+    public static final Long ID_SCHEMA2 = 1002L;
     public static final String EXTERNAL_ID_SCHEMA1 = "schema-1";
+    public static final String EXTERNAL_ID_SCHEMA2 = "schema-2";
 
     public static ItemSchema schema1()
     {
         return builder()
                 .emptySchema1()
+                .defaultFields()
+                .build();
+    }
+
+    public static ItemSchema schema2()
+    {
+        return builder()
+                .emptySchema2()
                 .defaultFields()
                 .build();
     }
@@ -32,7 +42,17 @@ public class ItemSchemaTestDataBuilder
             delegate
                 .id(ID_SCHEMA1)
                 .externalId(EXTERNAL_ID_SCHEMA1)
-                .name("Test schema");
+                .name("Test schema 1");
+
+            return this;
+        }
+
+        public Builder emptySchema2()
+        {
+            delegate
+                    .id(ID_SCHEMA2)
+                    .externalId(EXTERNAL_ID_SCHEMA2)
+                    .name("Test schema 2");
 
             return this;
         }
