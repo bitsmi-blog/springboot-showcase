@@ -2,6 +2,7 @@ package com.bitsmi.springbootshowcase.web.test.util;
 
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.test.context.ContextConfiguration;
@@ -25,11 +26,11 @@ import java.lang.annotation.Target;
 @ExtendWith({SpringExtension.class})
 @WebAppConfiguration
 @ContextConfiguration(loader = AnnotationConfigWebContextLoader.class)
+@EnableAutoConfiguration
 @AutoConfigureMockMvc
 @AutoConfigureTestDatabase
 @TestPropertySource(locations = {
-        "classpath:application.properties",
-        "file:./application-test.properties"
+        "classpath:web-test.properties"
     }
 )
 

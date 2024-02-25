@@ -4,17 +4,19 @@ import com.bitsmi.springbootshowcase.api.common.request.PageRequest;
 import com.bitsmi.springbootshowcase.api.common.response.PagedResponse;
 import com.bitsmi.springbootshowcase.api.content.IItemSchemaApi;
 import com.bitsmi.springbootshowcase.api.content.request.CreateItemSchemaRequest;
-import com.bitsmi.springbootshowcase.core.common.exception.ElementAlreadyExistsException;
-import com.bitsmi.springbootshowcase.core.content.IItemSchemaManagementService;
-import com.bitsmi.springbootshowcase.core.content.model.ItemSchema;
+import com.bitsmi.springbootshowcase.application.content.ICreateItemSchemaCommand;
+import com.bitsmi.springbootshowcase.application.content.IRetrieveItemSchemaApplicationQuery;
+import com.bitsmi.springbootshowcase.domain.common.dto.PagedData;
+import com.bitsmi.springbootshowcase.domain.common.dto.Pagination;
+import com.bitsmi.springbootshowcase.domain.common.dto.Sort;
+import com.bitsmi.springbootshowcase.domain.common.exception.ElementAlreadyExistsException;
+import com.bitsmi.springbootshowcase.domain.content.model.ItemSchema;
 import com.bitsmi.springbootshowcase.web.content.mapper.IItemSchemaApiMapper;
 import io.micrometer.observation.Observation;
 import io.micrometer.observation.ObservationRegistry;
 import io.micrometer.observation.annotation.Observed;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpClientErrorException;
 
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/content/schema", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -32,7 +35,9 @@ import java.nio.charset.StandardCharsets;
 public class ItemSchemaApiControllerImpl implements IItemSchemaApi
 {
     @Autowired
-    private IItemSchemaManagementService itemSchemaManagementService;
+    private IRetrieveItemSchemaApplicationQuery retrieveItemSchemaFlowQuery;
+    @Autowired
+    private ICreateItemSchemaCommand createItemSchemaCommand;
     @Autowired
     private IItemSchemaApiMapper itemSchemaMapper;
     @Autowired
@@ -41,21 +46,37 @@ public class ItemSchemaApiControllerImpl implements IItemSchemaApi
     @Override
     public PagedResponse<com.bitsmi.springbootshowcase.api.content.response.ItemSchema> getSchemas(@Valid final PageRequest pageRequest)
     {
-        final Pageable pageable = pageRequest!=null
-                ? org.springframework.data.domain.PageRequest.of(pageRequest.page(), pageRequest.size())
-                : Pageable.unpaged();
+        final Pagination page = pageRequest!=null
+                ? Pagination.of(pageRequest.page(), pageRequest.size(), Sort.UNSORTED)
+                : null;
 
-        final Page<ItemSchema> results = itemSchemaManagementService.findAllSchemas(pageable);
-
-        return PagedResponse.<com.bitsmi.springbootshowcase.api.content.response.ItemSchema>builder()
-                .content(results.getContent()
-                        .stream()
-                        .map(itemSchemaMapper::mapResponseFromModel)
-                        .toList())
-                .pageSize(results.getSize())
-                .totalElements(results.getTotalElements())
-                .totalPages(results.getTotalPages())
-                .build();
+        if(pageRequest!=null) {
+            final PagedData<ItemSchema> results = retrieveItemSchemaFlowQuery.retrieveAllItemSchemas(page);
+            return PagedResponse.<com.bitsmi.springbootshowcase.api.content.response.ItemSchema>builder()
+                    .content(results.content()
+                            .stream()
+                            .map(itemSchemaMapper::mapResponseFromModel)
+                            .toList()
+                    )
+                    .pagination(results.pagination())
+                    .pageCount(results.pageCount())
+                    .totalCount(results.totalCount())
+                    .totalPages(results.totalPages())
+                    .build();
+        }
+        else {
+            final List<ItemSchema> results = retrieveItemSchemaFlowQuery.retrieveAllItemSchemas();
+            return PagedResponse.<com.bitsmi.springbootshowcase.api.content.response.ItemSchema>builder()
+                    .content(results.stream()
+                            .map(itemSchemaMapper::mapResponseFromModel)
+                            .toList()
+                    )
+                    .pagination(Pagination.of(0, results.size(), Sort.UNSORTED))
+                    .pageCount(results.size())
+                    .totalCount(results.size())
+                    .totalPages(1)
+                    .build();
+        }
     }
 
     @Override
@@ -63,7 +84,7 @@ public class ItemSchemaApiControllerImpl implements IItemSchemaApi
     {
         try {
             ItemSchema inputItemSchema = itemSchemaMapper.mapModelFromRequest(request);
-            ItemSchema createdItemSchema = itemSchemaManagementService.createSchema(inputItemSchema);
+            ItemSchema createdItemSchema = createItemSchemaCommand.createItemSchema(inputItemSchema);
 
             // Event bound to the observation
             observationRegistry.getCurrentObservation()

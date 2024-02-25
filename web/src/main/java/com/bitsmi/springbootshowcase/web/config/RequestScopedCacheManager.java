@@ -43,9 +43,9 @@ public class RequestScopedCacheManager implements CacheManager
             cacheMap = new HashMap<>();
             requestAttributes.setAttribute(getCacheMapAttributeName(), cacheMap, RequestAttributes.SCOPE_REQUEST);
             requestAttributes.registerDestructionCallback(
-                getCacheMapAttributeName(),
-                () -> LOGGER.info("Removed scoped cache from request: {}", getCurrentHttpRequest()),
-                RequestAttributes.SCOPE_REQUEST
+                    getCacheMapAttributeName(),
+                    () -> LOGGER.info("Removed scoped cache from request: {}", getCurrentHttpRequest()),
+                    RequestAttributes.SCOPE_REQUEST
             );
         }
         return cacheMap;

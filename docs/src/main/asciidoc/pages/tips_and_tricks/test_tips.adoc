@@ -32,7 +32,7 @@ Once the test is executed, you can access to the resulting DB with a SQL client 
 @AutoConfigureDataJpa
 @AutoConfigureTestEntityManager
 @TestPropertySource(properties = {
-        "spring.liquibase.change-log=classpath:db/changelogs/core/test/content/item_management_service_tests.xml"
+        "spring.liquibase.change-log=classpath:db/changelogs/core/test/content/item_persistence_service_tests.xml"
 })
 public class ItemManagementServiceTests
 {

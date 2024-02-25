@@ -1,0 +1,143 @@
+= Architecture
+:toc:
+
+== Modules
+
+[plantuml]
+----
+rectangle main
+rectangle " " as setup {
+    rectangle application
+    rectangle core
+    rectangle domain
+    rectangle web
+}
+
+main .right.> setup : "assembles"
+web --> application
+application --> domain
+core --|> domain
+----
+
+=== Main
+**Purpose**
+
+`Main` module serves as entry point for application.
+It configures which modules are assembled to build the application.
+This is done in `MainConfig` class through `@Import` statements of the corresponding modules that will form part of the application
+
+E.G.
+
+[source,java]
+----
+@Configuration
+@Import({
+        WebConfig.class,
+        ApplicationConfig.class,
+        CoreConfig.class
+})
+@PropertySource(value = {
+        "file:conf/application.properties"
+    },
+    ignoreResourceNotFound = true
+)
+public class MainConfig
+{
+
+}
+
+----
+
+**What's inside**
+
+- Configurations related application's assembly
+- Docker & Docker compose configurations related to application's deployment
+
+=== Application
+**Purpose**
+
+`Application` module is used to define application flows so that every endpoint module such as `web`, `messaging`, etc. is able to access to the flow entry point.
+
+**What's inside**
+
+- Entry point services to application flows that coordinates application level activities. This layer should not implement business logic related to Domain. It should delegate it to `domain` module components
+- Implement top level transactionality when needed
+- Interfaces that top level modules (web, messaging...) should implement to provide specific functionality related to them. E.G. Memoize cache provider implementing request scoped caches provided by Web module
+
+=== Core
+**Purpose**
+
+`Core` module contains all infrastructure related configurations
+
+**What's inside**
+
+- Persistence support (JPA, Mongo...)
+- Configurations about transversal services like Caches, Observability...
+Each of this configurations should be made in a separate configuration so dependant modules can import them to used in, for example, integration tests
+- Configuration of Domain related managed beans E.G. make Domain Commands & Queries available to be injected in Application Flow components
+- Attach Domain SPI service interfaces to corresponding Core implementation
+
+=== Domain
+**Purpose**
+
+`Domain` module implements applications business logic in an agnostic way, try to not be dependant of frameworks
+
+**What's inside**
+
+- Model classes
+- Query & Commands for different use cases involving domain model classes
+- SPI interfaces that will be implemented in `Core` module for infrastructure dependant components like persistence or event publishing
+
+=== Web
+**Purpose**
+
+`Web` module exposes rest service entrypoints to Applications module defined flows
+
+**What's inside**
+
+- Spring web configurations
+- Spring rest based controllers definition
+- Spring security configuration, including basic & JWT auth
+
+== Component interaction
+
+[plantuml]
+----
+rectangle Web {
+    rectangle Controller
+}
+
+rectangle Application {
+    rectangle ApplicationCommand
+    rectangle ApplicationQuery
+
+    ApplicationCommand -[hidden]d-> ApplicationQuery
+}
+
+rectangle Domain {
+    rectangle InputPorts as DomainInputPorts {
+        rectangle CommandDomainService
+        rectangle QueryDomainService
+    }
+
+    rectangle OutputPorts as DomainOutputPorts {
+        rectangle IPersistenceService
+    }
+
+    DomainInputPorts -[hidden]d-> DomainOutputPorts
+    CommandDomainService -[hidden]d-> QueryDomainService
+}
+
+rectangle Core {
+    rectangle PersistenceServiceImpl
+}
+
+Controller -> Application
+ApplicationCommand -> DomainInputPorts
+ApplicationQuery -u-> DomainInputPorts
+DomainOutputPorts <|-- Core
+----
+
+== Variations
+
+TODO

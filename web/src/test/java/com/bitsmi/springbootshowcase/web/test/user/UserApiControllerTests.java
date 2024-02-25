@@ -1,8 +1,8 @@
 package com.bitsmi.springbootshowcase.web.test.user;
 
 import com.bitsmi.springbootshowcase.api.user.response.UserDetailsResponse;
-import com.bitsmi.springbootshowcase.core.common.IUserManagementService;
-import com.bitsmi.springbootshowcase.core.common.model.UserSummary;
+import com.bitsmi.springbootshowcase.domain.common.model.UserSummary;
+import com.bitsmi.springbootshowcase.domain.common.spi.IUserPersistenceService;
 import com.bitsmi.springbootshowcase.web.common.service.IAuthenticationPrincipalService;
 import com.bitsmi.springbootshowcase.web.user.controller.UserApiControllerImpl;
 import org.junit.jupiter.api.DisplayName;
@@ -25,7 +25,7 @@ public class UserApiControllerTests
     @Mock
     private IAuthenticationPrincipalService authenticationPrincipalService;
     @Mock
-    private IUserManagementService userManagementService;
+    private IUserPersistenceService userPersistenceService;
 
     @InjectMocks
     private UserApiControllerImpl userApiController;
@@ -45,7 +45,7 @@ public class UserApiControllerTests
         when(userDetails.getUsername()).thenReturn(expectedUsername);
         when(authenticationPrincipalService.getAuthenticationPrincipal())
                 .thenReturn(userDetails);
-        when(userManagementService.findUserSummaryByUsername(expectedUsername)).thenReturn(Optional.of(userSummary));
+        when(userPersistenceService.findUserSummaryByUsername(expectedUsername)).thenReturn(Optional.of(userSummary));
 
         UserDetailsResponse response = userApiController.getDetails();
 

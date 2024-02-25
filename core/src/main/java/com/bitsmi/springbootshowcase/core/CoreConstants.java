@@ -2,7 +2,6 @@ package com.bitsmi.springbootshowcase.core;
 
 public final class CoreConstants
 {
-    public static final String CACHE_MANAGER_MEMOIZE = "memoizeCacheManager";
     public static final String CACHE_MANAGER_DEFAULT = "cacheManager";
 
     public static final String CACHE_ALL_SCHEMAS = "allSchemas";

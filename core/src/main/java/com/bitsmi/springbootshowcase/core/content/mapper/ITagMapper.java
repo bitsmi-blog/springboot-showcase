@@ -1,7 +1,7 @@
 package com.bitsmi.springbootshowcase.core.content.mapper;
 
 import com.bitsmi.springbootshowcase.core.content.entity.TagEntity;
-import com.bitsmi.springbootshowcase.core.content.model.Tag;
+import com.bitsmi.springbootshowcase.domain.content.model.Tag;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring",

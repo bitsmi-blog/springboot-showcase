@@ -12,6 +12,6 @@ import org.mapstruct.Mapper;
 )
 public interface IItemSchemaApiMapper
 {
-    ItemSchema mapResponseFromModel(com.bitsmi.springbootshowcase.core.content.model.ItemSchema model);
-    com.bitsmi.springbootshowcase.core.content.model.ItemSchema mapModelFromRequest(CreateItemSchemaRequest request);
+    ItemSchema mapResponseFromModel(com.bitsmi.springbootshowcase.domain.content.model.ItemSchema model);
+    com.bitsmi.springbootshowcase.domain.content.model.ItemSchema mapModelFromRequest(CreateItemSchemaRequest request);
 }

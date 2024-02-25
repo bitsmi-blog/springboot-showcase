@@ -1,7 +1,9 @@
 package com.bitsmi.springbootshowcase.web.test.user;
 
 import com.bitsmi.springbootshowcase.api.user.response.UserDetailsResponse;
-import com.bitsmi.springbootshowcase.web.IMainPackage;
+import com.bitsmi.springbootshowcase.domain.common.util.IgnoreOnComponentScan;
+import com.bitsmi.springbootshowcase.web.config.WebConfig;
+import com.bitsmi.springbootshowcase.web.test.config.ApplicationModuleMockConfig;
 import com.bitsmi.springbootshowcase.web.test.util.ControllerIntegrationTest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -19,7 +21,6 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.security.web.FilterChainProxy;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
@@ -30,11 +31,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ControllerIntegrationTest
-@TestPropertySource(
-    properties = {
-        "spring.liquibase.change-log=classpath:db/changelogs/core/test/common/user_management_service_tests.xml"
-    }
-)
 @WithUserDetails("john.doe")
 public class UserApiControllerIntTests
 {
@@ -104,7 +100,8 @@ public class UserApiControllerIntTests
      * SETUP AND HELPERS
      *---------------------------*/
     @TestConfiguration
-    @ComponentScan(basePackageClasses = IMainPackage.class)
+    @Import({ WebConfig.class, ApplicationModuleMockConfig.class })
+    @IgnoreOnComponentScan
     static class TestConfig
     {
         @Bean
@@ -113,10 +110,10 @@ public class UserApiControllerIntTests
         {
             InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
             manager.createUser(User.withUsername("john.doe")
-                    .password(encoder.encode("foobar"))
+                    .password(encoder.encode("password.john.doe"))
                     .build());
             manager.createUser(User.withUsername("admin")
-                    .password(encoder.encode("barfoo"))
+                    .password(encoder.encode("password.admin"))
                     .roles("admin.authority1")
                     .build());
 

@@ -1,6 +1,6 @@
 package com.bitsmi.springbootshowcase.web.dummy.controller;
 
-import com.bitsmi.springbootshowcase.core.dummy.ISampleService;
+import com.bitsmi.springbootshowcase.application.dummy.ISampleApplicationService;
 import io.micrometer.observation.annotation.Observed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -16,14 +16,15 @@ import org.springframework.web.bind.annotation.RestController;
 public class SampleApiController
 {
     @Autowired
-    private ISampleService sampleService;
+    private ISampleApplicationService sampleApplicationService;
 
     @GetMapping(produces = MediaType.TEXT_PLAIN_VALUE)
     public String getSample()
     {
-        String sample = sampleService.getSample();
-        sampleService.getSample();
-        sampleService.getSample();
+        String sample = sampleApplicationService.getSample();
+        // Cached
+        sampleApplicationService.getSample();
+        sampleApplicationService.getSample();
 
         return sample;
     }

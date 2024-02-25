@@ -1,6 +1,6 @@
 package com.bitsmi.springbootshowcase.web.common.controller;
 
-import com.bitsmi.springbootshowcase.core.common.exception.CodedException;
+import com.bitsmi.springbootshowcase.domain.common.exception.CodedException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;

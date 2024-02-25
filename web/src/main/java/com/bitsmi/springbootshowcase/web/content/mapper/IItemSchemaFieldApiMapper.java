@@ -8,5 +8,5 @@ import org.mapstruct.Mapper;
 )
 public interface IItemSchemaFieldApiMapper
 {
-    ItemSchemaField fromModel(com.bitsmi.springbootshowcase.core.content.model.ItemSchemaField model);
+    ItemSchemaField fromModel(com.bitsmi.springbootshowcase.domain.content.model.ItemSchemaField model);
 }

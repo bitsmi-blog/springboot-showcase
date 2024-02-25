@@ -53,10 +53,12 @@ public class ItemSchemaApiClientTest
                         .withBody("""
                                 {
                                     "content":[{"id":1001,"externalId":"schema-1","name":"Dummy Schema 1","fields":[{"id":1002,"name":"field1.2","dataType":"NUMBER","comments":"Sample field comments","creationDate":"2023-01-01T00:00:00","lastUpdated":"2023-01-01T00:00:00"},{"id":1001,"name":"field1.1","dataType":"STRING","comments":null,"creationDate":"2023-01-01T00:00:00","lastUpdated":"2023-01-01T00:00:00"}],"creationDate":"2023-01-01T00:00:00","lastUpdated":"2023-01-01T00:00:00"},{"id":1002,"externalId":"schema-2","name":"Dummy Schema 2","fields":[{"id":1003,"name":"field2.1","dataType":"STRING","comments":null,"creationDate":"2023-01-01T00:00:00","lastUpdated":"2023-01-01T00:00:00"},{"id":1004,"name":"field2.2","dataType":"NUMBER","comments":"Sample field comments","creationDate":"2023-01-01T00:00:00","lastUpdated":"2023-01-01T00:00:00"}],"creationDate":"2023-01-01T00:00:00","lastUpdated":"2023-01-01T00:00:00"},{"id":1003,"externalId":"schema-3","name":"Dummy Schema 3","fields":[{"id":1005,"name":"field3.1","dataType":"STRING","comments":null,"creationDate":"2023-01-01T00:00:00","lastUpdated":"2023-01-01T00:00:00"},{"id":1006,"name":"field3.2","dataType":"NUMBER","comments":"Sample field comments","creationDate":"2023-01-01T00:00:00","lastUpdated":"2023-01-01T00:00:00"}],"creationDate":"2023-01-01T00:00:00","lastUpdated":"2023-01-01T00:00:00"},{"id":1004,"externalId":"schema-4","name":"Dummy Schema 4","fields":[{"id":1008,"name":"field4.2","dataType":"NUMBER","comments":"Sample field comments","creationDate":"2023-01-01T00:00:00","lastUpdated":"2023-01-01T00:00:00"},{"id":1007,"name":"field4.1","dataType":"STRING","comments":null,"creationDate":"2023-01-01T00:00:00","lastUpdated":"2023-01-01T00:00:00"}],"creationDate":"2023-01-01T00:00:00","lastUpdated":"2023-01-01T00:00:00"},{"id":1005,"externalId":"schema-5","name":"Dummy Schema 5","fields":[{"id":1010,"name":"field5.2","dataType":"NUMBER","comments":"Sample field comments","creationDate":"2023-01-01T00:00:00","lastUpdated":"2023-01-01T00:00:00"},{"id":1009,"name":"field5.1","dataType":"STRING","comments":null,"creationDate":"2023-01-01T00:00:00","lastUpdated":"2023-01-01T00:00:00"}],"creationDate":"2023-01-01T00:00:00","lastUpdated":"2023-01-01T00:00:00"}],
-                                    "pageNumber":0,
-                                    "pageSize":5,
+                                    "pagination":{
+                                        "pageNumber":0,
+                                        "pageSize":5
+                                    },
                                     "totalPages":3,
-                                    "totalElements":11
+                                    "totalCount":11
                                 }
                                 """)
                 )
@@ -64,11 +66,11 @@ public class ItemSchemaApiClientTest
 
         PagedResponse<ItemSchema> response = itemSchemaApiClient.getSchemas(PageRequest.of(0, 5));
 
-        assertThat(response.totalElements()).isEqualTo(11);
-        assertThat(response.pageNumber()).isEqualTo(0);
-        assertThat(response.totalPages()).isEqualTo(3);
-        assertThat(response.pageSize()).isEqualTo(5);
         assertThat(response.content()).hasSize(5);
+        assertThat(response.pagination().pageNumber()).isEqualTo(0);
+        assertThat(response.pagination().pageSize()).isEqualTo(5);
+        assertThat(response.totalPages()).isEqualTo(3);
+        assertThat(response.totalCount()).isEqualTo(11);
     }
 
     /*---------------------------*

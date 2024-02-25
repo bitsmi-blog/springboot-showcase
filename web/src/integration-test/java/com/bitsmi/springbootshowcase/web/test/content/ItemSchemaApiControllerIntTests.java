@@ -1,6 +1,8 @@
 package com.bitsmi.springbootshowcase.web.test.content;
 
-import com.bitsmi.springbootshowcase.web.IMainPackage;
+import com.bitsmi.springbootshowcase.domain.common.util.IgnoreOnComponentScan;
+import com.bitsmi.springbootshowcase.web.config.WebConfig;
+import com.bitsmi.springbootshowcase.web.test.config.ApplicationModuleMockConfig;
 import com.bitsmi.springbootshowcase.web.test.util.ControllerIntegrationTest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -17,7 +19,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.security.web.FilterChainProxy;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
@@ -29,11 +30,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ControllerIntegrationTest
-@TestPropertySource(
-    properties = {
-        "spring.liquibase.change-log=classpath:db/changelogs/core/test/content/item_schema_management_service_tests.xml"
-    }
-)
 @WithUserDetails("john.doe")
 public class ItemSchemaApiControllerIntTests
 {
@@ -58,12 +54,13 @@ public class ItemSchemaApiControllerIntTests
                         .with(testSecurityContext()))
                 .andDo(print())
                 .andExpectAll(
-                    status().isOk(),
-                    jsonPath("content").isArray(),
-                    jsonPath("pageNumber").value(0),
-                    jsonPath("pageSize").value(5),
-                    jsonPath("totalPages").value(3),
-                    jsonPath("totalElements").value(11)
+                        status().isOk(),
+                        jsonPath("content").isArray(),
+                        jsonPath("pagination.pageNumber").value(0),
+                        jsonPath("pagination.pageSize").value(5),
+                        jsonPath("pageCount").value(2),
+                        jsonPath("totalCount").value(2),
+                        jsonPath("totalPages").value(1)
                 );
     }
 
@@ -71,7 +68,8 @@ public class ItemSchemaApiControllerIntTests
      * SETUP AND HELPERS
      *---------------------------*/
     @TestConfiguration
-    @ComponentScan(basePackageClasses = IMainPackage.class)
+    @Import({ WebConfig.class, ApplicationModuleMockConfig.class })
+    @IgnoreOnComponentScan
     static class TestConfig
     {
         @Bean
