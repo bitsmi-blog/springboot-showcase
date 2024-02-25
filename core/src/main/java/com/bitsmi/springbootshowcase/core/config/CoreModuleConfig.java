@@ -11,7 +11,7 @@ import org.springframework.context.annotation.FilterType;
     basePackageClasses = { ICorePackage.class },
     excludeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION, classes = IgnoreOnComponentScan.class)
 )
-public class CoreConfig
+public class CoreModuleConfig
 {
 
 }

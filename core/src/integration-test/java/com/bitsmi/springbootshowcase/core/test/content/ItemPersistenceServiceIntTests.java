@@ -3,7 +3,7 @@ package com.bitsmi.springbootshowcase.core.test.content;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.bitsmi.springbootshowcase.domain.common.util.IgnoreOnComponentScan;
-import com.bitsmi.springbootshowcase.core.config.CoreConfig;
+import com.bitsmi.springbootshowcase.core.config.CoreModuleConfig;
 import com.bitsmi.springbootshowcase.core.content.repository.ITagRepository;
 import com.bitsmi.springbootshowcase.core.testutil.ServiceIntegrationTest;
 import com.bitsmi.springbootshowcase.domain.content.model.Item;
@@ -81,7 +81,7 @@ public class ItemPersistenceServiceIntTests
      * SETUP AND HELPERS
      *---------------------------*/
     @TestConfiguration
-    @Import({ CoreConfig.class })
+    @Import({ CoreModuleConfig.class })
     @IgnoreOnComponentScan
     static class TestConfig
     {

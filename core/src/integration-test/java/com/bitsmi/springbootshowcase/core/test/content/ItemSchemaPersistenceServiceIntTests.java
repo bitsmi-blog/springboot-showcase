@@ -1,7 +1,7 @@
 package com.bitsmi.springbootshowcase.core.test.content;
 
 import com.bitsmi.springbootshowcase.domain.common.util.IgnoreOnComponentScan;
-import com.bitsmi.springbootshowcase.core.config.CoreConfig;
+import com.bitsmi.springbootshowcase.core.config.CoreModuleConfig;
 import com.bitsmi.springbootshowcase.core.testutil.ServiceIntegrationTest;
 import com.bitsmi.springbootshowcase.domain.common.dto.PagedData;
 import com.bitsmi.springbootshowcase.domain.common.dto.Pagination;
@@ -340,7 +340,7 @@ public class ItemSchemaPersistenceServiceIntTests
      * SETUP AND HELPERS
      *---------------------------*/
     @TestConfiguration
-    @Import({ CoreConfig.class })
+    @Import({ CoreModuleConfig.class })
     @IgnoreOnComponentScan
     static class TestConfig
     {

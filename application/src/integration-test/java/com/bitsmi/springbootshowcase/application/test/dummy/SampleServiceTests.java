@@ -1,6 +1,6 @@
 package com.bitsmi.springbootshowcase.application.test.dummy;
 
-import com.bitsmi.springbootshowcase.application.config.ApplicationConfig;
+import com.bitsmi.springbootshowcase.application.config.ApplicationModuleConfig;
 import com.bitsmi.springbootshowcase.application.dummy.ISampleApplicationService;
 import com.bitsmi.springbootshowcase.application.test.config.DomainModuleMockConfig;
 import com.bitsmi.springbootshowcase.domain.common.util.IgnoreOnComponentScan;
@@ -86,7 +86,7 @@ public class SampleServiceTests
      * SETUP AND HELPERS
      *---------------------------*/
     @TestConfiguration
-    @Import({ ApplicationConfig.class, DomainModuleMockConfig.class })
+    @Import({ ApplicationModuleConfig.class, DomainModuleMockConfig.class })
     @IgnoreOnComponentScan
     @EnableAspectJAutoProxy
     static class TestConfig

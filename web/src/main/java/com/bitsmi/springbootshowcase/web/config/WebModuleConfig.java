@@ -19,7 +19,7 @@ import org.springframework.web.servlet.mvc.WebContentInterceptor;
         basePackageClasses = { IWebPackage.class },
         excludeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION, classes = IgnoreOnComponentScan.class)
 )
-public class WebConfig implements WebMvcConfigurer
+public class WebModuleConfig implements WebMvcConfigurer
 {
 	/**
      * Set async events timeout (180 seg.)

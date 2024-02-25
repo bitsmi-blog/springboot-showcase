@@ -3,7 +3,7 @@ package com.bitsmi.springbootshowcase.web.test.auth;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.bitsmi.springbootshowcase.api.user.response.UserDetailsResponse;
-import com.bitsmi.springbootshowcase.web.config.WebConfig;
+import com.bitsmi.springbootshowcase.web.config.WebModuleConfig;
 import com.bitsmi.springbootshowcase.web.test.config.ApplicationModuleMockConfig;
 import com.bitsmi.springbootshowcase.web.test.util.ControllerIntegrationTest;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -128,7 +128,7 @@ public class JwtAuthIntTests
      * SETUP AND HELPERS
      *---------------------------*/
     @TestConfiguration()
-    @Import({ WebConfig.class, ApplicationModuleMockConfig.class })
+    @Import({ WebModuleConfig.class, ApplicationModuleMockConfig.class })
     static class TestConfig
     {
         @Bean
