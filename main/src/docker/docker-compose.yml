@@ -1,6 +1,6 @@
 version: "3"
 
-name: springboot-showcase-web
+name: springboot-showcase-main
 
 networks:
   application-network:
@@ -8,8 +8,8 @@ networks:
 
 services:
   application:
-    image: springboot-showcase-web:1.0.0-SNAPSHOT
-    container_name: springboot-showcase-web
+    image: springboot-showcase-main:2.0.0-SNAPSHOT
+    container_name: springboot-showcase-main
     ports:
       - "8080:8080"
     env_file:
