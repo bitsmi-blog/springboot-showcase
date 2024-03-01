@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.20">
-<title>Spring Data</title>
+<title>Architecture</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -433,10 +433,225 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 @media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+pre.rouge table td { padding: 5px; }
+pre.rouge table pre { margin: 0; }
+pre.rouge .cm {
+  color: #999988;
+  font-style: italic;
+}
+pre.rouge .cp {
+  color: #999999;
+  font-weight: bold;
+}
+pre.rouge .c1 {
+  color: #999988;
+  font-style: italic;
+}
+pre.rouge .cs {
+  color: #999999;
+  font-weight: bold;
+  font-style: italic;
+}
+pre.rouge .c, pre.rouge .ch, pre.rouge .cd, pre.rouge .cpf {
+  color: #999988;
+  font-style: italic;
+}
+pre.rouge .err {
+  color: #a61717;
+  background-color: #e3d2d2;
+}
+pre.rouge .gd {
+  color: #000000;
+  background-color: #ffdddd;
+}
+pre.rouge .ge {
+  color: #000000;
+  font-style: italic;
+}
+pre.rouge .gr {
+  color: #aa0000;
+}
+pre.rouge .gh {
+  color: #999999;
+}
+pre.rouge .gi {
+  color: #000000;
+  background-color: #ddffdd;
+}
+pre.rouge .go {
+  color: #888888;
+}
+pre.rouge .gp {
+  color: #555555;
+}
+pre.rouge .gs {
+  font-weight: bold;
+}
+pre.rouge .gu {
+  color: #aaaaaa;
+}
+pre.rouge .gt {
+  color: #aa0000;
+}
+pre.rouge .kc {
+  color: #000000;
+  font-weight: bold;
+}
+pre.rouge .kd {
+  color: #000000;
+  font-weight: bold;
+}
+pre.rouge .kn {
+  color: #000000;
+  font-weight: bold;
+}
+pre.rouge .kp {
+  color: #000000;
+  font-weight: bold;
+}
+pre.rouge .kr {
+  color: #000000;
+  font-weight: bold;
+}
+pre.rouge .kt {
+  color: #445588;
+  font-weight: bold;
+}
+pre.rouge .k, pre.rouge .kv {
+  color: #000000;
+  font-weight: bold;
+}
+pre.rouge .mf {
+  color: #009999;
+}
+pre.rouge .mh {
+  color: #009999;
+}
+pre.rouge .il {
+  color: #009999;
+}
+pre.rouge .mi {
+  color: #009999;
+}
+pre.rouge .mo {
+  color: #009999;
+}
+pre.rouge .m, pre.rouge .mb, pre.rouge .mx {
+  color: #009999;
+}
+pre.rouge .sa {
+  color: #000000;
+  font-weight: bold;
+}
+pre.rouge .sb {
+  color: #d14;
+}
+pre.rouge .sc {
+  color: #d14;
+}
+pre.rouge .sd {
+  color: #d14;
+}
+pre.rouge .s2 {
+  color: #d14;
+}
+pre.rouge .se {
+  color: #d14;
+}
+pre.rouge .sh {
+  color: #d14;
+}
+pre.rouge .si {
+  color: #d14;
+}
+pre.rouge .sx {
+  color: #d14;
+}
+pre.rouge .sr {
+  color: #009926;
+}
+pre.rouge .s1 {
+  color: #d14;
+}
+pre.rouge .ss {
+  color: #990073;
+}
+pre.rouge .s, pre.rouge .dl {
+  color: #d14;
+}
+pre.rouge .na {
+  color: #008080;
+}
+pre.rouge .bp {
+  color: #999999;
+}
+pre.rouge .nb {
+  color: #0086B3;
+}
+pre.rouge .nc {
+  color: #445588;
+  font-weight: bold;
+}
+pre.rouge .no {
+  color: #008080;
+}
+pre.rouge .nd {
+  color: #3c5d5d;
+  font-weight: bold;
+}
+pre.rouge .ni {
+  color: #800080;
+}
+pre.rouge .ne {
+  color: #990000;
+  font-weight: bold;
+}
+pre.rouge .nf, pre.rouge .fm {
+  color: #990000;
+  font-weight: bold;
+}
+pre.rouge .nl {
+  color: #990000;
+  font-weight: bold;
+}
+pre.rouge .nn {
+  color: #555555;
+}
+pre.rouge .nt {
+  color: #000080;
+}
+pre.rouge .vc {
+  color: #008080;
+}
+pre.rouge .vg {
+  color: #008080;
+}
+pre.rouge .vi {
+  color: #008080;
+}
+pre.rouge .nv, pre.rouge .vm {
+  color: #008080;
+}
+pre.rouge .ow {
+  color: #000000;
+  font-weight: bold;
+}
+pre.rouge .o {
+  color: #000000;
+  font-weight: bold;
+}
+pre.rouge .w {
+  color: #bbbbbb;
+}
+pre.rouge {
+  background-color: #f8f8f8;
+}
+</style>
 </head>
 <body class="article toc2 toc-left">
 <div id="header">
-<h1>Spring Data</h1>
+<h1>Architecture</h1>
 <div class="details">
 <span id="revnumber">version 2.0.0-SNAPSHOT,</span>
 <span id="revdate">2024-03-01T17:16:56Z</span>
@@ -444,9 +659,33 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#spring-jpa">Spring JPA</a>
+<li><a href="#modules">Modules</a>
 <ul class="sectlevel2">
-<li><a href="#supported-keywords-inside-method-names">Supported keywords inside method names</a></li>
+<li><a href="#_main_module_description">Main</a></li>
+<li><a href="#application">Application</a></li>
+<li><a href="#core">Core</a></li>
+<li><a href="#domain">Domain</a></li>
+<li><a href="#web">Web</a></li>
+</ul>
+</li>
+<li><a href="#module-general-structure">Module general structure</a>
+<ul class="sectlevel2">
+<li><a href="#packages">Packages</a></li>
+<li><a href="#configuration">Configuration</a></li>
+</ul>
+</li>
+<li><a href="#components">Components</a>
+<ul class="sectlevel2">
+<li><a href="#web-2">Web</a></li>
+<li><a href="#application-2">Application</a></li>
+<li><a href="#domain-2">Domain</a></li>
+<li><a href="#core-2">Core</a></li>
+<li><a href="#interactions">Interactions</a></li>
+</ul>
+</li>
+<li><a href="#variations">Variations</a>
+<ul class="sectlevel2">
+<li><a href="#layered-module">Layered module</a></li>
 </ul>
 </li>
 </ul>
@@ -454,151 +693,344 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="spring-jpa"><a class="anchor" href="#spring-jpa"></a>Spring JPA</h2>
+<h2 id="modules"><a class="anchor" href="#modules"></a>Modules</h2>
+<div class="sectionbody">
+<div class="imageblock">
+<div class="content">
+<img src="diag-plantuml-md5-673b3a2a27228bac9eb667c0b6cde4f3.png" alt="Diagram" width="381" height="316">
+</div>
+</div>
+<div class="sect2">
+<h3 id="_main_module_description"><a class="anchor" href="#_main_module_description"></a>Main</h3>
+<div class="paragraph">
+<p><strong>Purpose</strong></p>
+</div>
+<div class="paragraph">
+<p><code>Main</code> module serves as entry point for application.
+It configures which modules are assembled to build the application.
+This is done in <code>MainModuleConfig</code> class through <code>@Import</code> statements of the corresponding modules that will form part of the application</p>
+</div>
+<div class="paragraph">
+<p>E.G.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java"><span class="nd">@Configuration</span>
+<span class="nd">@Import</span><span class="o">({</span>
+        <span class="nc">WebModuleConfig</span><span class="o">.</span><span class="na">class</span><span class="o">,</span>
+        <span class="nc">ApplicationModuleConfig</span><span class="o">.</span><span class="na">class</span><span class="o">,</span>
+        <span class="nc">CoreModuleConfig</span><span class="o">.</span><span class="na">class</span>
+<span class="o">})</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MainModuleConfig</span>
+<span class="o">{</span>
+
+<span class="o">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>What&#8217;s inside</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Configurations related application&#8217;s assembly</p>
+</li>
+<li>
+<p>Docker &amp; Docker compose configurations related to application&#8217;s deployment</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="application"><a class="anchor" href="#application"></a>Application</h3>
+<div class="paragraph">
+<p><strong>Purpose</strong></p>
+</div>
+<div class="paragraph">
+<p><code>Application</code> module is used to define application flows so that every endpoint module such as <code>web</code>, <code>messaging</code>, etc. is able to access to the flow entry point.</p>
+</div>
+<div class="paragraph">
+<p><strong>What&#8217;s inside</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Entry point services to application flows that coordinates application level activities. This layer should not implement business logic related to Domain. It should delegate it to <code>domain</code> module components</p>
+</li>
+<li>
+<p>Implement top level transactionality when needed</p>
+</li>
+<li>
+<p>Interfaces that top level modules (web, messaging&#8230;&#8203;) should implement to provide specific functionality related to them. E.G. Memoize cache provider implementing request scoped caches provided by Web module</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="core"><a class="anchor" href="#core"></a>Core</h3>
+<div class="paragraph">
+<p><strong>Purpose</strong></p>
+</div>
+<div class="paragraph">
+<p><code>Core</code> module contains all infrastructure related configurations</p>
+</div>
+<div class="paragraph">
+<p><strong>What&#8217;s inside</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Persistence support (JPA, Mongo&#8230;&#8203;)</p>
+</li>
+<li>
+<p>Configurations about transversal services like Caches, Observability&#8230;&#8203;
+Each of this configurations should be made in a separate configuration so dependant modules can import them to used in, for example, integration tests</p>
+</li>
+<li>
+<p>Configuration of Domain related managed beans E.G. make Domain Commands &amp; Queries available to be injected in Application Flow components</p>
+</li>
+<li>
+<p>Attach Domain SPI service interfaces to corresponding Core implementation</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="domain"><a class="anchor" href="#domain"></a>Domain</h3>
+<div class="paragraph">
+<p><strong>Purpose</strong></p>
+</div>
+<div class="paragraph">
+<p><code>Domain</code> module implements applications business logic in an agnostic way, try to not be dependant of frameworks</p>
+</div>
+<div class="paragraph">
+<p><strong>What&#8217;s inside</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Model classes</p>
+</li>
+<li>
+<p>Query &amp; Commands for different use cases involving domain model classes</p>
+</li>
+<li>
+<p>SPI interfaces that will be implemented in <code>Core</code> module for infrastructure dependant components like persistence or event publishing</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="web"><a class="anchor" href="#web"></a>Web</h3>
+<div class="paragraph">
+<p><strong>Purpose</strong></p>
+</div>
+<div class="paragraph">
+<p><code>Web</code> module exposes rest service entrypoints to Applications module defined flows</p>
+</div>
+<div class="paragraph">
+<p><strong>What&#8217;s inside</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Spring web configurations</p>
+</li>
+<li>
+<p>Spring rest based controllers definition</p>
+</li>
+<li>
+<p>Spring security configuration, including basic &amp; JWT auth</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="module-general-structure"><a class="anchor" href="#module-general-structure"></a>Module general structure</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="supported-keywords-inside-method-names"><a class="anchor" href="#supported-keywords-inside-method-names"></a>Supported keywords inside method names</h3>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 33.3333%;">
-<col style="width: 33.3334%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">Keyword</th>
-<th class="tableblock halign-left valign-top">Sample</th>
-<th class="tableblock halign-left valign-top">JPQL Snippet</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Distinct</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">findDistinctByLastnameAndFirstname</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">select distinct &#8230;&#8203; where x.lastname = ?1 and x.firstname = ?2</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">And</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">findByLastnameAndFirstname</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203; where x.lastname = ?1 and x.firstname = ?2</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Or</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">findByLastnameOrFirstname</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203; where x.lastname = ?1 or x.firstname = ?2</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Is, Equals</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">findByFirstname,findByFirstnameIs,findByFirstnameEquals</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">… where x.firstname = ?1</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Between</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">findByStartDateBetween</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203; where x.startDate between ?1 and ?2</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">LessThan</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">findByAgeLessThan</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203; where x.age &lt; ?1</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">LessThanEqual</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">findByAgeLessThanEqual</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203; where x.age &#8656; ?1</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">GreaterThan</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">findByAgeGreaterThan</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203; where x.age &gt; ?1</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">GreaterThanEqual</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">findByAgeGreaterThanEqual</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203; where x.age &gt;= ?1</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">After</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">findByStartDateAfter</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203; where x.startDate &gt; ?1</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Before</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">findByStartDateBefore</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203; where x.startDate &lt; ?1</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">IsNull, Null</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">findByAge(Is)Null</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203; where x.age is null</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">IsNotNull, NotNull</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">findByAge(Is)NotNull</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203; where x.age not null</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Like</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">findByFirstnameLike</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203; where x.firstname like ?1</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">NotLike</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">findByFirstnameNotLike</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203; where x.firstname not like ?1</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">StartingWith</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">findByFirstnameStartingWith</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203; where x.firstname like ?1 (parameter bound with appended %)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">EndingWith</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">findByFirstnameEndingWith</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203; where x.firstname like ?1 (parameter bound with prepended %)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Containing</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">findByFirstnameContaining</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203; where x.firstname like ?1 (parameter bound wrapped in %)</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">OrderBy</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">findByAgeOrderByLastnameDesc</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203; where x.age = ?1 order by x.lastname desc</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Not</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">findByLastnameNot</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203; where x.lastname &lt;&gt; ?1</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">In</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">findByAgeIn(Collection&lt;Age&gt; ages)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203; where x.age in ?1</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">NotIn</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">findByAgeNotIn(Collection&lt;Age&gt; ages)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203; where x.age not in ?1</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">True</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">findByActiveTrue()</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203; where x.active = true</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">False</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">findByActiveFalse()</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203; where x.active = false</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">IgnoreCase</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">findByFirstnameIgnoreCase</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203; where UPPER(x.firstname) = UPPER(?1)</p></td>
-</tr>
-</tbody>
-</table>
+<h3 id="packages"><a class="anchor" href="#packages"></a>Packages</h3>
+<div class="paragraph">
+<p>The general package structure and naming is defined by the following guide:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="diag-plantuml-md5-eb61ac6e93f520315535e4ef3e9e5e55.png" alt="Diagram" width="334" height="540">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Config</strong>: Contains the <strong>Main Config</strong> for the module that will be the entry point for the component scan
+and other module&#8217;s dependencies definition using Spring&#8217;s <code>@Import</code> statements. This package will also contain
+additional feature enable configurations such as <strong>Web MVC</strong>, <strong>Web Security</strong>, <strong>Cache</strong>, <strong>Observability</strong>, <strong>AOP</strong>, etc.
+Every feature configuration will be located in it&#8217;s related module if it&#8217;s only used in / affecting it (E.G. <strong>Web MVC</strong> in <strong>Web</strong> module)
+or in <strong>Core</strong> module if it&#8217;s a global feature (E.G. <strong>AOP</strong>, <strong>Observability</strong>, <strong>Caches</strong>)</p>
+</li>
+<li>
+<p><strong>Event</strong>: Contains general event definition and listeners. The main use case for these events is to be used
+as entry point for an external general event, such as Spring&#8217;s lifecycle events (E.G. <strong>ApplicationStartedEvent</strong>)
+that can be used to trigger module general actions. Context specific event definitions / listeners must be defined in context related subpackage</p>
+</li>
+<li>
+<p><strong>Contexts</strong>: A context should contain components related to a specific bounded context of the domain or concept in the application.
+Every context can define its <strong>Input Ports</strong> service interfaces at the root of the module and its <strong>Output ports</strong> in <code>spi</code> subpackage.
+Implementations for own <strong>Input ports</strong> and external <strong>output ports</strong> will be placed in <code>impl</code> subpackage.
+Also, a special context named <strong>Common</strong> can be defined as a place to put shared components that can be used by other contexts and doesn&#8217;t have
+enough meaning to put then in its own context. <strong>Common</strong> context will not contain general configs or event listeners because they aren&#8217;t dependencies of other contexts.
+In that case, these components can be placed in top <code>config</code> and <code>event/listeners</code> packages of the module
+because in that</p>
+</li>
+<li>
+<p><strong>Module Package Marker Interface</strong>: Java interface intended to be used in Spring&#8217;s component scans as type-safe alternative to basePackages for specifying the packages to scan for annotated components.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="configuration"><a class="anchor" href="#configuration"></a>Configuration</h3>
+<div class="paragraph">
+<p>Every module has its own <code>module config</code> class in charge of trigger the component scan on himself. It is also possible to filter components that doesn&#8217;t have to be scanned automatically because they are optional and must be manually imported using an <code>@Import</code> annotation. The marker annotation <code>IgnoreOnComponentScan</code> can be used to do that. E.G.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java"><span class="nd">@Configuration</span>
+<span class="c1">// This class will be ignored by automatic component scan</span>
+<span class="nd">@IgnoreOnComponentScan</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">OptionalConfig</span> <span class="o">{</span>
+
+<span class="o">}</span>
+
+<span class="c1">//----------------------------------</span>
+
+<span class="nd">@Configuration</span>
+<span class="nd">@ComponentScan</span><span class="o">(</span>
+        <span class="n">basePackageClasses</span> <span class="o">=</span> <span class="o">{</span> <span class="nc">IWebPackage</span><span class="o">.</span><span class="na">class</span> <span class="o">},</span>
+        <span class="n">excludeFilters</span> <span class="o">=</span> <span class="nd">@ComponentScan</span><span class="o">.</span><span class="na">Filter</span><span class="o">(</span><span class="n">type</span> <span class="o">=</span> <span class="nc">FilterType</span><span class="o">.</span><span class="na">ANNOTATION</span><span class="o">,</span> <span class="n">classes</span> <span class="o">=</span> <span class="nc">IgnoreOnComponentScan</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+<span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">WebModuleConfig</span> <span class="o">{</span>
+
+<span class="o">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As explained in <a href="#_main_module_description">Main module</a>'s description section, all module configurations will be assembled in the <code>MainModuleConfig</code> class using <code>@Import</code> annotation.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="components"><a class="anchor" href="#components"></a>Components</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Each module defines a number of different components in the application that interact with each other:</p>
+</div>
+<div class="sect2">
+<h3 id="web-2"><a class="anchor" href="#web-2"></a>Web</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Controller</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="application-2"><a class="anchor" href="#application-2"></a>Application</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Application Query</p>
+</li>
+<li>
+<p>Application Command</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="domain-2"><a class="anchor" href="#domain-2"></a>Domain</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Input Port Interface</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Query Domain Service</p>
+</li>
+<li>
+<p>Command Domain Service</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Output Port Interface</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Persistence Service</p>
+</li>
+<li>
+<p>Event Service</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="core-2"><a class="anchor" href="#core-2"></a>Core</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Domain Output Port Service Implementation</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Persistence Service Implementation</p>
+</li>
+<li>
+<p>Event Service Implementation</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="interactions"><a class="anchor" href="#interactions"></a>Interactions</h3>
+<div class="imageblock text-center">
+<div class="content">
+<img src="./component_interactions.drawio.svg" alt="Interactions diagram">
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="variations"><a class="anchor" href="#variations"></a>Variations</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="layered-module"><a class="anchor" href="#layered-module"></a>Layered module</h3>
+<div class="paragraph">
+<p>Instead of having separate modules for every module defined in this Architecture document,
+they can be defined as a layered architecture in the same package. Every module can be transformed
+in a subpackage.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="diag-plantuml-md5-9ff563728dcf5ee3b441f7e456cd10a3.png" alt="Diagram" width="295" height="499">
+</div>
+</div>
+<div class="paragraph">
+<p>It is also possible que have only <code>Domain</code> layer in a separate module and put the others in a common module. By this way, we can isolate domain business logic from framework dependant components.</p>
+</div>
 </div>
 </div>
 </div>
@@ -606,7 +1038,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="footer">
 <div id="footer-text">
 Version 2.0.0-SNAPSHOT<br>
-Last updated 2024-01-29 21:17:36 +0100
+Last updated 2024-02-28 21:12:20 +0100
 </div>
 </div>
 </body>

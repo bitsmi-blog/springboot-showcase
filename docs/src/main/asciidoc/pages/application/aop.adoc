@@ -1,6 +1,8 @@
 = AOP
 :toc:
 
+TODO
+
 == Aspects
 
 **Enable proxies**
@@ -12,12 +14,12 @@ In production code this not needed as it's auto-configured by Spring through `Ao
 
 [source, java]
 ----
-include::{core-sourcedir}/main/java/com/bitsmi/springbootshowcase/core/dummy/aop/DummyAspect.java[]
+include::{application-sourcedir}/main/java/com/bitsmi/springbootshowcase/application/dummy/aop/DummyAspect.java[]
 ----
 
 **Aspect configuration**
 
 [source, java]
 ----
-include::{core-sourcedir}/main/java/com/bitsmi/springbootshowcase/core/dummy/config/DummyAspectConfig.java[]
+include::{application-sourcedir}/main/java/com/bitsmi/springbootshowcase/application/dummy/config/DummyAspectConfig.java[]
 ----

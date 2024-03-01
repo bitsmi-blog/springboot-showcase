@@ -1,5 +1,7 @@
 # Actuators
 
+DEPRECATED
+
 ## Metrics Endpoints
 
 - http://localhost:8080/actuator

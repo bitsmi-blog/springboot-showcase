@@ -4,13 +4,15 @@
 
 xref:pages/application/architecture.adoc[Architecture]
 
-== Examples index
+xref:pages/application/aop.adoc[AOP]
 
-xref:pages/examples/aop.adoc[AOP]
+xref:pages/application/observability.adoc[Observability]
+
+xref:pages/application/testing.adoc[Testing]
 
 == Spring reference
 
-xref:pages/spring/actuators.adoc[Actuators]
+xref:pages/spring/actuators.adoc[Actuators] (DEPRECATED)
 
 xref:pages/spring/spring_data.adoc[Spring Data]
 

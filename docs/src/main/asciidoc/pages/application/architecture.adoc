@@ -5,6 +5,7 @@
 
 [plantuml]
 ----
+@startuml
 rectangle main
 rectangle " " as setup {
     rectangle application
@@ -17,8 +18,10 @@ main .right.> setup : "assembles"
 web --> application
 application --> domain
 core --|> domain
+@enduml
 ----
 
+[id=_main_module_description]
 === Main
 **Purpose**
 
@@ -36,11 +39,6 @@ E.G.
         ApplicationModuleConfig.class,
         CoreModuleConfig.class
 })
-@PropertySource(value = {
-        "file:conf/application.properties"
-    },
-    ignoreResourceNotFound = true
-)
 public class MainModuleConfig
 {
 
@@ -152,13 +150,35 @@ Every context can define its **Input Ports** service interfaces at the root of t
 Implementations for own **Input ports** and external **output ports** will be placed in `impl` subpackage.
 Also, a special context named **Common** can be defined as a place to put shared components that can be used by other contexts and doesn't have
 enough meaning to put then in its own context. **Common** context will not contain general configs or event listeners because they aren't dependencies of other contexts.
-In that case, these components can be placed in top `confing` and `event/listeners` packages of the module
+In that case, these components can be placed in top `config` and `event/listeners` packages of the module
 because in that
 * **Module Package Marker Interface**: Java interface intended to be used in Spring's component scans as type-safe alternative to basePackages for specifying the packages to scan for annotated components.
 
 === Configuration
 
-TODO
+Every module has its own `module config` class in charge of trigger the component scan on himself. It is also possible to filter components that doesn't have to be scanned automatically because they are optional and must be manually imported using an `@Import` annotation. The marker annotation `IgnoreOnComponentScan` can be used to do that. E.G.
+
+```java
+@Configuration
+// This class will be ignored by automatic component scan
+@IgnoreOnComponentScan
+public class OptionalConfig {
+
+}
+
+//----------------------------------
+
+@Configuration
+@ComponentScan(
+        basePackageClasses = { IWebPackage.class },
+        excludeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION, classes = IgnoreOnComponentScan.class)
+)
+public class WebModuleConfig {
+
+}
+```
+
+As explained in xref:_main_module_description[Main module]'s description section, all module configurations will be assembled in the `MainModuleConfig` class using `@Import` annotation.
 
 == Components
 
@@ -187,7 +207,7 @@ Each module defines a number of different components in the application that int
 
 === Interactions
 
-image::./media/component_interactions.drawio.svg[Interactions diagram,align="center"]
+image::./component_interactions.drawio.svg[Interactions diagram,align="center"]
 
 == Variations
 
@@ -228,3 +248,5 @@ legend
 end legend
 @end uml
 ----
+
+It is also possible que have only `Domain` layer in a separate module and put the others in a common module. By this way, we can isolate domain business logic from framework dependant components.
