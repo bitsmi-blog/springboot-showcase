@@ -48,9 +48,10 @@
             <artifactId>assertj-core</artifactId>
             <scope>test</scope>
         </dependency>
+		<!-- Use standalone artifact to not having conflicts between Wiremock's & Spring's Jetty -->
 		<dependency>
 			<groupId>org.wiremock</groupId>
-			<artifactId>wiremock</artifactId>
+			<artifactId>wiremock-standalone</artifactId>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
