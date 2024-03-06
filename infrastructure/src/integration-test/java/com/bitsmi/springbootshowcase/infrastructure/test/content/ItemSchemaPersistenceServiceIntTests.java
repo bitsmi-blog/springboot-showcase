@@ -1,21 +1,21 @@
 package com.bitsmi.springbootshowcase.infrastructure.test.content;
 
-import com.bitsmi.springbootshowcase.domain.common.util.IgnoreOnComponentScan;
-import com.bitsmi.springbootshowcase.infrastructure.config.InfrastructureModuleConfig;
-import com.bitsmi.springbootshowcase.infrastructure.testutil.ServiceIntegrationTest;
 import com.bitsmi.springbootshowcase.domain.common.dto.PagedData;
 import com.bitsmi.springbootshowcase.domain.common.dto.Pagination;
 import com.bitsmi.springbootshowcase.domain.common.dto.Sort;
 import com.bitsmi.springbootshowcase.domain.common.dto.Sort.Order;
 import com.bitsmi.springbootshowcase.domain.common.exception.ElementAlreadyExistsException;
 import com.bitsmi.springbootshowcase.domain.common.exception.ElementNotFoundException;
+import com.bitsmi.springbootshowcase.domain.common.util.IgnoreOnComponentScan;
 import com.bitsmi.springbootshowcase.domain.content.model.DataType;
 import com.bitsmi.springbootshowcase.domain.content.model.ItemSchema;
 import com.bitsmi.springbootshowcase.domain.content.model.ItemSchemaField;
 import com.bitsmi.springbootshowcase.domain.content.model.ItemSchemaSummary;
 import com.bitsmi.springbootshowcase.domain.content.spi.IItemSchemaPersistenceService;
-import com.bitsmi.springbootshowcase.domain.testutil.shared.content.model.ItemSchemaFieldTestDataBuilder;
-import com.bitsmi.springbootshowcase.domain.testutil.shared.content.model.ItemSchemaTestDataBuilder;
+import com.bitsmi.springbootshowcase.domain.testsupport.content.model.ItemSchemaFieldTestDataBuilder;
+import com.bitsmi.springbootshowcase.domain.testsupport.content.model.ItemSchemaTestDataBuilder;
+import com.bitsmi.springbootshowcase.infrastructure.config.InfrastructureModuleConfig;
+import com.bitsmi.springbootshowcase.infrastructure.testsupport.internal.ServiceIntegrationTest;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import org.junit.jupiter.api.DisplayName;

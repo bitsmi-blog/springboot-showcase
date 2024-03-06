@@ -191,7 +191,6 @@
                             <id>report</id>
                             <phase>prepare-package</phase>
                             <goals>
-                                <!-- Used instead "report" to support multi module aggregate coverage -->
                                 <goal>report</goal>
                             </goals>
                             <configuration>
@@ -215,10 +214,9 @@
                             <phase>post-integration-test</phase>
                             <goals>
                                 <!-- Used instead "report" to support multi module aggregate coverage -->
-                                <goal>report-aggregate</goal>
+                                <goal>report</goal>
                             </goals>
                             <configuration>
-                                <includeCurrentProject>true</includeCurrentProject>
                                 <outputDirectory>${project.reporting.outputDirectory}/jacoco-it</outputDirectory>
                             </configuration>
                         </execution>

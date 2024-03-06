@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import com.bitsmi.springbootshowcase.domain.common.util.IgnoreOnComponentScan;
 import com.bitsmi.springbootshowcase.infrastructure.config.InfrastructureModuleConfig;
 import com.bitsmi.springbootshowcase.infrastructure.content.repository.ITagRepository;
-import com.bitsmi.springbootshowcase.infrastructure.testutil.ServiceIntegrationTest;
+import com.bitsmi.springbootshowcase.infrastructure.testsupport.internal.ServiceIntegrationTest;
 import com.bitsmi.springbootshowcase.domain.content.model.Item;
 import com.bitsmi.springbootshowcase.domain.content.model.ItemStatus;
 import com.bitsmi.springbootshowcase.domain.content.model.Tag;

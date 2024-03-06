@@ -1,10 +1,10 @@
-package com.bitsmi.springbootshowcase.web.testutil.content;
+package com.bitsmi.springbootshowcase.application.testsupport.content;
 
 import com.bitsmi.springbootshowcase.application.content.IRetrieveItemSchemaApplicationQuery;
 import com.bitsmi.springbootshowcase.domain.common.dto.PagedData;
 import com.bitsmi.springbootshowcase.domain.common.dto.Pagination;
 import com.bitsmi.springbootshowcase.domain.content.model.ItemSchema;
-import com.bitsmi.springbootshowcase.domain.testutil.shared.content.model.ItemSchemaTestDataBuilder;
+import com.bitsmi.springbootshowcase.domain.testsupport.content.model.ItemSchemaTestDataBuilder;
 import org.mockito.Mockito;
 import org.springframework.test.context.event.annotation.BeforeTestExecution;
 
@@ -16,9 +16,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-/**
- * TODO Move to Application module
- */
 public class RetrieveItemSchemaApplicationQueryMocker
 {
     private final IRetrieveItemSchemaApplicationQuery mockedQuery;

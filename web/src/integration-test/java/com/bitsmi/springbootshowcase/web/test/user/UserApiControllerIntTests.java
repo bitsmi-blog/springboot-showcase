@@ -4,7 +4,7 @@ import com.bitsmi.springbootshowcase.api.user.response.UserDetailsResponse;
 import com.bitsmi.springbootshowcase.domain.common.util.IgnoreOnComponentScan;
 import com.bitsmi.springbootshowcase.web.config.WebModuleConfig;
 import com.bitsmi.springbootshowcase.web.test.config.ApplicationModuleMockConfig;
-import com.bitsmi.springbootshowcase.web.test.util.ControllerIntegrationTest;
+import com.bitsmi.springbootshowcase.web.testsupport.internal.ControllerIntegrationTest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

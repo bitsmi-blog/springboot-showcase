@@ -1,4 +1,4 @@
-package com.bitsmi.springbootshowcase.infrastructure.testutil;
+package com.bitsmi.springbootshowcase.infrastructure.testsupport.internal;
 
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.extension.ExtendWith;

@@ -1,4 +1,4 @@
-package com.bitsmi.springbootshowcase.domain.testutil.shared.common.model;
+package com.bitsmi.springbootshowcase.domain.testsupport.common.model;
 
 import com.bitsmi.springbootshowcase.domain.common.model.User;
 

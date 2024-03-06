@@ -1,10 +1,10 @@
-package com.bitsmi.springbootshowcase.web.testutil.domain.common;
+package com.bitsmi.springbootshowcase.domain.testsupport.common;
 
 import com.bitsmi.springbootshowcase.domain.common.model.User;
 import com.bitsmi.springbootshowcase.domain.common.model.UserSummary;
 import com.bitsmi.springbootshowcase.domain.common.spi.IUserPersistenceService;
-import com.bitsmi.springbootshowcase.domain.testutil.shared.common.model.UserSummaryTestDataBuilder;
-import com.bitsmi.springbootshowcase.domain.testutil.shared.common.model.UserTestDataBuilder;
+import com.bitsmi.springbootshowcase.domain.testsupport.common.model.UserSummaryTestDataBuilder;
+import com.bitsmi.springbootshowcase.domain.testsupport.common.model.UserTestDataBuilder;
 import org.mockito.Mockito;
 import org.springframework.test.context.event.annotation.BeforeTestExecution;
 
@@ -15,9 +15,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-/**
- * TODO Move to Domain module
- */
 public class UserPersistenceServiceMocker
 {
     private final IUserPersistenceService mockedService;

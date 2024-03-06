@@ -1,4 +1,4 @@
-package com.bitsmi.springbootshowcase.web.testutil.application.dummy;
+package com.bitsmi.springbootshowcase.web.testsupport.application.dummy;
 
 import com.bitsmi.springbootshowcase.application.dummy.ISampleApplicationService;
 import org.mockito.Mockito;

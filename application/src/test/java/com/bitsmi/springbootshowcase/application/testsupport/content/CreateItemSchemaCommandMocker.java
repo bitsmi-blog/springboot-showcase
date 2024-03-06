@@ -1,4 +1,4 @@
-package com.bitsmi.springbootshowcase.web.testutil.content;
+package com.bitsmi.springbootshowcase.application.testsupport.content;
 
 import com.bitsmi.springbootshowcase.application.content.ICreateItemSchemaCommand;
 import com.bitsmi.springbootshowcase.domain.content.model.ItemSchema;
@@ -12,9 +12,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-/**
- * TODO Move to Application module
- */
 public class CreateItemSchemaCommandMocker
 {
     private final ICreateItemSchemaCommand mockedCommand;

@@ -64,8 +64,11 @@
 						</goals>
 						<configuration>
 							<includes>
-								<include>/com/bitsmi/springbootshowcase/domain/testutil/shared/**/*</include>
+								<include>**/testsupport/**/*</include>
 							</includes>
+							<excludes>
+								<exclude>**/testsupport/**/internal/**/*</exclude>
+							</excludes>
 						</configuration>
 					</execution>
 				</executions>
