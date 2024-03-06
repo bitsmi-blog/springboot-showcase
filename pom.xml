@@ -23,7 +23,7 @@
 
     <modules>
         <module>domain</module>
-        <module>core</module>
+        <module>infrastructure</module>
         <module>application</module>
         <module>api</module>
         <module>api-client-openfeign</module>

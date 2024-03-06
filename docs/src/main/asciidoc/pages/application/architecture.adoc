@@ -9,7 +9,7 @@
 rectangle main
 rectangle " " as setup {
     rectangle application
-    rectangle core
+    rectangle infrastructure
     rectangle domain
     rectangle web
 }
@@ -17,7 +17,7 @@ rectangle " " as setup {
 main .right.> setup : "assembles"
 web --> application
 application --> domain
-core --|> domain
+infrastructure --|> domain
 @enduml
 ----
 
@@ -37,7 +37,7 @@ E.G.
 @Import({
         WebModuleConfig.class,
         ApplicationModuleConfig.class,
-        CoreModuleConfig.class
+        InfrastructureModuleConfig.class
 })
 public class MainModuleConfig
 {
@@ -62,10 +62,10 @@ public class MainModuleConfig
 * Implement top level transactionality when needed
 * Interfaces that top level modules (web, messaging...) should implement to provide specific functionality related to them. E.G. Memoize cache provider implementing request scoped caches provided by Web module
 
-=== Core
+=== Infrastructure
 **Purpose**
 
-`Core` module contains all infrastructure related configurations
+`Infrastructure` module contains all infrastructure related configurations
 
 **What's inside**
 
@@ -73,7 +73,7 @@ public class MainModuleConfig
 * Configurations about transversal services like Caches, Observability...
 Each of this configurations should be made in a separate configuration so dependant modules can import them to used in, for example, integration tests
 * Configuration of Domain related managed beans E.G. make Domain Commands & Queries available to be injected in Application Flow components
-* Attach Domain SPI service interfaces to corresponding Core implementation
+* Attach Domain SPI service interfaces to corresponding Infrastructure implementation
 
 === Domain
 **Purpose**
@@ -84,7 +84,7 @@ Each of this configurations should be made in a separate configuration so depend
 
 * Model classes
 * Query & Commands for different use cases involving domain model classes
-* SPI interfaces that will be implemented in `Core` module for infrastructure dependant components like persistence or event publishing
+* SPI interfaces that will be implemented in `Infrastructure` module for infrastructure dependant components like persistence or event publishing
 
 === Web
 **Purpose**
@@ -141,7 +141,7 @@ end legend
 and other module's dependencies definition using Spring's `@Import` statements. This package will also contain
 additional feature enable configurations such as **Web MVC**, **Web Security**, **Cache**, **Observability**, **AOP**, etc.
 Every feature configuration will be located in it's related module if it's only used in / affecting it (E.G. **Web MVC** in **Web** module)
-or in **Core** module if it's a global feature (E.G. **AOP**, **Observability**, **Caches**)
+or in **Infrastructure** module if it's a global feature (E.G. **AOP**, **Observability**, **Caches**)
 * **Event**: Contains general event definition and listeners. The main use case for these events is to be used
 as entry point for an external general event, such as Spring's lifecycle events (E.G. **ApplicationStartedEvent**)
 that can be used to trigger module general actions. Context specific event definitions / listeners must be defined in context related subpackage
@@ -200,7 +200,7 @@ Each module defines a number of different components in the application that int
 ** Persistence Service
 ** Event Service
 
-=== Core
+=== Infrastructure
 * Domain Output Port Service Implementation
 ** Persistence Service Implementation
 ** Event Service Implementation
@@ -241,7 +241,7 @@ legend
       |_ <:file_folder:> . . .
     |_ <:file_folder:> domain
       |_ <:file_folder:> . . .
-    |_ <:file_folder:> core
+    |_ <:file_folder:> infrastructure
       |_ <:file_folder:> config
       |_ <:file_folder:> . . .
 

@@ -654,7 +654,7 @@ pre.rouge {
 <h1>Test Tips</h1>
 <div class="details">
 <span id="revnumber">version 2.0.0-SNAPSHOT,</span>
-<span id="revdate">2024-03-01T17:16:56Z</span>
+<span id="revdate">2024-03-06T07:48:00Z</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -710,7 +710,7 @@ pre.rouge {
 <span class="nd">@AutoConfigureDataJpa</span>
 <span class="nd">@AutoConfigureTestEntityManager</span>
 <span class="nd">@TestPropertySource</span><span class="o">(</span><span class="n">properties</span> <span class="o">=</span> <span class="o">{</span>
-        <span class="s">"spring.liquibase.change-log=classpath:db/changelogs/core/test/content/item_persistence_service_tests.xml"</span>
+        <span class="s">"spring.liquibase.change-log=classpath:db/changelogs/infrastructure/test/content/item_persistence_service_tests.xml"</span>
 <span class="o">})</span>
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">ItemManagementServiceTests</span>
 <span class="o">{</span>
@@ -720,7 +720,7 @@ pre.rouge {
      * SETUP AND HELPERS
      *---------------------------*/</span>
     <span class="nd">@TestConfiguration</span>
-    <span class="nd">@ComponentScan</span><span class="o">(</span><span class="n">basePackageClasses</span> <span class="o">=</span> <span class="nc">ICorePackage</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+    <span class="nd">@ComponentScan</span><span class="o">(</span><span class="n">basePackageClasses</span> <span class="o">=</span> <span class="nc">IInfrastructurePackage</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
     <span class="nd">@EnableJpaRepositories</span><span class="o">(</span><span class="n">basePackageClasses</span> <span class="o">=</span> <span class="o">{</span>
             <span class="nc">IItemRepository</span><span class="o">.</span><span class="na">class</span><span class="o">,</span>
             <span class="nc">IH2DbRepository</span><span class="o">.</span><span class="na">class</span>
@@ -743,7 +743,7 @@ pre.rouge {
 <div id="footer">
 <div id="footer-text">
 Version 2.0.0-SNAPSHOT<br>
-Last updated 2024-02-26 09:06:49 +0100
+Last updated 2024-03-06 08:39:55 +0100
 </div>
 </div>
 </body>

@@ -29,8 +29,8 @@
                         <api-sourcedir>${project.basedir}/../api/src</api-sourcedir>
                         <api-client-openfeign-sourcedir>${project.basedir}/../api-client-openfeign/src</api-client-openfeign-sourcedir>
                         <application-sourcedir>${project.basedir}/../application/src</application-sourcedir>
-                        <core-sourcedir>${project.basedir}/../core/src</core-sourcedir>
                         <domain-sourcedir>${project.basedir}/../domain/src</domain-sourcedir>
+                        <infrastructure-sourcedir>${project.basedir}/../infrastructure/src</infrastructure-sourcedir>
                         <main-sourcedir>${project.basedir}/../main/src</main-sourcedir>
                         <utils-sourcedir>${project.basedir}/../utils/src</utils-sourcedir>
                         <web-sourcedir>${project.basedir}/../web/src</web-sourcedir>

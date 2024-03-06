@@ -1,7 +1,7 @@
 package com.bitsmi.springbootshowcase.main.config;
 
 import com.bitsmi.springbootshowcase.application.config.ApplicationModuleConfig;
-import com.bitsmi.springbootshowcase.core.config.CoreModuleConfig;
+import com.bitsmi.springbootshowcase.infrastructure.config.InfrastructureModuleConfig;
 import com.bitsmi.springbootshowcase.web.config.WebModuleConfig;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -11,7 +11,7 @@ import org.springframework.context.annotation.PropertySource;
 @Import({
         WebModuleConfig.class,
         ApplicationModuleConfig.class,
-        CoreModuleConfig.class
+        InfrastructureModuleConfig.class
 })
 @PropertySource(value = {
         "file:conf/application.properties"
