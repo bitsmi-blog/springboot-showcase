@@ -186,6 +186,9 @@
                             <goals>
                                 <goal>prepare-agent</goal>
                             </goals>
+                            <configuration>
+                                <destFile>${project.reporting.outputDirectory}/jacoco/unit-test/jacoco.exec</destFile>
+                            </configuration>
                         </execution>
                         <execution>
                             <id>report</id>
@@ -194,7 +197,8 @@
                                 <goal>report</goal>
                             </goals>
                             <configuration>
-                                <outputDirectory>${project.reporting.outputDirectory}/jacoco</outputDirectory>
+                                <dataFile>${project.reporting.outputDirectory}/jacoco/unit-test/jacoco.exec</dataFile>
+                                <outputDirectory>${project.reporting.outputDirectory}/jacoco/unit-test</outputDirectory>
                             </configuration>
                         </execution>
                         <!-- Integration tests -->
@@ -205,19 +209,53 @@
                             </goals>
                             <phase>pre-integration-test</phase>
                             <configuration>
-                                <!-- Override exec file -->
-                                <append>false</append>
+                                <destFile>${project.reporting.outputDirectory}/jacoco/integration-test/jacoco.exec</destFile>
                             </configuration>
                         </execution>
                         <execution>
                             <id>report-integration-test</id>
                             <phase>post-integration-test</phase>
                             <goals>
-                                <!-- Used instead "report" to support multi module aggregate coverage -->
                                 <goal>report</goal>
                             </goals>
                             <configuration>
-                                <outputDirectory>${project.reporting.outputDirectory}/jacoco-it</outputDirectory>
+                                <dataFile>${project.reporting.outputDirectory}/jacoco/integration-test/jacoco.exec</dataFile>
+                                <outputDirectory>${project.reporting.outputDirectory}/jacoco/integration-test</outputDirectory>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>merge-executions</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>merge</goal>
+                            </goals>
+                            <configuration>
+                                <fileSets>
+                                    <fileSet>
+                                        <directory>${project.reporting.outputDirectory}/jacoco/unit-test</directory>
+                                        <includes>
+                                            <include>*.exec</include>
+                                        </includes>
+                                    </fileSet>
+                                    <fileSet>
+                                        <directory>${project.reporting.outputDirectory}/jacoco/integration-test</directory>
+                                        <includes>
+                                            <include>*.exec</include>
+                                        </includes>
+                                    </fileSet>
+                                </fileSets>
+                                <destFile>${project.reporting.outputDirectory}/jacoco/aggregate.exec</destFile>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>create-aggregate-report</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>report</goal>
+                            </goals>
+                            <configuration>
+                                <dataFile>${project.reporting.outputDirectory}/jacoco/aggregate.exec</dataFile>
+                                <outputDirectory>${project.reporting.outputDirectory}/jacoco</outputDirectory>
                             </configuration>
                         </execution>
                     </executions>
