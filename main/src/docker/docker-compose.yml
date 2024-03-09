@@ -8,7 +8,7 @@ networks:
 
 services:
   application:
-    image: springboot-showcase-main:2.0.0-SNAPSHOT
+    image: springboot-showcase-main:${project.version}
     container_name: springboot-showcase-main
     ports:
       - "8080:8080"

@@ -298,6 +298,12 @@
                     <version>3.1.1</version>
                 </plugin>
 
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-assembly-plugin</artifactId>
+                    <version>3.6.0</version>
+                </plugin>
+
                 <!-- DOCS -->
                 <!-- Disable default docs generation through site plugin -->
                 <plugin>
