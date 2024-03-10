@@ -53,7 +53,7 @@ import org.testcontainers.utility.DockerImageName;
         "spring.datasource.driver-class-name = org.testcontainers.jdbc.ContainerDatabaseDriver"
 })
 @org.junit.jupiter.api.Tag("IntegrationTest")
-public class ItemManagementServiceTestContainerTests
+public class ItemPersistenceServiceTestContainerTests
 {
     @Container
     PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>(DockerImageName.parse("postgres").withTag("16.0"));
