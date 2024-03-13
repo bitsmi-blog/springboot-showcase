@@ -28,6 +28,7 @@
         <module>api</module>
         <module>api-client-openfeign</module>
         <module>web</module>
+        <module>messaging</module>
         <module>main</module>
         <module>utils</module>
         <module>docs</module>
