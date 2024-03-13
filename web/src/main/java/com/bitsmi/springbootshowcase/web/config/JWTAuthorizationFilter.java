@@ -7,7 +7,6 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,7 +16,6 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 
 @Component
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter
@@ -27,15 +25,15 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter
 
     private final UserDetailsService userDetailsService;
 
-    private final byte[] jwtSecret;
+    private final JWTProperties jwtProperties;
 
     public JWTAuthorizationFilter(final AuthenticationManager authenticationManager,
                                   final UserDetailsService userDetailsService,
-                                  final Environment environment)
+                                  final JWTProperties jwtProperties)
     {
         super(authenticationManager);
         this.userDetailsService = userDetailsService;
-        this.jwtSecret = environment.getProperty("jwt.secret").getBytes(StandardCharsets.UTF_8);
+        this.jwtProperties = jwtProperties;
     }
 
     @Override
@@ -58,7 +56,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter
 
         if(token != null) {
             try {
-                String username = JWT.require(Algorithm.HMAC512(jwtSecret))
+                String username = JWT.require(Algorithm.HMAC512(jwtProperties.getSecret()))
                         .build()
                         .verify(token.replace(TOKEN_PREFIX, ""))
                         .getSubject();

@@ -2,8 +2,9 @@ package com.bitsmi.springbootshowcase.web.user.controller;
 
 import com.bitsmi.springbootshowcase.api.user.IUserApi;
 import com.bitsmi.springbootshowcase.api.user.response.UserDetailsResponse;
+import com.bitsmi.springbootshowcase.application.common.IUserSummaryApplicationQuery;
+import com.bitsmi.springbootshowcase.domain.common.UserConstants;
 import com.bitsmi.springbootshowcase.domain.common.model.UserSummary;
-import com.bitsmi.springbootshowcase.domain.common.spi.IUserPersistenceService;
 import com.bitsmi.springbootshowcase.web.common.service.IAuthenticationPrincipalService;
 import io.micrometer.observation.annotation.Observed;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,16 +25,14 @@ public class UserApiControllerImpl implements IUserApi
 {
     @Autowired
     private IAuthenticationPrincipalService authenticationPrincipalService;
-    /* TODO Replace by IUserQueryService
-     */
     @Autowired
-    private IUserPersistenceService userPersistenceService;
+    private IUserSummaryApplicationQuery userSummaryApplicationQuery;
 
     @Override
     public UserDetailsResponse getDetails()
     {
         final UserDetails userDetails = authenticationPrincipalService.getAuthenticationPrincipal();
-        final UserSummary userSummary = userPersistenceService.findUserSummaryByUsername(userDetails.getUsername())
+        final UserSummary userSummary = userSummaryApplicationQuery.findUserSummaryByUsername(userDetails.getUsername())
                 .orElseThrow(() -> new ErrorResponseException(HttpStatus.NOT_FOUND));
 
         return UserDetailsResponse.builder()
@@ -43,7 +42,7 @@ public class UserApiControllerImpl implements IUserApi
     }
 
     @Override
-    @PreAuthorize("hasRole('admin.authority1')")
+    @PreAuthorize("hasRole('" + UserConstants.USER_GROUP_ADMIN + "')")
     public UserDetailsResponse getAdminDetails()
     {
         final UserDetails userDetails = authenticationPrincipalService.getAuthenticationPrincipal();

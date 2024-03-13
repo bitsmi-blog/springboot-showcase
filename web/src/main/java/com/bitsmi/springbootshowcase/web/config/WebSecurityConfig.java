@@ -11,7 +11,6 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
-import org.springframework.core.env.Environment;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
@@ -67,7 +66,7 @@ public class WebSecurityConfig
     @Bean
     // Default order = last
     public SecurityFilterChain securityFilterChainDefault(final HttpSecurity http,
-                                                          final Environment environment,
+                                                          final JWTProperties jwtProperties,
                                                           final UserDetailsService userDetailsService) throws Exception
     {
         http.securityMatcher("/api/**")
@@ -76,7 +75,7 @@ public class WebSecurityConfig
                 .exceptionHandling(this::exceptionHandlingDefault)
                 .addFilterBefore(new JWTAuthorizationFilter(authenticationManager(userDetailsService, passwordEncoder()),
                         userDetailsService,
-                        environment), UsernamePasswordAuthenticationFilter.class)
+                        jwtProperties), UsernamePasswordAuthenticationFilter.class)
                 .sessionManagement(this::sessionManagement);
 
         return http.build();

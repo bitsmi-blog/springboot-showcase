@@ -1,8 +1,8 @@
 package com.bitsmi.springbootshowcase.domain.testsupport.common;
 
+import com.bitsmi.springbootshowcase.domain.common.IUserDomainQueryService;
 import com.bitsmi.springbootshowcase.domain.common.model.User;
 import com.bitsmi.springbootshowcase.domain.common.model.UserSummary;
-import com.bitsmi.springbootshowcase.domain.common.spi.IUserPersistenceService;
 import com.bitsmi.springbootshowcase.domain.testsupport.common.model.UserSummaryTestDataBuilder;
 import com.bitsmi.springbootshowcase.domain.testsupport.common.model.UserTestDataBuilder;
 import org.mockito.Mockito;
@@ -15,11 +15,11 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class UserPersistenceServiceMocker
+public class UserDomainQueryServiceMocker
 {
-    private final IUserPersistenceService mockedService;
+    private final IUserDomainQueryService mockedService;
 
-    private UserPersistenceServiceMocker(IUserPersistenceService serviceInstance)
+    private UserDomainQueryServiceMocker(IUserDomainQueryService serviceInstance)
     {
         if(!Mockito.mockingDetails(serviceInstance).isMock()) {
             throw new IllegalArgumentException("Service instance must be a mock");
@@ -28,14 +28,14 @@ public class UserPersistenceServiceMocker
         this.mockedService = serviceInstance;
     }
 
-    public static UserPersistenceServiceMocker mocker()
+    public static UserDomainQueryServiceMocker mocker()
     {
-        return new UserPersistenceServiceMocker(mock(IUserPersistenceService.class));
+        return new UserDomainQueryServiceMocker(mock(IUserDomainQueryService.class));
     }
 
-    public static UserPersistenceServiceMocker fromMockedInstance(IUserPersistenceService serviceInstance)
+    public static UserDomainQueryServiceMocker fromMockedInstance(IUserDomainQueryService serviceInstance)
     {
-        return new UserPersistenceServiceMocker(serviceInstance);
+        return new UserDomainQueryServiceMocker(serviceInstance);
     }
 
     @BeforeTestExecution
@@ -43,30 +43,30 @@ public class UserPersistenceServiceMocker
     {
         this.whenFindUserByUsernameGivenAnyUsernameThenReturnEmpty()
                 .whenFindUserByUsernameThenReturnUser(UserTestDataBuilder.USERNAME_USER1, UserTestDataBuilder.user1())
-                .whenFindUserSummaryByUsernameThenReturnUser(UserTestDataBuilder.USERNAME_USER1, UserSummaryTestDataBuilder.user1());
+                .whenFindUserSummaryByUsernameThenReturnUser(UserSummaryTestDataBuilder.USERNAME_USER1, UserSummaryTestDataBuilder.user1());
     }
 
-    public UserPersistenceServiceMocker configureMock(Consumer<IUserPersistenceService> mockConsumer)
+    public UserDomainQueryServiceMocker configureMock(Consumer<IUserDomainQueryService> mockConsumer)
     {
         mockConsumer.accept(mockedService);
         return this;
     }
 
-    public UserPersistenceServiceMocker whenFindUserByUsernameGivenAnyUsernameThenReturnEmpty()
+    public UserDomainQueryServiceMocker whenFindUserByUsernameGivenAnyUsernameThenReturnEmpty()
     {
         when(mockedService.findUserByUsername(any()))
                 .thenReturn(Optional.empty());
         return this;
     }
 
-    public UserPersistenceServiceMocker whenFindUserByUsernameThenReturnUser(String userName, User result)
+    public UserDomainQueryServiceMocker whenFindUserByUsernameThenReturnUser(String userName, User result)
     {
         when(mockedService.findUserByUsername(userName))
                 .thenReturn(Optional.ofNullable(result));
         return this;
     }
 
-    public UserPersistenceServiceMocker whenFindUserSummaryByUsernameThenReturnUser(String userName, UserSummary result)
+    public UserDomainQueryServiceMocker whenFindUserSummaryByUsernameThenReturnUser(String userName, UserSummary result)
     {
         when(mockedService.findUserSummaryByUsername(userName))
                 .thenReturn(Optional.ofNullable(result));

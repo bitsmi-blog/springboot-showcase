@@ -1,14 +1,14 @@
 package com.bitsmi.springbootshowcase.domain.content.impl;
 
-import com.bitsmi.springbootshowcase.domain.content.IItemSchemaCommandDomainService;
+import com.bitsmi.springbootshowcase.domain.content.IItemSchemaDomainCommandService;
 import com.bitsmi.springbootshowcase.domain.content.model.ItemSchema;
 import com.bitsmi.springbootshowcase.domain.content.spi.IItemSchemaPersistenceService;
 
-public class ItemSchemaCommandDomainServiceImpl implements IItemSchemaCommandDomainService
+public class ItemSchemaDomainCommandServiceImpl implements IItemSchemaDomainCommandService
 {
     private final IItemSchemaPersistenceService itemSchemaPersistenceService;
 
-    public ItemSchemaCommandDomainServiceImpl(IItemSchemaPersistenceService itemSchemaPersistenceService)
+    public ItemSchemaDomainCommandServiceImpl(IItemSchemaPersistenceService itemSchemaPersistenceService)
     {
         this.itemSchemaPersistenceService = itemSchemaPersistenceService;
     }

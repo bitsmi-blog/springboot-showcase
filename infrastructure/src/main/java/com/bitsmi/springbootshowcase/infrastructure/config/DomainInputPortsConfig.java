@@ -1,12 +1,15 @@
 package com.bitsmi.springbootshowcase.infrastructure.config;
 
-import com.bitsmi.springbootshowcase.domain.common.IUserCommandDomainService;
-import com.bitsmi.springbootshowcase.domain.common.impl.UserCommandDomainServiceImpl;
+import com.bitsmi.springbootshowcase.domain.common.IUserDomainCommandService;
+import com.bitsmi.springbootshowcase.domain.common.IUserDomainQueryService;
+import com.bitsmi.springbootshowcase.domain.common.impl.UserDomainCommandServiceImpl;
+import com.bitsmi.springbootshowcase.domain.common.impl.UserDomainQueryServiceImpl;
+import com.bitsmi.springbootshowcase.domain.common.spi.IUserGroupPersistenceService;
 import com.bitsmi.springbootshowcase.domain.common.spi.IUserPersistenceService;
-import com.bitsmi.springbootshowcase.domain.content.IItemSchemaCommandDomainService;
-import com.bitsmi.springbootshowcase.domain.content.IItemSchemaQueryDomainService;
-import com.bitsmi.springbootshowcase.domain.content.impl.ItemSchemaCommandDomainServiceImpl;
-import com.bitsmi.springbootshowcase.domain.content.impl.ItemSchemaQueryDomainServiceImpl;
+import com.bitsmi.springbootshowcase.domain.content.IItemSchemaDomainCommandService;
+import com.bitsmi.springbootshowcase.domain.content.IItemSchemaDomainQueryService;
+import com.bitsmi.springbootshowcase.domain.content.impl.ItemSchemaDomainCommandServiceImpl;
+import com.bitsmi.springbootshowcase.domain.content.impl.ItemSchemaDomainQueryServiceImpl;
 import com.bitsmi.springbootshowcase.domain.content.spi.IItemSchemaPersistenceService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,20 +19,32 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class DomainInputPortsConfig
 {
     @Bean
-    public IUserCommandDomainService userCommandDomainService(IUserPersistenceService userPersistenceService, PasswordEncoder passwordEncoder)
+    public IUserDomainQueryService userQueryDomainService(
+            IUserPersistenceService userPersistenceService
+    )
     {
-        return new UserCommandDomainServiceImpl(userPersistenceService, passwordEncoder);
+        return new UserDomainQueryServiceImpl(userPersistenceService);
     }
 
     @Bean
-    public IItemSchemaQueryDomainService itemSchemaQueryDomainService(IItemSchemaPersistenceService itemSchemaPersistenceService)
+    public IUserDomainCommandService userCommandDomainService(
+            IUserPersistenceService userPersistenceService,
+            IUserGroupPersistenceService userGroupPersistenceService,
+            PasswordEncoder passwordEncoder
+    )
     {
-        return new ItemSchemaQueryDomainServiceImpl(itemSchemaPersistenceService);
+        return new UserDomainCommandServiceImpl(userPersistenceService, userGroupPersistenceService, passwordEncoder);
     }
 
     @Bean
-    public IItemSchemaCommandDomainService itemSchemaCommandDomainService(IItemSchemaPersistenceService itemSchemaPersistenceService)
+    public IItemSchemaDomainQueryService itemSchemaQueryDomainService(IItemSchemaPersistenceService itemSchemaPersistenceService)
     {
-        return new ItemSchemaCommandDomainServiceImpl(itemSchemaPersistenceService);
+        return new ItemSchemaDomainQueryServiceImpl(itemSchemaPersistenceService);
+    }
+
+    @Bean
+    public IItemSchemaDomainCommandService itemSchemaCommandDomainService(IItemSchemaPersistenceService itemSchemaPersistenceService)
+    {
+        return new ItemSchemaDomainCommandServiceImpl(itemSchemaPersistenceService);
     }
 }

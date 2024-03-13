@@ -1,7 +1,7 @@
 package com.bitsmi.springbootshowcase.application.common.impl;
 
 import com.bitsmi.springbootshowcase.application.common.IUserCreationApplicationCommand;
-import com.bitsmi.springbootshowcase.domain.common.IUserCommandDomainService;
+import com.bitsmi.springbootshowcase.domain.common.IUserDomainCommandService;
 import com.bitsmi.springbootshowcase.domain.common.model.User;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -14,8 +14,9 @@ import org.springframework.validation.annotation.Validated;
 public class UserCreationApplicationCommandImpl implements IUserCreationApplicationCommand
 {
     @Autowired
-    private IUserCommandDomainService userCommandDomainService;
+    private IUserDomainCommandService userCommandDomainService;
 
+    @Override
     public User createAdminUser(@NotNull String username, @NotEmpty char[] password)
     {
         return userCommandDomainService.createAdminUser(username, password);

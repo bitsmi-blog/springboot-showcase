@@ -57,18 +57,13 @@
         </createTable>
 
         <createTable tableName="APP_USER_GROUP_MEMBER">
-            <column name="ID" type="BIGINT">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_USER_GROUP_MEMBER"/>
-            </column>
-            <column name="VERSION" type="BIGINT"/>
             <column name="GROUP_ID" type="BIGINT">
                 <constraints nullable="false"/>
             </column>
             <column name="USER_ID" type="BIGINT">
                 <constraints nullable="false"/>
             </column>
-            <column name="CREATION_DATE" type="TIMESTAMP"/>
-            <column name="LAST_UPDATED" type="TIMESTAMP"/>
+            <column name="CREATION_DATE" type="TIMESTAMP" defaultValueDate="${current_timestamp}"/>
         </createTable>
 
         <addUniqueConstraint tableName="APP_AUTHORITY" columnNames="NAME" constraintName="C_AUTH_NAME"/>

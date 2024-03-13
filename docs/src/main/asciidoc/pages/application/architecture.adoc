@@ -193,8 +193,8 @@ Each module defines a number of different components in the application that int
 
 === Domain
 * Input Port Interface
-** Query Domain Service
-** Command Domain Service
+** Domain Query Service
+** Domain Command Service
 
 * Output Port Interface
 ** Persistence Service
@@ -226,9 +226,9 @@ skinparam Legend {
 }
 legend
 
-<:package:> springboot-showcase
+<:package:> account-ng-server
 |_ <:file_folder:> src/main/java
-  |_ <:file_folder:> com.bitsmi.springbootshowcase
+  |_ <:file_folder:> com.bitsmi.accountng.server
     |_ <:file_folder:> main
       |_ <:file_folder:> config
       |_ <:page_facing_up:> MainProgram

@@ -6,7 +6,7 @@ import com.bitsmi.springbootshowcase.domain.content.model.ItemSchema;
 
 import java.util.List;
 
-public interface IItemSchemaQueryDomainService
+public interface IItemSchemaDomainQueryService
 {
     List<ItemSchema> findAllItemSchemas();
     PagedData<ItemSchema> findAllItemSchemas(Pagination page);

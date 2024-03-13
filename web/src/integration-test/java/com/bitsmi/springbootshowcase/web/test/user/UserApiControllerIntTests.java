@@ -1,9 +1,11 @@
 package com.bitsmi.springbootshowcase.web.test.user;
 
 import com.bitsmi.springbootshowcase.api.user.response.UserDetailsResponse;
+import com.bitsmi.springbootshowcase.domain.common.UserConstants;
 import com.bitsmi.springbootshowcase.domain.common.util.IgnoreOnComponentScan;
 import com.bitsmi.springbootshowcase.web.config.WebModuleConfig;
 import com.bitsmi.springbootshowcase.web.test.config.ApplicationModuleMockConfig;
+import com.bitsmi.springbootshowcase.web.test.config.DomainModuleMockConfig;
 import com.bitsmi.springbootshowcase.web.testsupport.internal.ControllerIntegrationTest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -100,7 +102,7 @@ public class UserApiControllerIntTests
      * SETUP AND HELPERS
      *---------------------------*/
     @TestConfiguration
-    @Import({ WebModuleConfig.class, ApplicationModuleMockConfig.class })
+    @Import({ WebModuleConfig.class, ApplicationModuleMockConfig.class, DomainModuleMockConfig.class })
     @IgnoreOnComponentScan
     static class TestConfig
     {
@@ -111,10 +113,11 @@ public class UserApiControllerIntTests
             InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
             manager.createUser(User.withUsername("john.doe")
                     .password(encoder.encode("password.john.doe"))
+                    .roles(UserConstants.USER_GROUP_USER)
                     .build());
             manager.createUser(User.withUsername("admin")
                     .password(encoder.encode("password.admin"))
-                    .roles("admin.authority1")
+                    .roles(UserConstants.USER_GROUP_ADMIN, UserConstants.USER_GROUP_USER)
                     .build());
 
             return manager;
