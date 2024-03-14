@@ -1,0 +1,5 @@
+ID;VERSION;NAME;DESCRIPTION;CREATION_DATE;LAST_UPDATED
+1001;1;'admin.permission1';'Admin permission 1';'2023-01-01 00:00:00.000';'2023-01-01 00:00:00.000'
+1002;1;'admin.permission2';'Admin permission 2';'2023-01-01 00:00:00.000';'2023-01-01 00:00:00.000'
+1003;1;'user.permission1';'User permission 1';'2023-01-01 00:00:00.000';'2023-01-01 00:00:00.000'
+1004;1;'user.permission2';'User permission 2';'2023-01-01 00:00:00.000';'2023-01-01 00:00:00.000'

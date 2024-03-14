@@ -3,16 +3,16 @@
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.17.xsd">
 
-    <changeSet author="aarchilla (generated)" id="USER_GROUP_MEMBER_BASE_1">
-        <loadData file="db/changelogs/infrastructure/test/common/user_group_member_base.csv"
+    <changeSet author="aarchilla (generated)" id="USER_GROUP_AUTHORITY_BASE_1">
+        <loadData file="db/changelogs/infrastructure/test/common/user_group_authority_base.csv"
                   relativeToChangelogFile="false"
                   encoding="UTF-8"
                   quotchar="'"
                   commentLineStartsWith="#"
                   separator=";"
-                  tableName="APP_USER_GROUP_MEMBER">
+                  tableName="APP_USER_GROUP_AUTH">
             <column header="GROUP_ID" name="GROUP_ID" type="NUMERIC"/>
-            <column header="USER_ID" name="USER_ID" type="NUMERIC"/>
+            <column header="AUTHORITY_ID" name="AUTHORITY_ID" type="NUMERIC"/>
             <column header="CREATION_DATE" name="CREATION_DATE" type="TIMESTAMP"/>
         </loadData>
     </changeSet>

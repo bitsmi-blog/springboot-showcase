@@ -6,6 +6,7 @@ import com.bitsmi.springbootshowcase.domain.common.util.IgnoreOnComponentScan;
 import com.bitsmi.springbootshowcase.web.config.WebModuleConfig;
 import com.bitsmi.springbootshowcase.web.test.config.ApplicationModuleMockConfig;
 import com.bitsmi.springbootshowcase.web.test.config.DomainModuleMockConfig;
+import com.bitsmi.springbootshowcase.web.test.config.UserDetailsTestConfig;
 import com.bitsmi.springbootshowcase.web.testsupport.internal.ControllerIntegrationTest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -102,26 +103,16 @@ public class UserApiControllerIntTests
      * SETUP AND HELPERS
      *---------------------------*/
     @TestConfiguration
-    @Import({ WebModuleConfig.class, ApplicationModuleMockConfig.class, DomainModuleMockConfig.class })
+    @Import({
+            WebModuleConfig.class,
+            ApplicationModuleMockConfig.class,
+            DomainModuleMockConfig.class,
+            UserDetailsTestConfig.class
+    })
     @IgnoreOnComponentScan
     static class TestConfig
     {
-        @Bean
-        @Primary
-        public UserDetailsService userDetailsService(PasswordEncoder encoder)
-        {
-            InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-            manager.createUser(User.withUsername("john.doe")
-                    .password(encoder.encode("password.john.doe"))
-                    .roles(UserConstants.USER_GROUP_USER)
-                    .build());
-            manager.createUser(User.withUsername("admin")
-                    .password(encoder.encode("password.admin"))
-                    .roles(UserConstants.USER_GROUP_ADMIN, UserConstants.USER_GROUP_USER)
-                    .build());
 
-            return manager;
-        }
     }
 
     @BeforeEach

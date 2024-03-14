@@ -1,10 +1,13 @@
 package com.bitsmi.springbootshowcase.web.common.service.dto;
 
+import com.bitsmi.springbootshowcase.domain.common.model.Authority;
 import com.bitsmi.springbootshowcase.domain.common.model.User;
+import org.apache.commons.collections4.SetUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.Collection;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class UserDetails implements org.springframework.security.core.userdetails.UserDetails
@@ -19,11 +22,18 @@ public class UserDetails implements org.springframework.security.core.userdetail
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities()
     {
-        return user.groups().stream()
-                .flatMap(group -> group.authorities().stream())
-                .map(auth -> "ROLE_" + auth.name())
+        Set<GrantedAuthority> roles = user.groups().stream()
+                .map(group -> "ROLE_" + group.name())
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toSet());
+
+        Set<GrantedAuthority> authorities = user.groups().stream()
+                .flatMap(group -> group.authorities().stream())
+                .map(Authority::name)
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toSet());
+
+        return SetUtils.union(roles, authorities);
     }
 
     @Override

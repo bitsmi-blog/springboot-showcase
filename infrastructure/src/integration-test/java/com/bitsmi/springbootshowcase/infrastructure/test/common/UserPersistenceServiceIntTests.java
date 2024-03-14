@@ -1,6 +1,7 @@
 package com.bitsmi.springbootshowcase.infrastructure.test.common;
 
 import com.bitsmi.springbootshowcase.domain.common.UserConstants;
+import com.bitsmi.springbootshowcase.domain.common.model.Authority;
 import com.bitsmi.springbootshowcase.domain.common.model.User;
 import com.bitsmi.springbootshowcase.domain.common.model.UserGroup;
 import com.bitsmi.springbootshowcase.domain.common.model.UserSummary;
@@ -63,9 +64,15 @@ public class UserPersistenceServiceIntTests
             assertThat(user.password()).isEqualTo("{bcrypt}$2a$10$I2NL2EwOcbl9PIhgPiF/XeVXQ.yfErH11UQemNW21LBk.iaIpa44.");
             assertThat(user.completeName()).isEqualTo("John Doe");
             assertThat(user.active()).isTrue();
-            assertThat(user.groups()).hasSize(1)
-                    .extracting(UserGroup::name)
-                    .containsExactlyInAnyOrder("USER");
+            assertThat(user.groups())
+                    .hasSize(1)
+                    .first()
+                    .satisfies(userGroup -> {
+                        assertThat(userGroup.name()).isEqualTo(UserConstants.USER_GROUP_USER);
+                        assertThat(userGroup.authorities())
+                                .extracting(Authority::name)
+                                .containsExactlyInAnyOrder("user.permission1", "user.permission2");
+                    });
             assertThat(user.creationDate()).isEqualTo(controlDate);
             assertThat(user.lastUpdated()).isEqualTo(controlDate);
         });
@@ -103,9 +110,17 @@ public class UserPersistenceServiceIntTests
         Consumer<User> assertConsumer = userToAssert -> {
             assertThat(userToAssert.username()).isEqualTo(expectedUser.username());
             assertThat(userToAssert.password()).isEqualTo(expectedUser.password());
-            assertThat(userToAssert.groups()).hasSize(2)
-                    .extracting(UserGroup::name)
-                    .containsExactlyInAnyOrder(UserConstants.USER_GROUP_USER, UserConstants.USER_GROUP_ADMIN);
+            assertThat(userToAssert.groups()).hasSize(2);
+            assertThat(userToAssert.groups()).filteredOn(userGroups -> UserConstants.USER_GROUP_USER.equals(userGroups.name()))
+                    .isNotEmpty()
+                    .flatMap(UserGroup::authorities)
+                    .extracting(Authority::name)
+                    .containsExactlyInAnyOrder("user.permission1", "user.permission2");
+            assertThat(userToAssert.groups()).filteredOn(userGroups -> UserConstants.USER_GROUP_ADMIN.equals(userGroups.name()))
+                    .isNotEmpty()
+                    .flatMap(UserGroup::authorities)
+                    .extracting(Authority::name)
+                    .containsExactlyInAnyOrder("admin.permission1", "admin.permission2");
             assertThat(userToAssert.active()).isTrue();
             assertThat(userToAssert.creationDate().truncatedTo(ChronoUnit.MINUTES)).isEqualTo(controlDate);
             assertThat(userToAssert.lastUpdated().truncatedTo(ChronoUnit.MINUTES)).isEqualTo(controlDate);

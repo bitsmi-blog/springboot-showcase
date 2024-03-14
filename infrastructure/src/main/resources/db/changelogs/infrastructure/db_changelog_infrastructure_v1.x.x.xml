@@ -42,10 +42,6 @@
         </createTable>
 
         <createTable tableName="APP_USER_GROUP_AUTH">
-            <column name="ID" type="BIGINT">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_USER_GROUP_AUTH"/>
-            </column>
-            <column name="VERSION" type="BIGINT"/>
             <column name="GROUP_ID" type="BIGINT">
                 <constraints nullable="false"/>
             </column>
@@ -53,7 +49,6 @@
                 <constraints nullable="false"/>
             </column>
             <column name="CREATION_DATE" type="TIMESTAMP"/>
-            <column name="LAST_UPDATED" type="TIMESTAMP"/>
         </createTable>
 
         <createTable tableName="APP_USER_GROUP_MEMBER">
@@ -125,14 +120,6 @@
                         incrementBy="1"
                         cycle="false"/>
         <createSequence sequenceName="SEQ_APP_AUTHORITY"
-                        startValue="1"
-                        incrementBy="1"
-                        cycle="false"/>
-        <createSequence sequenceName="SEQ_APP_USER_GROUP_AUTH"
-                        startValue="1"
-                        incrementBy="1"
-                        cycle="false"/>
-        <createSequence sequenceName="SEQ_APP_USER_GROUP_MEMBER"
                         startValue="1"
                         incrementBy="1"
                         cycle="false"/>

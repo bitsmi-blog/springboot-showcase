@@ -17,5 +17,7 @@
     <!-- Data -->
     <include file="db/changelogs/infrastructure/test/common/user_base.xml"/>
     <include file="db/changelogs/infrastructure/test/common/user_group_member_base.xml"/>
+    <include file="db/changelogs/infrastructure/test/common/authority_base.xml"/>
+    <include file="db/changelogs/infrastructure/test/common/user_group_authority_base.xml"/>
 
 </databaseChangeLog>

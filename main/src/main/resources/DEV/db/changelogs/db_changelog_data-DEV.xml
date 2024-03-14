@@ -30,62 +30,47 @@
         <insert tableName="APP_AUTHORITY">
             <column name="ID" valueSequenceNext="SEQ_APP_AUTHORITY"/>
             <column name="VERSION" valueNumeric="1"/>
-            <column name="NAME" value="admin.authority1"/>
-            <column name="DESCRIPTION" value="Admin authority 1"/>
+            <column name="NAME" value="admin.permission1"/>
+            <column name="DESCRIPTION" value="Admin permission 1"/>
             <column name="CREATION_DATE" valueComputed="${current_timestamp}"/>
             <column name="LAST_UPDATED" valueComputed="${current_timestamp}"/>
         </insert>
         <insert tableName="APP_AUTHORITY">
             <column name="ID" valueSequenceNext="SEQ_APP_AUTHORITY"/>
             <column name="VERSION" valueNumeric="1"/>
-            <column name="NAME" value="user.authority1"/>
-            <column name="DESCRIPTION" value="User authority 1"/>
+            <column name="NAME" value="user.permission1"/>
+            <column name="DESCRIPTION" value="User permission 1"/>
             <column name="CREATION_DATE" valueComputed="${current_timestamp}"/>
             <column name="LAST_UPDATED" valueComputed="${current_timestamp}"/>
         </insert>
 
         <!-- GROUP AUTHORITIES -->
         <insert tableName="APP_USER_GROUP_AUTH">
-            <column name="ID" valueSequenceNext="SEQ_APP_USER_GROUP_AUTH"/>
-            <column name="VERSION" valueNumeric="1"/>
             <column name="GROUP_ID" valueComputed="(select ID from APP_USER_GROUP where NAME='ADMIN')"/>
-            <column name="AUTHORITY_ID" valueComputed="(select ID from APP_AUTHORITY where NAME='admin.authority1')"/>
+            <column name="AUTHORITY_ID" valueComputed="(select ID from APP_AUTHORITY where NAME='admin.permission1')"/>
             <column name="CREATION_DATE" valueComputed="${current_timestamp}"/>
-            <column name="LAST_UPDATED" valueComputed="${current_timestamp}"/>
         </insert>
         <insert tableName="APP_USER_GROUP_AUTH">
-            <column name="ID" valueSequenceNext="SEQ_APP_USER_GROUP_AUTH"/>
-            <column name="VERSION" valueNumeric="1"/>
             <column name="GROUP_ID" valueComputed="(select ID from APP_USER_GROUP where NAME='USER')"/>
-            <column name="AUTHORITY_ID" valueComputed="(select ID from APP_AUTHORITY where NAME='user.authority1')"/>
+            <column name="AUTHORITY_ID" valueComputed="(select ID from APP_AUTHORITY where NAME='user.permission1')"/>
             <column name="CREATION_DATE" valueComputed="${current_timestamp}"/>
-            <column name="LAST_UPDATED" valueComputed="${current_timestamp}"/>
         </insert>
 
         <!-- GROUP MEMBERS -->
         <insert tableName="APP_USER_GROUP_MEMBER">
-            <column name="ID" valueSequenceNext="SEQ_APP_USER_GROUP_MEMBER"/>
-            <column name="VERSION" valueNumeric="1"/>
             <column name="GROUP_ID" valueComputed="(select ID from APP_USER_GROUP where NAME='ADMIN')"/>
             <column name="USER_ID" valueComputed="(select ID from APP_USER where USERNAME='admin')"/>
             <column name="CREATION_DATE" valueComputed="${current_timestamp}"/>
-            <column name="LAST_UPDATED" valueComputed="${current_timestamp}"/>
         </insert>
         <insert tableName="APP_USER_GROUP_MEMBER">
-            <column name="ID" valueSequenceNext="SEQ_APP_USER_GROUP_MEMBER"/>
-            <column name="VERSION" valueNumeric="1"/>
             <column name="GROUP_ID" valueComputed="(select ID from APP_USER_GROUP where NAME='USER')"/>
             <column name="USER_ID" valueComputed="(select ID from APP_USER where USERNAME='admin')"/>
             <column name="CREATION_DATE" valueComputed="${current_timestamp}"/>
-            <column name="LAST_UPDATED" valueComputed="${current_timestamp}"/>
         </insert>
         <insert tableName="APP_USER_GROUP_MEMBER">
-            <column name="ID" valueSequenceNext="SEQ_APP_USER_GROUP_MEMBER"/>
-            <column name="VERSION" valueNumeric="1"/>
             <column name="GROUP_ID" valueComputed="(select ID from APP_USER_GROUP where NAME='USER')"/>
             <column name="USER_ID" valueComputed="(select ID from APP_USER where USERNAME='john.doe')"/>
             <column name="CREATION_DATE" valueComputed="${current_timestamp}"/>
-            <column name="LAST_UPDATED" valueComputed="${current_timestamp}"/>
         </insert>
     </changeSet>
 </databaseChangeLog>

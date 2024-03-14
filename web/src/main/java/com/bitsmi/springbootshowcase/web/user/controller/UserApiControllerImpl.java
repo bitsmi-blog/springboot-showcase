@@ -42,7 +42,8 @@ public class UserApiControllerImpl implements IUserApi
     }
 
     @Override
-    @PreAuthorize("hasRole('" + UserConstants.USER_GROUP_ADMIN + "')")
+//    @PreAuthorize("hasRole('" + UserConstants.USER_GROUP_ADMIN + "')")
+    @PreAuthorize("hasAuthority('" + UserConstants.USER_PERMISSION_ADMIN_PERMISSION1 + "')")
     public UserDetailsResponse getAdminDetails()
     {
         final UserDetails userDetails = authenticationPrincipalService.getAuthenticationPrincipal();

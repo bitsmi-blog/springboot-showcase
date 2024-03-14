@@ -1,0 +1,9 @@
+GROUP_ID;AUTHORITY_ID;CREATION_DATE
+# ADMIN; admin.permission1
+1;1001;'2023-01-01 00:00:00.000'
+# ADMIN; admin.permission2
+1;1002;'2023-01-01 00:00:00.000'
+# USER; user.permission1
+2;1003;'2023-01-01 00:00:00.000'
+# USER; user.permission2
+2;1004;'2023-01-01 00:00:00.000'
