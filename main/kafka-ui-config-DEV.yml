@@ -1,0 +1,13 @@
+auth:
+  type: DISABLED
+kafka:
+  clusters:
+  - bootstrapServers: broker:29092
+    name: local
+    properties: {
+      isolation.level: "read_committed"
+    }
+    readOnly: false
+rbac:
+  roles: []
+webclient: {}
