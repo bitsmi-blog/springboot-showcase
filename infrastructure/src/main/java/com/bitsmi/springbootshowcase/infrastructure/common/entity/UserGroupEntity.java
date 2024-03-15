@@ -1,5 +1,6 @@
 package com.bitsmi.springbootshowcase.infrastructure.common.entity;
 
+import com.bitsmi.springbootshowcase.domain.content.model.ItemSchema;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -92,15 +93,9 @@ public class UserGroupEntity implements Serializable
     @Override
     public boolean equals(Object o)
     {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        UserGroupEntity other = (UserGroupEntity) o;
-        return Objects.equals(name, other.name);
+        return this == o
+                || o instanceof UserGroupEntity other
+                    && Objects.equals(name, other.name);
     }
 
     @Override

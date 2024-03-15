@@ -87,15 +87,9 @@ public class ItemGroupEntity implements Serializable
     @Override
     public boolean equals(Object o)
     {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        ItemGroupEntity other = (ItemGroupEntity) o;
-        return Objects.equals(id, other.id);
+        return this == o
+                || o instanceof ItemGroupEntity other
+                    && Objects.equals(id, other.id);
     }
 
     @Override

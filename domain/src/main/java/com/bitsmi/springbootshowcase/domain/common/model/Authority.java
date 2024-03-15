@@ -30,15 +30,9 @@ public record Authority(
     @Override
     public boolean equals(Object o)
     {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        Authority other = (Authority) o;
-        return Objects.equals(name, other.name);
+        return this == o
+                || o instanceof Authority other
+                && Objects.equals(name, other.name);
     }
 
     @Override

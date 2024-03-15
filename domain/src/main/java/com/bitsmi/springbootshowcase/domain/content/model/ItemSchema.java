@@ -44,15 +44,9 @@ public record ItemSchema(
     @Override
     public boolean equals(Object o)
     {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        ItemSchema other = (ItemSchema) o;
-        return Objects.equals(externalId, other.externalId);
+        return this == o
+                || o instanceof ItemSchema other
+                    && Objects.equals(externalId, other.externalId);
     }
 
     @Override

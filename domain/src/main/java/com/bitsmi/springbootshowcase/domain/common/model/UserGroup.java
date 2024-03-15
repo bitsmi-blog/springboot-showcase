@@ -33,15 +33,9 @@ public record UserGroup(
     @Override
     public boolean equals(Object o)
     {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        UserGroup other = (UserGroup) o;
-        return Objects.equals(name, other.name);
+        return this == o
+                || o instanceof UserGroup other
+                    && Objects.equals(name, other.name);
     }
 
     @Override

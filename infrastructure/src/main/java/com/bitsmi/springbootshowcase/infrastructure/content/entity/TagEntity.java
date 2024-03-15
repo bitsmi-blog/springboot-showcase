@@ -77,15 +77,9 @@ public class TagEntity implements Serializable
     @Override
     public boolean equals(Object o)
     {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        TagEntity other = (TagEntity) o;
-        return Objects.equals(name, other.name);
+        return this == o
+                || o instanceof TagEntity other
+                && Objects.equals(name, other.name);
     }
 
     @Override

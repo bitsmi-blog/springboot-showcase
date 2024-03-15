@@ -39,14 +39,8 @@ public record ItemSchemaField(
     @Override
     public boolean equals(Object o)
     {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        ItemSchemaField other = (ItemSchemaField) o;
-        return Objects.equals(name, other.name);
+        return this == o
+                || o instanceof ItemSchemaField other
+                    && Objects.equals(name, other.name);
     }
 }

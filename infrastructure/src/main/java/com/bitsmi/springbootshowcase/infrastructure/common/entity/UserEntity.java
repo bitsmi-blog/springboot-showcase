@@ -99,15 +99,9 @@ public class UserEntity implements Serializable
     @Override
     public boolean equals(Object o)
     {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        UserEntity other = (UserEntity) o;
-        return Objects.equals(username, other.username);
+        return this == o
+                || o instanceof UserEntity other
+                    && Objects.equals(username, other.username);
     }
 
     @Override

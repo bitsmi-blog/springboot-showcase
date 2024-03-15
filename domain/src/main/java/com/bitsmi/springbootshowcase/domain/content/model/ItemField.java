@@ -30,15 +30,9 @@ public record ItemField(
     @Override
     public boolean equals(Object o)
     {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        ItemField other = (ItemField) o;
-        return Objects.equals(id, other.id);
+        return this == o
+                || o instanceof ItemField other
+                    && Objects.equals(id, other.id);
     }
 
     @Override

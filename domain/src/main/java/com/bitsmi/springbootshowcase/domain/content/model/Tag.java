@@ -30,15 +30,9 @@ public record Tag(
     @Override
     public boolean equals(Object o)
     {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        Tag other = (Tag) o;
-        return Objects.equals(name, other.name);
+        return this == o
+                || o instanceof Tag other
+                    && Objects.equals(name, other.name);
     }
 
     @Override

@@ -87,15 +87,9 @@ public class ItemSchemaEntity implements Serializable
     @Override
     public boolean equals(Object o)
     {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        ItemSchemaEntity other = (ItemSchemaEntity) o;
-        return Objects.equals(externalId, other.externalId);
+        return this == o
+                || o instanceof ItemSchemaEntity other
+                    && Objects.equals(externalId, other.externalId);
     }
 
     @Override

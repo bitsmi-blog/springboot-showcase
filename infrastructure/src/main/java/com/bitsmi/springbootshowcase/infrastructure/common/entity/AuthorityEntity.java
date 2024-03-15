@@ -77,15 +77,9 @@ public class AuthorityEntity implements Serializable
     @Override
     public boolean equals(Object o)
     {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        AuthorityEntity other = (AuthorityEntity) o;
-        return Objects.equals(name, other.name);
+        return this == o
+                || o instanceof AuthorityEntity other
+                    && Objects.equals(name, other.name);
     }
 
     @Override

@@ -1,5 +1,7 @@
 package com.bitsmi.springbootshowcase.domain.common.exception;
 
+import com.bitsmi.springbootshowcase.domain.content.model.ItemSchema;
+
 import java.util.Objects;
 
 public class CodedMessage
@@ -57,15 +59,9 @@ public class CodedMessage
 
     public boolean equals(Object o)
     {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        var other = (CodedMessage) o;
-        return Objects.equals(code, other.code)
-                && Objects.equals(message, other.message);
+        return this == o
+                || o instanceof CodedMessage other
+                    && Objects.equals(code, other.code)
+                    && Objects.equals(message, other.message);
     }
 }

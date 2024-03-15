@@ -24,15 +24,9 @@ public record CreateAdminUserRequest(
     @Override
     public boolean equals(Object o)
     {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        CreateAdminUserRequest other = (CreateAdminUserRequest) o;
-        return Objects.equals(username, other.username);
+        return this == o
+                || o instanceof CreateAdminUserRequest other
+                    && Objects.equals(username, other.username);
     }
 
     @Override

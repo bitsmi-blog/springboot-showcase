@@ -30,15 +30,9 @@ public record ItemGroup(
     @Override
     public boolean equals(Object o)
     {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        ItemGroup other = (ItemGroup) o;
-        return Objects.equals(id, other.id);
+        return this == o
+                || o instanceof ItemGroup other
+                    && Objects.equals(id, other.id);
     }
 
     @Override

@@ -86,15 +86,9 @@ public class ItemFieldEntity implements Serializable
     @Override
     public boolean equals(Object o)
     {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        ItemFieldEntity other = (ItemFieldEntity) o;
-        return Objects.equals(id, other.id);
+        return this == o
+                || o instanceof ItemFieldEntity other
+                    && Objects.equals(id, other.id);
     }
 
     @Override

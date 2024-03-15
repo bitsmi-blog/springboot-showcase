@@ -23,15 +23,9 @@ public record UserSummary(
     @Override
     public boolean equals(Object o)
     {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        UserSummary other = (UserSummary) o;
-        return Objects.equals(username, other.username);
+        return this == o
+                || o instanceof UserSummary other
+                    && Objects.equals(username, other.username);
     }
 
     @Override

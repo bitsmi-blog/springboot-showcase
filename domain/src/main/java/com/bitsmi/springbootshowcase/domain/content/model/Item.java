@@ -37,15 +37,9 @@ public record Item(
     @Override
     public boolean equals(Object o)
     {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        Item other = (Item) o;
-        return Objects.equals(id, other.id);
+        return this == o
+                || o instanceof Item other
+                    && Objects.equals(id, other.id);
     }
 
     @Override

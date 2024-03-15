@@ -37,15 +37,9 @@ public record User(
     @Override
     public boolean equals(Object o)
     {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        User other = (User) o;
-        return Objects.equals(username, other.username);
+        return this == o
+                || o instanceof User other
+                    && Objects.equals(username, other.username);
     }
 
     @Override

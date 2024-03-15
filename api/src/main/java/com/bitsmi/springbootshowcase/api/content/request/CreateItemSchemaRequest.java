@@ -31,15 +31,9 @@ public record CreateItemSchemaRequest(
     @Override
     public boolean equals(Object o)
     {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-
-        CreateItemSchemaRequest other = (CreateItemSchemaRequest) o;
-        return Objects.equals(externalId, other.externalId);
+        return this == o
+                || o instanceof CreateItemSchemaRequest other
+                    && Objects.equals(externalId, other.externalId);
     }
 
     @Override
