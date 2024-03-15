@@ -4,7 +4,9 @@ kafka:
   clusters:
   - bootstrapServers: broker:29092
     name: local
-    properties: {}
+    properties: {
+      isolation.level: "read_committed"
+    }
     readOnly: false
 rbac:
   roles: []
