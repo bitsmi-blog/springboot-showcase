@@ -433,51 +433,398 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 @media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+pre.rouge table td { padding: 5px; }
+pre.rouge table pre { margin: 0; }
+pre.rouge .cm {
+  color: #999988;
+  font-style: italic;
+}
+pre.rouge .cp {
+  color: #999999;
+  font-weight: bold;
+}
+pre.rouge .c1 {
+  color: #999988;
+  font-style: italic;
+}
+pre.rouge .cs {
+  color: #999999;
+  font-weight: bold;
+  font-style: italic;
+}
+pre.rouge .c, pre.rouge .ch, pre.rouge .cd, pre.rouge .cpf {
+  color: #999988;
+  font-style: italic;
+}
+pre.rouge .err {
+  color: #a61717;
+  background-color: #e3d2d2;
+}
+pre.rouge .gd {
+  color: #000000;
+  background-color: #ffdddd;
+}
+pre.rouge .ge {
+  color: #000000;
+  font-style: italic;
+}
+pre.rouge .gr {
+  color: #aa0000;
+}
+pre.rouge .gh {
+  color: #999999;
+}
+pre.rouge .gi {
+  color: #000000;
+  background-color: #ddffdd;
+}
+pre.rouge .go {
+  color: #888888;
+}
+pre.rouge .gp {
+  color: #555555;
+}
+pre.rouge .gs {
+  font-weight: bold;
+}
+pre.rouge .gu {
+  color: #aaaaaa;
+}
+pre.rouge .gt {
+  color: #aa0000;
+}
+pre.rouge .kc {
+  color: #000000;
+  font-weight: bold;
+}
+pre.rouge .kd {
+  color: #000000;
+  font-weight: bold;
+}
+pre.rouge .kn {
+  color: #000000;
+  font-weight: bold;
+}
+pre.rouge .kp {
+  color: #000000;
+  font-weight: bold;
+}
+pre.rouge .kr {
+  color: #000000;
+  font-weight: bold;
+}
+pre.rouge .kt {
+  color: #445588;
+  font-weight: bold;
+}
+pre.rouge .k, pre.rouge .kv {
+  color: #000000;
+  font-weight: bold;
+}
+pre.rouge .mf {
+  color: #009999;
+}
+pre.rouge .mh {
+  color: #009999;
+}
+pre.rouge .il {
+  color: #009999;
+}
+pre.rouge .mi {
+  color: #009999;
+}
+pre.rouge .mo {
+  color: #009999;
+}
+pre.rouge .m, pre.rouge .mb, pre.rouge .mx {
+  color: #009999;
+}
+pre.rouge .sa {
+  color: #000000;
+  font-weight: bold;
+}
+pre.rouge .sb {
+  color: #d14;
+}
+pre.rouge .sc {
+  color: #d14;
+}
+pre.rouge .sd {
+  color: #d14;
+}
+pre.rouge .s2 {
+  color: #d14;
+}
+pre.rouge .se {
+  color: #d14;
+}
+pre.rouge .sh {
+  color: #d14;
+}
+pre.rouge .si {
+  color: #d14;
+}
+pre.rouge .sx {
+  color: #d14;
+}
+pre.rouge .sr {
+  color: #009926;
+}
+pre.rouge .s1 {
+  color: #d14;
+}
+pre.rouge .ss {
+  color: #990073;
+}
+pre.rouge .s, pre.rouge .dl {
+  color: #d14;
+}
+pre.rouge .na {
+  color: #008080;
+}
+pre.rouge .bp {
+  color: #999999;
+}
+pre.rouge .nb {
+  color: #0086B3;
+}
+pre.rouge .nc {
+  color: #445588;
+  font-weight: bold;
+}
+pre.rouge .no {
+  color: #008080;
+}
+pre.rouge .nd {
+  color: #3c5d5d;
+  font-weight: bold;
+}
+pre.rouge .ni {
+  color: #800080;
+}
+pre.rouge .ne {
+  color: #990000;
+  font-weight: bold;
+}
+pre.rouge .nf, pre.rouge .fm {
+  color: #990000;
+  font-weight: bold;
+}
+pre.rouge .nl {
+  color: #990000;
+  font-weight: bold;
+}
+pre.rouge .nn {
+  color: #555555;
+}
+pre.rouge .nt {
+  color: #000080;
+}
+pre.rouge .vc {
+  color: #008080;
+}
+pre.rouge .vg {
+  color: #008080;
+}
+pre.rouge .vi {
+  color: #008080;
+}
+pre.rouge .nv, pre.rouge .vm {
+  color: #008080;
+}
+pre.rouge .ow {
+  color: #000000;
+  font-weight: bold;
+}
+pre.rouge .o {
+  color: #000000;
+  font-weight: bold;
+}
+pre.rouge .w {
+  color: #bbbbbb;
+}
+pre.rouge {
+  background-color: #f8f8f8;
+}
+</style>
 </head>
 <body class="article toc2 toc-left">
 <div id="header">
 <h1>Actuators</h1>
 <div class="details">
 <span id="revnumber">version 2.0.0-SNAPSHOT,</span>
-<span id="revdate">2024-03-06T07:48:00Z</span>
+<span id="revdate">2024-03-16T09:25:15Z</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#metrics-endpoints">Metrics Endpoints</a></li>
+<li><a href="#configuration">Configuration</a></li>
+<li><a href="#endpoints">Endpoints</a>
+<ul class="sectlevel2">
+<li><a href="#info">Info</a></li>
+<li><a href="#health">Health</a></li>
+<li><a href="#metrics">Metrics</a></li>
+<li><a href="#custom-actuators">Custom actuators</a></li>
+</ul>
+</li>
 <li><a href="#references">References</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
-<div id="preamble">
+<div class="sect1">
+<h2 id="configuration"><a class="anchor" href="#configuration"></a>Configuration</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>DEPRECATED</p>
+<p>Actuator endpoints must be enabled in <code>application.properties</code> exposing only necessary endpoints.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="properties"><span class="py">management.endpoints.enabled-by-default</span><span class="p">=</span><span class="s">false</span>
+<span class="py">management.endpoints.web.exposure.include</span><span class="p">=</span><span class="s">info,metrics,health</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In addition, every endpoint should be enabled individually (See sections below for more details)</p>
+</div>
+<div class="paragraph">
+<p>Enabled endpoints can be accessed through <code>/actuator</code> by default. This can be changed using the <code>base-path</code> configuration
+in <code>application.properties</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="properties"><span class="py">management.endpoints.web.base-path</span><span class="p">:</span> <span class="s">/public/actuator</span></code></pre>
+</div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="metrics-endpoints"><a class="anchor" href="#metrics-endpoints"></a>Metrics Endpoints</h2>
+<h2 id="endpoints"><a class="anchor" href="#endpoints"></a>Endpoints</h2>
 <div class="sectionbody">
+<div class="sect2">
+<h3 id="info"><a class="anchor" href="#info"></a>Info</h3>
+<div class="paragraph">
+<p>This endpoint allows display information about the application through <code>/actuator/info</code> endpoint including
+build information generated by <code>spring-boot-maven-plugin</code> Maven plugin and random information included in <code>application.properties</code>.</p>
+</div>
+<div class="paragraph">
+<p>First of all, we need to enable the endpoint in <code>application.properties</code></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="properties"><span class="py">management.endpoint.info.enabled</span><span class="p">=</span><span class="s">true</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To provide build information is necessary to configure <code>spring-boot-maven-plugin</code> executing the <code>build-info</code> goal.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;plugin&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>spring-boot-maven-plugin<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="c">&lt;!-- . . . --&gt;</span>
+    <span class="nt">&lt;executions&gt;</span>
+        <span class="nt">&lt;execution&gt;</span>
+            <span class="nt">&lt;id&gt;</span>build-info<span class="nt">&lt;/id&gt;</span>
+            <span class="nt">&lt;goals&gt;</span>
+                <span class="nt">&lt;goal&gt;</span>build-info<span class="nt">&lt;/goal&gt;</span>
+            <span class="nt">&lt;/goals&gt;</span>
+        <span class="nt">&lt;/execution&gt;</span>
+        <span class="c">&lt;!-- . . . --&gt;</span>
+    <span class="nt">&lt;/executions&gt;</span>
+<span class="nt">&lt;/plugin&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This will generate <code>build-info.properties</code> file inside <code>/target/META-INF</code> folder with this info. E.G.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="properties"><span class="py">build.artifact</span><span class="p">=</span><span class="s">springboot-showcase-main</span>
+<span class="py">build.group</span><span class="p">=</span><span class="s">com.bitsmi.springboot-showcase</span>
+<span class="py">build.name</span><span class="p">=</span><span class="s">springboot-showcase-main</span>
+<span class="py">build.time</span><span class="p">=</span><span class="s">2024-03-16T08</span><span class="se">\:</span><span class="s">32</span><span class="se">\:</span><span class="s">12.088Z</span>
+<span class="py">build.version</span><span class="p">=</span><span class="s">2.0.0-SNAPSHOT</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Custom information can be added in <code>application.properties</code> enabling <code>management.info.env.enabled</code> property
+and specifying them using <code>info</code> prefix. If properties file is filtered by Maven, we can use Maven env variables
+like <code>project.name</code>, <code>project.version</code>, etc. to make this configuration more general.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="properties"><span class="py">management.info.env.enabled</span><span class="p">=</span><span class="s">true</span>
+<span class="py">info.app.name</span><span class="p">=</span><span class="s">${spring.application.name}</span>
+<span class="py">info.app.description</span><span class="p">=</span><span class="s">${project.description}</span>
+<span class="py">info.app.version</span><span class="p">=</span><span class="s">${project.version}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We can use an infix to categorize the properties (<code>app</code> in the example above), so that endpoint&#8217;s response will contain inner json objects
+according to them.</p>
+</div>
+<div class="paragraph">
+<p>After doing these configurations, <code>/actuator/info</code> will provide us with a response like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="json"><span class="p">{</span><span class="w">
+  </span><span class="nl">"app"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"springboot-showcase-main"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SpringBoot Showcase Main"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.0.0-SNAPSHOT"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"build"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"artifact"</span><span class="p">:</span><span class="w"> </span><span class="s2">"springboot-showcase-main"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"springboot-showcase-main"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"time"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2024-03-16T08:32:12.088Z"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2.0.0-SNAPSHOT"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"group"</span><span class="p">:</span><span class="w"> </span><span class="s2">"com.bitsmi.springboot-showcase"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="health"><a class="anchor" href="#health"></a>Health</h3>
+<div class="paragraph">
+<p>TODO</p>
+</div>
 <div class="ulist">
 <ul>
 <li>
-<p><a href="http://localhost:8080/actuator" class="bare">http://localhost:8080/actuator</a></p>
-</li>
-<li>
-<p><a href="http://localhost:8080/actuator/health" class="bare">http://localhost:8080/actuator/health</a></p>
-</li>
-<li>
-<p><a href="http://localhost:8080/actuator/metrics" class="bare">http://localhost:8080/actuator/metrics</a></p>
-</li>
-<li>
-<p><a href="http://localhost:8080/actuator/metrics/userApiController" class="bare">http://localhost:8080/actuator/metrics/userApiController</a></p>
-</li>
-<li>
-<p><a href="http://localhost:8080/actuator/metrics/userApiController?tag=error%3AIllegalStateException" class="bare">http://localhost:8080/actuator/metrics/userApiController?tag=error%3AIllegalStateException</a></p>
+<p><code>/actuator/health</code></p>
 </li>
 </ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="metrics"><a class="anchor" href="#metrics"></a>Metrics</h3>
+<div class="paragraph">
+<p>TODO</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>/actuator/metrics</code></p>
+</li>
+<li>
+<p><code>/actuator/metrics/userApiController</code></p>
+</li>
+<li>
+<p><code>/actuator/metrics/userApiController?tag=error%3AIllegalStateException</code></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="custom-actuators"><a class="anchor" href="#custom-actuators"></a>Custom actuators</h3>
+<div class="paragraph">
+<p>TODO</p>
+</div>
 </div>
 </div>
 </div>
@@ -497,7 +844,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="footer">
 <div id="footer-text">
 Version 2.0.0-SNAPSHOT<br>
-Last updated 2024-03-03 09:52:19 +0100
+Last updated 2024-03-16 10:20:08 +0100
 </div>
 </div>
 </body>

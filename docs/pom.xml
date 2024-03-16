@@ -6,6 +6,7 @@
 
     <artifactId>springboot-showcase-docs</artifactId>
     <packaging>pom</packaging>
+    <description>SpringBoot Showcase Documentation module</description>
 
 	<parent>
     	<groupId>com.bitsmi.springboot-showcase</groupId>

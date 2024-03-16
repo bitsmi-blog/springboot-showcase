@@ -4,6 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	
     <artifactId>springboot-showcase-domain</artifactId>
+	<description>SpringBoot Showcase Domain layer module</description>
 	
 	<parent>
 		<groupId>com.bitsmi.springboot-showcase</groupId>

@@ -4,6 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	
     <artifactId>springboot-showcase-main</artifactId>
+	<description>SpringBoot Showcase Main module</description>
 
 	<parent>
 		<groupId>com.bitsmi.springboot-showcase</groupId>

@@ -12,7 +12,7 @@ xref:pages/application/testing.adoc[Testing]
 
 == Spring reference
 
-xref:pages/spring/actuators.adoc[Actuators] (DEPRECATED)
+xref:pages/spring/actuators.adoc[Actuators]
 
 xref:pages/spring/spring_data.adoc[Spring Data]
 
