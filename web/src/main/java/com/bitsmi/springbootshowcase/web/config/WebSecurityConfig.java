@@ -1,5 +1,6 @@
 package com.bitsmi.springbootshowcase.web.config;
 
+import com.bitsmi.springbootshowcase.domain.common.UserConstants;
 import com.bitsmi.springbootshowcase.web.common.controller.ProblemDetailBuilder;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletException;
@@ -83,7 +84,9 @@ public class WebSecurityConfig
 
     private void authorizeHttpRequestsBasic(AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry configurer)
     {
-        configurer.anyRequest().authenticated();
+        configurer
+                .requestMatchers(HttpMethod.GET, "/actuator/**").hasAnyRole(UserConstants.USER_GROUP_ADMIN, UserConstants.USER_GROUP_MONITORING)
+                .anyRequest().authenticated();
     }
 
     private void authorizeHttpRequestsDefault(AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry configurer)
