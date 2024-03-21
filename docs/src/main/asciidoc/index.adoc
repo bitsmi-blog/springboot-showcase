@@ -4,17 +4,19 @@
 
 xref:pages/application/architecture.adoc[Architecture]
 
-xref:pages/application/aop.adoc[AOP]
+== Spring How-To
 
-xref:pages/application/observability.adoc[Observability]
+xref:pages/spring-howto/actuators.adoc[Actuators]
 
-xref:pages/application/testing.adoc[Testing]
+xref:pages/spring-howto/aop.adoc[AOP]
 
-== Spring reference
+xref:pages/spring-howto/observability.adoc[Observability]
 
-xref:pages/spring/actuators.adoc[Actuators]
+xref:pages/spring-howto/testing.adoc[Testing]
 
-xref:pages/spring/spring_data.adoc[Spring Data]
+== Spring References
+
+xref:pages/spring-references/spring_data.adoc[Spring Data]
 
 == Tips & tricks
 

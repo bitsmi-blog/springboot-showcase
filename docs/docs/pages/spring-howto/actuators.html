@@ -654,7 +654,7 @@ pre.rouge {
 <h1>Actuators</h1>
 <div class="details">
 <span id="revnumber">version 2.0.0-SNAPSHOT,</span>
-<span id="revdate">2024-03-16T09:25:15Z</span>
+<span id="revdate">2024-03-21T17:11:07Z</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
@@ -791,14 +791,268 @@ according to them.</p>
 <div class="sect2">
 <h3 id="health"><a class="anchor" href="#health"></a>Health</h3>
 <div class="paragraph">
-<p>TODO</p>
+<p>This endpoint allows display information about application&#8217;s health through <code>/actuator/health</code> endpoint, including built-in and custom health indicators.</p>
+</div>
+<div class="paragraph">
+<p>First of all, we need to enable the endpoint in <code>application.properties</code></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="properties"><span class="py">management.endpoint.health.enabled</span><span class="p">=</span><span class="s">true</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And configure the visibility of the endpoint:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="proerties">management.endpoint.health.show-details=always
+management.endpoint.health.show-components=always</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The properties above can be configured with one of the following values:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><code>/actuator/health</code></p>
+<p><strong>never</strong></p>
+</li>
+<li>
+<p><strong>when-authorized</strong>: Only visible for authorized roles configured in <code>management.endpoint.health.roles</code> property</p>
+</li>
+<li>
+<p><strong>always</strong>: Visible for all users. We can use this value also if we want to manage the access to these endpoints directly in Spring-security configuration. E.G.</p>
 </li>
 </ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>private void authorizeHttpRequestsBasic(AuthorizeHttpRequestsConfigurer&lt;HttpSecurity&gt;.AuthorizationManagerRequestMatcherRegistry configurer)
+{
+    configurer
+        .requestMatchers(HttpMethod.GET, "/actuator/**").hasAnyRole(UserConstants.USER_GROUP_ADMIN, UserConstants.USER_GROUP_MONITORING)
+        .anyRequest().authenticated();
+}</pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="built-in-health-indicators"><a class="anchor" href="#built-in-health-indicators"></a>Built-in health indicators</h4>
+<div class="paragraph">
+<p>Spring Boot auto-configures the <code>HealthIndicators</code> listed in the following table (if module is in classpath and auto-configuration is enabled).
+You can also enable or disable selected indicators by configuring <code>management.health.key.enabled</code>, with the key listed in the following table:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Key</th>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cassandra</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CassandraDriverHealthIndicator</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Checks that a Cassandra database is up.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">couchbase</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CouchbaseHealthIndicator</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Checks that a Couchbase cluster is up.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">db</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DataSourceHealthIndicator</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Checks that a connection to DataSource can be obtained.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">diskspace</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DiskSpaceHealthIndicator</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Checks for low disk space.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">elasticsearch</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ElasticsearchRestClientHealthIndicator</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Checks that an Elasticsearch cluster is up.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">hazelcast</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HazelcastHealthIndicator</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Checks that a Hazelcast server is up.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">influxdb</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">InfluxDbHealthIndicator</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Checks that an InfluxDB server is up.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">jms</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">JmsHealthIndicator</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Checks that a JMS broker is up.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ldap</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">LdapHealthIndicator</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Checks that an LDAP server is up.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mail</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MailHealthIndicator</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Checks that a mail server is up.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mongo</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MongoHealthIndicator</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Checks that a Mongo database is up.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">neo4j</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Neo4jHealthIndicator</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Checks that a Neo4j database is up.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ping</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PingHealthIndicator</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Always responds with UP.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">rabbit</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RabbitHealthIndicator</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Checks that a Rabbit server is up.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">redis</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RedisHealthIndicator</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Checks that a Redis server is up.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Additional <code>HealthIndicators</code> are available but are not enabled by default:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Key</th>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">livenessstate</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">LivenessStateHealthIndicator</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Exposes the “Liveness” application availability state.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">readinessstate</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ReadinessStateHealthIndicator</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Exposes the “Readiness” application availability state.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="custom-health-indicators"><a class="anchor" href="#custom-health-indicators"></a>Custom health indicators</h4>
+<div class="paragraph">
+<p>We can create additional custom health indicators implementing <code>org.springframework.boot.actuate.health.HealthIndicator</code> interface or extending <code>org.springframework.boot.actuate.health.AbstractHealthIndicator</code> class. For example, if we want to create a Kafka indicator that tell us if the Kafka Broker is UP or DOWN, we can implement as this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java"><span class="nd">@Component</span>
+<span class="nd">@ConditionalOnEnabledHealthIndicator</span><span class="o">(</span><span class="s">"kafka"</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">KafkaHealthIndicator</span> <span class="kd">extends</span> <span class="nc">AbstractHealthIndicator</span>
+<span class="o">{</span>
+    <span class="kd">private</span> <span class="kd">final</span> <span class="nc">AdminClient</span> <span class="n">kafkaAdminClient</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">KafkaHealthIndicator</span><span class="o">(</span><span class="nc">KafkaAdmin</span> <span class="n">kafkaAdmin</span><span class="o">)</span>
+    <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">kafkaAdminClient</span> <span class="o">=</span> <span class="nc">AdminClient</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="n">kafkaAdmin</span><span class="o">.</span><span class="na">getConfigurationProperties</span><span class="o">());</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">doHealthCheck</span><span class="o">(</span><span class="nc">Builder</span> <span class="n">builder</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Exception</span>
+    <span class="o">{</span>
+        <span class="kd">final</span> <span class="nc">DescribeClusterOptions</span> <span class="n">options</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">DescribeClusterOptions</span><span class="o">().</span><span class="na">timeoutMs</span><span class="o">(</span><span class="mi">1000</span><span class="o">);</span>
+
+        <span class="nc">DescribeClusterResult</span> <span class="n">clusterDescription</span> <span class="o">=</span> <span class="n">kafkaAdminClient</span><span class="o">.</span><span class="na">describeCluster</span><span class="o">(</span><span class="n">options</span><span class="o">);</span>
+
+        <span class="c1">// When Kafka is not connected future.get() throws an exception which in turn sets the indicator DOWN.</span>
+        <span class="n">clusterDescription</span><span class="o">.</span><span class="na">clusterId</span><span class="o">().</span><span class="na">get</span><span class="o">();</span>
+
+        <span class="n">builder</span><span class="o">.</span><span class="na">up</span><span class="o">().</span><span class="na">build</span><span class="o">();</span>
+
+        <span class="c1">// Alternatively directly use data from future in health detail.</span>
+        <span class="n">builder</span><span class="o">.</span><span class="na">up</span><span class="o">()</span>
+                <span class="o">.</span><span class="na">withDetail</span><span class="o">(</span><span class="s">"clusterId"</span><span class="o">,</span> <span class="n">clusterDescription</span><span class="o">.</span><span class="na">clusterId</span><span class="o">().</span><span class="na">get</span><span class="o">())</span>
+                <span class="o">.</span><span class="na">withDetail</span><span class="o">(</span><span class="s">"nodeCount"</span><span class="o">,</span> <span class="n">clusterDescription</span><span class="o">.</span><span class="na">nodes</span><span class="o">().</span><span class="na">get</span><span class="o">().</span><span class="na">size</span><span class="o">())</span>
+                <span class="o">.</span><span class="na">build</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If we extend the <code>AbstractHealthIndicator</code> class this will allow us to include additional information through the provided builder. In the example, the <code>clusterId</code> and the <code>nodeCount</code> fields.</p>
+</div>
+<div class="paragraph">
+<p>The name of the indicator class should follow the convention <code>&lt;Indicator name&gt;HealthIndicator</code> so Spring will know the indicator name related to the configuration properties related to it.</p>
+</div>
+<div class="paragraph">
+<p>To allow to enable / disable a custom indicator through it&#8217;s corresponding configuration property, we must include the <code>@ConditionalOnEnabledHealthIndicator</code> annotation specifying the indicator name to it.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="indicator-groups"><a class="anchor" href="#indicator-groups"></a>Indicator groups</h4>
+<div class="paragraph">
+<p>Health indicators can be grouped creating a property in <code>application.properties</code> with the following format <code>management.endpoint.health.group.&lt;group name&gt;.include</code>. E.G. Create a group named <code>infrastructure</code> with only <code>db</code> and <code>kafka</code> indicators.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="properties"><span class="py">management.endpoint.health.group.infrastructure.include</span><span class="p">=</span><span class="s">db,kafka</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Doing this we can get the full list of indicators through <code>/actuators/health</code> endpoint and only the ones tagged as <code>infrastruture</code> using the <code>/actuators/health/infrastructure</code> endpoint.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="enabling-indicators"><a class="anchor" href="#enabling-indicators"></a>Enabling indicators</h4>
+<div class="paragraph">
+<p>Indicators can be configured to display information or not in <code>/actuators/health</code>. This can be achieved setting <code>true</code> or <code>false</code> in the corresponding <code>management.health.&lt;indicator name&gt;.enabled</code> property. Default indicators can be all enabled / disabled at once using the <code>management.health.defaults.enabled</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="properties"><span class="c"># Only expose DB and ping components (only applies to default indicators)
+</span><span class="py">management.health.defaults.enabled</span><span class="p">=</span><span class="s">false</span>
+<span class="py">management.health.db.enabled</span><span class="p">=</span><span class="s">true</span>
+<span class="py">management.health.ping.enabled</span><span class="p">=</span><span class="s">true</span>
+<span class="c"># Custom
+</span><span class="py">management.health.kafka.enabled</span><span class="p">=</span><span class="s">true</span></code></pre>
+</div>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+If an indicator is disabled, remove it from groups, otherwise it will raise an error and application won&#8217;t start.
+</td>
+</tr>
+</table>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -834,7 +1088,10 @@ according to them.</p>
 <div class="ulist">
 <ul>
 <li>
-<p><a href="https://docs.spring.io/spring-boot/docs/3.2.x/actuator-api/htmlsingle/#overview" class="bare">https://docs.spring.io/spring-boot/docs/3.2.x/actuator-api/htmlsingle/#overview</a></p>
+<p><a href="https://docs.spring.io/spring-boot/docs/3.2.x/actuator-api/htmlsingle/#overview">Actuator overview</a></p>
+</li>
+<li>
+<p><a href="https://docs.spring.io/spring-boot/docs/current/reference/html/actuator.html#actuator.endpoints.health">Health reference</a></p>
 </li>
 </ul>
 </div>
@@ -844,7 +1101,7 @@ according to them.</p>
 <div id="footer">
 <div id="footer-text">
 Version 2.0.0-SNAPSHOT<br>
-Last updated 2024-03-16 10:20:08 +0100
+Last updated 2024-03-21 08:59:34 +0100
 </div>
 </div>
 </body>
