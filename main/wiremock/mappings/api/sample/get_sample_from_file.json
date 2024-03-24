@@ -1,0 +1,14 @@
+{
+	"priority": 10,
+	"request": {
+		"method": "GET",
+		"url": "/api/sample"
+	},
+	"response": {
+		"status": 200,
+		"headers": {
+			"Content-Type": "application/json"
+		},
+		"bodyFileName": "get_sample_body.json"
+	}
+}

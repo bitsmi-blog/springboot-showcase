@@ -1,0 +1,67 @@
+= Mocking external services
+
+:toc:
+
+WIP
+
+== Wiremock
+
+=== Wiremock Admin API
+
+**Get all defined expectations**
+[source,bash]
+----
+curl http://localhost:8100/__admin/mappings
+----
+
+**Create a new expectation using the API**
+[source,bash]
+----
+curl -X POST -H "Content-Type: application/json" -d '
+{
+    "id": "12345678-1234-1234-1234-123456789012",
+	"priority": 10,
+	"request": {
+		"method": "GET",
+		"url": "/api/sample"
+	},
+	"response": {
+		"status": 200,
+		"headers": {
+			"Content-Type": "application/json"
+		},
+		"bodyFileName": "get_sample_response.json"
+	}
+}
+' http://localhost:8100/__admin/mappings
+----
+
+**Update an existing expectation using the API**
+[source,bash]
+----
+curl -X PUT -H "Content-Type: application/json" -d '
+{
+	"priority": 10,
+	"request": {
+		"method": "GET",
+		"url": "/api/sample"
+	},
+	"response": {
+		"status": 200,
+		"headers": {
+			"Content-Type": "application/json"
+		},
+		"jsonBody": [1, 2, 3, 4]
+	}
+}
+' http://localhost:8100/__admin/mappings/12345678-1234-1234-1234-123456789012
+----
+
+**Reload expectations from /mappings files**
+
+NOTE: This option makes possible to modify expectations editing mappings files directly and then reload Wiremock state
+
+[source,bash]
+----
+curl -X POST http://localhost:8100/__admin/mappings/reset
+----
