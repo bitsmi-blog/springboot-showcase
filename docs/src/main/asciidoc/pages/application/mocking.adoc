@@ -30,7 +30,7 @@ curl -X POST -H "Content-Type: application/json" -d '
 		"headers": {
 			"Content-Type": "application/json"
 		},
-		"bodyFileName": "get_sample_response.json"
+		"bodyFileName": "api/sample/get_sample_body.json"
 	}
 }
 ' http://localhost:8100/__admin/mappings

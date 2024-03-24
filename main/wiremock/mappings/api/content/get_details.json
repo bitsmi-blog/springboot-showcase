@@ -1,0 +1,19 @@
+{
+    "priority": 10,
+    "request": {
+        "method": "GET",
+        "url": "/api/content",
+        "queryParameters": {
+            "selector": {
+                "equalTo": "id EQUALS 1"
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "Content-Type": "application/json"
+        },
+        "bodyFileName": "get_details_body.json"
+    }
+}

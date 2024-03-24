@@ -1,0 +1,14 @@
+{
+    "priority": 10,
+    "request": {
+        "method": "GET",
+        "url": "/api/info/service-version"
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "Content-Type": "text/plain"
+        },
+        "body": "SAMPLE-SERVICE-1.0.0"
+    }
+}
