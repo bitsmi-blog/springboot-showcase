@@ -1,7 +1,7 @@
 package com.bitsmi.springbootshowcase.api.client.openfeign.test;
 
 import com.bitsmi.springbootshowcase.api.client.openfeign.content.IItemSchemaApiClient;
-import com.bitsmi.springbootshowcase.api.common.request.PageRequest;
+import com.bitsmi.springbootshowcase.api.common.request.PagedRequest;
 import com.bitsmi.springbootshowcase.api.common.response.PagedResponse;
 import com.bitsmi.springbootshowcase.api.content.response.ItemSchema;
 import com.github.tomakehurst.wiremock.WireMockServer;
@@ -47,7 +47,7 @@ public class ItemSchemaApiClientTest
     {
         wireMockServer.stubFor(WireMock.get(WireMock.urlPathEqualTo("/api/content/schema"))
                 .withQueryParam("page", WireMock.equalTo("0"))
-                .withQueryParam("size", WireMock.equalTo("5"))
+                .withQueryParam("pageSize", WireMock.equalTo("5"))
                 .willReturn(WireMock.aResponse()
                         .withHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)
                         .withBody("""
@@ -64,7 +64,7 @@ public class ItemSchemaApiClientTest
                 )
         );
 
-        PagedResponse<ItemSchema> response = itemSchemaApiClient.getSchemas(PageRequest.of(0, 5));
+        PagedResponse<ItemSchema> response = itemSchemaApiClient.getSchemas(PagedRequest.of(0, 5));
 
         assertThat(response.content()).hasSize(5);
         assertThat(response.pagination().pageNumber()).isEqualTo(0);
