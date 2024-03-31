@@ -1,6 +1,6 @@
 package com.bitsmi.springshowcase.sampleservice.client;
 
-import com.bitsmi.springshowcase.sampleservice.client.content.ContentSelectionApiBuilder;
+import com.bitsmi.springshowcase.sampleservice.client.content.ContentSetApiBuilder;
 import com.bitsmi.springshowcase.sampleservice.client.content.request.ContentSelector;
 import com.bitsmi.springshowcase.sampleservice.client.info.InfoApiBuilder;
 import jakarta.validation.NoProviderFoundException;
@@ -32,9 +32,9 @@ public class SampleServiceClient
         return new InfoApiBuilder(restClient);
     }
 
-    public ContentSelectionApiBuilder content(ContentSelector selector)
+    public ContentSetApiBuilder content(ContentSelector selector)
     {
-        return new ContentSelectionApiBuilder(restClient, validator, selector);
+        return new ContentSetApiBuilder(restClient, validator, selector);
     }
 
     public static class Builder

@@ -1,9 +1,11 @@
 package com.bitsmi.springshowcase.sampleservice.client.test;
 
 import com.bitsmi.springshowcase.sampleservice.client.SampleServiceClient;
+import com.bitsmi.springshowcase.sampleservice.client.common.response.PagedResponse;
+import com.bitsmi.springshowcase.sampleservice.client.common.response.Pagination;
+import com.bitsmi.springshowcase.sampleservice.client.common.response.Sort;
 import com.bitsmi.springshowcase.sampleservice.client.content.request.ContentSelector;
 import com.bitsmi.springshowcase.sampleservice.client.content.response.Content;
-import com.bitsmi.springshowcase.sampleservice.client.content.response.ContentDetailResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
@@ -18,6 +20,7 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static com.github.tomakehurst.wiremock.client.WireMock.equalTo;
@@ -35,19 +38,26 @@ public class ContentApiIntTests
     private ObjectMapper objectMapper;
 
     @Test
-    @DisplayName("get contentDetails operation should return a content details json")
-    public void contentDetailsTest1() throws JsonProcessingException
+    @DisplayName("get contentList operation should return a content list json given a selector")
+    public void contentListTest1() throws JsonProcessingException
     {
         final LocalDateTime now = LocalDateTime.now();
-        final ContentDetailResponse expectedResponse = ContentDetailResponse.builder()
-                .content(Content.builder()
+        final PagedResponse<Content> expectedResponse = PagedResponse.<Content>builder()
+                .content(List.of(
+                    Content.builder()
                         .id(1L)
                         .externalId("content_1")
                         .name("Content 1")
                         .creationDate(now)
                         .lastUpdated(now)
                         .build()
+                ))
+                .pagination(
+                    Pagination.of(0, 10, Sort.UNSORTED)
                 )
+                .totalPages(1)
+                .pageCount(1)
+                .totalCount(1)
                 .build();
 
         stubFor(get(urlPathEqualTo("/api/content"))
@@ -60,8 +70,9 @@ public class ContentApiIntTests
                 )
         );
 
-        ContentDetailResponse actualResponse = client.content(ContentSelector.id(1L))
-                .details()
+        PagedResponse<Content> actualResponse = client.content(ContentSelector.id(1L))
+                .list()
+                .paged(0, 10)
                 .get();
 
         assertThat(actualResponse)
@@ -70,12 +81,12 @@ public class ContentApiIntTests
     }
 
     @Test
-    @DisplayName("get contentDetails operation should validate content selector")
-    public void contentDetailsTest2()
+    @DisplayName("get contentList operation should validate content selector")
+    public void contentListTest2()
     {
         assertThatThrownBy(() -> {
                 client.content(ContentSelector.id(null))
-                    .details()
+                    .list()
                     .get();
             })
             .asInstanceOf(InstanceOfAssertFactories.type(ConstraintViolationException.class))
