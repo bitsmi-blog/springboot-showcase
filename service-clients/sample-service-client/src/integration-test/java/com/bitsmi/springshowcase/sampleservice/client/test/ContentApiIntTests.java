@@ -60,9 +60,13 @@ public class ContentApiIntTests
                 .totalCount(1)
                 .build();
 
+        System.out.println(objectMapper.writeValueAsString(expectedResponse));
+
         stubFor(get(urlPathEqualTo("/api/content"))
                 // Wiremock decodes query param value automatically
                 .withQueryParam("selector", equalTo("id EQUALS 1"))
+                .withQueryParam("page", equalTo("0"))
+                .withQueryParam("pageSize", equalTo("10"))
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withHeader("Content-Type", "application/json")

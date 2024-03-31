@@ -1,0 +1,21 @@
+{
+    "content": [
+        {
+            "id": 1,
+            "externalId": "content_1",
+            "name": "Content 1",
+            "creationDate": "2024-03-29T01:02:03.000",
+            "lastUpdated": "2024-03-29T01:02:03.000"
+        }
+    ],
+    "pagination": {
+        "pageNumber": 0,
+        "pageSize": 10,
+        "sort": {
+            "orders":[]
+        }
+    },
+    "pageCount":1,
+    "totalPages":1,
+    "totalCount":1
+}
