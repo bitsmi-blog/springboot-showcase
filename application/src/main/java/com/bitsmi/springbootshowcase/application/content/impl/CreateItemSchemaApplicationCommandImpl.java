@@ -1,6 +1,6 @@
 package com.bitsmi.springbootshowcase.application.content.impl;
 
-import com.bitsmi.springbootshowcase.application.content.ICreateItemSchemaCommand;
+import com.bitsmi.springbootshowcase.application.content.ICreateItemSchemaApplicationCommand;
 import com.bitsmi.springbootshowcase.domain.content.IItemSchemaDomainCommandService;
 import com.bitsmi.springbootshowcase.domain.content.model.ItemSchema;
 import jakarta.validation.Valid;
@@ -10,7 +10,7 @@ import org.springframework.validation.annotation.Validated;
 
 @Component
 @Validated
-public class CreateItemSchemaCommandImpl implements ICreateItemSchemaCommand
+public class CreateItemSchemaApplicationCommandImpl implements ICreateItemSchemaApplicationCommand
 {
     @Autowired
     private IItemSchemaDomainCommandService itemSchemaCommandDomainService;

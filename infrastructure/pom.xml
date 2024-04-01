@@ -18,6 +18,11 @@
 			<artifactId>springboot-showcase-domain</artifactId>
 			<version>2.0.0-SNAPSHOT</version>
 		</dependency>
+        <dependency>
+            <groupId>com.bitsmi.springboot-showcase</groupId>
+            <artifactId>springboot-showcase-sample-service-client</artifactId>
+            <version>2.0.0-SNAPSHOT</version>
+        </dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

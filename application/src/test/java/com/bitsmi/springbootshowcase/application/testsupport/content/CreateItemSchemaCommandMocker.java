@@ -1,6 +1,6 @@
 package com.bitsmi.springbootshowcase.application.testsupport.content;
 
-import com.bitsmi.springbootshowcase.application.content.ICreateItemSchemaCommand;
+import com.bitsmi.springbootshowcase.application.content.ICreateItemSchemaApplicationCommand;
 import com.bitsmi.springbootshowcase.domain.content.model.ItemSchema;
 import org.mockito.Mockito;
 import org.springframework.test.context.event.annotation.BeforeTestExecution;
@@ -14,9 +14,9 @@ import static org.mockito.Mockito.when;
 
 public class CreateItemSchemaCommandMocker
 {
-    private final ICreateItemSchemaCommand mockedCommand;
+    private final ICreateItemSchemaApplicationCommand mockedCommand;
 
-    private CreateItemSchemaCommandMocker(ICreateItemSchemaCommand mockedCommand)
+    private CreateItemSchemaCommandMocker(ICreateItemSchemaApplicationCommand mockedCommand)
     {
         if(!Mockito.mockingDetails(mockedCommand).isMock()) {
             throw new IllegalArgumentException("Command instance must be a mock");
@@ -27,10 +27,10 @@ public class CreateItemSchemaCommandMocker
 
     public static CreateItemSchemaCommandMocker mocker()
     {
-        return new CreateItemSchemaCommandMocker(mock(ICreateItemSchemaCommand.class));
+        return new CreateItemSchemaCommandMocker(mock(ICreateItemSchemaApplicationCommand.class));
     }
 
-    public static CreateItemSchemaCommandMocker fromMockedInstance(ICreateItemSchemaCommand commandInstance)
+    public static CreateItemSchemaCommandMocker fromMockedInstance(ICreateItemSchemaApplicationCommand commandInstance)
     {
         return new CreateItemSchemaCommandMocker(commandInstance);
     }
@@ -41,7 +41,7 @@ public class CreateItemSchemaCommandMocker
         this.whenCreateItemSchemaThenReturnData();
     }
 
-    public CreateItemSchemaCommandMocker configureMock(Consumer<ICreateItemSchemaCommand> mockConsumer)
+    public CreateItemSchemaCommandMocker configureMock(Consumer<ICreateItemSchemaApplicationCommand> mockConsumer)
     {
         mockConsumer.accept(mockedCommand);
         return this;
