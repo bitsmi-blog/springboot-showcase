@@ -1,4 +1,4 @@
-package com.bitsmi.springbootshowcase.infrastructure.content.mapper;
+package com.bitsmi.springbootshowcase.infrastructure.common.mapper;
 
 import com.bitsmi.springbootshowcase.domain.common.dto.PagedData;
 import com.bitsmi.springbootshowcase.domain.common.dto.Pagination;

@@ -6,8 +6,8 @@ import com.bitsmi.springbootshowcase.infrastructure.content.entity.ItemSchemaEnt
 import com.bitsmi.springbootshowcase.infrastructure.content.entity.ItemSchemaFieldEntity;
 import com.bitsmi.springbootshowcase.infrastructure.content.mapper.IItemSchemaMapper;
 import com.bitsmi.springbootshowcase.infrastructure.content.mapper.IItemSchemaSummaryMapper;
-import com.bitsmi.springbootshowcase.infrastructure.content.mapper.PageRequestMapper;
-import com.bitsmi.springbootshowcase.infrastructure.content.mapper.PagedDataMapper;
+import com.bitsmi.springbootshowcase.infrastructure.common.mapper.PageRequestMapper;
+import com.bitsmi.springbootshowcase.infrastructure.common.mapper.PagedDataMapper;
 import com.bitsmi.springbootshowcase.infrastructure.content.repository.IItemSchemaRepository;
 import com.bitsmi.springbootshowcase.domain.common.dto.PagedData;
 import com.bitsmi.springbootshowcase.domain.common.dto.Pagination;
