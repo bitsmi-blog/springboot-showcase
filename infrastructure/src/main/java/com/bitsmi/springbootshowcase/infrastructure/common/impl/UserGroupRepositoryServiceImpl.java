@@ -1,7 +1,7 @@
 package com.bitsmi.springbootshowcase.infrastructure.common.impl;
 
 import com.bitsmi.springbootshowcase.domain.common.model.UserGroup;
-import com.bitsmi.springbootshowcase.domain.common.spi.IUserGroupPersistenceService;
+import com.bitsmi.springbootshowcase.domain.common.spi.IUserGroupRepositoryService;
 import com.bitsmi.springbootshowcase.infrastructure.InfrastructureConstants;
 import com.bitsmi.springbootshowcase.infrastructure.common.mapper.IUserGroupModelMapper;
 import com.bitsmi.springbootshowcase.infrastructure.common.repository.IUserGroupRepository;
@@ -15,7 +15,7 @@ import java.util.Optional;
 
 @Service
 @Validated
-public class UserGroupPersistenceServiceImpl implements IUserGroupPersistenceService
+public class UserGroupRepositoryServiceImpl implements IUserGroupRepositoryService
 {
     @Autowired
     private IUserGroupRepository userGroupRepository;

@@ -5,8 +5,8 @@ import com.bitsmi.springbootshowcase.domain.common.model.Authority;
 import com.bitsmi.springbootshowcase.domain.common.model.User;
 import com.bitsmi.springbootshowcase.domain.common.model.UserGroup;
 import com.bitsmi.springbootshowcase.domain.common.model.UserSummary;
-import com.bitsmi.springbootshowcase.domain.common.spi.IUserGroupPersistenceService;
-import com.bitsmi.springbootshowcase.domain.common.spi.IUserPersistenceService;
+import com.bitsmi.springbootshowcase.domain.common.spi.IUserGroupRepositoryService;
+import com.bitsmi.springbootshowcase.domain.common.spi.IUserRepositoryService;
 import com.bitsmi.springbootshowcase.domain.common.util.IgnoreOnComponentScan;
 import com.bitsmi.springbootshowcase.infrastructure.config.InfrastructureModuleConfig;
 import com.bitsmi.springbootshowcase.infrastructure.testsupport.internal.ServiceIntegrationTest;
@@ -32,20 +32,20 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @ServiceIntegrationTest
 @TestPropertySource(properties = {
-        "spring.liquibase.change-log=classpath:db/changelogs/infrastructure/test/common/user_persistence_service_tests.xml"
+        "spring.liquibase.change-log=classpath:db/changelogs/infrastructure/test/common/user_repository_service_tests.xml"
 })
-public class UserPersistenceServiceIntTests
+public class UserRepositoryServiceIntTests
 {
     @Autowired
-    private IUserPersistenceService userPersistenceService;
+    private IUserRepositoryService userRepositoryService;
     @Autowired
-    private IUserGroupPersistenceService userGroupPersistenceService;
+    private IUserGroupRepositoryService userGroupRepositoryService;
 
     @Test
     @DisplayName("countAllUsers should return existing users count")
     public void countAllUsersTest1()
     {
-        Long count = userPersistenceService.countAllUsers();
+        Long count = userRepositoryService.countAllUsers();
 
         assertThat(count).isEqualTo(2);
     }
@@ -56,7 +56,7 @@ public class UserPersistenceServiceIntTests
     {
         LocalDateTime controlDate = LocalDateTime.of(LocalDate.of(2023, 1, 1), LocalTime.MIN);
 
-        Optional<User> optUser = userPersistenceService.findUserByUsername("john.doe");
+        Optional<User> optUser = userRepositoryService.findUserByUsername("john.doe");
 
         assertThat(optUser).isNotEmpty().hasValueSatisfying(user -> {
             assertThat(user.id()).isEqualTo(1001);
@@ -82,7 +82,7 @@ public class UserPersistenceServiceIntTests
     @DisplayName("findUserSummaryByUsername should return user summary data when it exists for the given username")
     public void findUserSummaryByUsernameTest1()
     {
-        Optional<UserSummary> optUserSummary = userPersistenceService.findUserSummaryByUsername("john.doe");
+        Optional<UserSummary> optUserSummary = userRepositoryService.findUserSummaryByUsername("john.doe");
 
         assertThat(optUserSummary).isNotEmpty().hasValueSatisfying(user -> {
             assertThat(user.username()).isEqualTo("john.doe");
@@ -101,8 +101,8 @@ public class UserPersistenceServiceIntTests
             .completeName("Test User")
             .active(Boolean.TRUE)
             .groups(Set.of(
-                    userGroupPersistenceService.findUserGroupByName(UserConstants.USER_GROUP_USER).get(),
-                    userGroupPersistenceService.findUserGroupByName(UserConstants.USER_GROUP_ADMIN).get()
+                    userGroupRepositoryService.findUserGroupByName(UserConstants.USER_GROUP_USER).get(),
+                    userGroupRepositoryService.findUserGroupByName(UserConstants.USER_GROUP_ADMIN).get()
                 )
             )
             .build();
@@ -126,11 +126,11 @@ public class UserPersistenceServiceIntTests
             assertThat(userToAssert.lastUpdated().truncatedTo(ChronoUnit.MINUTES)).isEqualTo(controlDate);
         };
 
-        User actualUser = userPersistenceService.createUser(expectedUser);
+        User actualUser = userRepositoryService.createUser(expectedUser);
 
         assertConsumer.accept(actualUser);
 
-        Optional<User> optActualUser = userPersistenceService.findUserByUsername(expectedUser.username());
+        Optional<User> optActualUser = userRepositoryService.findUserByUsername(expectedUser.username());
 
         assertThat(optActualUser).isPresent().hasValueSatisfying(assertConsumer);
     }

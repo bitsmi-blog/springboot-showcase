@@ -3,12 +3,12 @@ package com.bitsmi.springbootshowcase.infrastructure.test.content;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.bitsmi.springbootshowcase.domain.common.util.IgnoreOnComponentScan;
+import com.bitsmi.springbootshowcase.domain.content.spi.IItemRepositoryService;
 import com.bitsmi.springbootshowcase.infrastructure.config.InfrastructureModuleConfig;
 import com.bitsmi.springbootshowcase.infrastructure.content.repository.ITagRepository;
 import com.bitsmi.springbootshowcase.domain.content.model.Item;
 import com.bitsmi.springbootshowcase.domain.content.model.ItemStatus;
 import com.bitsmi.springbootshowcase.domain.content.model.Tag;
-import com.bitsmi.springbootshowcase.domain.content.spi.IItemPersistenceService;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -48,18 +48,18 @@ import org.testcontainers.utility.DockerImageName;
 @Testcontainers
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @TestPropertySource(properties = {
-        "spring.liquibase.change-log=classpath:/db/changelogs/infrastructure/test/content/item_persistence_service_tests.xml",
+        "spring.liquibase.change-log=classpath:/db/changelogs/infrastructure/test/content/item_repository_service_tests.xml",
         "spring.datasource.url = jdbc:tc:postgresql:16.0:///test-database",
         "spring.datasource.driver-class-name = org.testcontainers.jdbc.ContainerDatabaseDriver"
 })
 @org.junit.jupiter.api.Tag("IntegrationTest")
-public class ItemPersistenceServiceTestContainerTests
+public class ItemRepositoryServiceTestContainerTests
 {
     @Container
     PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>(DockerImageName.parse("postgres").withTag("16.0"));
 
     @Autowired
-    private IItemPersistenceService itemPersistenceService;
+    private IItemRepositoryService itemRepositoryService;
     @Autowired
     private ITagRepository tagRepository;
 
@@ -69,7 +69,7 @@ public class ItemPersistenceServiceTestContainerTests
     {
         LocalDateTime controlDate = LocalDateTime.of(LocalDate.of(2023, 1, 1), LocalTime.MIN);
 
-        Optional<Item> optItem = itemPersistenceService.findItemById(1001L);
+        Optional<Item> optItem = itemRepositoryService.findItemById(1001L);
 
         assertThat(optItem).isNotEmpty().hasValueSatisfying(item -> {
             assertThat(item.name()).isEqualTo("Ready Item 1");
@@ -84,7 +84,7 @@ public class ItemPersistenceServiceTestContainerTests
     @DisplayName("Find item should return empty when data doesn't exists for the given ID")
     public void findItemByExternalIdTest2()
     {
-        Optional<Item> optItem = itemPersistenceService.findItemById(99999L);
+        Optional<Item> optItem = itemRepositoryService.findItemById(99999L);
         assertThat(optItem).isEmpty();
     }
 
@@ -92,16 +92,16 @@ public class ItemPersistenceServiceTestContainerTests
     @DisplayName("Add item tag should save item-tag relationship")
     public void addItemTagTest1()
     {
-        Item item = itemPersistenceService.findItemById(1001L).orElseThrow();
+        Item item = itemRepositoryService.findItemById(1001L).orElseThrow();
         Tag tagToAdd = Tag.builder()
                 .id(1005L)
                 .build();
         assertThat(item.tags()).hasSize(3);
 
-        Item savedItem = itemPersistenceService.addItemTag(item, tagToAdd);
+        Item savedItem = itemRepositoryService.addItemTag(item, tagToAdd);
         assertThat(savedItem.tags()).hasSize(4);
 
-        Item retrievedItem = itemPersistenceService.findItemById(1001L).orElseThrow();
+        Item retrievedItem = itemRepositoryService.findItemById(1001L).orElseThrow();
         assertThat(retrievedItem.tags()).hasSize(4);
     }
 

@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotNull;
 
 import java.util.Optional;
 
-public interface IUserPersistenceService
+public interface IUserRepositoryService
 {
     Long countAllUsers();
 

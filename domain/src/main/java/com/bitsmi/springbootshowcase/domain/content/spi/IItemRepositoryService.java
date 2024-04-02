@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotNull;
 
 import java.util.Optional;
 
-public interface IItemPersistenceService
+public interface IItemRepositoryService
 {
     Optional<Item> findItemById(@NotNull Long id);
 

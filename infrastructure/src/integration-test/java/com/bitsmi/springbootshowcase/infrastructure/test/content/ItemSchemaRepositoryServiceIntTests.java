@@ -11,7 +11,7 @@ import com.bitsmi.springbootshowcase.domain.content.model.DataType;
 import com.bitsmi.springbootshowcase.domain.content.model.ItemSchema;
 import com.bitsmi.springbootshowcase.domain.content.model.ItemSchemaField;
 import com.bitsmi.springbootshowcase.domain.content.model.ItemSchemaSummary;
-import com.bitsmi.springbootshowcase.domain.content.spi.IItemSchemaPersistenceService;
+import com.bitsmi.springbootshowcase.domain.content.spi.IItemSchemaRepositoryService;
 import com.bitsmi.springbootshowcase.domain.testsupport.content.model.ItemSchemaFieldTestDataBuilder;
 import com.bitsmi.springbootshowcase.domain.testsupport.content.model.ItemSchemaTestDataBuilder;
 import com.bitsmi.springbootshowcase.infrastructure.config.InfrastructureModuleConfig;
@@ -39,12 +39,12 @@ import static org.assertj.core.api.Assertions.catchThrowableOfType;
 
 @ServiceIntegrationTest
 @TestPropertySource(properties = {
-        "spring.liquibase.change-log=classpath:db/changelogs/infrastructure/test/content/item_schema_persistence_service_tests.xml"
+        "spring.liquibase.change-log=classpath:db/changelogs/infrastructure/test/content/item_schema_repository_service_tests.xml"
 })
-public class ItemSchemaPersistenceServiceIntTests
+public class ItemSchemaRepositoryServiceIntTests
 {
     @Autowired
-    private IItemSchemaPersistenceService itemSchemaPersistenceService;
+    private IItemSchemaRepositoryService itemSchemaRepositoryService;
 
     /*---------------------------*
      * FIND ALL
@@ -53,7 +53,7 @@ public class ItemSchemaPersistenceServiceIntTests
     @DisplayName("findSchemaById should return all schemas data")
     public void findAllSchemasTest1()
     {
-        final List<ItemSchema> schemas = itemSchemaPersistenceService.findAllItemSchemas();
+        final List<ItemSchema> schemas = itemSchemaRepositoryService.findAllItemSchemas();
 
         assertThat(schemas).hasSize(11).allSatisfy(schema -> {
             assertThat(schema.id()).isNotNull();
@@ -73,7 +73,7 @@ public class ItemSchemaPersistenceServiceIntTests
     public void findSchemasByNameStartWithTest1()
     {
         // Case in-sensitive
-        PagedData<ItemSchema> schemasPage = itemSchemaPersistenceService.findSchemasByNameStartWith(
+        PagedData<ItemSchema> schemasPage = itemSchemaRepositoryService.findSchemasByNameStartWith(
                 "dummy",
                 Pagination.of(0, 5, Sort.by(Order.desc("externalId")))
         );
@@ -98,7 +98,7 @@ public class ItemSchemaPersistenceServiceIntTests
     public void findSchemasByNameStartWithTest2()
     {
         // Case in-sensitive
-        PagedData<ItemSchema> schemasPage = itemSchemaPersistenceService.findSchemasByNameStartWith(
+        PagedData<ItemSchema> schemasPage = itemSchemaRepositoryService.findSchemasByNameStartWith(
                 "DUMMY",
                 Pagination.of(2, 5, Sort.UNSORTED)
         );
@@ -119,7 +119,7 @@ public class ItemSchemaPersistenceServiceIntTests
     @DisplayName("findSchemaById should return data given id when it exists")
     public void findSchemaByIdTest1()
     {
-        final Optional<ItemSchema> optSchema = itemSchemaPersistenceService.findItemSchemaById(1001L);
+        final Optional<ItemSchema> optSchema = itemSchemaRepositoryService.findItemSchemaById(1001L);
 
         assertThat(optSchema).isPresent().hasValueSatisfying(schema -> {
             assertThat(schema.id()).isEqualTo(1001L);
@@ -135,7 +135,7 @@ public class ItemSchemaPersistenceServiceIntTests
     @DisplayName("findSchemaById should return empty given id when it doesn't exists exists")
     public void findSchemaByIdTest2()
     {
-        final Optional<ItemSchema> optSchema = itemSchemaPersistenceService.findItemSchemaById(9999L);
+        final Optional<ItemSchema> optSchema = itemSchemaRepositoryService.findItemSchemaById(9999L);
 
         assertThat(optSchema).isNotPresent();
     }
@@ -148,7 +148,7 @@ public class ItemSchemaPersistenceServiceIntTests
     public void findSchemaByExternalIdTest1()
     {
         // Case in-sensitive
-        Optional<ItemSchema> optSchema = itemSchemaPersistenceService.findItemSchemaByExternalId("schema-1");
+        Optional<ItemSchema> optSchema = itemSchemaRepositoryService.findItemSchemaByExternalId("schema-1");
 
         assertThat(optSchema).isPresent().hasValueSatisfying(schema -> {
             assertThat(schema.id()).isEqualTo(1001L);
@@ -167,7 +167,7 @@ public class ItemSchemaPersistenceServiceIntTests
     @DisplayName("findSchemaSummaryByExternalId should return data given id when it exists")
     public void findSchemaSummaryByExternalIdTest1()
     {
-        final Optional<ItemSchemaSummary> optSchema = itemSchemaPersistenceService.findItemSchemaSummaryByExternalId("schema-1");
+        final Optional<ItemSchemaSummary> optSchema = itemSchemaRepositoryService.findItemSchemaSummaryByExternalId("schema-1");
 
         assertThat(optSchema).isPresent().hasValueSatisfying(schema -> {
             assertThat(schema.externalId()).isEqualTo("schema-1");
@@ -180,7 +180,7 @@ public class ItemSchemaPersistenceServiceIntTests
     @DisplayName("findSchemaSummaryUsingQueryByExternalId should return data given id when it exists")
     public void findSchemaSummaryUsingQueryByExternalIdTest1()
     {
-        final Optional<ItemSchemaSummary> optSchema = itemSchemaPersistenceService.findItemSchemaSummaryUsingQueryByExternalId("schema-1");
+        final Optional<ItemSchemaSummary> optSchema = itemSchemaRepositoryService.findItemSchemaSummaryUsingQueryByExternalId("schema-1");
 
         assertThat(optSchema).isPresent().hasValueSatisfying(schema -> {
             assertThat(schema.externalId()).isEqualTo("schema-1");
@@ -202,7 +202,7 @@ public class ItemSchemaPersistenceServiceIntTests
                 .fields(Set.of(ItemSchemaFieldTestDataBuilder.stringField(), ItemSchemaFieldTestDataBuilder.numericField()))
                 .build();
 
-        ItemSchema createdSchema = itemSchemaPersistenceService.createItemSchema(schema);
+        ItemSchema createdSchema = itemSchemaRepositoryService.createItemSchema(schema);
 
         assertItemSchema(createdSchema, schema);
     }
@@ -215,7 +215,7 @@ public class ItemSchemaPersistenceServiceIntTests
 
         assertThatExceptionOfType(ElementAlreadyExistsException.class)
                 .isThrownBy(() -> {
-                    itemSchemaPersistenceService.createItemSchema(schema);
+                    itemSchemaRepositoryService.createItemSchema(schema);
                 });
     }
 
@@ -233,7 +233,7 @@ public class ItemSchemaPersistenceServiceIntTests
                 .build();
 
         ConstraintViolationException e = catchThrowableOfType(() -> {
-            itemSchemaPersistenceService.createItemSchema(schema);
+            itemSchemaRepositoryService.createItemSchema(schema);
         }, ConstraintViolationException.class);
 
         assertThat(e).isNotNull();
@@ -261,7 +261,7 @@ public class ItemSchemaPersistenceServiceIntTests
                 .build();
 
 
-        ItemSchema createdSchema = itemSchemaPersistenceService.updateItemSchema(schema);
+        ItemSchema createdSchema = itemSchemaRepositoryService.updateItemSchema(schema);
 
         assertItemSchema(createdSchema, schema);
     }
@@ -279,7 +279,7 @@ public class ItemSchemaPersistenceServiceIntTests
         assertThatExceptionOfType(ElementNotFoundException.class)
                 .isThrownBy(() -> {
                     // Non existing ID = 9999L
-                    itemSchemaPersistenceService.updateItemSchema(schema);
+                    itemSchemaRepositoryService.updateItemSchema(schema);
                 });
     }
 
@@ -300,7 +300,7 @@ public class ItemSchemaPersistenceServiceIntTests
                 .build();
 
         ConstraintViolationException e = catchThrowableOfType(() -> {
-            itemSchemaPersistenceService.updateItemSchema(schema);
+            itemSchemaRepositoryService.updateItemSchema(schema);
         }, ConstraintViolationException.class);
 
         assertThat(e).isNotNull();
@@ -327,7 +327,7 @@ public class ItemSchemaPersistenceServiceIntTests
                 .build();
 
         ConstraintViolationException e = catchThrowableOfType(() -> {
-            itemSchemaPersistenceService.updateItemSchema(schema);
+            itemSchemaRepositoryService.updateItemSchema(schema);
         }, ConstraintViolationException.class);
 
         assertThat(e).isNotNull();

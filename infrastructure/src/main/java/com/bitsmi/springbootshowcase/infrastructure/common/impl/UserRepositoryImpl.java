@@ -3,7 +3,7 @@ package com.bitsmi.springbootshowcase.infrastructure.common.impl;
 import com.bitsmi.springbootshowcase.domain.common.model.User;
 import com.bitsmi.springbootshowcase.domain.common.model.UserGroup;
 import com.bitsmi.springbootshowcase.domain.common.model.UserSummary;
-import com.bitsmi.springbootshowcase.domain.common.spi.IUserPersistenceService;
+import com.bitsmi.springbootshowcase.domain.common.spi.IUserRepositoryService;
 import com.bitsmi.springbootshowcase.infrastructure.common.entity.UserEntity;
 import com.bitsmi.springbootshowcase.infrastructure.common.entity.UserGroupEntity;
 import com.bitsmi.springbootshowcase.infrastructure.common.mapper.IUserModelMapper;
@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Validated
-public class UserPersistenceImpl implements IUserPersistenceService
+public class UserRepositoryImpl implements IUserRepositoryService
 {
     @Autowired
     private IUserRepository userRepository;

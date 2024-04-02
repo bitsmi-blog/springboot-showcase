@@ -8,7 +8,7 @@ import com.bitsmi.springbootshowcase.infrastructure.content.repository.ITagRepos
 import com.bitsmi.springbootshowcase.domain.common.exception.ElementNotFoundException;
 import com.bitsmi.springbootshowcase.domain.content.model.Item;
 import com.bitsmi.springbootshowcase.domain.content.model.Tag;
-import com.bitsmi.springbootshowcase.domain.content.spi.IItemPersistenceService;
+import com.bitsmi.springbootshowcase.domain.content.spi.IItemRepositoryService;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +19,7 @@ import java.util.Optional;
 
 @Service
 @Validated
-public class ItemPersistenceServiceImpl implements IItemPersistenceService
+public class ItemRepositoryServiceImpl implements IItemRepositoryService
 {
     @Autowired
     private IItemRepository itemRepository;

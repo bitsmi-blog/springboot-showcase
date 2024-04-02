@@ -4,27 +4,28 @@ import com.bitsmi.springbootshowcase.domain.common.dto.Pagination;
 import com.bitsmi.springbootshowcase.domain.common.dto.PagedData;
 import com.bitsmi.springbootshowcase.domain.content.IItemSchemaDomainQueryService;
 import com.bitsmi.springbootshowcase.domain.content.model.ItemSchema;
-import com.bitsmi.springbootshowcase.domain.content.spi.IItemSchemaPersistenceService;
+import com.bitsmi.springbootshowcase.domain.content.spi.IItemSchemaRepositoryService;
 import java.util.List;
 
 public class ItemSchemaDomainQueryServiceImpl implements IItemSchemaDomainQueryService
 {
-    private final IItemSchemaPersistenceService itemSchemaPersistenceService;
+    private final IItemSchemaRepositoryService itemSchemaRepositoryService;
 
-    public ItemSchemaDomainQueryServiceImpl(IItemSchemaPersistenceService itemSchemaPersistenceService)
+    public ItemSchemaDomainQueryServiceImpl(
+        IItemSchemaRepositoryService itemSchemaRepositoryService)
     {
-        this.itemSchemaPersistenceService = itemSchemaPersistenceService;
+        this.itemSchemaRepositoryService = itemSchemaRepositoryService;
     }
 
     @Override
     public List<ItemSchema> findAllItemSchemas()
     {
-        return itemSchemaPersistenceService.findAllItemSchemas();
+        return itemSchemaRepositoryService.findAllItemSchemas();
     }
 
     @Override
     public PagedData<ItemSchema> findAllItemSchemas(Pagination page)
     {
-        return itemSchemaPersistenceService.findAllItemSchemas(page);
+        return itemSchemaRepositoryService.findAllItemSchemas(page);
     }
 }

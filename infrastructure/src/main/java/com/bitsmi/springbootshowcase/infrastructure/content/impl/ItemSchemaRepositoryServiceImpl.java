@@ -16,7 +16,7 @@ import com.bitsmi.springbootshowcase.domain.common.exception.ElementNotFoundExce
 import com.bitsmi.springbootshowcase.domain.common.util.ValidToUpdate;
 import com.bitsmi.springbootshowcase.domain.content.model.ItemSchema;
 import com.bitsmi.springbootshowcase.domain.content.model.ItemSchemaSummary;
-import com.bitsmi.springbootshowcase.domain.content.spi.IItemSchemaPersistenceService;
+import com.bitsmi.springbootshowcase.domain.content.spi.IItemSchemaRepositoryService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +36,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Validated
-public class ItemSchemaPersistenceServiceImpl implements IItemSchemaPersistenceService
+public class ItemSchemaRepositoryServiceImpl implements IItemSchemaRepositoryService
 {
     @Autowired
     private IItemSchemaRepository itemSchemaRepository;

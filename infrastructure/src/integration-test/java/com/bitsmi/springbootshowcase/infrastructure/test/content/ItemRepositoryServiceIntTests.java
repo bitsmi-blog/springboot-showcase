@@ -9,7 +9,7 @@ import com.bitsmi.springbootshowcase.infrastructure.testsupport.internal.Service
 import com.bitsmi.springbootshowcase.domain.content.model.Item;
 import com.bitsmi.springbootshowcase.domain.content.model.ItemStatus;
 import com.bitsmi.springbootshowcase.domain.content.model.Tag;
-import com.bitsmi.springbootshowcase.domain.content.spi.IItemPersistenceService;
+import com.bitsmi.springbootshowcase.domain.content.spi.IItemRepositoryService;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -26,12 +26,12 @@ import org.springframework.test.context.TestPropertySource;
 
 @ServiceIntegrationTest
 @TestPropertySource(properties = {
-        "spring.liquibase.change-log=classpath:db/changelogs/infrastructure/test/content/item_persistence_service_tests.xml"
+        "spring.liquibase.change-log=classpath:db/changelogs/infrastructure/test/content/item_repository_service_tests.xml"
 })
-public class ItemPersistenceServiceIntTests
+public class ItemRepositoryServiceIntTests
 {
     @Autowired
-    private IItemPersistenceService itemPersistenceService;
+    private IItemRepositoryService itemRepositoryService;
     @Autowired
     private ITagRepository tagRepository;
 
@@ -41,7 +41,7 @@ public class ItemPersistenceServiceIntTests
     {
         LocalDateTime controlDate = LocalDateTime.of(LocalDate.of(2023, 1, 1), LocalTime.MIN);
 
-        Optional<Item> optItem = itemPersistenceService.findItemById(1001L);
+        Optional<Item> optItem = itemRepositoryService.findItemById(1001L);
 
         assertThat(optItem).isNotEmpty().hasValueSatisfying(item -> {
             assertThat(item.name()).isEqualTo("Ready Item 1");
@@ -56,7 +56,7 @@ public class ItemPersistenceServiceIntTests
     @DisplayName("Find item should return empty when data doesn't exists for the given ID")
     public void findItemByExternalIdTest2()
     {
-        Optional<Item> optItem = itemPersistenceService.findItemById(99999L);
+        Optional<Item> optItem = itemRepositoryService.findItemById(99999L);
         assertThat(optItem).isEmpty();
     }
 
@@ -64,16 +64,16 @@ public class ItemPersistenceServiceIntTests
     @DisplayName("Add item tag should save item-tag relationship")
     public void addItemTagTest1()
     {
-        Item item = itemPersistenceService.findItemById(1001L).orElseThrow();
+        Item item = itemRepositoryService.findItemById(1001L).orElseThrow();
         Tag tagToAdd = Tag.builder()
                 .id(1005L)
                 .build();
         assertThat(item.tags()).hasSize(3);
 
-        Item savedItem = itemPersistenceService.addItemTag(item, tagToAdd);
+        Item savedItem = itemRepositoryService.addItemTag(item, tagToAdd);
         assertThat(savedItem.tags()).hasSize(4);
 
-        Item retrievedItem = itemPersistenceService.findItemById(1001L).orElseThrow();
+        Item retrievedItem = itemRepositoryService.findItemById(1001L).orElseThrow();
         assertThat(retrievedItem.tags()).hasSize(4);
     }
 
