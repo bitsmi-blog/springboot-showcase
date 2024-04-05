@@ -197,12 +197,12 @@ Each module defines a number of different components in the application that int
 ** Domain Command Service
 
 * Output Port Interface
-** Persistence Service
+** Repository Service
 ** Event Service
 
 === Infrastructure
 * Domain Output Port Service Implementation
-** Persistence Service Implementation
+** Repository Service Implementation
 ** Event Service Implementation
 
 === Interactions

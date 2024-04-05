@@ -50,7 +50,8 @@ public class ItemSchemaApiControllerIntTests
     {
         this.mockMvc.perform(get("/api/content/schema")
                         .queryParam("page", "0")
-                        .queryParam("size", "5")
+                        .queryParam("pageSize", "5")
+                        .queryParam("sort", "creationDate,ASC", "name,ASC")
                         .with(testSecurityContext()))
                 .andDo(print())
                 .andExpectAll(

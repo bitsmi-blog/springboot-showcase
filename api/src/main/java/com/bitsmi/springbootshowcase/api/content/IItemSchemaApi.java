@@ -1,6 +1,6 @@
 package com.bitsmi.springbootshowcase.api.content;
 
-import com.bitsmi.springbootshowcase.api.common.request.PageRequest;
+import com.bitsmi.springbootshowcase.api.common.request.PagedRequest;
 import com.bitsmi.springbootshowcase.api.common.response.PagedResponse;
 import com.bitsmi.springbootshowcase.api.content.request.CreateItemSchemaRequest;
 import com.bitsmi.springbootshowcase.api.content.response.ItemSchema;
@@ -15,7 +15,7 @@ public interface IItemSchemaApi
 {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    PagedResponse<ItemSchema> getSchemas(final PageRequest pageable);
+    PagedResponse<ItemSchema> getSchemas(final PagedRequest pagedRequest);
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)

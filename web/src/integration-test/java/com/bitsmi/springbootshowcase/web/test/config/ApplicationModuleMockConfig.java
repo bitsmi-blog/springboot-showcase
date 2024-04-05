@@ -2,7 +2,7 @@ package com.bitsmi.springbootshowcase.web.test.config;
 
 import com.bitsmi.springbootshowcase.application.common.IUserCreationApplicationCommand;
 import com.bitsmi.springbootshowcase.application.common.IUserSummaryApplicationQuery;
-import com.bitsmi.springbootshowcase.application.content.ICreateItemSchemaCommand;
+import com.bitsmi.springbootshowcase.application.content.ICreateItemSchemaApplicationCommand;
 import com.bitsmi.springbootshowcase.application.content.IRetrieveItemSchemaApplicationQuery;
 import com.bitsmi.springbootshowcase.application.dummy.ISampleApplicationService;
 import com.bitsmi.springbootshowcase.application.testsupport.common.UserSummaryApplicationQueryMocker;
@@ -17,7 +17,7 @@ import org.springframework.context.annotation.Configuration;
 @MockBean(IUserSummaryApplicationQuery.class)
 @MockBean(ISampleApplicationService.class)
 @MockBean(IRetrieveItemSchemaApplicationQuery.class)
-@MockBean(ICreateItemSchemaCommand.class)
+@MockBean(ICreateItemSchemaApplicationCommand.class)
 @MockBean(IUserCreationApplicationCommand.class)
 public class ApplicationModuleMockConfig
 {
@@ -40,7 +40,7 @@ public class ApplicationModuleMockConfig
     }
 
     @Bean
-    CreateItemSchemaCommandMocker createItemSchemaCommandMocker(ICreateItemSchemaCommand createItemSchemaCommand)
+    CreateItemSchemaCommandMocker createItemSchemaCommandMocker(ICreateItemSchemaApplicationCommand createItemSchemaCommand)
     {
         return CreateItemSchemaCommandMocker.fromMockedInstance(createItemSchemaCommand);
     }

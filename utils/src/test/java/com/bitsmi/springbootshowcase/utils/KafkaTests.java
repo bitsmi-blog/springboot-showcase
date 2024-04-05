@@ -5,6 +5,7 @@ import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.header.internals.RecordHeader;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +15,7 @@ import org.springframework.kafka.core.KafkaTemplate;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 
+@Tag("ManualTest")
 public class KafkaTests
 {
     private static final Logger LOGGER = LoggerFactory.getLogger(KafkaTests.class);
