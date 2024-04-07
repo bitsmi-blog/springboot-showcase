@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Validated
-public class UserRepositoryImpl implements IUserRepositoryService
+public class UserRepositoryServiceImpl implements IUserRepositoryService
 {
     @Autowired
     private IUserRepository userRepository;

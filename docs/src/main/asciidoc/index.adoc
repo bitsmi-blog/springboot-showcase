@@ -4,6 +4,8 @@
 
 xref:pages/application/architecture.adoc[Architecture]
 
+xref:pages/application/mocking.adoc[Mocking external services]
+
 == Spring How-To
 
 xref:pages/spring-howto/actuators.adoc[Actuators]
