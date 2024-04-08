@@ -22,7 +22,7 @@
     </properties>
 
     <modules>
-        <module>service-clients/sample-service-client</module>
+        <module>service-clients/content-service-client</module>
         <module>domain</module>
         <module>infrastructure</module>
         <module>application</module>
