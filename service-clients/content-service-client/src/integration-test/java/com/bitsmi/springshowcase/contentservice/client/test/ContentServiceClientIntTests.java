@@ -1,6 +1,6 @@
 package com.bitsmi.springshowcase.contentservice.client.test;
 
-import com.bitsmi.springshowcase.contentservice.client.SampleServiceClient;
+import com.bitsmi.springshowcase.contentservice.client.ContentServiceClient;
 import com.github.tomakehurst.wiremock.junit5.WireMockRuntimeInfo;
 import com.github.tomakehurst.wiremock.junit5.WireMockTest;
 import org.assertj.core.api.InstanceOfAssertFactories;
@@ -19,9 +19,9 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @WireMockTest
 @Tag("IntegrationTest")
-public class ServiceClientTests
+public class ContentServiceClientIntTests
 {
-    private SampleServiceClient client;
+    private ContentServiceClient client;
 
     @Test
     @DisplayName("client should throw an HttpServerErrorException given a 5XX error")
@@ -59,7 +59,7 @@ public class ServiceClientTests
     @BeforeEach
     public void setUp(WireMockRuntimeInfo wmRuntimeInfo)
     {
-        client = SampleServiceClient.builder()
+        client = ContentServiceClient.builder()
                 .withBaseUrl(wmRuntimeInfo.getHttpBaseUrl())
                 .withDefaultValidation()
                 .build();

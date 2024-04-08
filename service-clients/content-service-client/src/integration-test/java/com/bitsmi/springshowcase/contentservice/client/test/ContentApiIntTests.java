@@ -1,6 +1,6 @@
 package com.bitsmi.springshowcase.contentservice.client.test;
 
-import com.bitsmi.springshowcase.contentservice.client.SampleServiceClient;
+import com.bitsmi.springshowcase.contentservice.client.ContentServiceClient;
 import com.bitsmi.springshowcase.contentservice.client.common.response.PagedResponse;
 import com.bitsmi.springshowcase.contentservice.client.common.response.Pagination;
 import com.bitsmi.springshowcase.contentservice.client.common.response.Sort;
@@ -34,7 +34,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @Tag("IntegrationTest")
 public class ContentApiIntTests
 {
-    private SampleServiceClient client;
+    private ContentServiceClient client;
     private ObjectMapper objectMapper;
 
     @Test
@@ -106,7 +106,7 @@ public class ContentApiIntTests
     @BeforeEach
     public void setUp(WireMockRuntimeInfo wmRuntimeInfo)
     {
-        client = SampleServiceClient.builder()
+        client = ContentServiceClient.builder()
                 .withBaseUrl(wmRuntimeInfo.getHttpBaseUrl())
                 .withDefaultValidation()
                 .build();

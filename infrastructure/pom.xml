@@ -20,7 +20,7 @@
 		</dependency>
         <dependency>
             <groupId>com.bitsmi.springboot-showcase</groupId>
-            <artifactId>springboot-showcase-sample-service-client</artifactId>
+            <artifactId>springboot-showcase-content-service-client</artifactId>
             <version>2.0.0-SNAPSHOT</version>
         </dependency>
 

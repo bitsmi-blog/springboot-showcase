@@ -11,12 +11,12 @@ import org.springframework.web.client.RestClient;
 
 import java.util.Objects;
 
-public class SampleServiceClient
+public class ContentServiceClient
 {
     private final RestClient restClient;
     private final Validator validator;
 
-    private SampleServiceClient(RestClient restClient, Validator validator)
+    private ContentServiceClient(RestClient restClient, Validator validator)
     {
         this.restClient = restClient;
         this.validator = validator;
@@ -60,7 +60,7 @@ public class SampleServiceClient
             return this;
         }
 
-        public SampleServiceClient build()
+        public ContentServiceClient build()
         {
             Objects.requireNonNull(baseUrl);
 
@@ -70,7 +70,7 @@ public class SampleServiceClient
                     .baseUrl(baseUrl)
                     .build();
 
-            return new SampleServiceClient(restClient, validator);
+            return new ContentServiceClient(restClient, validator);
         }
     }
 }

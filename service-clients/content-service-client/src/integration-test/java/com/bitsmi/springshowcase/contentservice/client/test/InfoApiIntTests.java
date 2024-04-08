@@ -1,6 +1,6 @@
 package com.bitsmi.springshowcase.contentservice.client.test;
 
-import com.bitsmi.springshowcase.contentservice.client.SampleServiceClient;
+import com.bitsmi.springshowcase.contentservice.client.ContentServiceClient;
 import com.github.tomakehurst.wiremock.junit5.WireMockRuntimeInfo;
 import com.github.tomakehurst.wiremock.junit5.WireMockTest;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Tag("IntegrationTest")
 public class InfoApiIntTests
 {
-    private SampleServiceClient client;
+    private ContentServiceClient client;
 
     @Test
     @DisplayName("get serviceVersion operation should return a version string")
@@ -38,7 +38,7 @@ public class InfoApiIntTests
     @BeforeEach
     public void setUp(WireMockRuntimeInfo wmRuntimeInfo)
     {
-        client = SampleServiceClient.builder()
+        client = ContentServiceClient.builder()
                 .withBaseUrl(wmRuntimeInfo.getHttpBaseUrl())
                 .withDefaultValidation()
                 .build();
