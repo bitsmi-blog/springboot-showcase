@@ -4,6 +4,8 @@
 
 xref:pages/application/architecture.adoc[Architecture]
 
+xref:pages/application/fluent_client.adoc[Fluent client API]
+
 xref:pages/application/mocking.adoc[Mocking external services]
 
 == Spring How-To

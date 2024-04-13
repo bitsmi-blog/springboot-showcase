@@ -3,6 +3,11 @@ package com.bitsmi.springshowcase.contentservice.client;
 import com.bitsmi.springshowcase.contentservice.client.content.ContentSetApiBuilder;
 import com.bitsmi.springshowcase.contentservice.client.content.request.ContentSelector;
 import com.bitsmi.springshowcase.contentservice.client.info.InfoApiBuilder;
+import com.bitsmi.springshowcase.contentservice.client.schema.SchemaCreationApiBuilder;
+import com.bitsmi.springshowcase.contentservice.client.schema.SchemaElementApiBuilder;
+import com.bitsmi.springshowcase.contentservice.client.schema.SchemaSetApiBuilder;
+import com.bitsmi.springshowcase.contentservice.client.schema.request.ItemSchemaData;
+import com.bitsmi.springshowcase.contentservice.client.schema.request.SchemaSetSelector;
 import jakarta.validation.NoProviderFoundException;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
@@ -32,9 +37,32 @@ public class ContentServiceClient
         return new InfoApiBuilder(restClient);
     }
 
+    /**
+     * TODO To remove
+     */
     public ContentSetApiBuilder content(ContentSelector selector)
     {
         return new ContentSetApiBuilder(restClient, validator, selector);
+    }
+
+    public SchemaSetApiBuilder schemas()
+    {
+        return new SchemaSetApiBuilder(restClient, validator);
+    }
+
+    public SchemaSetApiBuilder schemas(SchemaSetSelector selector)
+    {
+        return new SchemaSetApiBuilder(restClient, validator, selector);
+    }
+
+    public SchemaElementApiBuilder schema(Long id)
+    {
+        return new SchemaElementApiBuilder(restClient, validator, id);
+    }
+
+    public SchemaCreationApiBuilder schema(ItemSchemaData data)
+    {
+        return new SchemaCreationApiBuilder(restClient, validator, data);
     }
 
     public static class Builder
