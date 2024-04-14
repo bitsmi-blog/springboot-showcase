@@ -68,6 +68,10 @@ public class SchemaListOperation
             return;
         }
 
+        if(selector==null) {
+            return;
+        }
+
         Set<ConstraintViolation<SchemaSetSelector>> violations = validator.validate(selector);
         if(!violations.isEmpty()) {
             throw new ConstraintViolationException(violations);
