@@ -2,10 +2,10 @@
     "priority": 10,
     "request": {
         "method": "GET",
-        "urlPath": "/api/content",
+        "urlPath": "/api/schema",
         "queryParameters": {
             "selector": {
-                "equalTo": "id EQUALS 1"
+                "equalTo": "id EQUALS 1001"
             },
             "page": {
                 "equalTo": "0"
@@ -20,6 +20,6 @@
         "headers": {
             "Content-Type": "application/json"
         },
-        "bodyFileName": "api/content/get_list_body.json"
+        "bodyFileName": "api/schema/get_list_selector_body.json"
     }
 }

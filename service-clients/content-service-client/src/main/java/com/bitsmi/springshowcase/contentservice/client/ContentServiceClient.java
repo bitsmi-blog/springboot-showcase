@@ -1,7 +1,5 @@
 package com.bitsmi.springshowcase.contentservice.client;
 
-import com.bitsmi.springshowcase.contentservice.client.content.ContentSetApiBuilder;
-import com.bitsmi.springshowcase.contentservice.client.content.request.ContentSelector;
 import com.bitsmi.springshowcase.contentservice.client.info.InfoApiBuilder;
 import com.bitsmi.springshowcase.contentservice.client.schema.SchemaCreationApiBuilder;
 import com.bitsmi.springshowcase.contentservice.client.schema.SchemaElementApiBuilder;
@@ -35,14 +33,6 @@ public class ContentServiceClient
     public InfoApiBuilder info()
     {
         return new InfoApiBuilder(restClient);
-    }
-
-    /**
-     * TODO To remove
-     */
-    public ContentSetApiBuilder content(ContentSelector selector)
-    {
-        return new ContentSetApiBuilder(restClient, validator, selector);
     }
 
     public SchemaSetApiBuilder schemas()

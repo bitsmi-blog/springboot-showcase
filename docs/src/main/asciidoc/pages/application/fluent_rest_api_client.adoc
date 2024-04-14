@@ -1,0 +1,42 @@
+= Fluent REST API client
+:toc:
+
+WIP
+
+== Concept
+
+This document introduces the design of a fluid API to execute different operations defined by a remote service.
+
+API in subdomains and operations
+
+To illustrate the design, we will take the following service API as an example:
+
+[plantuml]
+----
+@startwbs
+* Client
+** Info
+*** Version
+** Schema
+*** List
+*** Detail
+*** Create
+*** Update
+*** Delete
+** . . .
+@endwbs
+----
+
+== General structure
+
+=== Client
+Wraps the underlying client that will be used to consume the API, also providing a builder
+to create and configure it. This client wrapper creates an independent layer that makes possible
+to use different underlying clients (E.G. Spring's `RestClient`, `RestTemplate`, `OkHttp3`...)
+maintaining the same API.
+
+Client API provides access to ...
+
+=== API Builders
+
+=== Operations

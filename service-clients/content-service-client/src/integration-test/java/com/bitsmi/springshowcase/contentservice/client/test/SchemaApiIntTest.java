@@ -137,6 +137,8 @@ public class SchemaApiIntTest
                 )
         );
 
+        System.out.println(expectedRequestJson);
+
         ItemSchema actualResponse = client.schema(expectedRequest)
                 .create();
 

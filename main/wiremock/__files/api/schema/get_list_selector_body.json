@@ -1,0 +1,39 @@
+{
+    "content": [
+        {
+            "id": 1001,
+            "externalId": "schema-1",
+            "name": "Test schema 1",
+            "fields": [
+                {
+                    "id": 1,
+                    "name": "stringField",
+                    "dataType": "STRING",
+                    "comments": null,
+                    "creationDate": "2024-01-02T10:20:00.000",
+                    "lastUpdated": "2024-01-02T10:20:00.000",
+                },
+                {
+                    "id": 2,
+                    "name": "numericField",
+                    "dataType": "NUMBER",
+                    "comments": "Sample comments for numeric field",
+                    "creationDate": "2024-01-02T10:20:00.000",
+                    "lastUpdated": "2024-01-02T10:20:00.000"
+                }
+            ],
+            "creationDate": "2024-01-02T10:20:00.000",
+            "lastUpdated": "2024-01-02T10:20:00.000"
+        }
+    ],
+    "pagination": {
+        "pageNumber": 0,
+        "pageSize": 10,
+        "sort": {
+            "orders": []
+        }
+    },
+    "pageCount": 1,
+    "totalPages": 1,
+    "totalCount": 1
+}
