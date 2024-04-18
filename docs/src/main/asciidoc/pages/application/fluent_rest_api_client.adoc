@@ -1,42 +1,553 @@
 = Fluent REST API client
 :toc:
 
-WIP
-
 == Concept
 
-This document introduces the design of a fluid API to execute different operations defined by a remote service.
+This document introduces the design for a fluent API allowing executing different operations defined by a remote service.
 
-API in subdomains and operations
+Given a remote service API, we can define the following concepts:
 
-To illustrate the design, we will take the following service API as an example:
+* **Resource**: Full path to the resource. E.G. `/schema/1`
+* **(Sub)domain**: URL path that groups resources. E.G. The `/schema/1` resource is defined under `/schema` domain. 
+Also, we can define subdomains under a main domain. E.G.  we can have `/field` subdomain under `/schema/{id}` domain (`/schema/{id}/field`)
+* **Operation**: Action to be done on the resource or (sub)domain, usually a CRUD operation. 
+
+In order to illustrate the design, we introduce the following service API:
+
+* We have a remote service API that defines 2 main domains: `/info` and `/schema`:
+* `/info` domain defines the following operation:
+	** `get version` doing a `GET` request to the `/info/version` endpoint
+* `/schema` domain defines the following operations:
+	** `list` schemas doing a `GET` request to the `/schema` endpoint
+	** get an specific schema `detail` doing a `GET` request to the `/schema/{id}` endpoint
+	** `create` a new schema doing a `POST` request to the `/schema` endpoint
+	** `update` an existent schema doing a `PUT` request to the `/schema/{id}` endpoint
+	** `delete` an existent doing a `DELETE` request to the `/schema/{id}` endpoint
+* `/schema` domain defines the subdomain `/field` for each element on it
+* `/schema/field` subdomain defines the following operations:
+	** `list` fields belonging to a schema doing a `GET` request to the `/schema/{schema id}/field` endpoint
+	
+In a schematic way:
 
 [plantuml]
 ----
 @startwbs
-* Client
-** Info
-*** Version
-** Schema
-*** List
-*** Detail
-*** Create
-*** Update
-*** Delete
-** . . .
+* /
+**[#lightblue] info
+***[#lightgreen] getVersion
+**[#lightblue] schema
+***[#lightgreen]< list
+***[#lightgreen]< detail
+***[#lightgreen]< create
+***[#lightgreen]< update
+***[#lightgreen]< delete
+***[#lightblue] field
+****[#lightgreen] list
+
+legend left
+|<back:#lightblue>     </back>| Domain |
+|<back:#lightgreen>     </back>| Operation |
+endlegend
 @endwbs
 ----
-
-== General structure
+	
+With the previous concepts, we can define a series of client API elements to access them:
 
 === Client
-Wraps the underlying client that will be used to consume the API, also providing a builder
-to create and configure it. This client wrapper creates an independent layer that makes possible
+
+Used as entrypoint to the client API providing access to implemented `API Builders` for service API domains.
+
+Wraps the underlying client that will be used to consume the service API, providing also a builder to create and configure it. This client wrapper creates an independent layer that makes possible
 to use different underlying clients (E.G. Spring's `RestClient`, `RestTemplate`, `OkHttp3`...)
 maintaining the same API.
 
-Client API provides access to ...
-
 === API Builders
 
+`API Builders` provide methods to access and configure operations to be executed on the different domains or resources supported
+by the `Client` using its top level API methods.
+
+An `API Builder` should be usually created using domain related data and then select the operation that should be executed. 
+If the operation does not define additional intermediate methods, the operation selection method can execute directly the operation,
+returning the resulting data directly (if any). E.G.
+
+[source,java]
+----
+// ElementApiBuilder.java
+. . .
+public SomeElement update(SomeElementInputData newData) {
+	// Create update operation using required arguments and execute it directly
+	return new UpdateOperation(. . .).update(newData);
+}
+. . .
+----
+
+We can define several kinds of `Api Builder` classes depending on its target type:
+
+* `SetApiBuilder`: Meant to be used for operations over datasets (retrieval, batch update...). 
+The builder may or may not receive as input a filter / selector to limit the dataset affected.
+* `CreationApiBuilder`: Meant to be used for element creation operations targeting a specific (sub)domain. The builder will receive
+the data to send to the server as input.
+* `ElementApiBuilder`: Meant to be used for individual element data retrieval or manipulation involving a unique identifier received as input
+
+An `API Builder` may also contain calls to other builders if it's needed to access to a nested domain or operation API. 
+
 === Operations
+
+`Operations` are the final operators of the API in charge of execute the final call to the remote service using de underlying configured client. 
+They define a method in charge of executing the operation along others intermediate methods meant to add or modify the data
+or behaviour of this execution. For example, a dataset retrieval operation may define intermediate methods like `paginate(...)` 
+or `sort(...)` that configure the pagination parameters of the request.
+
+== Example
+
+Following the explanation above, we can model our client API as follows:
+
+=== Client
+
+Entrypoint of client API. Provides methods to give access to the `API Builders` that group operations by domain.
+
+[source,java]
+----
+public class Client {
+    // Underlying HTTP client instance
+    private final RestClient restClient;
+
+    private ContentServiceClient(RestClient restClient) {
+        this.restClient = restClient;
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    /* API Builders accessors
+     */
+    public InfoApiBuilder info() {
+        return new InfoApiBuilder(restClient);
+    }
+
+    public SchemaSetApiBuilder schemas() {
+        return new SchemaSetApiBuilder(restClient);
+    }
+
+    public SchemaSetApiBuilder schemas(SchemaSetSelector selector) {
+        return new SchemaSetApiBuilder(restClient, selector);
+    }
+
+    public SchemaElementApiBuilder schema(Long id) {
+        return new SchemaElementApiBuilder(restClient, id);
+    }
+
+    public SchemaCreationApiBuilder schema(ItemSchemaData data) {
+        return new SchemaCreationApiBuilder(restClient, data);
+    }
+
+    /* Builder allowing to configure the underlying client
+     */
+    public static class Builder {
+        // . . .
+    }
+}
+----
+
+Once implemented, we can get an instance of our client as follows:
+
+[source,java]
+----
+ContentServiceClient client = ContentServiceClient.builder()
+		.withBaseUrl(remoteServiceUrl)
+		.build();
+----
+
+=== Info API
+
+`Info API Builder` provides access to every operation defined by the implemented domain. In this case it only have an operation, accessible through `serviceVersion()` method.
+
+[source,java]
+----
+public class InfoApiBuilder {
+
+    private final RestClient restClient;
+
+    public InfoApiBuilder(RestClient restClient) {
+        this.restClient = restClient;
+    }
+
+    public ServiceVersionOperation serviceVersion() {
+        return new ServiceVersionOperation(restClient);
+    }
+}
+----
+
+This is a simple `Operation` that only allows retrieving data through `get()` method and does not provide additional methods to configure additional parameters
+
+[source,java]
+----
+public class ServiceVersionOperation {
+    private final RestClient restClient;
+
+    ServiceVersionOperation(RestClient restClient) {
+        this.restClient = restClient;
+    }
+    /* Method that executes the operation sending the request to the remote service
+     */
+    public String get() {
+        return restClient.get()
+                .uri("/api/info/version")
+                .retrieve()
+                .body(String.class);
+    }
+}
+----
+
+Usage example:
+
+[source,java]
+----
+String actualServiceVersion = client.info()
+	.serviceVersion()
+	.get();
+----
+
+=== Schema API
+
+`SchemaSetApiBuilder` is a more complex example of a `API Builder` supporting parameters, allowing filtering the result set, and a configurable operation with additional intermediate methods:
+
+[source,java]
+----
+public class SchemaSetApiBuilder
+{
+    private final RestClient restClient;
+    // Selector parameter received from Client that will be passed to downstream operations
+    private final SchemaSetSelector selector;
+
+    public SchemaSetApiBuilder(RestClient restClient) {
+        this(restClient, null);
+    }
+
+    public SchemaSetApiBuilder(RestClient restClient, SchemaSetSelector selector) {
+        this.restClient = restClient;
+        this.selector = selector;
+    }
+
+    /* Selects the domain operation to execute
+     */
+    public SchemaListOperation list() {
+        return new SchemaListOperation(restClient, validator, selector);
+    }
+}
+----
+
+[source,java]
+----
+public class SchemaListOperation
+{
+    public static final String ENDPOINT_PATH = "/api/schema";
+
+    private final RestClient restClient;
+    private final SchemaSetSelector selector;
+    private Integer pageNumber;
+    private Integer pageSize;
+
+    SchemaListOperation(RestClient restClient, SchemaSetSelector selector)
+    {
+        this.restClient = restClient;
+        this.selector = selector;
+    }
+
+    /* Intermediate operation that allows specifying
+     * additional parameters to the request
+     */
+    public SchemaListOperation paginate(int pageNumber, int pageSize)
+    {
+        this.pageNumber = pageNumber;
+        this.pageSize = pageSize;
+        return this;
+    }
+
+    /* Method that executes the operation sending the request to the remote service
+     */
+    public PagedResponse<ItemSchema> get()
+    {
+        return restClient.get()
+                .uri(this::buildURI)
+                .retrieve()
+                .body(new ParameterizedTypeReference<PagedResponse<ItemSchema>>(){});
+    }
+
+    private URI buildURI(UriBuilder uriBuilder) {
+        uriBuilder.path(ENDPOINT_PATH);
+        if(selector != null) {
+            uriBuilder.queryParam("selector", URLEncoder.encode(selector.toString(), StandardCharsets.UTF_8));
+        }
+        if(pageNumber!=null) {
+            uriBuilder.queryParam("page", pageNumber);
+        }
+        if(pageSize!=null) {
+            uriBuilder.queryParam("pageSize", pageSize);
+        }
+
+        return uriBuilder.build();
+    }
+}
+----
+
+`SchemaElementApiBuilder` is an example of how we can implement multiple operations, with the possibility to bypass the operation, and subdomain `API Builder`s
+
+[source,java]
+----
+public class SchemaElementApiBuilder {
+    private final RestClient restClient;
+    private final Long id;
+
+    public SchemaElementApiBuilder(RestClient restClient, Long id) {
+        this.restClient = restClient;
+        this.id = id;
+    }
+
+    /* Bypass operation and execute the operation directly, as this
+     * operation is not configurable and doesn't provide additional methods
+     */
+    public Optional<ItemSchema> get() {
+        return new SchemaGetOperation(restClient, id).get();
+    }
+
+    public ItemSchema update(ItemSchemaData data) {
+        return new SchemaUpdateOperation(restClient, id, data)
+                .update();
+    }
+
+    public void delete() {
+        return new SchemaUpdateOperation(restClient, id)
+                .delete();
+    }
+
+    /* Provide access to "field" subdomain API Builder. Parameters
+     * received by this API Builder are propagated to the downstream API Builder
+     */
+    public SchemaFieldSetApiBuilder fields() {
+        return new SchemaFieldSetApiBuilder(restClient, id);
+    }
+}
+
+----
+
+Bypassed `Operation` classes only have a method to execute the request on remote service API.
+
+[source,java]
+----
+public class SchemaGetOperation {
+    public static final String ENDPOINT_PATH = "/api/schema/{id}";
+
+    private final RestClient restClient;
+    private final Long id;
+
+    SchemaGetOperation(RestClient restClient, Long id) {
+        this.restClient = restClient;
+        this.id = id;
+    }
+
+    public Optional<ItemSchema> get()
+    {
+    	return Optional.ofNullable(
+            restClient.get()
+                .uri(this::buildURI)
+                .retrieve()
+                .body(ItemSchema.class)
+        );
+    }
+
+    private URI buildURI(UriBuilder uriBuilder) {
+        uriBuilder.path(ENDPOINT_PATH);
+        return uriBuilder.build(id);
+    }
+}
+----
+
+[source,java]
+----
+public class SchemaUpdateOperation {
+    public static final String ENDPOINT_PATH = "/api/schema/{id}";
+
+    private final RestClient restClient;
+    private final Long id;
+    private final ItemSchemaData data;
+
+    SchemaUpdateOperation(RestClient restClient, Long id, ItemSchemaData data) {
+        this.restClient = restClient;
+        this.id = id;
+        this.data = data;
+    }
+
+    public ItemSchema update()
+    {
+        return restClient.put()
+                .uri(this::buildURI)
+                .body(data)
+                .retrieve()
+                .body(ItemSchema.class);
+    }
+
+    private URI buildURI(UriBuilder uriBuilder) {
+        uriBuilder.path(ENDPOINT_PATH);
+        return uriBuilder.build(id);
+    }
+}
+----
+
+[source,java]
+----
+public class SchemaDeleteOperation
+{
+    public static final String ENDPOINT_PATH = "/api/schema/{id}";
+
+    private final RestClient restClient;
+    private final Long id;
+
+    SchemaDeleteOperation(RestClient restClient, Long id)
+    {
+        this.restClient = restClient;
+        this.id = id;
+    }
+
+    public void delete()
+    {
+        return restClient.delete()
+                .uri(this::buildURI)
+                .retrieve()
+                .toBodilessEntity();
+    }
+
+    private URI buildURI(UriBuilder uriBuilder) {
+        uriBuilder.path(ENDPOINT_PATH);
+        return uriBuilder.build(id);
+    }
+}
+----
+
+Here we have the subdomain `API Builder` that is called from the main domain `API Builder`. It receives the needed parameters from it and configure `Operation`s according to them.
+
+[source,java]
+----
+public class SchemaFieldSetApiBuilder {
+    private final RestClient restClient;
+    private final Long schemaId;
+
+    public SchemaElementApiBuilder(RestClient restClient, Long schemaId) {
+        this.restClient = restClient;
+        this.schemaId = schemaId;
+    }
+
+    public PagedResponse<ItemSchemaField> list() {
+        return new SchemaFieldListOperation(restClient, schemaId).get();
+    }
+}
+----
+
+[source,java]
+----
+public class SchemaFieldListOperation
+{
+    public static final String ENDPOINT_PATH = "/api/schema/{schemaId}/field";
+
+    private final RestClient restClient;
+    private final Long schemaId;
+
+    SchemaFieldListOperation(RestClient restClient, Long schemaId)
+    {
+        this.restClient = restClient;
+        this.schemaId = schemaId;
+    }
+
+    public PagedResponse<ItemSchemaField> get()
+    {
+        return restClient.get()
+                .uri(this::buildURI)
+                .retrieve()
+                .body(new ParameterizedTypeReference<PagedResponse<ItemSchemaField>>(){});
+    }
+
+    private URI buildURI(UriBuilder uriBuilder) {
+        uriBuilder.path(ENDPOINT_PATH);
+        return uriBuilder.build(schemaId);
+    }
+}
+----
+
+`SchemaCreationApiBuilder` is another example of a `API Builder` bypassing operations, as the required data is obtained at the top level client call
+
+[source,java]
+----
+public class SchemaCreationApiBuilder {
+    private final RestClient restClient;
+    private final ItemSchemaData data;
+
+    public SchemaCreationApiBuilder(RestClient restClient, ItemSchemaData data)
+    {
+        this.restClient = restClient;
+        this.data = data;
+    }
+
+    public ItemSchema create()
+    {
+        return new SchemaCreateOperation(restClient, data)
+                .create();
+    }
+}
+
+----
+
+[source,java]
+----
+public class SchemaCreateOperation {
+    public static final String ENDPOINT_PATH = "/api/schema";
+
+    private final RestClient restClient;
+    private final ItemSchemaData data;
+
+    SchemaCreateOperation(RestClient restClient, ItemSchemaData data) {
+        this.restClient = restClient;
+        this.data = data;
+    }
+
+    public ItemSchema create()
+    {
+        return restClient.post()
+                .uri(this::buildURI)
+                .body(data)
+                .retrieve()
+                .body(ItemSchema.class);
+    }
+
+    private URI buildURI(UriBuilder uriBuilder) {
+        uriBuilder.path(ENDPOINT_PATH);
+        return uriBuilder.build();
+    }
+}
+----
+
+Some usage examples:
+
+[source,java]
+----
+
+// Schema list
+PagedResponse<ItemSchema> response = client.schemas()
+		.list()
+		.paginate(0, 10)
+		.get();
+
+// Schema field list
+PagedResponse<ItemSchemaField> response = client.schema(1001L)
+		.fields()
+		.list();
+
+ItemSchemaData schemaData = buildSchemaData();
+// Schema creation
+ItemSchema response = client.schema(schemaData)
+		.create();
+
+// Schema update
+ItemSchema response = client.schema(1001L)
+		.update(schemaData);
+----
