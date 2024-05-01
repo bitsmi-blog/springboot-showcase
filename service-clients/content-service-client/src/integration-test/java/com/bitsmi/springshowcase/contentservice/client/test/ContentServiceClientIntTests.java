@@ -1,6 +1,8 @@
 package com.bitsmi.springshowcase.contentservice.client.test;
 
 import com.bitsmi.springshowcase.contentservice.client.ContentServiceClient;
+import com.bitsmi.springshowcase.contentservice.client.common.exception.ClientErrorServiceException;
+import com.bitsmi.springshowcase.contentservice.client.common.exception.ServerErrorServiceException;
 import com.github.tomakehurst.wiremock.junit5.WireMockRuntimeInfo;
 import com.github.tomakehurst.wiremock.junit5.WireMockTest;
 import org.assertj.core.api.InstanceOfAssertFactories;
@@ -9,8 +11,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.HttpServerErrorException;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static com.github.tomakehurst.wiremock.client.WireMock.get;
@@ -28,14 +28,18 @@ public class ContentServiceClientIntTests
     public void httpServerErrorTest1()
     {
         stubFor(get("/api/info/service-version")
-                .willReturn(aResponse().withStatus(502)));
+                .willReturn(aResponse()
+                        .withStatus(502)
+                        .withBody("Bad gateway")
+                )
+        );
 
         assertThatThrownBy(() -> {
             client.info().serviceVersion().get();
         })
-                .asInstanceOf(InstanceOfAssertFactories.type(HttpServerErrorException.class))
-                .extracting(HttpServerErrorException::getStatusCode)
-                .isEqualTo(HttpStatus.BAD_GATEWAY);
+                .asInstanceOf(InstanceOfAssertFactories.type(ServerErrorServiceException.class))
+                .extracting(ServerErrorServiceException::getErrorCode, ServerErrorServiceException::getMessage)
+                .containsExactly(Integer.toString(HttpStatus.BAD_GATEWAY.value()), "Bad gateway");
     }
 
     @Test
@@ -43,14 +47,18 @@ public class ContentServiceClientIntTests
     public void httpClientErrorTest1()
     {
         stubFor(get("/api/info/service-version")
-                .willReturn(aResponse().withStatus(404)));
+                .willReturn(aResponse()
+                        .withStatus(404)
+                        .withBody("Resource not found")
+                )
+        );
 
         assertThatThrownBy(() -> {
             client.info().serviceVersion().get();
         })
-                .asInstanceOf(InstanceOfAssertFactories.type(HttpClientErrorException.class))
-                .extracting(HttpClientErrorException::getStatusCode)
-                .isEqualTo(HttpStatus.NOT_FOUND);
+                .asInstanceOf(InstanceOfAssertFactories.type(ClientErrorServiceException.class))
+                .extracting(ClientErrorServiceException::getErrorCode, ClientErrorServiceException::getMessage)
+                .containsExactly(Integer.toString(HttpStatus.NOT_FOUND.value()), "Resource not found");
     }
 
     /*---------------------------*

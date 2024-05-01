@@ -1,5 +1,7 @@
 package com.bitsmi.springshowcase.contentservice.client;
 
+import com.bitsmi.springshowcase.contentservice.client.common.exception.ClientErrorServiceException;
+import com.bitsmi.springshowcase.contentservice.client.common.exception.ServerErrorServiceException;
 import com.bitsmi.springshowcase.contentservice.client.info.InfoApiBuilder;
 import com.bitsmi.springshowcase.contentservice.client.schema.SchemaCreationApiBuilder;
 import com.bitsmi.springshowcase.contentservice.client.schema.SchemaElementApiBuilder;
@@ -9,9 +11,13 @@ import com.bitsmi.springshowcase.contentservice.client.schema.request.SchemaSetS
 import jakarta.validation.NoProviderFoundException;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
+import org.apache.commons.io.IOUtils;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestClient;
 
+import java.io.StringWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
 public class ContentServiceClient
@@ -85,6 +91,18 @@ public class ContentServiceClient
             RestClient restClient = RestClient.builder()
                     // Use HTTPClient
                     .requestFactory(new HttpComponentsClientHttpRequestFactory())
+                    .defaultStatusHandler(HttpStatusCode::is4xxClientError, (request, response) -> {
+                        throw new ClientErrorServiceException(
+                                Integer.toString(response.getStatusCode().value()),
+                                IOUtils.toString(response.getBody(), StandardCharsets.UTF_8)
+                        );
+                    })
+                    .defaultStatusHandler(HttpStatusCode::is5xxServerError, (request, response) -> {
+                        throw new ServerErrorServiceException(
+                                Integer.toString(response.getStatusCode().value()),
+                                IOUtils.toString(response.getBody(), StandardCharsets.UTF_8)
+                        );
+                    })
                     .baseUrl(baseUrl)
                     .build();
 

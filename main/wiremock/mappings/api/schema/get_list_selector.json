@@ -5,7 +5,11 @@
         "urlPath": "/api/schema",
         "queryParameters": {
             "selector": {
-                "equalTo": "id EQUALS 1001"
+                "or": [{
+                    "equalTo": "id EQUALS 1001"
+                }, {
+                    "equalTo": "externalId EQUALS 'schema-1'"
+                }]
             },
             "page": {
                 "equalTo": "0"

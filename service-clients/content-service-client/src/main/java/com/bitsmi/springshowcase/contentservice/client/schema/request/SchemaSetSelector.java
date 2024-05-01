@@ -32,6 +32,14 @@ public class SchemaSetSelector
         ));
     }
 
+    public static SchemaSetSelector externalId(String externalId)
+    {
+        return new SchemaSetSelector(new SimpleSelector("externalId",
+                RelationalOperator.EQUALS,
+                externalId
+        ));
+    }
+
     public SchemaSetSelector and(SchemaSetSelector other)
     {
         return new SchemaSetSelector(this.selector().and(other.selector()));
