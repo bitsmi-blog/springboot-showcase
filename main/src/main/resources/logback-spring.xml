@@ -51,6 +51,13 @@
   	<logger name="alert" level="${LOG_LEVEL:-debug}" additivity="false">
         <appender-ref ref="console" />
   	</logger>
+
+    <!-- Enable RestClient req / res logs -->
+<!--
+    <logger name="org.apache.hc.client5.http" additivity="false" level="DEBUG">
+        <appender-ref ref="application"/>
+    </logger>
+-->
         
     <root level="${LOG_LEVEL:-debug}">
     	<!-- console logger is filtered at WARN level. General log file will contain all traces -->

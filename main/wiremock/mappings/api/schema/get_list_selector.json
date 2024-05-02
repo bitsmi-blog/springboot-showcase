@@ -12,10 +12,18 @@
                 }]
             },
             "page": {
-                "equalTo": "0"
+                "or": [{
+                    "absent": true
+                }, {
+                    "equalTo": "0"
+                }]
             },
             "pageSize": {
-                "equalTo": "10"
+                "or": [{
+                    "absent": true
+                }, {
+                    "equalTo": "10"
+                }]
             }
         }
     },
