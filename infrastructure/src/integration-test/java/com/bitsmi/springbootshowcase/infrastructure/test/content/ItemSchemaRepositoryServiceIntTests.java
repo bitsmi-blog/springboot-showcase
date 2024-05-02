@@ -10,6 +10,12 @@ import com.bitsmi.springbootshowcase.domain.testsupport.content.model.ItemSchema
 import com.bitsmi.springbootshowcase.infrastructure.config.InfrastructureModuleConfig;
 import com.bitsmi.springbootshowcase.infrastructure.testsupport.internal.ServiceIntegrationTest;
 import com.bitsmi.springshowcase.contentservice.client.ContentServiceClient;
+import com.bitsmi.springshowcase.contentservice.client.common.response.PagedResponse;
+import com.bitsmi.springshowcase.contentservice.client.common.response.Pagination;
+import com.bitsmi.springshowcase.contentservice.client.common.response.Sort;
+import com.bitsmi.springshowcase.contentservice.client.schema.SchemaListOperation;
+import com.bitsmi.springshowcase.contentservice.client.schema.SchemaSetApiBuilder;
+import com.bitsmi.springshowcase.contentservice.client.schema.request.SchemaSetSelector;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import org.junit.jupiter.api.DisplayName;
@@ -23,10 +29,18 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.TestPropertySource;
 
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowableOfType;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 /**
  * Test validations & cache implementations. The rest of use cases are tested in corresponding Unit Test
@@ -50,7 +64,7 @@ class ItemSchemaRepositoryServiceIntTests
     private IItemSchemaRepositoryService itemSchemaRepositoryService;
 
     /*---------------------------*
-     * CREATE SCHEMA
+     * VALIDATION TESTS
      *---------------------------*/
     @Test
     @DisplayName("createSchema should throw an ConstraintViolationException given incomplete input data")
@@ -76,9 +90,6 @@ class ItemSchemaRepositoryServiceIntTests
                 .allMatch("{jakarta.validation.constraints.NotNull.message}"::equals);;
     }
 
-    /*---------------------------*
-     * UPDATE SCHEMA
-     *---------------------------*/
     @Test
     @DisplayName("updateSchema should throw an ConstraintViolationException given incomplete input data")
     void updateSchemaTest1()
@@ -133,7 +144,47 @@ class ItemSchemaRepositoryServiceIntTests
     }
 
     /*---------------------------*
-     * SETUP AND HELPERS
+     * CACHES
+     *---------------------------*/
+    @Test
+    @DisplayName("findItemSchemaByExternalId should cache results given consecutive calls with same externalId")
+    void cacheTest1()
+    {
+        com.bitsmi.springshowcase.contentservice.client.schema.response.ItemSchema expectedSchema =
+                com.bitsmi.springshowcase.contentservice.client.testsupport.schema.response.ItemSchemaTestDataBuilder.schema1();
+        SchemaSetSelector expectedSelector = SchemaSetSelector.externalId(ItemSchemaTestDataBuilder.EXTERNAL_ID_SCHEMA1);
+
+        SchemaSetApiBuilder schemaSetApiBuilder = mock(SchemaSetApiBuilder.class);
+        SchemaListOperation schemaListOperation = mock(SchemaListOperation.class);
+        when(contentServiceClient.schemas(expectedSelector))
+                .thenReturn(schemaSetApiBuilder);
+        when(schemaSetApiBuilder.list())
+                .thenReturn(schemaListOperation);
+        when(schemaListOperation.get())
+                .thenReturn(
+                    PagedResponse.<com.bitsmi.springshowcase.contentservice.client.schema.response.ItemSchema>builder()
+                            .content(List.of(expectedSchema))
+                            .pagination(Pagination.of(0, 10, Sort.UNSORTED))
+                            .pageCount(1)
+                            .totalCount(1)
+                            .totalPages(1)
+                            .build()
+                );
+
+        Optional<ItemSchema> optItemSchema1 = itemSchemaRepositoryService.findItemSchemaByExternalId(ItemSchemaTestDataBuilder.EXTERNAL_ID_SCHEMA1);
+        Optional<ItemSchema> optItemSchema2 = itemSchemaRepositoryService.findItemSchemaByExternalId(ItemSchemaTestDataBuilder.EXTERNAL_ID_SCHEMA1);
+
+        // Only 1 interaction
+        verify(contentServiceClient).schemas(expectedSelector);
+
+        assertThat(optItemSchema1).isPresent()
+                .hasValueSatisfying(actualSchema -> assertSchema(actualSchema, expectedSchema));
+        assertThat(optItemSchema2).isPresent()
+                .hasValueSatisfying(actualSchema -> assertSchema(actualSchema, expectedSchema));
+    }
+
+    /*---------------------------*
+     * CONFIG AND HELPERS
      *---------------------------*/
     @TestConfiguration
     @Import({ InfrastructureModuleConfig.class })
@@ -145,5 +196,33 @@ class ItemSchemaRepositoryServiceIntTests
         {
             return PasswordEncoderFactories.createDelegatingPasswordEncoder();
         }
+    }
+
+    private void assertSchema(ItemSchema actual, com.bitsmi.springshowcase.contentservice.client.schema.response.ItemSchema expected)
+    {
+        assertThat(actual.id()).isEqualTo(expected.id());
+        assertThat(actual.externalId()).isEqualTo(expected.externalId());
+        assertThat(actual.name()).isEqualTo(expected.name());
+        assertThat(actual.creationDate()).isEqualTo(expected.creationDate());
+        assertThat(actual.lastUpdated()).isEqualTo(expected.lastUpdated());
+
+        Map<String, com.bitsmi.springshowcase.contentservice.client.schema.response.ItemSchemaField> idxExpectedFields = expected.fields().stream()
+                .collect(Collectors.toMap(com.bitsmi.springshowcase.contentservice.client.schema.response.ItemSchemaField::name, Function.identity()));
+        assertThat(actual.fields())
+                .hasSize(expected.fields().size())
+                .allSatisfy(actualField -> {
+                    var expectedField = idxExpectedFields.get(actualField.name());
+                    assertField(actualField, expectedField);
+                });
+    }
+
+    private void assertField(ItemSchemaField actual, com.bitsmi.springshowcase.contentservice.client.schema.response.ItemSchemaField expected)
+    {
+        assertThat(actual.id()).isEqualTo(expected.id());
+        assertThat(actual.name()).isEqualTo(expected.name());
+        assertThat(actual.dataType().name()).isEqualTo(expected.dataType().name());
+        assertThat(actual.comments()).isEqualTo(expected.comments());
+        assertThat(actual.creationDate()).isEqualTo(expected.creationDate());
+        assertThat(actual.lastUpdated()).isEqualTo(expected.lastUpdated());
     }
 }
