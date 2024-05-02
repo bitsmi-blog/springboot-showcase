@@ -4,6 +4,8 @@
 
 xref:pages/application/architecture.adoc[Architecture]
 
+xref:pages/application/fluent_rest_api_client.adoc[Fluent REST API client]
+
 xref:pages/application/mocking.adoc[Mocking external services]
 
 == Spring How-To
@@ -11,6 +13,8 @@ xref:pages/application/mocking.adoc[Mocking external services]
 xref:pages/spring-howto/actuators.adoc[Actuators]
 
 xref:pages/spring-howto/aop.adoc[AOP]
+
+xref:pages/spring-howto/http_clients.adoc[HTTP Clients]
 
 xref:pages/spring-howto/observability.adoc[Observability]
 

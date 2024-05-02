@@ -1,111 +1,99 @@
 package com.bitsmi.springbootshowcase.infrastructure.content.impl;
 
-import com.bitsmi.springbootshowcase.infrastructure.InfrastructureConstants;
-import com.bitsmi.springbootshowcase.infrastructure.content.entity.DataType;
-import com.bitsmi.springbootshowcase.infrastructure.content.entity.ItemSchemaEntity;
-import com.bitsmi.springbootshowcase.infrastructure.content.entity.ItemSchemaFieldEntity;
-import com.bitsmi.springbootshowcase.infrastructure.content.mapper.IItemSchemaMapper;
-import com.bitsmi.springbootshowcase.infrastructure.content.mapper.IItemSchemaSummaryMapper;
-import com.bitsmi.springbootshowcase.infrastructure.common.mapper.PageRequestMapper;
-import com.bitsmi.springbootshowcase.infrastructure.common.mapper.PagedDataMapper;
-import com.bitsmi.springbootshowcase.infrastructure.content.repository.IItemSchemaRepository;
 import com.bitsmi.springbootshowcase.domain.common.dto.PagedData;
 import com.bitsmi.springbootshowcase.domain.common.dto.Pagination;
 import com.bitsmi.springbootshowcase.domain.common.exception.ElementAlreadyExistsException;
 import com.bitsmi.springbootshowcase.domain.common.exception.ElementNotFoundException;
 import com.bitsmi.springbootshowcase.domain.common.util.ValidToUpdate;
 import com.bitsmi.springbootshowcase.domain.content.model.ItemSchema;
-import com.bitsmi.springbootshowcase.domain.content.model.ItemSchemaSummary;
 import com.bitsmi.springbootshowcase.domain.content.spi.IItemSchemaRepositoryService;
+import com.bitsmi.springbootshowcase.infrastructure.InfrastructureConstants;
+import com.bitsmi.springbootshowcase.infrastructure.content.mapper.ContentServiceClientPagedResponseMapper;
+import com.bitsmi.springbootshowcase.infrastructure.content.mapper.IItemSchemaMapper;
+import com.bitsmi.springshowcase.contentservice.client.ContentServiceClient;
+import com.bitsmi.springshowcase.contentservice.client.common.exception.ClientErrorServiceException;
+import com.bitsmi.springshowcase.contentservice.client.common.response.PagedResponse;
+import com.bitsmi.springshowcase.contentservice.client.schema.request.ItemSchemaData;
+import com.bitsmi.springshowcase.contentservice.client.schema.request.ItemSchemaFieldData;
+import com.bitsmi.springshowcase.contentservice.client.schema.request.SchemaSetSelector;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.function.Function;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
 @Validated
 public class ItemSchemaRepositoryServiceImpl implements IItemSchemaRepositoryService
 {
-    @Autowired
-    private IItemSchemaRepository itemSchemaRepository;
-    @Autowired
-    private IItemSchemaMapper itemSchemaMapper;
-    @Autowired
-    private IItemSchemaSummaryMapper itemSchemaSummaryMapper;
-    @Autowired
-    private PageRequestMapper pageRequestMapper;
-    @Autowired
-    private PagedDataMapper pagedDataMapper;
+    private final ContentServiceClient contentServiceClient;
+    private final IItemSchemaMapper itemSchemaMapper;
+    private final ContentServiceClientPagedResponseMapper pagedDataMapper;
+
+    public ItemSchemaRepositoryServiceImpl(
+            ContentServiceClient contentServiceClient,
+            IItemSchemaMapper itemSchemaMapper,
+            ContentServiceClientPagedResponseMapper pagedDataMapper
+    ) {
+        this.contentServiceClient = contentServiceClient;
+        this.itemSchemaMapper = itemSchemaMapper;
+        this.pagedDataMapper = pagedDataMapper;
+    }
 
     @Override
     public List<ItemSchema> findAllItemSchemas()
     {
-        return itemSchemaRepository.findAll()
-                .stream()
-                .map(itemSchemaMapper::fromEntity)
-                .toList();
+        List<ItemSchema> results = new ArrayList<>();
+
+        PagedResponse<com.bitsmi.springshowcase.contentservice.client.schema.response.ItemSchema> response = contentServiceClient.schemas()
+                .list()
+                .get();
+        results.addAll(collectAndMapItemSchemasFromPagedResponse(response));
+
+        Optional<com.bitsmi.springshowcase.contentservice.client.common.response.Pagination> optNextPage = response.nextPage();
+        while(optNextPage.isPresent()) {
+            response = contentServiceClient.schemas()
+                    .list()
+                    .paginate(optNextPage.get().pageNumber(), optNextPage.get().pageSize())
+                    .get();
+            results.addAll(collectAndMapItemSchemasFromPagedResponse(response));
+        }
+
+        return results;
     }
 
     @Cacheable(cacheNames = InfrastructureConstants.CACHE_ALL_SCHEMAS, key = "#pagination.pageNumber")
     @Override
     public PagedData<ItemSchema> findAllItemSchemas(@NotNull Pagination pagination)
     {
-        final Pageable pageable = pageRequestMapper.fromPagination(pagination);
+        PagedResponse<com.bitsmi.springshowcase.contentservice.client.schema.response.ItemSchema> response = contentServiceClient.schemas()
+                .list()
+                .paginate(pagination.pageNumber(), pagination.pageSize())
+                .get();
 
-        final org.springframework.data.domain.Page<ItemSchemaEntity> entityPage = itemSchemaRepository.findAll(pageable);
-
-        return pagedDataMapper.fromPage(entityPage, itemSchemaMapper::fromEntity);
+        return pagedDataMapper.fromPage(response, itemSchemaMapper::fromClientResponse);
     }
 
-    @Override
-    public PagedData<ItemSchema> findSchemasByNameStartWith(@NotNull String namePrefix, @NotNull Pagination pagination)
-    {
-        final Pageable pageable = pageRequestMapper.fromPagination(pagination);
-
-        final org.springframework.data.domain.Page<ItemSchemaEntity> entityPage = itemSchemaRepository.findByNameStartsWithIgnoreCase(namePrefix, pageable);
-
-        return pagedDataMapper.fromPage(entityPage, itemSchemaMapper::fromEntity);
-    }
-
-    @Cacheable(cacheNames = InfrastructureConstants.CACHE_SCHEMA_BY_ID)
-    @Override
-    public Optional<ItemSchema> findItemSchemaById(@NotNull Long id)
-    {
-        return itemSchemaRepository.findById(id)
-                .map(itemSchemaMapper::fromEntity);
-    }
-
+    @Cacheable(cacheNames = InfrastructureConstants.CACHE_SCHEMA_BY_EXTERNAL_ID)
     @Override
     public Optional<ItemSchema> findItemSchemaByExternalId(@NotNull String externalId)
     {
-        return itemSchemaRepository.findThroughExternalId(externalId)
-                .map(itemSchemaMapper::fromEntity);
-    }
-
-    @Override
-    public Optional<ItemSchemaSummary> findItemSchemaSummaryByExternalId(@NotNull String externalId)
-    {
-        return itemSchemaRepository.findSummaryProjectionByExternalId(externalId)
-                .map(itemSchemaSummaryMapper::fromProjection);
-    }
-
-    @Override
-    public Optional<ItemSchemaSummary> findItemSchemaSummaryUsingQueryByExternalId(@NotNull String externalId)
-    {
-        return itemSchemaRepository.findSummaryProjectionUsingQueryByExternalId(externalId)
-                .map(itemSchemaSummaryMapper::fromProjection);
+        return contentServiceClient.schemas(SchemaSetSelector.externalId(externalId))
+                .list()
+                .get()
+                .content()
+                .stream()
+                .findFirst()
+                .map(itemSchemaMapper::fromClientResponse);
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -113,63 +101,75 @@ public class ItemSchemaRepositoryServiceImpl implements IItemSchemaRepositorySer
     @Override
     public ItemSchema createItemSchema(@Valid ItemSchema itemSchema)
     {
-        if(itemSchemaRepository.existsByExternalId(itemSchema.externalId())) {
-            throw new ElementAlreadyExistsException(ItemSchema.class.getSimpleName(), "externalId:" + itemSchema.externalId());
-        }
-
-        final ItemSchemaEntity schemaEntity = ItemSchemaEntity.builder()
-                .externalId(itemSchema.externalId())
-                .name(itemSchema.name())
-                .build();
-        schemaEntity.setFields(itemSchema.fields().stream()
-                .map(fieldDto -> ItemSchemaFieldEntity.builder()
-                        .schema(schemaEntity)
-                        .name(fieldDto.name())
-                        .dataType(DataType.valueOf(fieldDto.dataType().name()))
-                        .comments(fieldDto.comments())
+        final Set<ItemSchemaFieldData> schemaFieldsData = itemSchema.fields().stream()
+                .map(field -> ItemSchemaFieldData.builder()
+                        .name(field.name())
+                        .dataType(com.bitsmi.springshowcase.contentservice.client.schema.shared.DataType.valueOf(field.dataType().name()))
+                        .comments(field.comments())
                         .build()
                 )
-                .collect(Collectors.toSet())
-        );
+                .collect(Collectors.toSet());
+        final ItemSchemaData data = ItemSchemaData.builder()
+                .externalId(itemSchema.externalId())
+                .name(itemSchema.name())
+                .fields(schemaFieldsData)
+                .build();
 
-        return itemSchemaMapper.fromEntity(itemSchemaRepository.save(schemaEntity));
+        try {
+            final com.bitsmi.springshowcase.contentservice.client.schema.response.ItemSchema response = contentServiceClient.schema(data)
+                    .create();
+
+            return itemSchemaMapper.fromClientResponse(response);
+        }
+        catch(ClientErrorServiceException e) {
+            if ("409".equals(e.getErrorCode())) {
+                throw new ElementAlreadyExistsException(ItemSchema.class.getSimpleName(), "externalId:" + itemSchema.externalId());
+            }
+            throw e;
+        }
     }
 
     @Transactional(rollbackFor = Exception.class)
     @Caching(evict = {
             @CacheEvict(cacheNames = InfrastructureConstants.CACHE_ALL_SCHEMAS, allEntries = true),
-            @CacheEvict(cacheNames = InfrastructureConstants.CACHE_SCHEMA_BY_ID, key = "#itemSchema.id")
+            @CacheEvict(cacheNames = InfrastructureConstants.CACHE_SCHEMA_BY_EXTERNAL_ID, key = "#itemSchema.externalId")
     })
     @Override
     public ItemSchema updateItemSchema(@Valid @ValidToUpdate ItemSchema itemSchema)
     {
-        ItemSchemaEntity schemaEntity = itemSchemaRepository.findById(itemSchema.id())
-                .orElseThrow(() -> new ElementNotFoundException(ItemSchema.class.getSimpleName(), "externalId:" + itemSchema.externalId()));
+        final Set<ItemSchemaFieldData> schemaFieldsData = itemSchema.fields().stream()
+                .map(field -> ItemSchemaFieldData.builder()
+                        .name(field.name())
+                        .dataType(com.bitsmi.springshowcase.contentservice.client.schema.shared.DataType.valueOf(field.dataType().name()))
+                        .comments(field.comments())
+                        .build()
+                )
+                .collect(Collectors.toSet());
+        final ItemSchemaData data = ItemSchemaData.builder()
+                .externalId(itemSchema.externalId())
+                .name(itemSchema.name())
+                .fields(schemaFieldsData)
+                .build();
 
-        schemaEntity.setExternalId(itemSchema.externalId());
-        schemaEntity.setName(itemSchema.name());
+        try {
+            final com.bitsmi.springshowcase.contentservice.client.schema.response.ItemSchema response = contentServiceClient.schema(itemSchema.id())
+                    .update(data);
 
-        Map<String, ItemSchemaFieldEntity> idxCurrentEntityFields = schemaEntity.getFields().stream()
-                .collect(Collectors.toMap(ItemSchemaFieldEntity::getName, Function.identity()));
+            return itemSchemaMapper.fromClientResponse(response);
+        }
+        catch(ClientErrorServiceException e) {
+            if ("404".equals(e.getErrorCode())) {
+                throw new ElementNotFoundException(ItemSchema.class.getSimpleName(), "externalId:" + itemSchema.externalId());
+            }
+            throw e;
+        }
+    }
 
-        itemSchema.fields()
-                .forEach(fieldDto -> {
-                    ItemSchemaFieldEntity fieldEntity = idxCurrentEntityFields.get(fieldDto.name());
-                    if(fieldEntity==null) {
-                        fieldEntity = new ItemSchemaFieldEntity();
-                        fieldEntity.setSchema(schemaEntity);
-                        schemaEntity.getFields().add(fieldEntity);
-                    }
-                    fieldEntity.setName(fieldDto.name());
-                    fieldEntity.setDataType(DataType.valueOf(fieldDto.dataType().name()));
-                    fieldEntity.setComments(fieldDto.comments());
-
-                    idxCurrentEntityFields.remove(fieldDto.name());
-                });
-
-        // Remove fields not present in the new schema definition
-        idxCurrentEntityFields.values().forEach(field -> schemaEntity.getFields().remove(field));
-
-        return itemSchemaMapper.fromEntity(itemSchemaRepository.save(schemaEntity));
+    private List<ItemSchema> collectAndMapItemSchemasFromPagedResponse(PagedResponse<com.bitsmi.springshowcase.contentservice.client.schema.response.ItemSchema> response)
+    {
+        return response.content()
+                .stream()
+                .map(itemSchemaMapper::fromClientResponse)
+                .toList();
     }
 }

@@ -47,11 +47,16 @@ import org.testcontainers.utility.DockerImageName;
 @AutoConfigureDataJpa
 @Testcontainers
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@TestPropertySource(properties = {
-        "spring.liquibase.change-log=classpath:/db/changelogs/infrastructure/test/content/item_repository_service_tests.xml",
+@TestPropertySource(
+    locations = {
+        "classpath:application-test.properties"
+    },
+    properties = {
+        "spring.liquibase.change-log=classpath:/db/changelogs/infrastructure/test/content/item_repository_service_tests_main.xml",
         "spring.datasource.url = jdbc:tc:postgresql:16.0:///test-database",
         "spring.datasource.driver-class-name = org.testcontainers.jdbc.ContainerDatabaseDriver"
-})
+    }
+)
 @org.junit.jupiter.api.Tag("IntegrationTest")
 public class ItemRepositoryServiceTestContainerTests
 {

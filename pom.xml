@@ -22,7 +22,7 @@
     </properties>
 
     <modules>
-        <module>service-clients/sample-service-client</module>
+        <module>service-clients/content-service-client</module>
         <module>domain</module>
         <module>infrastructure</module>
         <module>application</module>
@@ -57,6 +57,11 @@
                 <groupId>com.auth0</groupId>
                 <artifactId>java-jwt</artifactId>
                 <version>4.4.0</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>2.15.1</version>
             </dependency>
 
             <dependency>

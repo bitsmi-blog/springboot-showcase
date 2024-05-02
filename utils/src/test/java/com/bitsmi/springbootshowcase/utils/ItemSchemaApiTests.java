@@ -27,7 +27,7 @@ public class ItemSchemaApiTests
         auth().flatMap(token -> client.get()
                 .uri(uriBuilder -> uriBuilder.path("/api/content/schema")
                         .queryParam("page", "0")
-                        .queryParam("size", "5")
+                        .queryParam("pageSize", "10")
                         .build())
                 .header("Authorization", "Bearer " + token)
                 .retrieve()

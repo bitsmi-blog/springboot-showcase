@@ -20,6 +20,6 @@ public class CacheMetricsRegistrarApplicationStartedListener implements Applicat
     public void onApplicationEvent(final ApplicationStartedEvent event)
     {
         this.cacheMetricsRegistrar.bindCacheToRegistry(cacheManager.getCache(InfrastructureConstants.CACHE_ALL_SCHEMAS));
-        this.cacheMetricsRegistrar.bindCacheToRegistry(cacheManager.getCache(InfrastructureConstants.CACHE_SCHEMA_BY_ID));
+        this.cacheMetricsRegistrar.bindCacheToRegistry(cacheManager.getCache(InfrastructureConstants.CACHE_SCHEMA_BY_EXTERNAL_ID));
     }
 }

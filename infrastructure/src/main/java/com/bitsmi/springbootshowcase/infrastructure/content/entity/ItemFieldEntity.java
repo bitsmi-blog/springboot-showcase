@@ -41,8 +41,7 @@ public class ItemFieldEntity implements Serializable
     @Version
     private Long version;
 
-    @ManyToOne(optional = false)
-    private ItemSchemaFieldEntity field;
+    private String fieldName;
 
     @ManyToOne(optional = false)
     private ItemEntity item;
@@ -76,7 +75,7 @@ public class ItemFieldEntity implements Serializable
                 .append("id", id)
                 .append("version", version)
                 .append("item", item)
-                .append("field", field)
+                .append("fieldName", fieldName)
                 .append("value", value)
                 .append("creationDate", creationDate)
                 .append("lastUpdated", lastUpdated)

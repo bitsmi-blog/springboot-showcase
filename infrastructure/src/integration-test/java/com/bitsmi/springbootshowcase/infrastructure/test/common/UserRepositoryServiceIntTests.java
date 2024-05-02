@@ -31,9 +31,14 @@ import java.util.function.Consumer;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ServiceIntegrationTest
-@TestPropertySource(properties = {
+@TestPropertySource(
+    locations = {
+        "classpath:application-test.properties"
+    },
+    properties = {
         "spring.liquibase.change-log=classpath:db/changelogs/infrastructure/test/common/user_repository_service_tests.xml"
-})
+    }
+)
 public class UserRepositoryServiceIntTests
 {
     @Autowired

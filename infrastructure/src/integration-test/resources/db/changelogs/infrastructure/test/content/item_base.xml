@@ -14,7 +14,7 @@
             <column header="VERSION" name="VERSION" type="NUMERIC"/>
             <column header="NAME" name="NAME" type="STRING"/>
             <column header="STATUS" name="STATUS" type="STRING"/>
-            <column header="SCHEMA" name="SCHEMA_ID" type="NUMERIC"/>
+            <column header="SCHEMA_EXTERNAL_ID" name="SCHEMA_EXTERNAL_ID" type="STRING"/>
             <column header="CREATION_DATE" name="CREATION_DATE" type="TIMESTAMP"/>
             <column header="LAST_UPDATED" name="LAST_UPDATED" type="TIMESTAMP"/>
         </loadData>

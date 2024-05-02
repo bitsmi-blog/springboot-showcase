@@ -20,14 +20,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.TestPropertySource;
 
 @ServiceIntegrationTest
-@TestPropertySource(properties = {
-        "spring.liquibase.change-log=classpath:db/changelogs/infrastructure/test/content/item_repository_service_tests.xml"
-})
+@TestPropertySource(
+    locations = {
+        "classpath:application-test.properties"
+    },
+    properties = {
+        "spring.liquibase.change-log=classpath:db/changelogs/infrastructure/test/content/item_repository_service_tests_main.xml"
+    }
+)
 public class ItemRepositoryServiceIntTests
 {
     @Autowired
