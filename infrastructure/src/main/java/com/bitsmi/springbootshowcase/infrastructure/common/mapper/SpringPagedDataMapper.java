@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.function.Function;
 
 @Component
-public class PagedDataMapper
+public class SpringPagedDataMapper
 {
     public <T, R> PagedData<R> fromPage(Page<T> page, Function<T, R> elementMapper)
     {

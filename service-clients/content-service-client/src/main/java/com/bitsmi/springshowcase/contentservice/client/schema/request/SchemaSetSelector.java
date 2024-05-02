@@ -6,6 +6,7 @@ import com.bitsmi.springshowcase.contentservice.client.common.request.SimpleSele
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 
+import java.util.Objects;
 import java.util.Optional;
 
 public class SchemaSetSelector
@@ -54,5 +55,19 @@ public class SchemaSetSelector
     public String toString()
     {
         return selector.toString();
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return Objects.hash(selector);
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        return this == o
+                || o instanceof SchemaSetSelector other
+                && Objects.equals(selector, other.selector);
     }
 }

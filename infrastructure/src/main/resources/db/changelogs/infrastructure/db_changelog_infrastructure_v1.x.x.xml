@@ -169,7 +169,7 @@
             <column name="STATUS" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="SCHEMA_ID" type="BIGINT">
+            <column name="SCHEMA_EXTERNAL_ID" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
             <column name="CREATION_DATE" type="TIMESTAMP"/>
@@ -213,40 +213,6 @@
             <column name="TAG_DATE" type="TIMESTAMP" defaultValueDate="${current_timestamp}"/>
         </createTable>
 
-        <createTable tableName="ITEM_SCHEMA">
-            <column name="ID" type="BIGINT">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_ITEM_SCHEMA"/>
-            </column>
-            <column name="VERSION" type="BIGINT"/>
-            <column name="NAME" type="VARCHAR(255)">
-                <constraints nullable="false" unique="true"/>
-            </column>
-            <column name="EXTERNAL_ID" type="VARCHAR(255)">
-                <constraints nullable="false" unique="true"/>
-            </column>
-            <column name="CREATION_DATE" type="TIMESTAMP"/>
-            <column name="LAST_UPDATED" type="TIMESTAMP"/>
-        </createTable>
-
-        <createTable tableName="ITEM_SCHEMA_FIELD">
-            <column name="ID" type="BIGINT">
-                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_ITEM_SCHEMA_FIELD"/>
-            </column>
-            <column name="VERSION" type="BIGINT"/>
-            <column name="SCHEMA_ID" type="BIGINT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="NAME" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="DATA_TYPE" type="VARCHAR(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="COMMENTS" type="${clob_type}"/>
-            <column name="CREATION_DATE" type="TIMESTAMP"/>
-            <column name="LAST_UPDATED" type="TIMESTAMP"/>
-        </createTable>
-
         <createTable tableName="ITEM_FIELD">
             <column name="ID" type="BIGINT">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="PK_ITEM_FIELD"/>
@@ -255,7 +221,7 @@
             <column name="ITEM_ID" type="BIGINT">
                 <constraints nullable="false"/>
             </column>
-            <column name="FIELD_ID" type="BIGINT">
+            <column name="FIELD_NAME" type="BIGINT">
                 <constraints nullable="false"/>
             </column>
             <!-- "value" is a reserved word in H2 (used to test)
@@ -279,31 +245,12 @@
                         startValue="1"
                         incrementBy="1"
                         cycle="false"/>
-        <createSequence sequenceName="SEQ_ITEM_SCHEMA"
-                        startValue="1"
-                        incrementBy="1"
-                        cycle="false"/>
-        <createSequence sequenceName="SEQ_ITEM_SCHEMA_FIELD"
-                        startValue="1"
-                        incrementBy="1"
-                        cycle="false"/>
         <createSequence sequenceName="SEQ_ITEM_FIELD"
                         startValue="1"
                         incrementBy="1"
                         cycle="false"/>
 
         <!-- Constraints -->
-        <addForeignKeyConstraint constraintName="FK_ITEM_SCHEMA_FIELD_SCHEMA"
-                                 baseTableName="ITEM_SCHEMA_FIELD"
-                                 baseColumnNames="SCHEMA_ID"
-                                 deferrable="false"
-                                 initiallyDeferred="false"
-                                 onDelete="NO ACTION"
-                                 onUpdate="NO ACTION"
-                                 referencedColumnNames="ID"
-                                 referencedTableName="ITEM_SCHEMA"
-                                 referencesUniqueColumn="true"/>
-
         <addForeignKeyConstraint constraintName="FK_ITEM_FIELD_ITEM"
                                  baseTableName="ITEM_FIELD"
                                  baseColumnNames="ITEM_ID"
@@ -315,27 +262,9 @@
                                  referencedTableName="ITEM"
                                  referencesUniqueColumn="true"/>
 
-        <addForeignKeyConstraint constraintName="FK_ITEM_FIELD_SCHEMA_FIELD"
-                                 baseTableName="ITEM_FIELD"
-                                 baseColumnNames="FIELD_ID"
-                                 deferrable="false"
-                                 initiallyDeferred="false"
-                                 onDelete="NO ACTION"
-                                 onUpdate="NO ACTION"
-                                 referencedColumnNames="ID"
-                                 referencedTableName="ITEM_SCHEMA_FIELD"
-                                 referencesUniqueColumn="true"/>
-
         <addUniqueConstraint constraintName="C_ITEM_TAG_UNIQUE"
                              tableName="ITEM_TAG"
                              columnNames="TAG_ID, ITEM_ID"
-                             disabled="false"
-                             initiallyDeferred="false"
-                             deferrable="false"/>
-
-        <addUniqueConstraint constraintName="C_ITEM_SCHEMA_FIELD_UNIQUE"
-                             tableName="ITEM_SCHEMA_FIELD"
-                             columnNames="SCHEMA_ID, NAME"
                              disabled="false"
                              initiallyDeferred="false"
                              deferrable="false"/>

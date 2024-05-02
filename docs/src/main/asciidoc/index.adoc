@@ -14,6 +14,8 @@ xref:pages/spring-howto/actuators.adoc[Actuators]
 
 xref:pages/spring-howto/aop.adoc[AOP]
 
+xref:pages/spring-howto/http_clients.adoc[HTTP Clients]
+
 xref:pages/spring-howto/observability.adoc[Observability]
 
 xref:pages/spring-howto/testing.adoc[Testing]

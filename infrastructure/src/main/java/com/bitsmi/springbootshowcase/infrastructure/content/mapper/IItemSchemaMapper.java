@@ -1,10 +1,11 @@
 package com.bitsmi.springbootshowcase.infrastructure.content.mapper;
 
-import com.bitsmi.springbootshowcase.infrastructure.content.entity.ItemSchemaEntity;
 import com.bitsmi.springbootshowcase.domain.content.model.ItemSchema;
+import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring",
+        injectionStrategy = InjectionStrategy.CONSTRUCTOR,
         implementationName = "ItemSchemaMapperImpl",
         uses = {
             IItemSchemaFieldMapper.class
@@ -12,5 +13,5 @@ import org.mapstruct.Mapper;
 )
 public interface IItemSchemaMapper
 {
-    ItemSchema fromEntity(ItemSchemaEntity entity);
+    ItemSchema fromClientResponse(com.bitsmi.springshowcase.contentservice.client.schema.response.ItemSchema response);
 }

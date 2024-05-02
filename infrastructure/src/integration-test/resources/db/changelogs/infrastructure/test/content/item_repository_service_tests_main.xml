@@ -15,7 +15,6 @@
     <!-- Application changelogs -->
     <include file="db/changelogs/infrastructure/db_changelog_infrastructure_main.xml"/>
     <!-- Data -->
-    <include file="db/changelogs/infrastructure/test/content/item_schema_base.xml"/>
     <include file="db/changelogs/infrastructure/test/content/item_base.xml"/>
     <include file="db/changelogs/infrastructure/test/content/tag_base.xml"/>
     <include file="db/changelogs/infrastructure/test/content/item_tag_base.xml"/>

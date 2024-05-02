@@ -58,8 +58,7 @@ public class ItemEntity implements Serializable
     @NotNull
     private ItemStatus status;
 
-    @ManyToOne
-    private ItemSchemaEntity schema;
+    private String schemaExternalId;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "ITEM_TAG",
@@ -95,7 +94,7 @@ public class ItemEntity implements Serializable
                 .append("version", version)
                 .append("name", name)
                 .append("status", status)
-                .append("schema", schema)
+                .append("schemaExternalId", schemaExternalId)
                 .append("creationDate", creationDate)
                 .append("lastUpdated", lastUpdated)
                 .build();

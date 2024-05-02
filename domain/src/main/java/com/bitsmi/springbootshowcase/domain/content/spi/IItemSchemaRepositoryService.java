@@ -16,14 +16,7 @@ public interface IItemSchemaRepositoryService
     List<ItemSchema> findAllItemSchemas();
     PagedData<ItemSchema> findAllItemSchemas(@NotNull Pagination pagination);
 
-    PagedData<ItemSchema> findSchemasByNameStartWith(@NotNull String namePrefix, @NotNull Pagination pagination);
-
-    Optional<ItemSchema> findItemSchemaById(@NotNull Long id);
-
     Optional<ItemSchema> findItemSchemaByExternalId(@NotNull String externalId);
-
-    Optional<ItemSchemaSummary> findItemSchemaSummaryByExternalId(@NotNull String externalId);
-    Optional<ItemSchemaSummary> findItemSchemaSummaryUsingQueryByExternalId(@NotNull String externalId);
 
     ItemSchema createItemSchema(@Valid ItemSchema itemSchema);
     ItemSchema updateItemSchema(@Valid @ValidToUpdate ItemSchema itemSchema);
