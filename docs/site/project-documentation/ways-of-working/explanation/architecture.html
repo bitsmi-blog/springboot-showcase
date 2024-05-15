@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Architecture :: Springboot-Showcase // Docs</title>
+    <link rel="canonical" href="https://documentation.kumo-klstr.duckdns.org/project-documentation/ways-of-working/explanation/architecture.html">
+    <link rel="prev" href="../../index.html">
+    <link rel="next" href="fluent_rest_api_client.html">
+    <meta name="generator" content="Antora 3.1.7">
+    <link rel="stylesheet" href="../../../_/css/site.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://documentation.kumo-klstr.duckdns.org">Springboot-Showcase // Docs</a>
+      <button class="navbar-burger" aria-controls="topbar-nav" aria-expanded="false" aria-label="Toggle main menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Product A</a>
+            <a class="navbar-item" href="#">Product B</a>
+            <a class="navbar-item" href="#">Product C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Services</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Service A</a>
+            <a class="navbar-item" href="#">Service B</a>
+            <a class="navbar-item" href="#">Service C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="project-documentation" data-version="">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
+    <h3 class="title"><a href="../../index.html">Project Documentation</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../index.html">Index</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Ways of working</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Explanation guides</span>
+<ul class="nav-list">
+  <li class="nav-item is-current-page" data-depth="3">
+    <a class="nav-link" href="architecture.html">Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="fluent_rest_api_client.html">Fluent REST API client</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">How-to guides</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../how-to/mocking_an_external_service.html">Mocking an external client</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Spring guides</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">How-to guides</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../spring-docs/how-to/actuators.html">Actuators</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../spring-docs/how-to/aop.html">AOP</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../spring-docs/how-to/observability.html">Observability</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../spring-docs/how-to/testing.html">Testing</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">References</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../spring-docs/reference/spring_data.html">Spring Data</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../spring-docs/tutorial/index.html">Tutorials</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Project Documentation</span>
+    <span class="version"></span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <div class="title"><a href="../../index.html">Project Documentation</a></div>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../../index.html">Project Documentation</a></li>
+    <li>Ways of working</li>
+    <li>Explanation guides</li>
+    <li><a href="architecture.html">Architecture</a></li>
+  </ul>
+</nav>
+<div class="edit-this-page"><a href="file:///D:/home/programming/intellij_workspace/springboot-showcase//docs/src/main/antora/modules/ways-of-working/pages/explanation/architecture.adoc">Edit this Page</a></div>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Architecture</h1>
+<div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#modules">Modules</a>
+<ul class="sectlevel2">
+<li><a href="#_main_module_description">Main</a></li>
+<li><a href="#application">Application</a></li>
+<li><a href="#infrastructure">Infrastructure</a></li>
+<li><a href="#domain">Domain</a></li>
+<li><a href="#web">Web</a></li>
+</ul>
+</li>
+<li><a href="#module-general-structure">Module general structure</a>
+<ul class="sectlevel2">
+<li><a href="#packages">Packages</a></li>
+<li><a href="#configuration">Configuration</a></li>
+</ul>
+</li>
+<li><a href="#components">Components</a>
+<ul class="sectlevel2">
+<li><a href="#web-2">Web</a></li>
+<li><a href="#application-2">Application</a></li>
+<li><a href="#domain-2">Domain</a></li>
+<li><a href="#infrastructure-2">Infrastructure</a></li>
+<li><a href="#interactions">Interactions</a></li>
+</ul>
+</li>
+<li><a href="#variations">Variations</a>
+<ul class="sectlevel2">
+<li><a href="#layered-module">Layered module</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="sect1">
+<h2 id="modules"><a class="anchor" href="#modules"></a>Modules</h2>
+<div class="sectionbody">
+<div class="imageblock kroki">
+<div class="content">
+<img src="../_images/diag-fec61dd907a42a10927ca67acd58b0afa92b59aa.svg" alt="Diagram">
+</div>
+</div>
+<div class="sect2">
+<h3 id="_main_module_description"><a class="anchor" href="#_main_module_description"></a>Main</h3>
+<div class="paragraph">
+<p><strong>Purpose</strong></p>
+</div>
+<div class="paragraph">
+<p><code>Main</code> module serves as entry point for application.
+It configures which modules are assembled to build the application.
+This is done in <code>MainModuleConfig</code> class through <code>@Import</code> statements of the corresponding modules that will form part of the application</p>
+</div>
+<div class="paragraph">
+<p>E.G.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Configuration
+@Import({
+        WebModuleConfig.class,
+        ApplicationModuleConfig.class,
+        InfrastructureModuleConfig.class
+})
+public class MainModuleConfig
+{
+
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>What&#8217;s inside</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Configurations related application&#8217;s assembly</p>
+</li>
+<li>
+<p>Docker &amp; Docker compose configurations related to application&#8217;s deployment</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="application"><a class="anchor" href="#application"></a>Application</h3>
+<div class="paragraph">
+<p><strong>Purpose</strong></p>
+</div>
+<div class="paragraph">
+<p><code>Application</code> module is used to define application flows so that every endpoint module such as <code>web</code>, <code>messaging</code>, etc. is able to access to the flow entry point.</p>
+</div>
+<div class="paragraph">
+<p><strong>What&#8217;s inside</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Entry point services to application flows that coordinates application level activities. This layer should not implement business logic related to Domain. It should delegate it to <code>domain</code> module components</p>
+</li>
+<li>
+<p>Implement top level transactionality when needed</p>
+</li>
+<li>
+<p>Interfaces that top level modules (web, messaging&#8230;&#8203;) should implement to provide specific functionality related to them. E.G. Memoize cache provider implementing request scoped caches provided by Web module</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="infrastructure"><a class="anchor" href="#infrastructure"></a>Infrastructure</h3>
+<div class="paragraph">
+<p><strong>Purpose</strong></p>
+</div>
+<div class="paragraph">
+<p><code>Infrastructure</code> module contains all infrastructure related configurations</p>
+</div>
+<div class="paragraph">
+<p><strong>What&#8217;s inside</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Persistence support (JPA, Mongo&#8230;&#8203;)</p>
+</li>
+<li>
+<p>Configurations about transversal services like Caches, Observability&#8230;&#8203;
+Each of this configurations should be made in a separate configuration so dependant modules can import them to used in, for example, integration tests</p>
+</li>
+<li>
+<p>Configuration of Domain related managed beans E.G. make Domain Commands &amp; Queries available to be injected in Application Flow components</p>
+</li>
+<li>
+<p>Attach Domain SPI service interfaces to corresponding Infrastructure implementation</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="domain"><a class="anchor" href="#domain"></a>Domain</h3>
+<div class="paragraph">
+<p><strong>Purpose</strong></p>
+</div>
+<div class="paragraph">
+<p><code>Domain</code> module implements applications business logic in an agnostic way, try to not be dependant of frameworks</p>
+</div>
+<div class="paragraph">
+<p><strong>What&#8217;s inside</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Model classes</p>
+</li>
+<li>
+<p>Query &amp; Commands for different use cases involving domain model classes</p>
+</li>
+<li>
+<p>SPI interfaces that will be implemented in <code>Infrastructure</code> module for infrastructure dependant components like persistence or event publishing</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="web"><a class="anchor" href="#web"></a>Web</h3>
+<div class="paragraph">
+<p><strong>Purpose</strong></p>
+</div>
+<div class="paragraph">
+<p><code>Web</code> module exposes rest service entrypoints to Applications module defined flows</p>
+</div>
+<div class="paragraph">
+<p><strong>What&#8217;s inside</strong></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Spring web configurations</p>
+</li>
+<li>
+<p>Spring rest based controllers definition</p>
+</li>
+<li>
+<p>Spring security configuration, including basic &amp; JWT auth</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="module-general-structure"><a class="anchor" href="#module-general-structure"></a>Module general structure</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="packages"><a class="anchor" href="#packages"></a>Packages</h3>
+<div class="paragraph">
+<p>The general package structure and naming is defined by the following guide:</p>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="../_images/diag-1a9913037479e8c34c8626d22b261b3406369b0e.svg" alt="Diagram">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Config</strong>: Contains the <strong>Main Config</strong> for the module that will be the entry point for the component scan
+and other module&#8217;s dependencies definition using Spring&#8217;s <code>@Import</code> statements. This package will also contain
+additional feature enable configurations such as <strong>Web MVC</strong>, <strong>Web Security</strong>, <strong>Cache</strong>, <strong>Observability</strong>, <strong>AOP</strong>, etc.
+Every feature configuration will be located in it&#8217;s related module if it&#8217;s only used in / affecting it (E.G. <strong>Web MVC</strong> in <strong>Web</strong> module)
+or in <strong>Infrastructure</strong> module if it&#8217;s a global feature (E.G. <strong>AOP</strong>, <strong>Observability</strong>, <strong>Caches</strong>)</p>
+</li>
+<li>
+<p><strong>Event</strong>: Contains general event definition and listeners. The main use case for these events is to be used
+as entry point for an external general event, such as Spring&#8217;s lifecycle events (E.G. <strong>ApplicationStartedEvent</strong>)
+that can be used to trigger module general actions. Context specific event definitions / listeners must be defined in context related subpackage</p>
+</li>
+<li>
+<p><strong>Contexts</strong>: A context should contain components related to a specific bounded context of the domain or concept in the application.
+Every context can define its <strong>Input Ports</strong> service interfaces at the root of the module and its <strong>Output ports</strong> in <code>spi</code> subpackage.
+Implementations for own <strong>Input ports</strong> and external <strong>output ports</strong> will be placed in <code>impl</code> subpackage.
+Also, a special context named <strong>Common</strong> can be defined as a place to put shared components that can be used by other contexts and doesn&#8217;t have
+enough meaning to put then in its own context. <strong>Common</strong> context will not contain general configs or event listeners because they aren&#8217;t dependencies of other contexts.
+In that case, these components can be placed in top <code>config</code> and <code>event/listeners</code> packages of the module
+because in that</p>
+</li>
+<li>
+<p><strong>Module Package Marker Interface</strong>: Java interface intended to be used in Spring&#8217;s component scans as type-safe alternative to basePackages for specifying the packages to scan for annotated components.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="configuration"><a class="anchor" href="#configuration"></a>Configuration</h3>
+<div class="paragraph">
+<p>Every module has its own <code>module config</code> class in charge of trigger the component scan on himself. It is also possible to filter components that doesn&#8217;t have to be scanned automatically because they are optional and must be manually imported using an <code>@Import</code> annotation. The marker annotation <code>IgnoreOnComponentScan</code> can be used to do that. E.G.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Configuration
+// This class will be ignored by automatic component scan
+@IgnoreOnComponentScan
+public class OptionalConfig {
+
+}
+
+//----------------------------------
+
+@Configuration
+@ComponentScan(
+        basePackageClasses = { IWebPackage.class },
+        excludeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION, classes = IgnoreOnComponentScan.class)
+)
+public class WebModuleConfig {
+
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As explained in <a href="#_main_module_description">Main module</a>'s description section, all module configurations will be assembled in the <code>MainModuleConfig</code> class using <code>@Import</code> annotation.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="components"><a class="anchor" href="#components"></a>Components</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Each module defines a number of different components in the application that interact with each other:</p>
+</div>
+<div class="sect2">
+<h3 id="web-2"><a class="anchor" href="#web-2"></a>Web</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Controller</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="application-2"><a class="anchor" href="#application-2"></a>Application</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Application Query</p>
+</li>
+<li>
+<p>Application Command</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="domain-2"><a class="anchor" href="#domain-2"></a>Domain</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Input Port Interface</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Domain Query Service</p>
+</li>
+<li>
+<p>Domain Command Service</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Output Port Interface</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Repository Service</p>
+</li>
+<li>
+<p>Event Service</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="infrastructure-2"><a class="anchor" href="#infrastructure-2"></a>Infrastructure</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Domain Output Port Service Implementation</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Repository Service Implementation</p>
+</li>
+<li>
+<p>Event Service Implementation</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="interactions"><a class="anchor" href="#interactions"></a>Interactions</h3>
+<div class="imageblock text-center">
+<div class="content">
+<img src="../_images/explanation/architecture/component_interactions.drawio.svg" alt="Interactions diagram">
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="variations"><a class="anchor" href="#variations"></a>Variations</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="layered-module"><a class="anchor" href="#layered-module"></a>Layered module</h3>
+<div class="paragraph">
+<p>Instead of having separate modules for every module defined in this Architecture document,
+they can be defined as a layered architecture in the same package. Every module can be transformed
+in a subpackage.</p>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="../_images/diag-49e9cb327e09721c2e24cdc91b64679e9f522895.svg" alt="Diagram">
+</div>
+</div>
+<div class="paragraph">
+<p>It is also possible que have only <code>Domain</code> layer in a separate module and put the others in a common module. By this way, we can isolate domain business logic from framework dependant components.</p>
+</div>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="../../index.html">Index</a></span>
+  <span class="next"><a href="fluent_rest_api_client.html">Fluent REST API client</a></span>
+</nav>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script id="site-script" src="../../../_/js/site.js" data-ui-root-path="../../../_"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>
