@@ -20,25 +20,14 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
             </plugin>
-
             <plugin>
-                <groupId>org.asciidoctor</groupId>
-                <artifactId>asciidoctor-maven-plugin</artifactId>
-                <configuration>
-                    <attributes>
-                        <!-- Allow references to source code in the docs -->
-                        <api-sourcedir>${project.basedir}/../api/src</api-sourcedir>
-                        <api-client-openfeign-sourcedir>${project.basedir}/../api-client-openfeign/src</api-client-openfeign-sourcedir>
-                        <application-sourcedir>${project.basedir}/../application/src</application-sourcedir>
-                        <domain-sourcedir>${project.basedir}/../domain/src</domain-sourcedir>
-                        <infrastructure-sourcedir>${project.basedir}/../infrastructure/src</infrastructure-sourcedir>
-                        <main-sourcedir>${project.basedir}/../main/src</main-sourcedir>
-                        <utils-sourcedir>${project.basedir}/../utils/src</utils-sourcedir>
-                        <web-sourcedir>${project.basedir}/../web/src</web-sourcedir>
-                    </attributes>
-                </configuration>
+                <groupId>com.github.eirslett</groupId>
+                <artifactId>frontend-maven-plugin</artifactId>
             </plugin>
-
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+            </plugin>
             <!-- Delete docs folder prior to copy the re-generated files -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

@@ -1,0 +1,8 @@
+* Ways of working
+
+** Explanation guides
+*** xref:explanation/architecture.adoc[Architecture]
+*** xref:explanation/fluent_rest_api_client.adoc[Fluent REST API client]
+
+** How-to guides
+*** xref:how-to/mocking_an_external_service.adoc[Mocking an external client]

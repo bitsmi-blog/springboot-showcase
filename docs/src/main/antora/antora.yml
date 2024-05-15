@@ -1,0 +1,9 @@
+name: project-documentation
+title: Project Documentation
+# Unversioned content
+version: ~
+start_page: project-documentation::index.adoc
+nav:
+- modules/ROOT/nav.adoc
+- modules/ways-of-working/nav.adoc
+- modules/spring-docs/nav.adoc

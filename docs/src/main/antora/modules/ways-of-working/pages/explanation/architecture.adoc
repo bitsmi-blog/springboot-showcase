@@ -207,7 +207,7 @@ Each module defines a number of different components in the application that int
 
 === Interactions
 
-image::./component_interactions.drawio.svg[Interactions diagram,align="center"]
+image::explanation/architecture/component_interactions.drawio.svg[Interactions diagram,align="center"]
 
 == Variations
 
