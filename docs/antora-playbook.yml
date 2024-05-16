@@ -8,6 +8,9 @@ content:
   - url: ../
     branches: HEAD
     start_path: docs/src/main/antora
+antora:
+  extensions:
+  - '@antora/collector-extension'
 asciidoc:
   attributes:
     experimental: true
@@ -20,5 +23,7 @@ asciidoc:
   - asciidoctor-kroki
 ui:
   bundle:
-    url: https://gitlab.com/antora/antora-ui-default/-/jobs/artifacts/HEAD/raw/build/ui-bundle.zip?job=bundle-stable
+#    url: https://gitlab.com/antora/antora-ui-default/-/jobs/artifacts/HEAD/raw/build/ui-bundle.zip?job=bundle-stable
+    url: ./ui-bundle.zip
     snapshot: true
+  supplemental_files: ./src/main/antora/supplemental-ui

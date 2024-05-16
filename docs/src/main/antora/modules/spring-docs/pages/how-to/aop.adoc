@@ -23,3 +23,8 @@ include::example$how-to/aop/DummyAspect.java[]
 ----
 include::example$how-to/aop/DummyAspectConfig.java[]
 ----
+////
+Use application-code generated module to import source from application sources
+E.G:
+include::application-code:example$springboot-showcase-application-sources/com/bitsmi/springbootshowcase/application/dummy/config/IApplicationApi.java[]
+////

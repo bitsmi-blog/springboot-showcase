@@ -14,7 +14,7 @@
 <header class="header">
   <nav class="navbar">
     <div class="navbar-brand">
-      <a class="navbar-item" href="https://documentation.kumo-klstr.duckdns.org">Springboot-Showcase // Docs</a>
+      <a class="navbar-item" href="../../..">Springboot-Showcase // Docs</a>
       <button class="navbar-burger" aria-controls="topbar-nav" aria-expanded="false" aria-label="Toggle main menu">
         <span></span>
         <span></span>
@@ -22,30 +22,7 @@
       </button>
     </div>
     <div id="topbar-nav" class="navbar-menu">
-      <div class="navbar-end">
-        <a class="navbar-item" href="#">Home</a>
-        <div class="navbar-item has-dropdown is-hoverable">
-          <a class="navbar-link" href="#">Products</a>
-          <div class="navbar-dropdown">
-            <a class="navbar-item" href="#">Product A</a>
-            <a class="navbar-item" href="#">Product B</a>
-            <a class="navbar-item" href="#">Product C</a>
-          </div>
-        </div>
-        <div class="navbar-item has-dropdown is-hoverable">
-          <a class="navbar-link" href="#">Services</a>
-          <div class="navbar-dropdown">
-            <a class="navbar-item" href="#">Service A</a>
-            <a class="navbar-item" href="#">Service B</a>
-            <a class="navbar-item" href="#">Service C</a>
-          </div>
-        </div>
-        <div class="navbar-item">
-          <span class="control">
-            <a class="button is-primary" href="#">Download</a>
-          </span>
-        </div>
-      </div>
+
     </div>
   </nav>
 </header>
@@ -139,17 +116,6 @@
 </ul>
   </nav>
 </div>
-<div class="nav-panel-explore" data-panel="explore">
-  <div class="context">
-    <span class="title">Project Documentation</span>
-    <span class="version"></span>
-  </div>
-  <ul class="components">
-    <li class="component is-current">
-      <div class="title"><a href="../../index.html">Project Documentation</a></div>
-    </li>
-  </ul>
-</div>
     </div>
   </aside>
 </div>
@@ -165,7 +131,6 @@
     <li><a href="aop.html">AOP</a></li>
   </ul>
 </nav>
-<div class="edit-this-page"><a href="file:///D:/home/programming/intellij_workspace/springboot-showcase//docs/src/main/antora/modules/spring-docs/pages/how-to/aop.adoc">Edit this Page</a></div>
 </div>
   <div class="content">
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
@@ -201,7 +166,53 @@ In production code this not needed as it&#8217;s auto-configured by Spring throu
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Unresolved include directive in modules/spring-docs/pages/how-to/aop.adoc - include::../application/src/main/java/com/bitsmi/springbootshowcase/application/dummy/aop/DummyAspect.java[]</code></pre>
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package com.bitsmi.springbootshowcase.application.dummy.aop;
+
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.Pointcut;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+@Aspect
+public class DummyAspect
+{
+    private static final Logger LOGGER = LoggerFactory.getLogger(DummyAspect.class);
+
+    @Pointcut("within(com.bitsmi.springbootshowcase.application.dummy..*)")
+    public void dummyPackagePointcut() { }
+
+    @Pointcut("within(@org.springframework.stereotype.Service *)")
+    public void servicePointcut() { }
+
+    @Pointcut("@annotation(org.springframework.cache.annotation.Cacheable)")
+    public void cacheableMethod() { }
+
+    @Before("dummyPackagePointcut() &amp;&amp; servicePointcut() &amp;&amp; cacheableMethod()")
+    public void beforeDummyApplicationServiceCacheableMethod(JoinPoint joinPoint)
+    {
+        LOGGER.info("[beforeDummyApplicationServiceCacheableMethod] Aspect executed before ({})", joinPoint.getSignature().getName());
+    }
+
+    @Around("dummyPackagePointcut() &amp;&amp; servicePointcut() &amp;&amp; cacheableMethod()")
+    public Object aroundDummyServiceCacheableMethod(ProceedingJoinPoint proceedingJoinPoint) throws Throwable
+    {
+        LOGGER.info("[aroundDummyApplicationServiceCacheableMethod] Before ({})", proceedingJoinPoint.getSignature().getName());
+        Object result = proceedingJoinPoint.proceed();
+        LOGGER.info("[aroundDummyApplicationServiceCacheableMethod] After ({}) with result ({})", proceedingJoinPoint.getSignature().getName(), result);
+
+        return result;
+    }
+
+    @Before("execution(* com.bitsmi.springbootshowcase.application.dummy.ISampleApplicationService.*(..))")
+    public void beforeDummyServiceMethodExecution(JoinPoint joinPoint)
+    {
+        LOGGER.info("[beforeDummyApplicationServiceMethodExecution] Aspect executed before ({})", joinPoint.getSignature().getName());
+    }
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -209,7 +220,21 @@ In production code this not needed as it&#8217;s auto-configured by Spring throu
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Unresolved include directive in modules/spring-docs/pages/how-to/aop.adoc - include::../application/src/main/java/com/bitsmi/springbootshowcase/application/dummy/config/DummyAspectConfig.java[]</code></pre>
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package com.bitsmi.springbootshowcase.application.dummy.config;
+
+import com.bitsmi.springbootshowcase.application.dummy.aop.DummyAspect;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class DummyAspectConfig
+{
+    @Bean
+    public DummyAspect dummyASpect()
+    {
+        return new DummyAspect();
+    }
+}</code></pre>
 </div>
 </div>
 </div>
