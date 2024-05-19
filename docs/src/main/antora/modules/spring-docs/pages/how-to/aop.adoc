@@ -1,0 +1,30 @@
+= AOP
+:toc:
+
+TODO
+
+== Aspects
+
+**Enable proxies**
+
+It is needed to include `@EnableAspectJAutoProxy` annotation in tests to enable aspect proxies creation.
+In production code this not needed as it's auto-configured by Spring through `AopAutoConfiguration` class.
+
+**Pointcut definition**
+
+[source, java]
+----
+include::example$how-to/aop/DummyAspect.java[]
+----
+
+**Aspect configuration**
+
+[source, java]
+----
+include::example$how-to/aop/DummyAspectConfig.java[]
+----
+////
+Use application-code generated module to import source from application sources
+E.G:
+include::application-code:example$springboot-showcase-application-sources/com/bitsmi/springbootshowcase/application/dummy/config/IApplicationApi.java[]
+////

@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Fluent REST API client :: Springboot-Showcase // Docs</title>
+    <link rel="prev" href="architecture.html">
+    <link rel="next" href="../how-to/mocking_an_external_service.html">
+    <meta name="generator" content="Antora 3.1.7">
+    <link rel="stylesheet" href="../../../_/css/site.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="../../..">Springboot-Showcase // Docs</a>
+      <button class="navbar-burger" aria-controls="topbar-nav" aria-expanded="false" aria-label="Toggle main menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="springboot-showcase" data-version="">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
+    <h3 class="title"><a href="../../index.html">Springboot Showcase</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../index.html">Index</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Ways of working</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Explanation guides</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="architecture.html">Architecture</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="3">
+    <a class="nav-link" href="fluent_rest_api_client.html">Fluent REST API client</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">How-to guides</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../how-to/mocking_an_external_service.html">Mocking an external client</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Spring guides</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">How-to guides</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../spring-docs/how-to/actuators.html">Actuators</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../spring-docs/how-to/aop.html">AOP</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../spring-docs/how-to/observability.html">Observability</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../spring-docs/how-to/testing.html">Testing</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">References</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../spring-docs/reference/spring_data.html">Spring Data</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../spring-docs/tutorial/index.html">Tutorials</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../../index.html">Springboot Showcase</a></li>
+    <li>Ways of working</li>
+    <li>Explanation guides</li>
+    <li><a href="fluent_rest_api_client.html">Fluent REST API client</a></li>
+  </ul>
+</nav>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Fluent REST API client</h1>
+<div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#concept">Concept</a>
+<ul class="sectlevel2">
+<li><a href="#client">Client</a></li>
+<li><a href="#api-builders">API Builders</a></li>
+<li><a href="#operations">Operations</a></li>
+</ul>
+</li>
+<li><a href="#example">Example</a>
+<ul class="sectlevel2">
+<li><a href="#client-2">Client</a></li>
+<li><a href="#info-api">Info API</a></li>
+<li><a href="#schema-api">Schema API</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="sect1">
+<h2 id="concept"><a class="anchor" href="#concept"></a>Concept</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This document introduces the design for a fluent API allowing executing different operations defined by a remote service.</p>
+</div>
+<div class="paragraph">
+<p>Given a remote service API, we can define the following concepts:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Resource</strong>: Full path to the resource. E.G. <code>/schema/1</code></p>
+</li>
+<li>
+<p><strong>(Sub)domain</strong>: URL path that groups resources. E.G. The <code>/schema/1</code> resource is defined under <code>/schema</code> domain.
+Also, we can define subdomains under a main domain. E.G.  we can have <code>/field</code> subdomain under <code>/schema/{id}</code> domain (<code>/schema/{id}/field</code>)</p>
+</li>
+<li>
+<p><strong>Operation</strong>: Action to be done on the resource or (sub)domain, usually a CRUD operation.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>In order to illustrate the design, we introduce the following service API:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>We have a remote service API that defines 2 main domains: <code>/info</code> and <code>/schema</code>:</p>
+</li>
+<li>
+<p><code>/info</code> domain defines the following operation:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>get version</code> doing a <code>GET</code> request to the <code>/info/version</code> endpoint</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><code>/schema</code> domain defines the following operations:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>list</code> schemas doing a <code>GET</code> request to the <code>/schema</code> endpoint</p>
+</li>
+<li>
+<p>get an specific schema <code>detail</code> doing a <code>GET</code> request to the <code>/schema/{id}</code> endpoint</p>
+</li>
+<li>
+<p><code>create</code> a new schema doing a <code>POST</code> request to the <code>/schema</code> endpoint</p>
+</li>
+<li>
+<p><code>update</code> an existent schema doing a <code>PUT</code> request to the <code>/schema/{id}</code> endpoint</p>
+</li>
+<li>
+<p><code>delete</code> an existent doing a <code>DELETE</code> request to the <code>/schema/{id}</code> endpoint</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><code>/schema</code> domain defines the subdomain <code>/field</code> for each element on it</p>
+</li>
+<li>
+<p><code>/schema/field</code> subdomain defines the following operations:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>list</code> fields belonging to a schema doing a <code>GET</code> request to the <code>/schema/{schema id}/field</code> endpoint</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>In a schematic way:</p>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="../_images/diag-a5758d6862619ca2e9cae4448431369d5dfd49f5.svg" alt="Diagram">
+</div>
+</div>
+<div class="paragraph">
+<p>With the previous concepts, we can define a series of client API elements to access them:</p>
+</div>
+<div class="sect2">
+<h3 id="client"><a class="anchor" href="#client"></a>Client</h3>
+<div class="paragraph">
+<p>Used as entrypoint to the client API providing access to implemented <code>API Builders</code> for service API domains.</p>
+</div>
+<div class="paragraph">
+<p>Wraps the underlying client that will be used to consume the service API, providing also a builder to create and configure it. This client wrapper creates an independent layer that makes possible
+to use different underlying clients (E.G. Spring&#8217;s <code>RestClient</code>, <code>RestTemplate</code>, <code>OkHttp3</code>&#8230;&#8203;)
+maintaining the same API.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="api-builders"><a class="anchor" href="#api-builders"></a>API Builders</h3>
+<div class="paragraph">
+<p><code>API Builders</code> provide methods to access and configure operations to be executed on the different domains or resources supported
+by the <code>Client</code> using its top level API methods.</p>
+</div>
+<div class="paragraph">
+<p>An <code>API Builder</code> should be usually created using domain related data and then select the operation that should be executed.
+If the operation does not define additional intermediate methods, the operation selection method can execute directly the operation,
+returning the resulting data directly (if any). E.G.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// ElementApiBuilder.java
+. . .
+public SomeElement update(SomeElementInputData newData) {
+	// Create update operation using required arguments and execute it directly
+	return new UpdateOperation(. . .).update(newData);
+}
+. . .</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We can define several kinds of <code>Api Builder</code> classes depending on its target type:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>SetApiBuilder</code>: Meant to be used for operations over datasets (retrieval, batch update&#8230;&#8203;).
+The builder may or may not receive as input a filter / selector to limit the dataset affected.</p>
+</li>
+<li>
+<p><code>CreationApiBuilder</code>: Meant to be used for element creation operations targeting a specific (sub)domain. The builder will receive
+the data to send to the server as input.</p>
+</li>
+<li>
+<p><code>ElementApiBuilder</code>: Meant to be used for individual element data retrieval or manipulation involving a unique identifier received as input</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>An <code>API Builder</code> may also contain calls to other builders if it&#8217;s needed to access to a nested domain or operation API.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="operations"><a class="anchor" href="#operations"></a>Operations</h3>
+<div class="paragraph">
+<p><code>Operations</code> are the final operators of the API in charge of execute the final call to the remote service using de underlying configured client.
+They define a method in charge of executing the operation along others intermediate methods meant to add or modify the data
+or behaviour of this execution. For example, a dataset retrieval operation may define intermediate methods like <code>paginate(&#8230;&#8203;)</code>
+or <code>sort(&#8230;&#8203;)</code> that configure the pagination parameters of the request.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="example"><a class="anchor" href="#example"></a>Example</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Following the explanation above, we can model our client API as follows:</p>
+</div>
+<div class="sect2">
+<h3 id="client-2"><a class="anchor" href="#client-2"></a>Client</h3>
+<div class="paragraph">
+<p>Entrypoint of client API. Provides methods to give access to the <code>API Builders</code> that group operations by domain.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class Client {
+    // Underlying HTTP client instance
+    private final RestClient restClient;
+
+    private ContentServiceClient(RestClient restClient) {
+        this.restClient = restClient;
+    }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    /* API Builders accessors
+     */
+    public InfoApiBuilder info() {
+        return new InfoApiBuilder(restClient);
+    }
+
+    public SchemaSetApiBuilder schemas() {
+        return new SchemaSetApiBuilder(restClient);
+    }
+
+    public SchemaSetApiBuilder schemas(SchemaSetSelector selector) {
+        return new SchemaSetApiBuilder(restClient, selector);
+    }
+
+    public SchemaElementApiBuilder schema(Long id) {
+        return new SchemaElementApiBuilder(restClient, id);
+    }
+
+    public SchemaCreationApiBuilder schema(ItemSchemaData data) {
+        return new SchemaCreationApiBuilder(restClient, data);
+    }
+
+    /* Builder allowing to configure the underlying client
+     */
+    public static class Builder {
+        // . . .
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Once implemented, we can get an instance of our client as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">ContentServiceClient client = ContentServiceClient.builder()
+		.withBaseUrl(remoteServiceUrl)
+		.build();</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="info-api"><a class="anchor" href="#info-api"></a>Info API</h3>
+<div class="paragraph">
+<p><code>Info API Builder</code> provides access to every operation defined by the implemented domain. In this case it only have an operation, accessible through <code>serviceVersion()</code> method.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class InfoApiBuilder {
+
+    private final RestClient restClient;
+
+    public InfoApiBuilder(RestClient restClient) {
+        this.restClient = restClient;
+    }
+
+    public ServiceVersionOperation serviceVersion() {
+        return new ServiceVersionOperation(restClient);
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This is a simple <code>Operation</code> that only allows retrieving data through <code>get()</code> method and does not provide additional methods to configure additional parameters</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class ServiceVersionOperation {
+    private final RestClient restClient;
+
+    ServiceVersionOperation(RestClient restClient) {
+        this.restClient = restClient;
+    }
+    /* Method that executes the operation sending the request to the remote service
+     */
+    public String get() {
+        return restClient.get()
+                .uri("/api/info/version")
+                .retrieve()
+                .body(String.class);
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Usage example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">String actualServiceVersion = client.info()
+	.serviceVersion()
+	.get();</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="schema-api"><a class="anchor" href="#schema-api"></a>Schema API</h3>
+<div class="paragraph">
+<p><code>SchemaSetApiBuilder</code> is a more complex example of a <code>API Builder</code> supporting parameters, allowing filtering the result set, and a configurable operation with additional intermediate methods:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class SchemaSetApiBuilder
+{
+    private final RestClient restClient;
+    // Selector parameter received from Client that will be passed to downstream operations
+    private final SchemaSetSelector selector;
+
+    public SchemaSetApiBuilder(RestClient restClient) {
+        this(restClient, null);
+    }
+
+    public SchemaSetApiBuilder(RestClient restClient, SchemaSetSelector selector) {
+        this.restClient = restClient;
+        this.selector = selector;
+    }
+
+    /* Selects the domain operation to execute
+     */
+    public SchemaListOperation list() {
+        return new SchemaListOperation(restClient, validator, selector);
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class SchemaListOperation
+{
+    public static final String ENDPOINT_PATH = "/api/schema";
+
+    private final RestClient restClient;
+    private final SchemaSetSelector selector;
+    private Integer pageNumber;
+    private Integer pageSize;
+
+    SchemaListOperation(RestClient restClient, SchemaSetSelector selector)
+    {
+        this.restClient = restClient;
+        this.selector = selector;
+    }
+
+    /* Intermediate operation that allows specifying
+     * additional parameters to the request
+     */
+    public SchemaListOperation paginate(int pageNumber, int pageSize)
+    {
+        this.pageNumber = pageNumber;
+        this.pageSize = pageSize;
+        return this;
+    }
+
+    /* Method that executes the operation sending the request to the remote service
+     */
+    public PagedResponse&lt;ItemSchema&gt; get()
+    {
+        return restClient.get()
+                .uri(this::buildURI)
+                .retrieve()
+                .body(new ParameterizedTypeReference&lt;PagedResponse&lt;ItemSchema&gt;&gt;(){});
+    }
+
+    private URI buildURI(UriBuilder uriBuilder) {
+        uriBuilder.path(ENDPOINT_PATH);
+        if(selector != null) {
+            uriBuilder.queryParam("selector", URLEncoder.encode(selector.toString(), StandardCharsets.UTF_8));
+        }
+        if(pageNumber!=null) {
+            uriBuilder.queryParam("page", pageNumber);
+        }
+        if(pageSize!=null) {
+            uriBuilder.queryParam("pageSize", pageSize);
+        }
+
+        return uriBuilder.build();
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>SchemaElementApiBuilder</code> is an example of how we can implement multiple operations, with the possibility to bypass the operation, and subdomain `API Builder`s</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class SchemaElementApiBuilder {
+    private final RestClient restClient;
+    private final Long id;
+
+    public SchemaElementApiBuilder(RestClient restClient, Long id) {
+        this.restClient = restClient;
+        this.id = id;
+    }
+
+    /* Bypass operation and execute the operation directly, as this
+     * operation is not configurable and doesn't provide additional methods
+     */
+    public Optional&lt;ItemSchema&gt; get() {
+        return new SchemaGetOperation(restClient, id).get();
+    }
+
+    public ItemSchema update(ItemSchemaData data) {
+        return new SchemaUpdateOperation(restClient, id, data)
+                .update();
+    }
+
+    public void delete() {
+        return new SchemaUpdateOperation(restClient, id)
+                .delete();
+    }
+
+    /* Provide access to "field" subdomain API Builder. Parameters
+     * received by this API Builder are propagated to the downstream API Builder
+     */
+    public SchemaFieldSetApiBuilder fields() {
+        return new SchemaFieldSetApiBuilder(restClient, id);
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Bypassed <code>Operation</code> classes only have a method to execute the request on remote service API.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class SchemaGetOperation {
+    public static final String ENDPOINT_PATH = "/api/schema/{id}";
+
+    private final RestClient restClient;
+    private final Long id;
+
+    SchemaGetOperation(RestClient restClient, Long id) {
+        this.restClient = restClient;
+        this.id = id;
+    }
+
+    public Optional&lt;ItemSchema&gt; get()
+    {
+    	return Optional.ofNullable(
+            restClient.get()
+                .uri(this::buildURI)
+                .retrieve()
+                .body(ItemSchema.class)
+        );
+    }
+
+    private URI buildURI(UriBuilder uriBuilder) {
+        uriBuilder.path(ENDPOINT_PATH);
+        return uriBuilder.build(id);
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class SchemaUpdateOperation {
+    public static final String ENDPOINT_PATH = "/api/schema/{id}";
+
+    private final RestClient restClient;
+    private final Long id;
+    private final ItemSchemaData data;
+
+    SchemaUpdateOperation(RestClient restClient, Long id, ItemSchemaData data) {
+        this.restClient = restClient;
+        this.id = id;
+        this.data = data;
+    }
+
+    public ItemSchema update()
+    {
+        return restClient.put()
+                .uri(this::buildURI)
+                .body(data)
+                .retrieve()
+                .body(ItemSchema.class);
+    }
+
+    private URI buildURI(UriBuilder uriBuilder) {
+        uriBuilder.path(ENDPOINT_PATH);
+        return uriBuilder.build(id);
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class SchemaDeleteOperation
+{
+    public static final String ENDPOINT_PATH = "/api/schema/{id}";
+
+    private final RestClient restClient;
+    private final Long id;
+
+    SchemaDeleteOperation(RestClient restClient, Long id)
+    {
+        this.restClient = restClient;
+        this.id = id;
+    }
+
+    public void delete()
+    {
+        return restClient.delete()
+                .uri(this::buildURI)
+                .retrieve()
+                .toBodilessEntity();
+    }
+
+    private URI buildURI(UriBuilder uriBuilder) {
+        uriBuilder.path(ENDPOINT_PATH);
+        return uriBuilder.build(id);
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Here we have the subdomain <code>API Builder</code> that is called from the main domain <code>API Builder</code>. It receives the needed parameters from it and configure `Operation`s according to them.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class SchemaFieldSetApiBuilder {
+    private final RestClient restClient;
+    private final Long schemaId;
+
+    public SchemaElementApiBuilder(RestClient restClient, Long schemaId) {
+        this.restClient = restClient;
+        this.schemaId = schemaId;
+    }
+
+    public PagedResponse&lt;ItemSchemaField&gt; list() {
+        return new SchemaFieldListOperation(restClient, schemaId).get();
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class SchemaFieldListOperation
+{
+    public static final String ENDPOINT_PATH = "/api/schema/{schemaId}/field";
+
+    private final RestClient restClient;
+    private final Long schemaId;
+
+    SchemaFieldListOperation(RestClient restClient, Long schemaId)
+    {
+        this.restClient = restClient;
+        this.schemaId = schemaId;
+    }
+
+    public PagedResponse&lt;ItemSchemaField&gt; get()
+    {
+        return restClient.get()
+                .uri(this::buildURI)
+                .retrieve()
+                .body(new ParameterizedTypeReference&lt;PagedResponse&lt;ItemSchemaField&gt;&gt;(){});
+    }
+
+    private URI buildURI(UriBuilder uriBuilder) {
+        uriBuilder.path(ENDPOINT_PATH);
+        return uriBuilder.build(schemaId);
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>SchemaCreationApiBuilder</code> is another example of a <code>API Builder</code> bypassing operations, as the required data is obtained at the top level client call</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class SchemaCreationApiBuilder {
+    private final RestClient restClient;
+    private final ItemSchemaData data;
+
+    public SchemaCreationApiBuilder(RestClient restClient, ItemSchemaData data)
+    {
+        this.restClient = restClient;
+        this.data = data;
+    }
+
+    public ItemSchema create()
+    {
+        return new SchemaCreateOperation(restClient, data)
+                .create();
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class SchemaCreateOperation {
+    public static final String ENDPOINT_PATH = "/api/schema";
+
+    private final RestClient restClient;
+    private final ItemSchemaData data;
+
+    SchemaCreateOperation(RestClient restClient, ItemSchemaData data) {
+        this.restClient = restClient;
+        this.data = data;
+    }
+
+    public ItemSchema create()
+    {
+        return restClient.post()
+                .uri(this::buildURI)
+                .body(data)
+                .retrieve()
+                .body(ItemSchema.class);
+    }
+
+    private URI buildURI(UriBuilder uriBuilder) {
+        uriBuilder.path(ENDPOINT_PATH);
+        return uriBuilder.build();
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Some usage examples:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// Schema list
+PagedResponse&lt;ItemSchema&gt; response = client.schemas()
+		.list()
+		.paginate(0, 10)
+		.get();
+
+// Schema field list
+PagedResponse&lt;ItemSchemaField&gt; response = client.schema(1001L)
+		.fields()
+		.list();
+
+ItemSchemaData schemaData = buildSchemaData();
+// Schema creation
+ItemSchema response = client.schema(schemaData)
+		.create();
+
+// Schema update
+ItemSchema response = client.schema(1001L)
+		.update(schemaData);</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="architecture.html">Architecture</a></span>
+  <span class="next"><a href="../how-to/mocking_an_external_service.html">Mocking an external client</a></span>
+</nav>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script id="site-script" src="../../../_/js/site.js" data-ui-root-path="../../../_"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

@@ -13,6 +13,8 @@
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
+		<node.version>v20.12.2</node.version>
+
         <spring.boot.version>3.2.3</spring.boot.version>
         <spring.cloud.version>2023.0.0</spring.cloud.version>
         <mapstruct.version>1.5.5.Final</mapstruct.version>
@@ -300,15 +302,30 @@
                 </plugin>
 
                 <plugin>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>exec-maven-plugin</artifactId>
-                    <version>3.1.1</version>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-assembly-plugin</artifactId>
+                    <version>3.6.0</version>
                 </plugin>
 
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-assembly-plugin</artifactId>
-                    <version>3.6.0</version>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>3.3.1</version>
+                    <executions>
+                        <execution>
+                            <id>attach-sources</id>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>jar-no-fork</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <version>3.6.1</version>
                 </plugin>
 
                 <!-- DOCS -->
@@ -322,63 +339,55 @@
                     </configuration>
                 </plugin>
                 <plugin>
-                    <groupId>org.asciidoctor</groupId>
-                    <artifactId>asciidoctor-maven-plugin</artifactId>
-                    <version>3.0.0</version>
-                    <dependencies>
-                        <dependency>
-                            <groupId>org.asciidoctor</groupId>
-                            <artifactId>asciidoctorj-pdf</artifactId>
-                            <version>2.3.13</version>
-                        </dependency>
-                        <dependency>
-                            <groupId>org.asciidoctor</groupId>
-                            <artifactId>asciidoctorj-diagram</artifactId>
-                            <version>2.2.17</version>
-                        </dependency>
-                        <dependency>
-                            <groupId>org.asciidoctor</groupId>
-                            <artifactId>asciidoctorj-diagram-plantuml</artifactId>
-                            <version>1.2022.14</version>
-                        </dependency>
-                    </dependencies>
-                    <configuration>
-                        <sourceDirectory>src/main/asciidoc</sourceDirectory>
-                        <requires>
-                            <require>asciidoctor-diagram</require>
-                        </requires>
-                        <attributes>
-                            <endpoint-url>http://example.org</endpoint-url>
-                            <project-version>${project.version}</project-version>
-                        </attributes>
-                    </configuration>
-                    <executions>
-                        <execution>
-                            <id>asciidoc-to-html</id>
-                            <phase>site</phase>
-                            <goals>
-                                <goal>process-asciidoc</goal>
-                            </goals>
-                            <configuration>
-                                <backend>html5</backend>
-                                <preserveDirectories>true</preserveDirectories>
-                                <attributes>
-                                    <revnumber>${project.version}</revnumber>
-                                    <revdate>${maven.build.timestamp}</revdate>
-                                    <source-highlighter>rouge</source-highlighter>
-                                    <toc>left</toc>
-                                    <icons>font</icons>
-                                    <sectanchors>true</sectanchors>
-                                    <!-- set the idprefix to blank -->
-                                    <idprefix/>
-                                    <idseparator>-</idseparator>
-                                    <docinfo1>true</docinfo1>
-                                </attributes>
-                            </configuration>
-                        </execution>
-                    </executions>
-                </plugin>
-                <!-- Delete docs folder prior to copy the re-generated files -->
+					<groupId>com.github.eirslett</groupId>
+					<artifactId>frontend-maven-plugin</artifactId>
+					<version>1.15.0</version>
+					<executions>
+						<execution>
+							<id>install node and npm</id>
+							<goals>
+								<goal>install-node-and-npm</goal>
+							</goals>
+							<phase>initialize</phase>
+						</execution>
+						<execution>
+							<id>npm install antora</id>
+							<goals>
+								<goal>npm</goal>
+							</goals>
+							<phase>initialize</phase>
+							<configuration>
+								<arguments>install</arguments>
+							</configuration>
+						</execution>											
+					</executions>
+					<configuration>
+						<nodeVersion>${node.version}</nodeVersion>
+					</configuration>
+				</plugin>			
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>exec-maven-plugin</artifactId>
+					<version>3.2.0</version>
+					<executions>
+						<execution>
+							<goals>
+								<goal>exec</goal>
+							</goals>
+							<phase>site</phase>
+							<configuration>							
+								<executable>${project.basedir}/node/node</executable>
+								<executable>${project.basedir}/node/${npx.executable}</executable>
+								<arguments>
+									<argument>antora</argument>
+									<argument>antora-playbook.yml</argument>
+									<argument>--to-dir=target/generated-docs</argument>
+								</arguments>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+				<!-- Delete docs folder prior to copy the re-generated files -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-antrun-plugin</artifactId>
@@ -393,7 +402,7 @@
                             <configuration>
                                 <target>
                                     <delete includeEmptyDirs="true">
-                                        <fileset dir="${basedir}/docs"/>
+                                        <fileset dir="${basedir}/site"/>
                                     </delete>
                                 </target>
                             </configuration>
@@ -410,7 +419,7 @@
                                 <goal>copy-resources</goal>
                             </goals>
                             <configuration>
-                                <outputDirectory>${basedir}/docs</outputDirectory>
+                                <outputDirectory>${basedir}/site</outputDirectory>
                                 <resources>
                                     <resource>
                                         <directory>${basedir}/target/generated-docs</directory>
@@ -439,6 +448,28 @@
             </activation>
             <properties>
                 <application.profile>DEV</application.profile>
+            </properties>
+        </profile>
+		<profile>
+            <id>windows-profile</id>
+            <activation>
+                <os>
+                    <family>windows</family>
+                </os>
+            </activation>
+            <properties>
+                <npx.executable>npx.cmd</npx.executable>
+            </properties>
+        </profile>
+        <profile>
+            <id>non-windows-profile</id>
+            <activation>
+                <os>
+                    <family>!windows</family>
+                </os>
+            </activation>
+            <properties>
+                <npx.executable>npx</npx.executable>
             </properties>
         </profile>
     </profiles>

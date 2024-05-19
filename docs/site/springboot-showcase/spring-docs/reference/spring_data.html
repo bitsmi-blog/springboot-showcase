@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Spring Data :: Springboot-Showcase // Docs</title>
+    <link rel="prev" href="../how-to/testing.html">
+    <link rel="next" href="../tutorial/index.html">
+    <meta name="generator" content="Antora 3.1.7">
+    <link rel="stylesheet" href="../../../_/css/site.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="../../..">Springboot-Showcase // Docs</a>
+      <button class="navbar-burger" aria-controls="topbar-nav" aria-expanded="false" aria-label="Toggle main menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="springboot-showcase" data-version="">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
+    <h3 class="title"><a href="../../index.html">Springboot Showcase</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../index.html">Index</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Ways of working</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Explanation guides</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../ways-of-working/explanation/architecture.html">Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../ways-of-working/explanation/fluent_rest_api_client.html">Fluent REST API client</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">How-to guides</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../ways-of-working/how-to/mocking_an_external_service.html">Mocking an external client</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Spring guides</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">How-to guides</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../how-to/actuators.html">Actuators</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../how-to/aop.html">AOP</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../how-to/observability.html">Observability</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../how-to/testing.html">Testing</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">References</span>
+<ul class="nav-list">
+  <li class="nav-item is-current-page" data-depth="3">
+    <a class="nav-link" href="spring_data.html">Spring Data</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../tutorial/index.html">Tutorials</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../../index.html">Springboot Showcase</a></li>
+    <li>Spring guides</li>
+    <li>References</li>
+    <li><a href="spring_data.html">Spring Data</a></li>
+  </ul>
+</nav>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Spring Data</h1>
+<div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#spring-jpa">Spring JPA</a>
+<ul class="sectlevel2">
+<li><a href="#supported-keywords-inside-method-names">Supported keywords inside method names</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="sect1">
+<h2 id="spring-jpa"><a class="anchor" href="#spring-jpa"></a>Spring JPA</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="supported-keywords-inside-method-names"><a class="anchor" href="#supported-keywords-inside-method-names"></a>Supported keywords inside method names</h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Keyword</th>
+<th class="tableblock halign-left valign-top">Sample</th>
+<th class="tableblock halign-left valign-top">JPQL Snippet</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Distinct</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">findDistinctByLastnameAndFirstname</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">select distinct &#8230;&#8203; where x.lastname = ?1 and x.firstname = ?2</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">And</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">findByLastnameAndFirstname</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203; where x.lastname = ?1 and x.firstname = ?2</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Or</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">findByLastnameOrFirstname</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203; where x.lastname = ?1 or x.firstname = ?2</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Is, Equals</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">findByFirstname,findByFirstnameIs,findByFirstnameEquals</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">… where x.firstname = ?1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Between</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">findByStartDateBetween</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203; where x.startDate between ?1 and ?2</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">LessThan</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">findByAgeLessThan</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203; where x.age &lt; ?1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">LessThanEqual</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">findByAgeLessThanEqual</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203; where x.age &#8656; ?1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GreaterThan</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">findByAgeGreaterThan</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203; where x.age &gt; ?1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GreaterThanEqual</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">findByAgeGreaterThanEqual</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203; where x.age &gt;= ?1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">After</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">findByStartDateAfter</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203; where x.startDate &gt; ?1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Before</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">findByStartDateBefore</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203; where x.startDate &lt; ?1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IsNull, Null</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">findByAge(Is)Null</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203; where x.age is null</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IsNotNull, NotNull</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">findByAge(Is)NotNull</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203; where x.age not null</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Like</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">findByFirstnameLike</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203; where x.firstname like ?1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">NotLike</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">findByFirstnameNotLike</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203; where x.firstname not like ?1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">StartingWith</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">findByFirstnameStartingWith</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203; where x.firstname like ?1 (parameter bound with appended %)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">EndingWith</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">findByFirstnameEndingWith</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203; where x.firstname like ?1 (parameter bound with prepended %)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Containing</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">findByFirstnameContaining</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203; where x.firstname like ?1 (parameter bound wrapped in %)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">OrderBy</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">findByAgeOrderByLastnameDesc</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203; where x.age = ?1 order by x.lastname desc</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Not</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">findByLastnameNot</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203; where x.lastname &lt;&gt; ?1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">In</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">findByAgeIn(Collection&lt;Age&gt; ages)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203; where x.age in ?1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">NotIn</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">findByAgeNotIn(Collection&lt;Age&gt; ages)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203; where x.age not in ?1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">True</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">findByActiveTrue()</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203; where x.active = true</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">False</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">findByActiveFalse()</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203; where x.active = false</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IgnoreCase</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">findByFirstnameIgnoreCase</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203; where UPPER(x.firstname) = UPPER(?1)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="../how-to/testing.html">Testing</a></span>
+  <span class="next"><a href="../tutorial/index.html">Tutorials</a></span>
+</nav>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script id="site-script" src="../../../_/js/site.js" data-ui-root-path="../../../_"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

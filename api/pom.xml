@@ -49,4 +49,14 @@
             <scope>test</scope>
         </dependency>		
 	</dependencies>
+
+    <build>
+        <plugins>
+            <!-- Generate sources jar -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 </project>

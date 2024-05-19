@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Actuators :: Springboot-Showcase // Docs</title>
+    <link rel="prev" href="../../ways-of-working/how-to/mocking_an_external_service.html">
+    <link rel="next" href="aop.html">
+    <meta name="generator" content="Antora 3.1.7">
+    <link rel="stylesheet" href="../../../_/css/site.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="../../..">Springboot-Showcase // Docs</a>
+      <button class="navbar-burger" aria-controls="topbar-nav" aria-expanded="false" aria-label="Toggle main menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="springboot-showcase" data-version="">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
+    <h3 class="title"><a href="../../index.html">Springboot Showcase</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../index.html">Index</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Ways of working</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Explanation guides</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../ways-of-working/explanation/architecture.html">Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../ways-of-working/explanation/fluent_rest_api_client.html">Fluent REST API client</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">How-to guides</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../ways-of-working/how-to/mocking_an_external_service.html">Mocking an external client</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Spring guides</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">How-to guides</span>
+<ul class="nav-list">
+  <li class="nav-item is-current-page" data-depth="3">
+    <a class="nav-link" href="actuators.html">Actuators</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="aop.html">AOP</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="observability.html">Observability</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="testing.html">Testing</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">References</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../reference/spring_data.html">Spring Data</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../tutorial/index.html">Tutorials</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../../index.html">Springboot Showcase</a></li>
+    <li>Spring guides</li>
+    <li>How-to guides</li>
+    <li><a href="actuators.html">Actuators</a></li>
+  </ul>
+</nav>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Actuators</h1>
+<div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#configuration">Configuration</a></li>
+<li><a href="#endpoints">Endpoints</a>
+<ul class="sectlevel2">
+<li><a href="#info">Info</a></li>
+<li><a href="#health">Health</a></li>
+<li><a href="#metrics">Metrics</a></li>
+<li><a href="#custom-actuators">Custom actuators</a></li>
+</ul>
+</li>
+<li><a href="#references">References</a></li>
+</ul>
+</div>
+<div class="sect1">
+<h2 id="configuration"><a class="anchor" href="#configuration"></a>Configuration</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Actuator endpoints must be enabled in <code>application.properties</code> exposing only necessary endpoints.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties">management.endpoints.enabled-by-default=false
+management.endpoints.web.exposure.include=info,metrics,health</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In addition, every endpoint should be enabled individually (See sections below for more details)</p>
+</div>
+<div class="paragraph">
+<p>Enabled endpoints can be accessed through <code>/actuator</code> by default. This can be changed using the <code>base-path</code> configuration
+in <code>application.properties</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties">management.endpoints.web.base-path: /public/actuator</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="endpoints"><a class="anchor" href="#endpoints"></a>Endpoints</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="info"><a class="anchor" href="#info"></a>Info</h3>
+<div class="paragraph">
+<p>This endpoint allows display information about the application through <code>/actuator/info</code> endpoint including
+build information generated by <code>spring-boot-maven-plugin</code> Maven plugin and random information included in <code>application.properties</code>.</p>
+</div>
+<div class="paragraph">
+<p>First of all, we need to enable the endpoint in <code>application.properties</code></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties">management.endpoint.info.enabled=true</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To provide build information is necessary to configure <code>spring-boot-maven-plugin</code> executing the <code>build-info</code> goal.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;plugin&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-maven-plugin&lt;/artifactId&gt;
+    &lt;!-- . . . --&gt;
+    &lt;executions&gt;
+        &lt;execution&gt;
+            &lt;id&gt;build-info&lt;/id&gt;
+            &lt;goals&gt;
+                &lt;goal&gt;build-info&lt;/goal&gt;
+            &lt;/goals&gt;
+        &lt;/execution&gt;
+        &lt;!-- . . . --&gt;
+    &lt;/executions&gt;
+&lt;/plugin&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This will generate <code>build-info.properties</code> file inside <code>/target/META-INF</code> folder with this info. E.G.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties">build.artifact=springboot-showcase-main
+build.group=com.bitsmi.springboot-showcase
+build.name=springboot-showcase-main
+build.time=2024-03-16T08\:32\:12.088Z
+build.version=2.0.0-SNAPSHOT</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Custom information can be added in <code>application.properties</code> enabling <code>management.info.env.enabled</code> property
+and specifying them using <code>info</code> prefix. If properties file is filtered by Maven, we can use Maven env variables
+like <code>project.name</code>, <code>project.version</code>, etc. to make this configuration more general.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties">management.info.env.enabled=true
+info.app.name=${spring.application.name}
+info.app.description=${project.description}
+info.app.version=${project.version}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We can use an infix to categorize the properties (<code>app</code> in the example above), so that endpoint&#8217;s response will contain inner json objects
+according to them.</p>
+</div>
+<div class="paragraph">
+<p>After doing these configurations, <code>/actuator/info</code> will provide us with a response like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
+  "app": {
+    "name": "springboot-showcase-main",
+    "description": "SpringBoot Showcase Main",
+    "version": "1.0.0-SNAPSHOT"
+  },
+  "build": {
+    "artifact": "springboot-showcase-main",
+    "name": "springboot-showcase-main",
+    "time": "2024-03-16T08:32:12.088Z",
+    "version": "2.0.0-SNAPSHOT",
+    "group": "com.bitsmi.springboot-showcase"
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="health"><a class="anchor" href="#health"></a>Health</h3>
+<div class="paragraph">
+<p>This endpoint allows display information about application&#8217;s health through <code>/actuator/health</code> endpoint, including built-in and custom health indicators.</p>
+</div>
+<div class="paragraph">
+<p>First of all, we need to enable the endpoint in <code>application.properties</code></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties">management.endpoint.health.enabled=true</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And configure the visibility of the endpoint:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-proerties hljs" data-lang="proerties">management.endpoint.health.show-details=always
+management.endpoint.health.show-components=always</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The properties above can be configured with one of the following values:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>never</strong></p>
+</li>
+<li>
+<p><strong>when-authorized</strong>: Only visible for authorized roles configured in <code>management.endpoint.health.roles</code> property</p>
+</li>
+<li>
+<p><strong>always</strong>: Visible for all users. We can use this value also if we want to manage the access to these endpoints directly in Spring-security configuration. E.G.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>private void authorizeHttpRequestsBasic(AuthorizeHttpRequestsConfigurer&lt;HttpSecurity&gt;.AuthorizationManagerRequestMatcherRegistry configurer)
+{
+    configurer
+        .requestMatchers(HttpMethod.GET, "/actuator/**").hasAnyRole(UserConstants.USER_GROUP_ADMIN, UserConstants.USER_GROUP_MONITORING)
+        .anyRequest().authenticated();
+}</pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="built-in-health-indicators"><a class="anchor" href="#built-in-health-indicators"></a>Built-in health indicators</h4>
+<div class="paragraph">
+<p>Spring Boot auto-configures the <code>HealthIndicators</code> listed in the following table (if module is in classpath and auto-configuration is enabled).
+You can also enable or disable selected indicators by configuring <code>management.health.key.enabled</code>, with the key listed in the following table:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Key</th>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cassandra</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CassandraDriverHealthIndicator</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Checks that a Cassandra database is up.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">couchbase</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CouchbaseHealthIndicator</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Checks that a Couchbase cluster is up.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">db</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DataSourceHealthIndicator</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Checks that a connection to DataSource can be obtained.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">diskspace</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DiskSpaceHealthIndicator</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Checks for low disk space.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">elasticsearch</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ElasticsearchRestClientHealthIndicator</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Checks that an Elasticsearch cluster is up.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">hazelcast</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HazelcastHealthIndicator</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Checks that a Hazelcast server is up.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">influxdb</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">InfluxDbHealthIndicator</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Checks that an InfluxDB server is up.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">jms</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">JmsHealthIndicator</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Checks that a JMS broker is up.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ldap</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">LdapHealthIndicator</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Checks that an LDAP server is up.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mail</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MailHealthIndicator</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Checks that a mail server is up.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">mongo</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MongoHealthIndicator</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Checks that a Mongo database is up.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">neo4j</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Neo4jHealthIndicator</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Checks that a Neo4j database is up.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ping</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PingHealthIndicator</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Always responds with UP.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">rabbit</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RabbitHealthIndicator</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Checks that a Rabbit server is up.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">redis</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RedisHealthIndicator</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Checks that a Redis server is up.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Additional <code>HealthIndicators</code> are available but are not enabled by default:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Key</th>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">livenessstate</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">LivenessStateHealthIndicator</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Exposes the “Liveness” application availability state.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">readinessstate</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ReadinessStateHealthIndicator</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Exposes the “Readiness” application availability state.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="custom-health-indicators"><a class="anchor" href="#custom-health-indicators"></a>Custom health indicators</h4>
+<div class="paragraph">
+<p>We can create additional custom health indicators implementing <code>org.springframework.boot.actuate.health.HealthIndicator</code> interface or extending <code>org.springframework.boot.actuate.health.AbstractHealthIndicator</code> class. For example, if we want to create a Kafka indicator that tell us if the Kafka Broker is UP or DOWN, we can implement as this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Component
+@ConditionalOnEnabledHealthIndicator("kafka")
+public class KafkaHealthIndicator extends AbstractHealthIndicator
+{
+    private final AdminClient kafkaAdminClient;
+
+    public KafkaHealthIndicator(KafkaAdmin kafkaAdmin)
+    {
+        this.kafkaAdminClient = AdminClient.create(kafkaAdmin.getConfigurationProperties());
+    }
+
+    @Override
+    protected void doHealthCheck(Builder builder) throws Exception
+    {
+        final DescribeClusterOptions options = new DescribeClusterOptions().timeoutMs(1000);
+
+        DescribeClusterResult clusterDescription = kafkaAdminClient.describeCluster(options);
+
+        // When Kafka is not connected future.get() throws an exception which in turn sets the indicator DOWN.
+        clusterDescription.clusterId().get();
+
+        builder.up().build();
+
+        // Alternatively directly use data from future in health detail.
+        builder.up()
+                .withDetail("clusterId", clusterDescription.clusterId().get())
+                .withDetail("nodeCount", clusterDescription.nodes().get().size())
+                .build();
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If we extend the <code>AbstractHealthIndicator</code> class this will allow us to include additional information through the provided builder. In the example, the <code>clusterId</code> and the <code>nodeCount</code> fields.</p>
+</div>
+<div class="paragraph">
+<p>The name of the indicator class should follow the convention <code>&lt;Indicator name&gt;HealthIndicator</code> so Spring will know the indicator name related to the configuration properties related to it.</p>
+</div>
+<div class="paragraph">
+<p>To allow to enable / disable a custom indicator through it&#8217;s corresponding configuration property, we must include the <code>@ConditionalOnEnabledHealthIndicator</code> annotation specifying the indicator name to it.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="indicator-groups"><a class="anchor" href="#indicator-groups"></a>Indicator groups</h4>
+<div class="paragraph">
+<p>Health indicators can be grouped creating a property in <code>application.properties</code> with the following format <code>management.endpoint.health.group.&lt;group name&gt;.include</code>. E.G. Create a group named <code>infrastructure</code> with only <code>db</code> and <code>kafka</code> indicators.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties">management.endpoint.health.group.infrastructure.include=db,kafka</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Doing this we can get the full list of indicators through <code>/actuators/health</code> endpoint and only the ones tagged as <code>infrastruture</code> using the <code>/actuators/health/infrastructure</code> endpoint.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="enabling-indicators"><a class="anchor" href="#enabling-indicators"></a>Enabling indicators</h4>
+<div class="paragraph">
+<p>Indicators can be configured to display information or not in <code>/actuators/health</code>. This can be achieved setting <code>true</code> or <code>false</code> in the corresponding <code>management.health.&lt;indicator name&gt;.enabled</code> property. Default indicators can be all enabled / disabled at once using the <code>management.health.defaults.enabled</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties"># Only expose DB and ping components (only applies to default indicators)
+management.health.defaults.enabled=false
+management.health.db.enabled=true
+management.health.ping.enabled=true
+# Custom
+management.health.kafka.enabled=true</code></pre>
+</div>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+If an indicator is disabled, remove it from groups, otherwise it will raise an error and application won&#8217;t start.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="metrics"><a class="anchor" href="#metrics"></a>Metrics</h3>
+<div class="paragraph">
+<p>TODO</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>/actuator/metrics</code></p>
+</li>
+<li>
+<p><code>/actuator/metrics/userApiController</code></p>
+</li>
+<li>
+<p><code>/actuator/metrics/userApiController?tag=error%3AIllegalStateException</code></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="custom-actuators"><a class="anchor" href="#custom-actuators"></a>Custom actuators</h3>
+<div class="paragraph">
+<p>TODO</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="references"><a class="anchor" href="#references"></a>References</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://docs.spring.io/spring-boot/docs/3.2.x/actuator-api/htmlsingle/#overview">Actuator overview</a></p>
+</li>
+<li>
+<p><a href="https://docs.spring.io/spring-boot/docs/current/reference/html/actuator.html#actuator.endpoints.health">Health reference</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="../../ways-of-working/how-to/mocking_an_external_service.html">Mocking an external client</a></span>
+  <span class="next"><a href="aop.html">AOP</a></span>
+</nav>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script id="site-script" src="../../../_/js/site.js" data-ui-root-path="../../../_"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

@@ -1,0 +1,13 @@
+* Spring guides
+
+** How-to guides
+*** xref:how-to/actuators.adoc[Actuators]
+*** xref:how-to/aop.adoc[AOP]
+*** xref:how-to/observability.adoc[Observability]
+*** xref:how-to/testing.adoc[Testing]
+
+** References
+*** xref:reference/spring_data.adoc[Spring Data]
+
+** xref:tutorial/index.adoc[Tutorials]
+

@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Mocking external services :: Springboot-Showcase // Docs</title>
+    <link rel="prev" href="../explanation/fluent_rest_api_client.html">
+    <link rel="next" href="../../spring-docs/how-to/actuators.html">
+    <meta name="generator" content="Antora 3.1.7">
+    <link rel="stylesheet" href="../../../_/css/site.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="../../..">Springboot-Showcase // Docs</a>
+      <button class="navbar-burger" aria-controls="topbar-nav" aria-expanded="false" aria-label="Toggle main menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="springboot-showcase" data-version="">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
+    <h3 class="title"><a href="../../index.html">Springboot Showcase</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../index.html">Index</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Ways of working</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Explanation guides</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../explanation/architecture.html">Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../explanation/fluent_rest_api_client.html">Fluent REST API client</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">How-to guides</span>
+<ul class="nav-list">
+  <li class="nav-item is-current-page" data-depth="3">
+    <a class="nav-link" href="mocking_an_external_service.html">Mocking an external client</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Spring guides</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">How-to guides</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../spring-docs/how-to/actuators.html">Actuators</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../spring-docs/how-to/aop.html">AOP</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../spring-docs/how-to/observability.html">Observability</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../spring-docs/how-to/testing.html">Testing</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">References</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../spring-docs/reference/spring_data.html">Spring Data</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../spring-docs/tutorial/index.html">Tutorials</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../../index.html">Springboot Showcase</a></li>
+    <li>Ways of working</li>
+    <li>How-to guides</li>
+    <li><a href="mocking_an_external_service.html">Mocking an external client</a></li>
+  </ul>
+</nav>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Mocking external services</h1>
+<div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#wiremock">Wiremock</a>
+<ul class="sectlevel2">
+<li><a href="#expectations-configuration">Expectations configuration</a></li>
+<li><a href="#wiremock-admin-api">Wiremock Admin API</a></li>
+</ul>
+</li>
+<li><a href="#references">References</a></li>
+</ul>
+</div>
+<div class="sect1">
+<h2 id="wiremock"><a class="anchor" href="#wiremock"></a>Wiremock</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>If we need to mock an external service during application development, we can configure a <strong>Wiremock container</strong>
+as part of the <code>docker-compose-DEV.yaml</code> service stack:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml"># . . .
+services:
+  # . . .
+  wiremock:
+    container_name: wiremock
+    image: "wiremock/wiremock:3.4.2-1"
+    ports:
+      - 8100:8080
+    entrypoint: [ "/docker-entrypoint.sh", "--global-response-templating", "--disable-gzip", "--verbose" ]
+    volumes:
+      - ./wiremock/extensions:/var/wiremock/extensions
+      - ./wiremock/__files:/home/wiremock/__files
+      - ./wiremock/mappings:/home/wiremock/mappings</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This configuration allow us to access mock server through port <code>8100</code>. The specified <code>volumes</code> configuration
+make possible to load mock expectations at startup:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>extensions</strong>: Folder that will contain additional <strong>Wiremock</strong> extensions, for example, to allow processing <strong>gRPC</strong> or <strong>GraphQL</strong> messaging.</p>
+</li>
+<li>
+<p><strong>__files</strong>: Folder that will contain files that will be served directly as a kind of <code>public</code> folder.
+This is useful for referencing content files inside <code>expectation configuration</code> files.</p>
+</li>
+<li>
+<p><strong>mappings</strong>: Folder that will contain <code>expectation configuration</code> files in form of <code>json</code> files.</p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="expectations-configuration"><a class="anchor" href="#expectations-configuration"></a>Expectations configuration</h3>
+<div class="paragraph">
+<p>Every <code>expectation configuration</code> file will contain a <code>single</code> expectation configured as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
+    "priority": 10,
+    "request": {
+
+    },
+    "response": {
+
+    }
+}</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>priority</strong>: A number indicating the priority of this configuration when a request matches multiple expectations.
+The one with a lower priority wins.</p>
+</li>
+<li>
+<p><strong>request</strong>: Request matcher configuration for the expectation</p>
+</li>
+<li>
+<p><strong>response</strong>: Configuration of the response that will be returned if the expectation is selected.</p>
+</li>
+</ul>
+</div>
+<div class="sect3">
+<h4 id="request-matcher"><a class="anchor" href="#request-matcher"></a>Request matcher</h4>
+<div class="paragraph">
+<p>The <code>request</code> section of the <code>expectation configuration</code> allows the specification of multiple matchers that determines if
+a request is selectable for this expectation, including:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>method</strong>: HTTP method (GET, POST, PUT, DELETE, PATCH)</p>
+</li>
+<li>
+<p><strong>urlPath</strong>: Path without query parameters</p>
+</li>
+<li>
+<p><strong>url</strong>: Full url with including query parameters</p>
+</li>
+<li>
+<p><strong>queryParameters</strong>: Matchers for individual query parameters. Parameter values can be matched using a series of matchers including:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Match exactly (<code>equalsTo</code>),</p>
+</li>
+<li>
+<p>Using a regular expressions (<code>matches</code>)</p>
+</li>
+<li>
+<p>Containing a value (<code>contains</code>)</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="response-configuration"><a class="anchor" href="#response-configuration"></a>Response configuration</h4>
+<div class="paragraph">
+<p>The response that will be returned as the result of the matching expectation can be configured with the following information:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>status</strong>: HTTP status code for the response</p>
+</li>
+<li>
+<p><strong>headers</strong>: Map containing the headers carried by the response</p>
+</li>
+<li>
+<p><strong>body</strong>: Plain text data that will be returned as response body</p>
+</li>
+<li>
+<p><strong>jsonBody</strong>: JSON data that will be returned as response body</p>
+</li>
+<li>
+<p><strong>bodyFileName</strong>: Path relative to <code>__files</code> folder containing the raw content of response body</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="example"><a class="anchor" href="#example"></a>Example</h4>
+<div class="paragraph">
+<p>The following example matches a request to the <code>/api/content</code> endpoint that provides <code>selector</code>, <code>page</code> and <code>pageSize</code> query parameters
+that matches exactly the specified values. A response with status code <code>200</code> and a JSON body will bre returned.
+The content of this response is located in <code>api/content/get_list_body.json</code> file located in the <code>__files</code> folder.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
+    "priority": 10,
+    "request": {
+        "method": "GET",
+        "urlPath": "/api/content",
+        "queryParameters": {
+            "selector": {
+                "equalTo": "id EQUALS 1"
+            },
+            "page": {
+                "equalTo": "0"
+            },
+            "pageSize": {
+                "equalTo": "10"
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "Content-Type": "application/json"
+        },
+        "bodyFileName": "api/content/get_list_body.json"
+    }
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="response-configuration-2"><a class="anchor" href="#response-configuration-2"></a>Response configuration</h4>
+
+</div>
+</div>
+<div class="sect2">
+<h3 id="wiremock-admin-api"><a class="anchor" href="#wiremock-admin-api"></a>Wiremock Admin API</h3>
+<div class="paragraph">
+<p>Once the service is started, we can manage expectations using Wiremock&#8217;s Admin API as follows:</p>
+</div>
+<div class="paragraph">
+<p><strong>Get all defined expectations</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">curl http://localhost:8100/__admin/mappings</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Create a new expectation using the API</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">curl -X POST -H "Content-Type: application/json" -d '
+{
+    "id": "12345678-1234-1234-1234-123456789012",
+	"priority": 10,
+	"request": {
+		"method": "GET",
+		"url": "/api/sample"
+	},
+	"response": {
+		"status": 200,
+		"headers": {
+			"Content-Type": "application/json"
+		},
+		"bodyFileName": "api/sample/get_sample_body.json"
+	}
+}
+' http://localhost:8100/__admin/mappings</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Update an existing expectation using the API</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">curl -X PUT -H "Content-Type: application/json" -d '
+{
+	"priority": 10,
+	"request": {
+		"method": "GET",
+		"url": "/api/sample"
+	},
+	"response": {
+		"status": 200,
+		"headers": {
+			"Content-Type": "application/json"
+		},
+		"jsonBody": [1, 2, 3, 4]
+	}
+}
+' http://localhost:8100/__admin/mappings/12345678-1234-1234-1234-123456789012</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Reload expectations from /mappings files</strong></p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+This option makes possible to modify expectations editing mappings files directly and then reload Wiremock state
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">curl -X POST http://localhost:8100/__admin/mappings/reset</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="references"><a class="anchor" href="#references"></a>References</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://wiremock.org/docs/">Wiremock reference documentation</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="../explanation/fluent_rest_api_client.html">Fluent REST API client</a></span>
+  <span class="next"><a href="../../spring-docs/how-to/actuators.html">Actuators</a></span>
+</nav>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script id="site-script" src="../../../_/js/site.js" data-ui-root-path="../../../_"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

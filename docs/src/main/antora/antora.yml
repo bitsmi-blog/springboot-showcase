@@ -1,0 +1,17 @@
+name: springboot-showcase
+title: Springboot Showcase
+# Unversioned content
+version: ~
+start_page: index.adoc
+nav:
+- modules/ROOT/nav.adoc
+- modules/ways-of-working/nav.adoc
+- modules/spring-docs/nav.adoc
+ext:
+  collector:
+    run:
+      # Workaround to scan deleting folder at the beginning.
+      # https://gitlab.com/antora/antora-collector-extension/-/issues/10
+      command: 'mvn -f docs/pom.xml org.apache.maven.plugins:maven-antrun-plugin:run@move-additional-docs'
+    scan:
+      dir: docs/target/additional-sources

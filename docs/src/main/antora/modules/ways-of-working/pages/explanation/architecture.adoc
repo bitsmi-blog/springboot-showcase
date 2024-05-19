@@ -1,0 +1,252 @@
+= Architecture
+:toc:
+
+== Modules
+
+[plantuml]
+----
+@startuml
+rectangle main
+rectangle " " as setup {
+    rectangle application
+    rectangle infrastructure
+    rectangle domain
+    rectangle web
+}
+
+main .right.> setup : "assembles"
+web --> application
+application --> domain
+infrastructure --|> domain
+@enduml
+----
+
+[id=_main_module_description]
+=== Main
+**Purpose**
+
+`Main` module serves as entry point for application.
+It configures which modules are assembled to build the application.
+This is done in `MainModuleConfig` class through `@Import` statements of the corresponding modules that will form part of the application
+
+E.G.
+
+[source,java]
+----
+@Configuration
+@Import({
+        WebModuleConfig.class,
+        ApplicationModuleConfig.class,
+        InfrastructureModuleConfig.class
+})
+public class MainModuleConfig
+{
+
+}
+
+----
+
+**What's inside**
+
+* Configurations related application's assembly
+* Docker & Docker compose configurations related to application's deployment
+
+=== Application
+**Purpose**
+
+`Application` module is used to define application flows so that every endpoint module such as `web`, `messaging`, etc. is able to access to the flow entry point.
+
+**What's inside**
+
+* Entry point services to application flows that coordinates application level activities. This layer should not implement business logic related to Domain. It should delegate it to `domain` module components
+* Implement top level transactionality when needed
+* Interfaces that top level modules (web, messaging...) should implement to provide specific functionality related to them. E.G. Memoize cache provider implementing request scoped caches provided by Web module
+
+=== Infrastructure
+**Purpose**
+
+`Infrastructure` module contains all infrastructure related configurations
+
+**What's inside**
+
+* Persistence support (JPA, Mongo...)
+* Configurations about transversal services like Caches, Observability...
+Each of this configurations should be made in a separate configuration so dependant modules can import them to used in, for example, integration tests
+* Configuration of Domain related managed beans E.G. make Domain Commands & Queries available to be injected in Application Flow components
+* Attach Domain SPI service interfaces to corresponding Infrastructure implementation
+
+=== Domain
+**Purpose**
+
+`Domain` module implements applications business logic in an agnostic way, try to not be dependant of frameworks
+
+**What's inside**
+
+* Model classes
+* Query & Commands for different use cases involving domain model classes
+* SPI interfaces that will be implemented in `Infrastructure` module for infrastructure dependant components like persistence or event publishing
+
+=== Web
+**Purpose**
+
+`Web` module exposes rest service entrypoints to Applications module defined flows
+
+**What's inside**
+
+* Spring web configurations
+* Spring rest based controllers definition
+* Spring security configuration, including basic & JWT auth
+
+== Module general structure
+
+=== Packages
+
+The general package structure and naming is defined by the following guide:
+
+[plantuml]
+----
+@startuml
+skinparam Legend {
+	BackgroundColor transparent
+	BorderColor transparent
+}
+legend
+
+<:package:> module
+|_ <:file_folder:> src/main/java/<module package name>
+  |_ <:file_folder:> config
+    |_ <:page_facing_up:> Module Config
+    |_ <:page_facing_up:> Feature Config 1
+    |_ <:page_facing_up:> Feature Config 2
+    |_ . . .
+  |_ <:file_folder:> event
+    |_ <:file_folder:> listener
+      |_ <:page_facing_up:> Event Listener
+    |_ <:page_facing_up:> Event Definition
+  |_ <:file_folder:> <context>
+    |_ <:file_folder:> config
+    |_ <:file_folder:> event
+    |_ <:file_folder:> impl
+      |_ <:page_facing_up:> Input Port Impl
+    |_ <:file_folder:> spi
+      |_ <:page_facing_up:> Output Port Interface
+    |_ <:page_facing_up:>Input Port Interface
+  |_ <:page_facing_up:> Module Package Marker Interface
+
+end legend
+@end uml
+----
+
+* **Config**: Contains the **Main Config** for the module that will be the entry point for the component scan
+and other module's dependencies definition using Spring's `@Import` statements. This package will also contain
+additional feature enable configurations such as **Web MVC**, **Web Security**, **Cache**, **Observability**, **AOP**, etc.
+Every feature configuration will be located in it's related module if it's only used in / affecting it (E.G. **Web MVC** in **Web** module)
+or in **Infrastructure** module if it's a global feature (E.G. **AOP**, **Observability**, **Caches**)
+* **Event**: Contains general event definition and listeners. The main use case for these events is to be used
+as entry point for an external general event, such as Spring's lifecycle events (E.G. **ApplicationStartedEvent**)
+that can be used to trigger module general actions. Context specific event definitions / listeners must be defined in context related subpackage
+* **Contexts**: A context should contain components related to a specific bounded context of the domain or concept in the application.
+Every context can define its **Input Ports** service interfaces at the root of the module and its **Output ports** in `spi` subpackage.
+Implementations for own **Input ports** and external **output ports** will be placed in `impl` subpackage.
+Also, a special context named **Common** can be defined as a place to put shared components that can be used by other contexts and doesn't have
+enough meaning to put then in its own context. **Common** context will not contain general configs or event listeners because they aren't dependencies of other contexts.
+In that case, these components can be placed in top `config` and `event/listeners` packages of the module
+because in that
+* **Module Package Marker Interface**: Java interface intended to be used in Spring's component scans as type-safe alternative to basePackages for specifying the packages to scan for annotated components.
+
+=== Configuration
+
+Every module has its own `module config` class in charge of trigger the component scan on himself. It is also possible to filter components that doesn't have to be scanned automatically because they are optional and must be manually imported using an `@Import` annotation. The marker annotation `IgnoreOnComponentScan` can be used to do that. E.G.
+
+```java
+@Configuration
+// This class will be ignored by automatic component scan
+@IgnoreOnComponentScan
+public class OptionalConfig {
+
+}
+
+//----------------------------------
+
+@Configuration
+@ComponentScan(
+        basePackageClasses = { IWebPackage.class },
+        excludeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION, classes = IgnoreOnComponentScan.class)
+)
+public class WebModuleConfig {
+
+}
+```
+
+As explained in xref:_main_module_description[Main module]'s description section, all module configurations will be assembled in the `MainModuleConfig` class using `@Import` annotation.
+
+== Components
+
+Each module defines a number of different components in the application that interact with each other:
+
+=== Web
+* Controller
+
+=== Application
+* Application Query
+* Application Command
+
+=== Domain
+* Input Port Interface
+** Domain Query Service
+** Domain Command Service
+
+* Output Port Interface
+** Repository Service
+** Event Service
+
+=== Infrastructure
+* Domain Output Port Service Implementation
+** Repository Service Implementation
+** Event Service Implementation
+
+=== Interactions
+
+image::explanation/architecture/component_interactions.drawio.svg[Interactions diagram,align="center"]
+
+== Variations
+
+=== Layered module
+
+Instead of having separate modules for every module defined in this Architecture document,
+they can be defined as a layered architecture in the same package. Every module can be transformed
+in a subpackage.
+
+[plantuml]
+----
+@startuml
+skinparam Legend {
+	BackgroundColor transparent
+	BorderColor transparent
+}
+legend
+
+<:package:> account-ng-server
+|_ <:file_folder:> src/main/java
+  |_ <:file_folder:> com.bitsmi.accountng.server
+    |_ <:file_folder:> main
+      |_ <:file_folder:> config
+      |_ <:page_facing_up:> MainProgram
+    |_ <:file_folder:> web
+      |_ <:file_folder:> config
+      |_ <:file_folder:> controller
+      |_ <:file_folder:> . . .
+    |_ <:file_folder:> application
+      |_ <:file_folder:> config
+      |_ <:file_folder:> . . .
+    |_ <:file_folder:> domain
+      |_ <:file_folder:> . . .
+    |_ <:file_folder:> infrastructure
+      |_ <:file_folder:> config
+      |_ <:file_folder:> . . .
+
+end legend
+@end uml
+----
+
+It is also possible que have only `Domain` layer in a separate module and put the others in a common module. By this way, we can isolate domain business logic from framework dependant components.

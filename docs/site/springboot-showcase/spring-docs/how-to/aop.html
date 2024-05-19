@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>AOP :: Springboot-Showcase // Docs</title>
+    <link rel="prev" href="actuators.html">
+    <link rel="next" href="observability.html">
+    <meta name="generator" content="Antora 3.1.7">
+    <link rel="stylesheet" href="../../../_/css/site.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="../../..">Springboot-Showcase // Docs</a>
+      <button class="navbar-burger" aria-controls="topbar-nav" aria-expanded="false" aria-label="Toggle main menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="springboot-showcase" data-version="">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
+    <h3 class="title"><a href="../../index.html">Springboot Showcase</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../index.html">Index</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Ways of working</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Explanation guides</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../ways-of-working/explanation/architecture.html">Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../ways-of-working/explanation/fluent_rest_api_client.html">Fluent REST API client</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">How-to guides</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../ways-of-working/how-to/mocking_an_external_service.html">Mocking an external client</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Spring guides</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">How-to guides</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="actuators.html">Actuators</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="3">
+    <a class="nav-link" href="aop.html">AOP</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="observability.html">Observability</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="testing.html">Testing</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">References</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../reference/spring_data.html">Spring Data</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../tutorial/index.html">Tutorials</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../../index.html">Springboot Showcase</a></li>
+    <li>Spring guides</li>
+    <li>How-to guides</li>
+    <li><a href="aop.html">AOP</a></li>
+  </ul>
+</nav>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">AOP</h1>
+<div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#aspects">Aspects</a></li>
+</ul>
+</div>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>TODO</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="aspects"><a class="anchor" href="#aspects"></a>Aspects</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong>Enable proxies</strong></p>
+</div>
+<div class="paragraph">
+<p>It is needed to include <code>@EnableAspectJAutoProxy</code> annotation in tests to enable aspect proxies creation.
+In production code this not needed as it&#8217;s auto-configured by Spring through <code>AopAutoConfiguration</code> class.</p>
+</div>
+<div class="paragraph">
+<p><strong>Pointcut definition</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package com.bitsmi.springbootshowcase.application.dummy.aop;
+
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.Pointcut;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+@Aspect
+public class DummyAspect
+{
+    private static final Logger LOGGER = LoggerFactory.getLogger(DummyAspect.class);
+
+    @Pointcut("within(com.bitsmi.springbootshowcase.application.dummy..*)")
+    public void dummyPackagePointcut() { }
+
+    @Pointcut("within(@org.springframework.stereotype.Service *)")
+    public void servicePointcut() { }
+
+    @Pointcut("@annotation(org.springframework.cache.annotation.Cacheable)")
+    public void cacheableMethod() { }
+
+    @Before("dummyPackagePointcut() &amp;&amp; servicePointcut() &amp;&amp; cacheableMethod()")
+    public void beforeDummyApplicationServiceCacheableMethod(JoinPoint joinPoint)
+    {
+        LOGGER.info("[beforeDummyApplicationServiceCacheableMethod] Aspect executed before ({})", joinPoint.getSignature().getName());
+    }
+
+    @Around("dummyPackagePointcut() &amp;&amp; servicePointcut() &amp;&amp; cacheableMethod()")
+    public Object aroundDummyServiceCacheableMethod(ProceedingJoinPoint proceedingJoinPoint) throws Throwable
+    {
+        LOGGER.info("[aroundDummyApplicationServiceCacheableMethod] Before ({})", proceedingJoinPoint.getSignature().getName());
+        Object result = proceedingJoinPoint.proceed();
+        LOGGER.info("[aroundDummyApplicationServiceCacheableMethod] After ({}) with result ({})", proceedingJoinPoint.getSignature().getName(), result);
+
+        return result;
+    }
+
+    @Before("execution(* com.bitsmi.springbootshowcase.application.dummy.ISampleApplicationService.*(..))")
+    public void beforeDummyServiceMethodExecution(JoinPoint joinPoint)
+    {
+        LOGGER.info("[beforeDummyApplicationServiceMethodExecution] Aspect executed before ({})", joinPoint.getSignature().getName());
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Aspect configuration</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package com.bitsmi.springbootshowcase.application.dummy.config;
+
+import com.bitsmi.springbootshowcase.application.dummy.aop.DummyAspect;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class DummyAspectConfig
+{
+    @Bean
+    public DummyAspect dummyASpect()
+    {
+        return new DummyAspect();
+    }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="actuators.html">Actuators</a></span>
+  <span class="next"><a href="observability.html">Observability</a></span>
+</nav>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script id="site-script" src="../../../_/js/site.js" data-ui-root-path="../../../_"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>
