@@ -1,18 +1,14 @@
 package com.bitsmi.springbootshowcase.infrastructure.test.content;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import com.bitsmi.springbootshowcase.domain.common.util.IgnoreOnComponentScan;
-import com.bitsmi.springbootshowcase.domain.content.spi.IItemRepositoryService;
-import com.bitsmi.springbootshowcase.infrastructure.config.InfrastructureModuleConfig;
-import com.bitsmi.springbootshowcase.infrastructure.content.repository.ITagRepository;
 import com.bitsmi.springbootshowcase.domain.content.model.Item;
 import com.bitsmi.springbootshowcase.domain.content.model.ItemStatus;
 import com.bitsmi.springbootshowcase.domain.content.model.Tag;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.Optional;
+import com.bitsmi.springbootshowcase.domain.content.spi.IItemRepositoryService;
+import com.bitsmi.springbootshowcase.infrastructure.config.InfrastructureModuleConfig;
+import com.bitsmi.springbootshowcase.infrastructure.content.repository.ITagRepository;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -33,9 +29,15 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.transaction.annotation.Transactional;
 import org.testcontainers.containers.PostgreSQLContainer;
-import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(loader = AnnotationConfigContextLoader.class)
@@ -60,13 +62,26 @@ import org.testcontainers.utility.DockerImageName;
 @org.junit.jupiter.api.Tag("IntegrationTest")
 public class ItemRepositoryServiceTestContainerTests
 {
-    @Container
-    PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>(DockerImageName.parse("postgres").withTag("16.0"));
+    // Singleton container. Don't start at every test using @Container annotation
+    static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>(DockerImageName.parse("postgres").withTag("16.0"));
 
     @Autowired
     private IItemRepositoryService itemRepositoryService;
     @Autowired
     private ITagRepository tagRepository;
+
+    @BeforeAll
+    static void setUpAll()
+    {
+        postgres = new PostgreSQLContainer<>(DockerImageName.parse("postgres").withTag("16.0"));
+        postgres.start();
+    }
+
+    @AfterAll
+    static void tearDownAll()
+    {
+        postgres.stop();
+    }
 
     @Test
     @DisplayName("Find item should return item data when it exists for the given ID")
@@ -111,7 +126,7 @@ public class ItemRepositoryServiceTestContainerTests
     }
 
     /*---------------------------*
-     * SETUP AND HELPERS
+     * TEST CONFIG AND HELPERS
      *---------------------------*/
     @TestConfiguration
     @Import({ InfrastructureModuleConfig.class })

@@ -75,16 +75,16 @@ public class TagEntity implements Serializable
     }
 
     @Override
+    public int hashCode()
+    {
+        return Objects.hash(name);
+    }
+
+    @Override
     public boolean equals(Object o)
     {
         return this == o
                 || o instanceof TagEntity other
                 && Objects.equals(name, other.name);
-    }
-
-    @Override
-    public int hashCode()
-    {
-        return Objects.hash(name);
     }
 }

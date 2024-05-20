@@ -83,16 +83,16 @@ public class ItemFieldEntity implements Serializable
     }
 
     @Override
+    public int hashCode()
+    {
+        return Objects.hash(id);
+    }
+
+    @Override
     public boolean equals(Object o)
     {
         return this == o
                 || o instanceof ItemFieldEntity other
                     && Objects.equals(id, other.id);
-    }
-
-    @Override
-    public int hashCode()
-    {
-        return Objects.hash(id);
     }
 }

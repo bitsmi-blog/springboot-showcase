@@ -91,16 +91,16 @@ public class UserGroupEntity implements Serializable
     }
 
     @Override
+    public int hashCode()
+    {
+        return Objects.hash(name);
+    }
+
+    @Override
     public boolean equals(Object o)
     {
         return this == o
                 || o instanceof UserGroupEntity other
                     && Objects.equals(name, other.name);
-    }
-
-    @Override
-    public int hashCode()
-    {
-        return Objects.hash(name);
     }
 }
