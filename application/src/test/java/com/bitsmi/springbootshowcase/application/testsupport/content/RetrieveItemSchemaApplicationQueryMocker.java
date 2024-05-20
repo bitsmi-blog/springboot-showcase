@@ -1,7 +1,7 @@
 package com.bitsmi.springbootshowcase.application.testsupport.content;
 
 import com.bitsmi.springbootshowcase.application.content.IRetrieveItemSchemaApplicationQuery;
-import com.bitsmi.springbootshowcase.domain.common.dto.PagedData;
+import com.bitsmi.springbootshowcase.domain.common.dto.PaginatedData;
 import com.bitsmi.springbootshowcase.domain.common.dto.Pagination;
 import com.bitsmi.springbootshowcase.domain.content.model.ItemSchema;
 import com.bitsmi.springbootshowcase.domain.testsupport.content.model.ItemSchemaTestDataBuilder;
@@ -75,7 +75,7 @@ public class RetrieveItemSchemaApplicationQueryMocker
         when(mockedQuery.retrieveAllItemSchemas(any()))
                 .thenAnswer(answer -> {
                     Pagination pagination = answer.getArgument(0);
-                    return PagedData.<ItemSchema>builder()
+                    return PaginatedData.<ItemSchema>builder()
                             .content(Collections.emptyList())
                             .pagination(pagination)
                             .pageCount(0)
@@ -94,7 +94,7 @@ public class RetrieveItemSchemaApplicationQueryMocker
         when(mockedQuery.retrieveAllItemSchemas(any()))
                 .thenAnswer(answer -> {
                     Pagination pagination = answer.getArgument(0);
-                    return PagedData.<ItemSchema>builder()
+                    return PaginatedData.<ItemSchema>builder()
                             .content(results)
                             .pagination(pagination)
                             .pageCount(results.size())

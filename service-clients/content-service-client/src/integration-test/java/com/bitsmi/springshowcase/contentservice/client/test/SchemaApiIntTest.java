@@ -1,7 +1,7 @@
 package com.bitsmi.springshowcase.contentservice.client.test;
 
 import com.bitsmi.springshowcase.contentservice.client.ContentServiceClient;
-import com.bitsmi.springshowcase.contentservice.client.common.response.PagedResponse;
+import com.bitsmi.springshowcase.contentservice.client.common.response.PaginatedResponse;
 import com.bitsmi.springshowcase.contentservice.client.common.response.Pagination;
 import com.bitsmi.springshowcase.contentservice.client.common.response.Sort;
 import com.bitsmi.springshowcase.contentservice.client.schema.request.ItemSchemaData;
@@ -46,7 +46,7 @@ public class SchemaApiIntTest
     @DisplayName("Schema list operation should return a schema list json")
     public void listSchemasTest1() throws JsonProcessingException
     {
-        final PagedResponse<ItemSchema> expectedResponse = PagedResponse.<ItemSchema>builder()
+        final PaginatedResponse<ItemSchema> expectedResponse = PaginatedResponse.<ItemSchema>builder()
                 .content(List.of(
                         ItemSchemaTestDataBuilder.schema1(),
                         ItemSchemaTestDataBuilder.schema2()
@@ -69,7 +69,7 @@ public class SchemaApiIntTest
                 )
         );
 
-        PagedResponse<ItemSchema> actualResponse = client.schemas()
+        PaginatedResponse<ItemSchema> actualResponse = client.schemas()
                 .list()
                 .paginate(0, 10)
                 .get();
@@ -83,7 +83,7 @@ public class SchemaApiIntTest
     @DisplayName("Schema list operation should return a schema list json given a selector")
     public void listSchemasTest2() throws JsonProcessingException
     {
-        final PagedResponse<ItemSchema> expectedResponse = PagedResponse.<ItemSchema>builder()
+        final PaginatedResponse<ItemSchema> expectedResponse = PaginatedResponse.<ItemSchema>builder()
                 .content(List.of(
                         ItemSchemaTestDataBuilder.schema1()
                 ))
@@ -107,7 +107,7 @@ public class SchemaApiIntTest
                 )
         );
 
-        PagedResponse<ItemSchema> actualResponse = client.schemas(SchemaSetSelector.id(ItemSchemaTestDataBuilder.ID_SCHEMA1))
+        PaginatedResponse<ItemSchema> actualResponse = client.schemas(SchemaSetSelector.id(ItemSchemaTestDataBuilder.ID_SCHEMA1))
                 .list()
                 .paginate(0, 10)
                 .get();

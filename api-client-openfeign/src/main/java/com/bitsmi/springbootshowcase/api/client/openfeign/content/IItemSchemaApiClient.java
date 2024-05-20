@@ -1,8 +1,8 @@
 package com.bitsmi.springbootshowcase.api.client.openfeign.content;
 
 import com.bitsmi.springbootshowcase.api.client.openfeign.config.FeignConfig;
-import com.bitsmi.springbootshowcase.api.common.request.PagedRequest;
-import com.bitsmi.springbootshowcase.api.common.response.PagedResponse;
+import com.bitsmi.springbootshowcase.api.common.request.PaginatedRequest;
+import com.bitsmi.springbootshowcase.api.common.response.PaginatedResponse;
 import com.bitsmi.springbootshowcase.api.content.IItemSchemaApi;
 import com.bitsmi.springbootshowcase.api.content.response.ItemSchema;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -21,5 +21,5 @@ public interface IItemSchemaApiClient extends IItemSchemaApi
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     @Override
-    PagedResponse<ItemSchema> getSchemas(@SpringQueryMap final PagedRequest pagedRequest);
+    PaginatedResponse<ItemSchema> getSchemas(@SpringQueryMap final PaginatedRequest paginatedRequest);
 }

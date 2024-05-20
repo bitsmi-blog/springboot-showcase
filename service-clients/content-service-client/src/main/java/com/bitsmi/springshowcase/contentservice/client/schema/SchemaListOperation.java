@@ -1,6 +1,6 @@
 package com.bitsmi.springshowcase.contentservice.client.schema;
 
-import com.bitsmi.springshowcase.contentservice.client.common.response.PagedResponse;
+import com.bitsmi.springshowcase.contentservice.client.common.response.PaginatedResponse;
 import com.bitsmi.springshowcase.contentservice.client.schema.request.SchemaSetSelector;
 import com.bitsmi.springshowcase.contentservice.client.schema.response.ItemSchema;
 import jakarta.validation.ConstraintViolation;
@@ -50,16 +50,16 @@ public class SchemaListOperation
 
     /**
      * @throws jakarta.validation.ValidationException
-     * @return {@link PagedResponse}&lt;{@link ItemSchema}&gt; -
+     * @return {@link PaginatedResponse}&lt;{@link ItemSchema}&gt; -
      */
-    public PagedResponse<ItemSchema> get()
+    public PaginatedResponse<ItemSchema> get()
     {
         validateRequest();
 
         return restClient.get()
                 .uri(this::buildURI)
                 .retrieve()
-                .body(new ParameterizedTypeReference<PagedResponse<ItemSchema>>(){});
+                .body(new ParameterizedTypeReference<PaginatedResponse<ItemSchema>>(){});
     }
 
     private void validateRequest()

@@ -1,8 +1,8 @@
 package com.bitsmi.springbootshowcase.api.client.openfeign.test;
 
 import com.bitsmi.springbootshowcase.api.client.openfeign.content.IItemSchemaApiClient;
-import com.bitsmi.springbootshowcase.api.common.request.PagedRequest;
-import com.bitsmi.springbootshowcase.api.common.response.PagedResponse;
+import com.bitsmi.springbootshowcase.api.common.request.PaginatedRequest;
+import com.bitsmi.springbootshowcase.api.common.response.PaginatedResponse;
 import com.bitsmi.springbootshowcase.api.content.response.ItemSchema;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.client.WireMock;
@@ -64,7 +64,7 @@ public class ItemSchemaApiClientTest
                 )
         );
 
-        PagedResponse<ItemSchema> response = itemSchemaApiClient.getSchemas(PagedRequest.of(0, 5));
+        PaginatedResponse<ItemSchema> response = itemSchemaApiClient.getSchemas(PaginatedRequest.of(0, 5));
 
         assertThat(response.content()).hasSize(5);
         assertThat(response.pagination().pageNumber()).isEqualTo(0);

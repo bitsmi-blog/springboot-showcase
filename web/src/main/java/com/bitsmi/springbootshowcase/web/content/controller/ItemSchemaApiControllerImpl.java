@@ -1,13 +1,13 @@
 package com.bitsmi.springbootshowcase.web.content.controller;
 
-import com.bitsmi.springbootshowcase.api.common.request.PagedRequest;
-import com.bitsmi.springbootshowcase.api.common.response.PagedResponse;
+import com.bitsmi.springbootshowcase.api.common.request.PaginatedRequest;
+import com.bitsmi.springbootshowcase.api.common.response.PaginatedResponse;
 import com.bitsmi.springbootshowcase.api.common.response.Sort;
 import com.bitsmi.springbootshowcase.api.content.IItemSchemaApi;
 import com.bitsmi.springbootshowcase.api.content.request.CreateItemSchemaRequest;
 import com.bitsmi.springbootshowcase.application.content.ICreateItemSchemaApplicationCommand;
 import com.bitsmi.springbootshowcase.application.content.IRetrieveItemSchemaApplicationQuery;
-import com.bitsmi.springbootshowcase.domain.common.dto.PagedData;
+import com.bitsmi.springbootshowcase.domain.common.dto.PaginatedData;
 import com.bitsmi.springbootshowcase.domain.common.dto.Pagination;
 import com.bitsmi.springbootshowcase.domain.common.exception.ElementAlreadyExistsException;
 import com.bitsmi.springbootshowcase.domain.content.model.ItemSchema;
@@ -47,15 +47,15 @@ public class ItemSchemaApiControllerImpl implements IItemSchemaApi
     private ObservationRegistry observationRegistry;
 
     @Override
-    public PagedResponse<com.bitsmi.springbootshowcase.api.content.response.ItemSchema> getSchemas(
-            PagedRequest pagedRequest
+    public PaginatedResponse<com.bitsmi.springbootshowcase.api.content.response.ItemSchema> getSchemas(
+            PaginatedRequest paginatedRequest
     )
     {
-        final Pagination page = paginationMapper.fromRequest(pagedRequest);
+        final Pagination page = paginationMapper.fromRequest(paginatedRequest);
 
         if(page!=null) {
-            final PagedData<ItemSchema> results = retrieveItemSchemaQuery.retrieveAllItemSchemas(page);
-            return PagedResponse.<com.bitsmi.springbootshowcase.api.content.response.ItemSchema>builder()
+            final PaginatedData<ItemSchema> results = retrieveItemSchemaQuery.retrieveAllItemSchemas(page);
+            return PaginatedResponse.<com.bitsmi.springbootshowcase.api.content.response.ItemSchema>builder()
                     .content(results.content()
                             .stream()
                             .map(itemSchemaMapper::mapResponseFromModel)
@@ -69,7 +69,7 @@ public class ItemSchemaApiControllerImpl implements IItemSchemaApi
         }
         else {
             final List<ItemSchema> results = retrieveItemSchemaQuery.retrieveAllItemSchemas();
-            return PagedResponse.<com.bitsmi.springbootshowcase.api.content.response.ItemSchema>builder()
+            return PaginatedResponse.<com.bitsmi.springbootshowcase.api.content.response.ItemSchema>builder()
                     .content(results.stream()
                             .map(itemSchemaMapper::mapResponseFromModel)
                             .toList()

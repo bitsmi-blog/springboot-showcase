@@ -1,6 +1,6 @@
 package com.bitsmi.springbootshowcase.web.common.mapper;
 
-import com.bitsmi.springbootshowcase.api.common.request.PagedRequest;
+import com.bitsmi.springbootshowcase.api.common.request.PaginatedRequest;
 import com.bitsmi.springbootshowcase.api.common.response.Pagination;
 import com.bitsmi.springbootshowcase.api.common.response.Sort;
 import com.bitsmi.springbootshowcase.domain.common.dto.Sort.Direction;
@@ -18,7 +18,7 @@ public interface IPaginationMapper
 {
     @Mapping(target = "pageNumber", source = "page")
     @Mapping(target = "sort", qualifiedByName = "MapRequestSortToDomainSort")
-    com.bitsmi.springbootshowcase.domain.common.dto.Pagination fromRequest(PagedRequest request);
+    com.bitsmi.springbootshowcase.domain.common.dto.Pagination fromRequest(PaginatedRequest request);
 
     @Named("MapRequestSortToDomainSort")
     default com.bitsmi.springbootshowcase.domain.common.dto.Sort mapRequestSortToDomainSort(List<String> sort)

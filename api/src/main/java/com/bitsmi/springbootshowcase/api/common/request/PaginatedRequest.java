@@ -8,20 +8,20 @@ import java.util.List;
 
 @Getter
 @Builder(toBuilder = true, builderClassName = "Builder")
-public class PagedRequest
+public class PaginatedRequest
 {
     protected int page;
     protected int pageSize;
     protected List<String> sort;
 
-    public PagedRequest(int page, int pageSize, List<String> sort)
+    public PaginatedRequest(int page, int pageSize, List<String> sort)
     {
         this.page = page;
         this.pageSize = pageSize;
         this.sort = sort;
     }
 
-    public static PagedRequest of(int page, int pageSize)
+    public static PaginatedRequest of(int page, int pageSize)
     {
         return builder().page(page)
                 .pageSize(pageSize)
@@ -29,7 +29,7 @@ public class PagedRequest
                 .build();
     }
 
-    public static PagedRequest of(int page, int pageSize, List<String> sort)
+    public static PaginatedRequest of(int page, int pageSize, List<String> sort)
     {
         return builder().page(page)
                 .pageSize(pageSize)
@@ -39,9 +39,9 @@ public class PagedRequest
 
     public static class Builder
     {
-        public PagedRequest build()
+        public PaginatedRequest build()
         {
-            return new PagedRequest(
+            return new PaginatedRequest(
                     page,
                     pageSize>0 ? pageSize : 5,
                     sort!=null ? sort : Collections.emptyList()

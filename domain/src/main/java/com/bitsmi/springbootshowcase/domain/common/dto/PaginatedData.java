@@ -5,7 +5,7 @@ import lombok.Builder;
 import java.util.List;
 
 @Builder(toBuilder = true, builderClassName = "Builder")
-public record PagedData<T>(
+public record PaginatedData<T>(
         List<T> content,
         Pagination pagination,
         int pageCount,

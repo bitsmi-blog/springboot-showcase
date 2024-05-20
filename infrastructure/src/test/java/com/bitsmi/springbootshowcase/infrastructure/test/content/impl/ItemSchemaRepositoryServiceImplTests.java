@@ -7,12 +7,12 @@ import com.bitsmi.springbootshowcase.domain.content.model.ItemSchemaField;
 import com.bitsmi.springbootshowcase.domain.content.spi.IItemSchemaRepositoryService;
 import com.bitsmi.springbootshowcase.domain.testsupport.content.model.ItemSchemaTestDataBuilder;
 import com.bitsmi.springbootshowcase.infrastructure.content.impl.ItemSchemaRepositoryServiceImpl;
-import com.bitsmi.springbootshowcase.infrastructure.content.mapper.ContentServiceClientPagedResponseMapper;
+import com.bitsmi.springbootshowcase.infrastructure.content.mapper.ContentServiceClientPaginatedResponseMapper;
 import com.bitsmi.springbootshowcase.infrastructure.content.mapper.ItemSchemaFieldMapperImpl;
 import com.bitsmi.springbootshowcase.infrastructure.content.mapper.ItemSchemaMapperImpl;
 import com.bitsmi.springshowcase.contentservice.client.ContentServiceClient;
 import com.bitsmi.springshowcase.contentservice.client.common.exception.ClientErrorServiceException;
-import com.bitsmi.springshowcase.contentservice.client.common.response.PagedResponse;
+import com.bitsmi.springshowcase.contentservice.client.common.response.PaginatedResponse;
 import com.bitsmi.springshowcase.contentservice.client.common.response.Pagination;
 import com.bitsmi.springshowcase.contentservice.client.common.response.Sort;
 import com.bitsmi.springshowcase.contentservice.client.schema.SchemaCreationApiBuilder;
@@ -58,7 +58,7 @@ class ItemSchemaRepositoryServiceImplTests
         itemSchemaRepositoryService = new ItemSchemaRepositoryServiceImpl(
                 contentServiceClient,
                 new ItemSchemaMapperImpl(new ItemSchemaFieldMapperImpl()),
-                new ContentServiceClientPagedResponseMapper()
+                new ContentServiceClientPaginatedResponseMapper()
         );
     }
 
@@ -82,7 +82,7 @@ class ItemSchemaRepositoryServiceImplTests
                 .thenReturn(schemaListOperation);
         when(schemaListOperation.get())
                 .thenReturn(
-                    PagedResponse.<com.bitsmi.springshowcase.contentservice.client.schema.response.ItemSchema>builder()
+                    PaginatedResponse.<com.bitsmi.springshowcase.contentservice.client.schema.response.ItemSchema>builder()
                         .content(expectedSchemas)
                         .pagination(Pagination.of(0, 10, Sort.UNSORTED))
                         .pageCount(2)
@@ -121,7 +121,7 @@ class ItemSchemaRepositoryServiceImplTests
                 .thenReturn(schemaListOperation);
         when(schemaListOperation.get())
                 .thenReturn(
-                        PagedResponse.<com.bitsmi.springshowcase.contentservice.client.schema.response.ItemSchema>builder()
+                        PaginatedResponse.<com.bitsmi.springshowcase.contentservice.client.schema.response.ItemSchema>builder()
                                 .content(List.of(expectedSchema))
                                 .pagination(Pagination.of(0, 10, Sort.UNSORTED))
                                 .pageCount(1)

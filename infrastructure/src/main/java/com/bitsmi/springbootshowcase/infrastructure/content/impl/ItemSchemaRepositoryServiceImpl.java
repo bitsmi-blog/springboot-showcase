@@ -1,6 +1,6 @@
 package com.bitsmi.springbootshowcase.infrastructure.content.impl;
 
-import com.bitsmi.springbootshowcase.domain.common.dto.PagedData;
+import com.bitsmi.springbootshowcase.domain.common.dto.PaginatedData;
 import com.bitsmi.springbootshowcase.domain.common.dto.Pagination;
 import com.bitsmi.springbootshowcase.domain.common.exception.ElementAlreadyExistsException;
 import com.bitsmi.springbootshowcase.domain.common.exception.ElementNotFoundException;
@@ -8,11 +8,11 @@ import com.bitsmi.springbootshowcase.domain.common.util.ValidToUpdate;
 import com.bitsmi.springbootshowcase.domain.content.model.ItemSchema;
 import com.bitsmi.springbootshowcase.domain.content.spi.IItemSchemaRepositoryService;
 import com.bitsmi.springbootshowcase.infrastructure.InfrastructureConstants;
-import com.bitsmi.springbootshowcase.infrastructure.content.mapper.ContentServiceClientPagedResponseMapper;
+import com.bitsmi.springbootshowcase.infrastructure.content.mapper.ContentServiceClientPaginatedResponseMapper;
 import com.bitsmi.springbootshowcase.infrastructure.content.mapper.IItemSchemaMapper;
 import com.bitsmi.springshowcase.contentservice.client.ContentServiceClient;
 import com.bitsmi.springshowcase.contentservice.client.common.exception.ClientErrorServiceException;
-import com.bitsmi.springshowcase.contentservice.client.common.response.PagedResponse;
+import com.bitsmi.springshowcase.contentservice.client.common.response.PaginatedResponse;
 import com.bitsmi.springshowcase.contentservice.client.schema.request.ItemSchemaData;
 import com.bitsmi.springshowcase.contentservice.client.schema.request.ItemSchemaFieldData;
 import com.bitsmi.springshowcase.contentservice.client.schema.request.SchemaSetSelector;
@@ -37,16 +37,16 @@ public class ItemSchemaRepositoryServiceImpl implements IItemSchemaRepositorySer
 {
     private final ContentServiceClient contentServiceClient;
     private final IItemSchemaMapper itemSchemaMapper;
-    private final ContentServiceClientPagedResponseMapper pagedDataMapper;
+    private final ContentServiceClientPaginatedResponseMapper paginatedDataMapper;
 
     public ItemSchemaRepositoryServiceImpl(
             ContentServiceClient contentServiceClient,
             IItemSchemaMapper itemSchemaMapper,
-            ContentServiceClientPagedResponseMapper pagedDataMapper
+            ContentServiceClientPaginatedResponseMapper paginatedDataMapper
     ) {
         this.contentServiceClient = contentServiceClient;
         this.itemSchemaMapper = itemSchemaMapper;
-        this.pagedDataMapper = pagedDataMapper;
+        this.paginatedDataMapper = paginatedDataMapper;
     }
 
     @Override
@@ -54,10 +54,10 @@ public class ItemSchemaRepositoryServiceImpl implements IItemSchemaRepositorySer
     {
         List<ItemSchema> results = new ArrayList<>();
 
-        PagedResponse<com.bitsmi.springshowcase.contentservice.client.schema.response.ItemSchema> response = contentServiceClient.schemas()
+        PaginatedResponse<com.bitsmi.springshowcase.contentservice.client.schema.response.ItemSchema> response = contentServiceClient.schemas()
                 .list()
                 .get();
-        results.addAll(collectAndMapItemSchemasFromPagedResponse(response));
+        results.addAll(collectAndMapItemSchemasFromPaginatedResponse(response));
 
         Optional<com.bitsmi.springshowcase.contentservice.client.common.response.Pagination> optNextPage = response.nextPage();
         while(optNextPage.isPresent()) {
@@ -65,7 +65,7 @@ public class ItemSchemaRepositoryServiceImpl implements IItemSchemaRepositorySer
                     .list()
                     .paginate(optNextPage.get().pageNumber(), optNextPage.get().pageSize())
                     .get();
-            results.addAll(collectAndMapItemSchemasFromPagedResponse(response));
+            results.addAll(collectAndMapItemSchemasFromPaginatedResponse(response));
         }
 
         return results;
@@ -73,14 +73,14 @@ public class ItemSchemaRepositoryServiceImpl implements IItemSchemaRepositorySer
 
     @Cacheable(cacheNames = InfrastructureConstants.CACHE_ALL_SCHEMAS, key = "#pagination.pageNumber")
     @Override
-    public PagedData<ItemSchema> findAllItemSchemas(@NotNull Pagination pagination)
+    public PaginatedData<ItemSchema> findAllItemSchemas(@NotNull Pagination pagination)
     {
-        PagedResponse<com.bitsmi.springshowcase.contentservice.client.schema.response.ItemSchema> response = contentServiceClient.schemas()
+        PaginatedResponse<com.bitsmi.springshowcase.contentservice.client.schema.response.ItemSchema> response = contentServiceClient.schemas()
                 .list()
                 .paginate(pagination.pageNumber(), pagination.pageSize())
                 .get();
 
-        return pagedDataMapper.fromPage(response, itemSchemaMapper::fromClientResponse);
+        return paginatedDataMapper.fromPaginatedResponse(response, itemSchemaMapper::fromClientResponse);
     }
 
     @Cacheable(cacheNames = InfrastructureConstants.CACHE_SCHEMA_BY_EXTERNAL_ID)
@@ -165,7 +165,7 @@ public class ItemSchemaRepositoryServiceImpl implements IItemSchemaRepositorySer
         }
     }
 
-    private List<ItemSchema> collectAndMapItemSchemasFromPagedResponse(PagedResponse<com.bitsmi.springshowcase.contentservice.client.schema.response.ItemSchema> response)
+    private List<ItemSchema> collectAndMapItemSchemasFromPaginatedResponse(PaginatedResponse<com.bitsmi.springshowcase.contentservice.client.schema.response.ItemSchema> response)
     {
         return response.content()
                 .stream()
