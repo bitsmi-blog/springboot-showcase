@@ -3,8 +3,7 @@ package com.bitsmi.springbootshowcase.domain.testsupport.common;
 import com.bitsmi.springbootshowcase.domain.common.IUserDomainQueryService;
 import com.bitsmi.springbootshowcase.domain.common.model.User;
 import com.bitsmi.springbootshowcase.domain.common.model.UserSummary;
-import com.bitsmi.springbootshowcase.domain.testsupport.common.model.UserSummaryTestDataBuilder;
-import com.bitsmi.springbootshowcase.domain.testsupport.common.model.UserTestDataBuilder;
+import org.apache.commons.lang3.ObjectUtils;
 import org.mockito.Mockito;
 import org.springframework.test.context.event.annotation.BeforeTestExecution;
 
@@ -18,32 +17,47 @@ import static org.mockito.Mockito.when;
 public class UserDomainQueryServiceMocker
 {
     private final IUserDomainQueryService mockedService;
+    private final IDomainCommonTestScenario testScenario;
 
-    private UserDomainQueryServiceMocker(IUserDomainQueryService serviceInstance)
+    private UserDomainQueryServiceMocker(IUserDomainQueryService serviceInstance, IDomainCommonTestScenario testScenario)
     {
         if(!Mockito.mockingDetails(serviceInstance).isMock()) {
             throw new IllegalArgumentException("Service instance must be a mock");
         }
 
         this.mockedService = serviceInstance;
+        this.testScenario = testScenario;
     }
 
-    public static UserDomainQueryServiceMocker mocker()
+    public static UserDomainQueryServiceMocker mocker() {
+        return mocker(null);
+    }
+
+    public static UserDomainQueryServiceMocker mocker(IDomainCommonTestScenario testScenario)
     {
-        return new UserDomainQueryServiceMocker(mock(IUserDomainQueryService.class));
+        return new UserDomainQueryServiceMocker(
+                mock(IUserDomainQueryService.class),
+                ObjectUtils.defaultIfNull(testScenario, IDomainCommonTestScenario.getDefaultInstance())
+        );
     }
 
     public static UserDomainQueryServiceMocker fromMockedInstance(IUserDomainQueryService serviceInstance)
     {
-        return new UserDomainQueryServiceMocker(serviceInstance);
+        return fromMockedInstance(serviceInstance, null);
+    }
+
+    public static UserDomainQueryServiceMocker fromMockedInstance(IUserDomainQueryService serviceInstance, IDomainCommonTestScenario testScenario)
+    {
+        return new UserDomainQueryServiceMocker(
+                serviceInstance,
+                ObjectUtils.defaultIfNull(testScenario, IDomainCommonTestScenario.getDefaultInstance())
+        );
     }
 
     @BeforeTestExecution
     public void reset()
     {
-        this.whenFindUserByUsernameGivenAnyUsernameThenReturnEmpty()
-                .whenFindUserByUsernameThenReturnUser(UserTestDataBuilder.USERNAME_USER1, UserTestDataBuilder.user1())
-                .whenFindUserSummaryByUsernameThenReturnUser(UserSummaryTestDataBuilder.USERNAME_USER1, UserSummaryTestDataBuilder.user1());
+        testScenario.configureUserDomainQueryServiceMocker(this);
     }
 
     public UserDomainQueryServiceMocker configureMock(Consumer<IUserDomainQueryService> mockConsumer)

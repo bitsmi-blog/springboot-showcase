@@ -5,10 +5,13 @@ import com.bitsmi.springbootshowcase.application.common.IUserSummaryApplicationQ
 import com.bitsmi.springbootshowcase.application.content.ICreateItemSchemaApplicationCommand;
 import com.bitsmi.springbootshowcase.application.content.IRetrieveItemSchemaApplicationQuery;
 import com.bitsmi.springbootshowcase.application.dummy.ISampleApplicationService;
+import com.bitsmi.springbootshowcase.application.testsupport.common.IApplicationCommonTestScenario;
 import com.bitsmi.springbootshowcase.application.testsupport.common.UserSummaryApplicationQueryMocker;
 import com.bitsmi.springbootshowcase.application.testsupport.content.CreateItemSchemaCommandMocker;
+import com.bitsmi.springbootshowcase.application.testsupport.content.IApplicationContentTestScenario;
 import com.bitsmi.springbootshowcase.application.testsupport.content.RetrieveItemSchemaApplicationQueryMocker;
 import com.bitsmi.springbootshowcase.web.testsupport.application.dummy.SampleApplicationServiceMocker;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,9 +25,11 @@ import org.springframework.context.annotation.Configuration;
 public class ApplicationModuleMockConfig
 {
     @Bean
-    public UserSummaryApplicationQueryMocker userSummaryApplicationQueryMocker(IUserSummaryApplicationQuery userSummaryApplicationQuery)
-    {
-        return UserSummaryApplicationQueryMocker.fromMockedInstance(userSummaryApplicationQuery);
+    public UserSummaryApplicationQueryMocker userSummaryApplicationQueryMocker(
+            IUserSummaryApplicationQuery userSummaryApplicationQuery,
+            @Autowired(required = false) IApplicationCommonTestScenario applicationCommonTestScenario
+    ) {
+        return UserSummaryApplicationQueryMocker.fromMockedInstance(userSummaryApplicationQuery, applicationCommonTestScenario);
     }
 
     @Bean
@@ -34,9 +39,11 @@ public class ApplicationModuleMockConfig
     }
 
     @Bean
-    RetrieveItemSchemaApplicationQueryMocker retrieveItemSchemaApplicationQueryMocker(IRetrieveItemSchemaApplicationQuery retrieveItemSchemaApplicationQuery)
-    {
-        return RetrieveItemSchemaApplicationQueryMocker.fromMockedInstance(retrieveItemSchemaApplicationQuery);
+    RetrieveItemSchemaApplicationQueryMocker retrieveItemSchemaApplicationQueryMocker(
+            IRetrieveItemSchemaApplicationQuery retrieveItemSchemaApplicationQuery,
+            @Autowired(required = false) IApplicationContentTestScenario applicationContentTestScenario
+    ) {
+        return RetrieveItemSchemaApplicationQueryMocker.fromMockedInstance(retrieveItemSchemaApplicationQuery, applicationContentTestScenario);
     }
 
     @Bean

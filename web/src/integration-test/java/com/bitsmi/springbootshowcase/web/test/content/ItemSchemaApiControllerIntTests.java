@@ -31,7 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ControllerIntegrationTest
 @WithUserDetails("john.doe")
-public class ItemSchemaApiControllerIntTests
+class ItemSchemaApiControllerIntTests
 {
     @Autowired
     private WebApplicationContext context;
@@ -44,9 +44,18 @@ public class ItemSchemaApiControllerIntTests
 
     private MockMvc mockMvc;
 
+    @BeforeEach
+    void setup()
+    {
+        this.mockMvc = MockMvcBuilders
+                .webAppContextSetup(this.context)
+                .addFilter(springSecurityFilterChain)
+                .build();
+    }
+
     @Test
     @DisplayName("Get item schemas should return paginated data when user is logged")
-    public void getItemSchemasTest1() throws Exception
+    void getItemSchemasTest1() throws Exception
     {
         this.mockMvc.perform(get("/api/content/schema")
                         .queryParam("page", "0")
@@ -74,6 +83,11 @@ public class ItemSchemaApiControllerIntTests
     static class TestConfig
     {
         @Bean
+        public ContentStandardTestScenario testScenario() {
+            return new ContentStandardTestScenario();
+        }
+
+        @Bean
         @Primary
         public UserDetailsService userDetailsService(PasswordEncoder encoder)
         {
@@ -88,14 +102,5 @@ public class ItemSchemaApiControllerIntTests
 
             return manager;
         }
-    }
-
-    @BeforeEach
-    public void setup()
-    {
-        this.mockMvc = MockMvcBuilders
-                .webAppContextSetup(this.context)
-                .addFilter(springSecurityFilterChain)
-                .build();
     }
 }

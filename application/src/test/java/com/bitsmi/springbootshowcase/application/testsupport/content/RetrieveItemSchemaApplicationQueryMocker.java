@@ -5,6 +5,7 @@ import com.bitsmi.springbootshowcase.domain.common.dto.PaginatedData;
 import com.bitsmi.springbootshowcase.domain.common.dto.Pagination;
 import com.bitsmi.springbootshowcase.domain.content.model.ItemSchema;
 import com.bitsmi.springbootshowcase.domain.testsupport.content.model.ItemSchemaTestDataBuilder;
+import org.apache.commons.lang3.ObjectUtils;
 import org.mockito.Mockito;
 import org.springframework.test.context.event.annotation.BeforeTestExecution;
 
@@ -19,31 +20,48 @@ import static org.mockito.Mockito.when;
 public class RetrieveItemSchemaApplicationQueryMocker
 {
     private final IRetrieveItemSchemaApplicationQuery mockedQuery;
+    private final IApplicationContentTestScenario testScenario;
 
-    private RetrieveItemSchemaApplicationQueryMocker(IRetrieveItemSchemaApplicationQuery mockedQuery)
+    private RetrieveItemSchemaApplicationQueryMocker(IRetrieveItemSchemaApplicationQuery mockedQuery, IApplicationContentTestScenario testScenario)
     {
         if(!Mockito.mockingDetails(mockedQuery).isMock()) {
             throw new IllegalArgumentException("Query instance must be a mock");
         }
 
         this.mockedQuery = mockedQuery;
+        this.testScenario = testScenario;
     }
 
     public static RetrieveItemSchemaApplicationQueryMocker mocker()
     {
-        return new RetrieveItemSchemaApplicationQueryMocker(mock(IRetrieveItemSchemaApplicationQuery.class));
+        return mocker(null);
+    }
+
+    public static RetrieveItemSchemaApplicationQueryMocker mocker(IApplicationContentTestScenario mockingScenario)
+    {
+        return new RetrieveItemSchemaApplicationQueryMocker(
+                mock(IRetrieveItemSchemaApplicationQuery.class),
+                ObjectUtils.defaultIfNull(mockingScenario, IApplicationContentTestScenario.getDefaultInstance())
+        );
     }
 
     public static RetrieveItemSchemaApplicationQueryMocker fromMockedInstance(IRetrieveItemSchemaApplicationQuery queryInstance)
     {
-        return new RetrieveItemSchemaApplicationQueryMocker(queryInstance);
+        return fromMockedInstance(queryInstance, null);
+    }
+
+    public static RetrieveItemSchemaApplicationQueryMocker fromMockedInstance(IRetrieveItemSchemaApplicationQuery queryInstance, IApplicationContentTestScenario mockingScenario)
+    {
+        return new RetrieveItemSchemaApplicationQueryMocker(
+                queryInstance,
+                ObjectUtils.defaultIfNull(mockingScenario, IApplicationContentTestScenario.getDefaultInstance())
+        );
     }
 
     @BeforeTestExecution
     public void reset()
     {
-        this.whenRetrieveAllItemSchemasThenReturnData()
-                .whenRetrieveAllItemSchemasGivenPaginationThenReturnData();
+        testScenario.configureRetrieveItemSchemaApplicationQueryMocker(this);
     }
 
     public RetrieveItemSchemaApplicationQueryMocker configureMock(Consumer<IRetrieveItemSchemaApplicationQuery> mockConsumer)

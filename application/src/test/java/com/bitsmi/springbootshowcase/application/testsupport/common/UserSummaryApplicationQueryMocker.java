@@ -2,7 +2,7 @@ package com.bitsmi.springbootshowcase.application.testsupport.common;
 
 import com.bitsmi.springbootshowcase.application.common.IUserSummaryApplicationQuery;
 import com.bitsmi.springbootshowcase.domain.common.model.UserSummary;
-import com.bitsmi.springbootshowcase.domain.testsupport.common.model.UserSummaryTestDataBuilder;
+import org.apache.commons.lang3.ObjectUtils;
 import org.mockito.Mockito;
 import org.springframework.test.context.event.annotation.BeforeTestExecution;
 
@@ -16,31 +16,48 @@ import static org.mockito.Mockito.when;
 public class UserSummaryApplicationQueryMocker
 {
     private final IUserSummaryApplicationQuery mockedQuery;
+    private final IApplicationCommonTestScenario testScenario;
 
-    private UserSummaryApplicationQueryMocker(IUserSummaryApplicationQuery queryInstance)
+    private UserSummaryApplicationQueryMocker(IUserSummaryApplicationQuery queryInstance, IApplicationCommonTestScenario testScenario)
     {
         if(!Mockito.mockingDetails(queryInstance).isMock()) {
             throw new IllegalArgumentException("Query instance must be a mock");
         }
 
         this.mockedQuery = queryInstance;
+        this.testScenario = testScenario;
     }
 
     public static UserSummaryApplicationQueryMocker mocker()
     {
-        return new UserSummaryApplicationQueryMocker(mock(IUserSummaryApplicationQuery.class));
+        return mocker(null);
+    }
+
+    public static UserSummaryApplicationQueryMocker mocker(IApplicationCommonTestScenario testScenario)
+    {
+        return new UserSummaryApplicationQueryMocker(
+                mock(IUserSummaryApplicationQuery.class),
+                ObjectUtils.defaultIfNull(testScenario, IApplicationCommonTestScenario.getDefaultInstance())
+        );
     }
 
     public static UserSummaryApplicationQueryMocker fromMockedInstance(IUserSummaryApplicationQuery queryInstance)
     {
-        return new UserSummaryApplicationQueryMocker(queryInstance);
+        return fromMockedInstance(queryInstance, null);
+    }
+
+    public static UserSummaryApplicationQueryMocker fromMockedInstance(IUserSummaryApplicationQuery queryInstance, IApplicationCommonTestScenario testScenario)
+    {
+        return new UserSummaryApplicationQueryMocker(
+                queryInstance,
+                ObjectUtils.defaultIfNull(testScenario, IApplicationCommonTestScenario.getDefaultInstance())
+        );
     }
 
     @BeforeTestExecution
     public void reset()
     {
-        this.whenFindUserSummaryByUsernameGivenAnyUsernameThenReturnEmpty()
-                .whenFindUserSummaryByUsernameThenReturnUserSummary(UserSummaryTestDataBuilder.USERNAME_USER1, UserSummaryTestDataBuilder.user1());
+        testScenario.configureUserDomainQueryServiceMocker(this);
     }
 
     public UserSummaryApplicationQueryMocker configureMock(Consumer<IUserSummaryApplicationQuery> mockConsumer)
