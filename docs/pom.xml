@@ -11,68 +11,14 @@
 	<parent>
     	<groupId>com.bitsmi.springboot-showcase</groupId>
     	<artifactId>springboot-showcase-parent</artifactId>
-    	<version>2.0.0-SNAPSHOT</version>
+    	<version>3.0.0-SNAPSHOT</version>
     </parent>
 
     <dependencies>
         <dependency>
             <groupId>com.bitsmi.springboot-showcase</groupId>
-            <artifactId>springboot-showcase-content-service-client</artifactId>
-            <version>2.0.0-SNAPSHOT</version>
-            <classifier>sources</classifier>
-        </dependency>
-        <dependency>
-            <groupId>com.bitsmi.springboot-showcase</groupId>
-            <artifactId>springboot-showcase-domain</artifactId>
-            <version>2.0.0-SNAPSHOT</version>
-            <classifier>sources</classifier>
-        </dependency>
-        <dependency>
-            <groupId>com.bitsmi.springboot-showcase</groupId>
-            <artifactId>springboot-showcase-infrastructure</artifactId>
-            <version>2.0.0-SNAPSHOT</version>
-            <classifier>sources</classifier>
-        </dependency>
-        <dependency>
-            <groupId>com.bitsmi.springboot-showcase</groupId>
-            <artifactId>springboot-showcase-application</artifactId>
-            <version>2.0.0-SNAPSHOT</version>
-            <classifier>sources</classifier>
-        </dependency>
-        <dependency>
-            <groupId>com.bitsmi.springboot-showcase</groupId>
-            <artifactId>springboot-showcase-api</artifactId>
-            <version>2.0.0-SNAPSHOT</version>
-            <classifier>sources</classifier>
-        </dependency>
-        <dependency>
-            <groupId>com.bitsmi.springboot-showcase</groupId>
-            <artifactId>springboot-showcase-api-client-openfeign</artifactId>
-            <version>2.0.0-SNAPSHOT</version>
-            <classifier>sources</classifier>
-        </dependency>
-        <dependency>
-            <groupId>com.bitsmi.springboot-showcase</groupId>
-            <artifactId>springboot-showcase-web</artifactId>
-            <version>2.0.0-SNAPSHOT</version>
-            <classifier>sources</classifier>
-        </dependency>
-        <dependency>
-            <groupId>com.bitsmi.springboot-showcase</groupId>
-            <artifactId>springboot-showcase-messaging</artifactId>
-            <version>2.0.0-SNAPSHOT</version>
-            <classifier>sources</classifier>
-        </dependency>
-        <dependency>
-            <groupId>com.bitsmi.springboot-showcase</groupId>
-            <artifactId>springboot-showcase-main</artifactId>
-            <version>2.0.0-SNAPSHOT</version>
-            <classifier>sources</classifier>
-        </dependency>
-        <dependency>
-            <groupId>com.bitsmi.springboot-showcase</groupId>
-            <artifactId>springboot-showcase-utils</artifactId>
-            <version>2.0.0-SNAPSHOT</version>
+            <artifactId>springboot-showcase-sample-domain</artifactId>
+            <version>3.0.0-SNAPSHOT</version>
             <classifier>sources</classifier>
         </dependency>
     </dependencies>
