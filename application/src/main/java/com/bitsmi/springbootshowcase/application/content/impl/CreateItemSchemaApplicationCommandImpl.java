@@ -4,7 +4,6 @@ import com.bitsmi.springbootshowcase.application.content.ICreateItemSchemaApplic
 import com.bitsmi.springbootshowcase.domain.content.IItemSchemaDomainCommandService;
 import com.bitsmi.springbootshowcase.domain.content.model.ItemSchema;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
 
@@ -12,12 +11,16 @@ import org.springframework.validation.annotation.Validated;
 @Validated
 public class CreateItemSchemaApplicationCommandImpl implements ICreateItemSchemaApplicationCommand
 {
-    @Autowired
-    private IItemSchemaDomainCommandService itemSchemaCommandDomainService;
+    private final IItemSchemaDomainCommandService itemSchemaDomainCommandService;
+
+    public CreateItemSchemaApplicationCommandImpl(IItemSchemaDomainCommandService itemSchemaDomainCommandService)
+    {
+        this.itemSchemaDomainCommandService = itemSchemaDomainCommandService;
+    }
 
     @Override
     public ItemSchema createItemSchema(@Valid ItemSchema itemSchema)
     {
-        return itemSchemaCommandDomainService.createItemSchema(itemSchema);
+        return itemSchemaDomainCommandService.createItemSchema(itemSchema);
     }
 }

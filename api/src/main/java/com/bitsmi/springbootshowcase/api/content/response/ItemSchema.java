@@ -1,7 +1,5 @@
 package com.bitsmi.springbootshowcase.api.content.response;
 
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
@@ -12,11 +10,9 @@ import java.util.Set;
 @Builder(toBuilder = true, builderClassName = "Builder")
 public record ItemSchema(
         Long id,
-        @NotNull
         String externalId,
-        @NotNull
         String name,
-        Set<@Valid ItemSchemaField> fields,
+        Set<ItemSchemaField> fields,
         LocalDateTime creationDate,
         LocalDateTime lastUpdated
 )

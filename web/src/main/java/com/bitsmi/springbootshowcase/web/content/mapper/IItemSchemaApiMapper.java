@@ -2,9 +2,11 @@ package com.bitsmi.springbootshowcase.web.content.mapper;
 
 import com.bitsmi.springbootshowcase.api.content.request.CreateItemSchemaRequest;
 import com.bitsmi.springbootshowcase.api.content.response.ItemSchema;
+import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring",
+        injectionStrategy = InjectionStrategy.CONSTRUCTOR,
         implementationName = "ItemSchemaApiMapperImpl",
         uses = {
                 IItemSchemaFieldApiMapper.class
