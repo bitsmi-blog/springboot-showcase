@@ -3,8 +3,8 @@
 		xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	
-    <artifactId>springboot-showcase-sampleapps-domain</artifactId>
-	<description>SpringBoot Showcase Sample Applications Domain layer module</description>
+    <artifactId>springboot-showcase-sampleapps-application</artifactId>
+	<description>SpringBoot Showcase Sample Application layer module</description>
 	
 	<parent>
 		<groupId>com.bitsmi.springboot-showcase</groupId>
@@ -14,6 +14,27 @@
 	</parent>
 	
 	<dependencies>
+        <!-- PROJECT -->
+		<dependency>
+			<groupId>com.bitsmi.springboot-showcase</groupId>
+			<artifactId>springboot-showcase-sampleapps-domain</artifactId>
+			<version>3.0.0-SNAPSHOT</version>
+		</dependency>
+
+        <!-- SPRING -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-aop</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter</artifactId>
+		</dependency>
+
         <!-- UTILS -->
 		<dependency>
 			<groupId>jakarta.validation</groupId>
@@ -31,20 +52,28 @@
 			<groupId>org.mapstruct</groupId>
 			<artifactId>mapstruct</artifactId>
 		</dependency>
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-crypto</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
 
 		<!-- TEST -->
-        <dependency>
-            <groupId>org.assertj</groupId>
-            <artifactId>assertj-core</artifactId>
-            <scope>test</scope>
-        </dependency>
+		<dependency>
+			<groupId>com.bitsmi.springboot-showcase</groupId>
+			<artifactId>springboot-showcase-sampleapps-domain</artifactId>
+			<version>3.0.0-SNAPSHOT</version>
+			<classifier>tests</classifier>
+			<type>test-jar</type>
+			<scope>test</scope>
+		</dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
             <scope>test</scope>
         </dependency>
 	</dependencies>
