@@ -42,6 +42,7 @@
 
     <modules>
         <module>sample-applications/common-modules/domain</module>
+        <module>sample-applications/common-modules/infrastructure</module>
         <module>sample-applications/common-modules/application</module>
 
         <module>docs</module>
@@ -68,14 +69,14 @@
 
             <!-- UTILS -->
             <dependency>
-                <groupId>com.auth0</groupId>
-                <artifactId>java-jwt</artifactId>
-                <version>${dependency.version.java-jwt}</version>
-            </dependency>
-            <dependency>
                 <groupId>commons-io</groupId>
                 <artifactId>commons-io</artifactId>
                 <version>${dependency.version.commons-io}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.auth0</groupId>
+                <artifactId>java-jwt</artifactId>
+                <version>${dependency.version.java-jwt}</version>
             </dependency>
             <dependency>
                 <groupId>org.projectlombok</groupId>
