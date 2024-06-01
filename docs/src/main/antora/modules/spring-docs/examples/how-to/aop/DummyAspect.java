@@ -1,4 +1,4 @@
-package com.bitsmi.springbootshowcase.application.dummy.aop;
+package com.bitsmi.springbootshowcase.sampleapps.application.dummy.aop;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -14,7 +14,7 @@ public class DummyAspect
 {
     private static final Logger LOGGER = LoggerFactory.getLogger(DummyAspect.class);
 
-    @Pointcut("within(com.bitsmi.springbootshowcase.application.dummy..*)")
+    @Pointcut("within(com.bitsmi.springbootshowcase.sampleapps.application.dummy..*)")
     public void dummyPackagePointcut() { }
 
     @Pointcut("within(@org.springframework.stereotype.Service *)")
@@ -39,7 +39,7 @@ public class DummyAspect
         return result;
     }
 
-    @Before("execution(* com.bitsmi.springbootshowcase.application.dummy.ISampleApplicationService.*(..))")
+    @Before("execution(* com.bitsmi.springbootshowcase.sampleapps.application.dummy.ISampleApplicationService.*(..))")
     public void beforeDummyServiceMethodExecution(JoinPoint joinPoint)
     {
         LOGGER.info("[beforeDummyApplicationServiceMethodExecution] Aspect executed before ({})", joinPoint.getSignature().getName());
