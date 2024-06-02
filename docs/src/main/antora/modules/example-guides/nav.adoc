@@ -1,0 +1,4 @@
+* Example guides
+
+** Sample applications
+*** xref:sample-applications/web-mvc.adoc[Web MVC]
