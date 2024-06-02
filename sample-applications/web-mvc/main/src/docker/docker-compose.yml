@@ -1,0 +1,44 @@
+version: "3"
+
+name: springboot-showcase-sampleapps-webmvc
+
+networks:
+  application-network:
+    external: false
+
+services:
+  application:
+    image: springboot-showcase-sampleapps-webmvc:${project.version}
+    container_name: springboot-showcase-sampleapps-webmvc
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+    networks:
+      - application-network
+    restart: always
+    depends_on:
+      db:
+        condition: service_healthy
+        restart: true
+      broker:
+        condition: service_healthy
+        restart: true
+  db:
+    image: postgres:16.0-alpine
+    container_name: springboot-showcase-sampleapps-webmvc-db
+    ports:
+      - 5432:5432
+    env_file:
+      - .env
+    networks:
+      - application-network
+    volumes:
+      - ./postgres/data:/var/lib/postgresql/data
+      - ./postgres/initdb/:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "sh -c 'pg_isready -U ${APP_DATABASE_USER} -d app_db'"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+    restart: always

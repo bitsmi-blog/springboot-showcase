@@ -44,6 +44,8 @@
         <module>sample-applications/common-modules/domain</module>
         <module>sample-applications/common-modules/infrastructure</module>
         <module>sample-applications/common-modules/application</module>
+        <module>sample-applications/web-mvc/web</module>
+        <module>sample-applications/web-mvc/main</module>
 
         <module>docs</module>
     </modules>

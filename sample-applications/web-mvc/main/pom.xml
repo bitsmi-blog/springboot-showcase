@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+    <artifactId>springboot-showcase-sampleapps-webmvc-main</artifactId>
+    <description>SpringBoot Showcase Sample Applications Web MVC Main module</description>
+
+    <parent>
+        <groupId>com.bitsmi.springboot-showcase</groupId>
+        <artifactId>springboot-showcase-parent</artifactId>
+        <version>3.0.0-SNAPSHOT</version>
+        <relativePath>../../../pom.xml</relativePath>
+    </parent>
+
+	<dependencies>
+        <!-- PROJECT -->
+		<dependency>
+			<groupId>com.bitsmi.springboot-showcase</groupId>
+            <artifactId>springboot-showcase-sampleapps-application</artifactId>
+			<version>3.0.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.bitsmi.springboot-showcase</groupId>
+            <artifactId>springboot-showcase-sampleapps-infrastructure</artifactId>
+			<version>3.0.0-SNAPSHOT</version>
+		</dependency>
+        <dependency>
+            <groupId>com.bitsmi.springboot-showcase</groupId>
+            <artifactId>springboot-showcase-sampleapps-webmvc-web</artifactId>
+            <version>3.0.0-SNAPSHOT</version>
+        </dependency>
+
+        <!-- SPRING -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-docker-compose</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-aop</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-validation</artifactId>
+		</dependency>
+
+        <!-- UTILS -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.mapstruct</groupId>
+			<artifactId>mapstruct</artifactId>
+		</dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+		<!-- TEST -->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+		<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+	</dependencies>
+
+	<build>
+		<finalName>${artifactId}</finalName>
+		<resources>
+			<resource>
+				<directory>${basedir}/src/main/resources</directory>
+				<filtering>false</filtering>
+				<excludes>
+					<exclude>application.properties</exclude>
+					<exclude>DEV/</exclude>
+					<exclude>PRO/</exclude>
+				</excludes>
+			</resource>
+			<resource>
+				<directory>${basedir}/src/main/resources</directory>
+				<filtering>true</filtering>
+				<includes>
+					<include>application.properties</include>
+				</includes>
+			</resource>
+			<!-- Include profile specific files -->
+			<resource>
+				<directory>${basedir}/src/main/resources/${application.profile}</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+			</plugin>
+
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+			</plugin>
+
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<mainClass>com.bitsmi.springbootshowcase.sampleapps.main.MainProgram</mainClass>
+					<layers>
+						<enabled>true</enabled>
+					</layers>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+            <!-- Generate sources jar -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+            </plugin>
+		</plugins>
+	</build>
+
+	<profiles>
+		<profile>
+			<id>DOCKER</id>
+			<build>
+				<!-- Generate docker-compose distributable file -->
+				<resources>
+					<!-- Automatically replace version in docker-compose file -->
+					<resource>
+						<directory>${basedir}/src/docker</directory>
+						<targetPath>${build.directory}/docker</targetPath>
+						<filtering>true</filtering>
+						<includes>
+							<include>docker-compose.yml</include>
+						</includes>
+					</resource>
+					<!-- Leave other files untouched -->
+					<resource>
+						<directory>${basedir}/src/docker</directory>
+						<targetPath>${build.directory}/docker</targetPath>
+						<filtering>false</filtering>
+						<excludes>
+							<exclude>docker-compose.yml</exclude>
+							<!-- Not needed -->
+							<exclude>Dockerfile</exclude>
+						</excludes>
+					</resource>
+				</resources>
+
+				<plugins>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>exec-maven-plugin</artifactId>
+						<executions>
+							<execution>
+								<goals>
+									<goal>exec</goal>
+								</goals>
+								<phase>package</phase>
+								<configuration>
+									<!-- docker build -f src/main/docker/Dockerfile . -t springboot-showcase-main:1.0.0 -->
+									<executable>docker</executable>
+									<arguments>
+										<argument>build</argument>
+										<argument>-f</argument>
+										<argument>src/docker/Dockerfile</argument>
+										<argument>--tag</argument>
+										<argument>${project.artifactId}:${project.version}</argument>
+										<argument>.</argument>
+									</arguments>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-assembly-plugin</artifactId>
+						<configuration>
+							<descriptors>
+								<descriptor>${project.basedir}/src/assembly/dist-docker.xml</descriptor>
+							</descriptors>
+						</configuration>
+						<executions>
+							<execution>
+								<phase>package</phase>
+								<goals>
+									<goal>single</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+</project>
