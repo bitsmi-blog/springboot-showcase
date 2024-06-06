@@ -5,3 +5,5 @@
 * xref:sample-applications/web-mvc.adoc[Web MVC]
 
 == Spring Data JPA
+
+* xref:spring-data-jpa/repository-extension.adoc[Repository extension]

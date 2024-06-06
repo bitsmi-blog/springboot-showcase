@@ -25,3 +25,4 @@
 * H2 in-memory database support for tests
 * Integration tests using **Mock MVC**
 * **Testcontainers** database support (**Postgres**)
+* Test conventions described in #TODO# guide

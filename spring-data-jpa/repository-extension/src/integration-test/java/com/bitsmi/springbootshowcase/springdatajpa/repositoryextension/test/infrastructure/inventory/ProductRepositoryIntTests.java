@@ -2,7 +2,9 @@ package com.bitsmi.springbootshowcase.springdatajpa.repositoryextension.test.inf
 
 import com.bitsmi.springbootshowcase.springdatajpa.repositoryextension.infrastructure.config.InfrastructureModuleConfig;
 import com.bitsmi.springbootshowcase.springdatajpa.repositoryextension.infrastructure.inventory.entity.ProductEntity;
-import com.bitsmi.springbootshowcase.springdatajpa.repositoryextension.infrastructure.inventory.repository.IProductRepository;
+import com.bitsmi.springbootshowcase.springdatajpa.repositoryextension.infrastructure.inventory.projection.ProductStockProjection;
+import com.bitsmi.springbootshowcase.springdatajpa.repositoryextension.infrastructure.inventory.projection.ProductSummaryProjection;
+import com.bitsmi.springbootshowcase.springdatajpa.repositoryextension.infrastructure.inventory.repository.ProductRepository;
 import com.bitsmi.springbootshowcase.springdatajpa.repositoryextension.testsupport.internal.RepositoryIntegrationTest;
 import com.bitsmi.springbootshowcase.springdatajpa.repositoryextension.util.IgnoreOnComponentScan;
 import org.junit.jupiter.api.DisplayName;
@@ -26,7 +28,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class ProductRepositoryIntTests
 {
     @Autowired
-    private IProductRepository productRepository;
+    private ProductRepository productRepository;
 
     @Test
     @DisplayName("findAll should return all products")
@@ -64,6 +66,36 @@ class ProductRepositoryIntTests
                     assertThat(product.getId()).isEqualTo(1001L);
                     assertThat(product.getExternalId()).isEqualTo("product-1.1");
                     assertThat(product.getName()).isEqualTo("Product 1.1");
+                });
+    }
+
+    @Test
+    @DisplayName("findStockProjectionByExternalId should return product stock given an existing product externalId")
+    void findStockProjectionByExternalIdTest1()
+    {
+        Optional<ProductStockProjection> actualProduct = productRepository.findStockProjectionByExternalId("product-1.1");
+
+        assertThat(actualProduct).isPresent()
+                .get()
+                .satisfies(product -> {
+                    assertThat(product.getExternalId()).isEqualTo("product-1.1");
+                    assertThat(product.getName()).isEqualTo("Product 1.1");
+                    assertThat(product.getTotalStock()).isEqualTo(300);
+                });
+    }
+
+    @Test
+    @DisplayName("findSummaryProjectionByExternalId should return product summary given an existing product externalId")
+    void findSummaryProjectionByExternalIdTest1()
+    {
+        Optional<ProductSummaryProjection> actualProduct = productRepository.findSummaryProjectionByExternalId("product-1.1");
+
+        assertThat(actualProduct).isPresent()
+                .get()
+                .satisfies(product -> {
+                    assertThat(product.getExternalId()).isEqualTo("product-1.1");
+                    assertThat(product.getName()).isEqualTo("Product 1.1");
+                    assertThat(product.getCategoryName()).isEqualTo("Category 1");
                 });
     }
 

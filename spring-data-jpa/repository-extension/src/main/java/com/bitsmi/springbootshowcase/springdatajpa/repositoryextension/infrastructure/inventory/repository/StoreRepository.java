@@ -6,7 +6,7 @@ import com.bitsmi.springbootshowcase.springdatajpa.repositoryextension.infrastru
 
 import java.util.Optional;
 
-public interface IStoreRepository extends CustomBaseRepository<StoreEntity, Long>, ExternalIdQuerySupportRepository
+public interface StoreRepository extends CustomBaseRepository<StoreEntity, Long>, ExternalIdQuerySupportRepository
 {
     default Optional<StoreEntity> findByExternalId(String externalId)
     {
