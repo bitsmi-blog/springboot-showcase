@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.17.xsd">
+
+    <!-- General properties -->
+    <property name="current_date" value="CURRENT_DATE"/>
+    <property name="current_timestamp" value="CURRENT_TIMESTAMP"/>
+
+    <property name="clob_type" value="CLOB" dbms="h2"/>
+    <property name="clob_type" value="TEXT" dbms="postgresql"/>
+    <property name="blob_type" value="BLOB(16M)" dbms="h2"/>
+    <property name="blob_type" value="BYTEA" dbms="postgresql"/>
+
+    <!-- Application changelogs -->
+    <include file="db/changelogs/infrastructure/db_changelog_infrastructure_main.xml"/>
+    <!-- Data -->
+    <include file="db/changelogs/test/infrastructure/inventory/category_base.xml"/>
+    <include file="db/changelogs/test/infrastructure/inventory/product_base.xml"/>
+    <include file="db/changelogs/test/infrastructure/inventory/store_base.xml"/>
+    <include file="db/changelogs/test/infrastructure/inventory/stock_base.xml"/>
+
+</databaseChangeLog>

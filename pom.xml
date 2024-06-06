@@ -47,6 +47,8 @@
         <module>sample-applications/web-mvc/web</module>
         <module>sample-applications/web-mvc/main</module>
 
+        <module>spring-data-jpa/repository-extension</module>
+
         <module>docs</module>
     </modules>
 
