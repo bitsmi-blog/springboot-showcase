@@ -17,27 +17,27 @@ import static org.mockito.Mockito.when;
 public class UserDomainQueryServiceMocker
 {
     private final IUserDomainQueryService mockedService;
-    private final IDomainCommonTestScenario testScenario;
+    private final DomainCommonTestFixture testFixture;
 
-    private UserDomainQueryServiceMocker(IUserDomainQueryService serviceInstance, IDomainCommonTestScenario testScenario)
+    private UserDomainQueryServiceMocker(IUserDomainQueryService serviceInstance, DomainCommonTestFixture testFixture)
     {
         if(!Mockito.mockingDetails(serviceInstance).isMock()) {
             throw new IllegalArgumentException("Service instance must be a mock");
         }
 
         this.mockedService = serviceInstance;
-        this.testScenario = testScenario;
+        this.testFixture = testFixture;
     }
 
     public static UserDomainQueryServiceMocker mocker() {
         return mocker(null);
     }
 
-    public static UserDomainQueryServiceMocker mocker(IDomainCommonTestScenario testScenario)
+    public static UserDomainQueryServiceMocker mocker(DomainCommonTestFixture testFixture)
     {
         return new UserDomainQueryServiceMocker(
                 mock(IUserDomainQueryService.class),
-                ObjectUtils.defaultIfNull(testScenario, IDomainCommonTestScenario.getDefaultInstance())
+                ObjectUtils.defaultIfNull(testFixture, DomainCommonTestFixture.getDefaultInstance())
         );
     }
 
@@ -46,18 +46,18 @@ public class UserDomainQueryServiceMocker
         return fromMockedInstance(serviceInstance, null);
     }
 
-    public static UserDomainQueryServiceMocker fromMockedInstance(IUserDomainQueryService serviceInstance, IDomainCommonTestScenario testScenario)
+    public static UserDomainQueryServiceMocker fromMockedInstance(IUserDomainQueryService serviceInstance, DomainCommonTestFixture testScenario)
     {
         return new UserDomainQueryServiceMocker(
                 serviceInstance,
-                ObjectUtils.defaultIfNull(testScenario, IDomainCommonTestScenario.getDefaultInstance())
+                ObjectUtils.defaultIfNull(testScenario, DomainCommonTestFixture.getDefaultInstance())
         );
     }
 
     @BeforeTestExecution
     public void reset()
     {
-        testScenario.configureUserDomainQueryServiceMocker(this);
+        testFixture.configureUserDomainQueryServiceMocker(this);
     }
 
     public UserDomainQueryServiceMocker configureMock(Consumer<IUserDomainQueryService> mockConsumer)

@@ -5,7 +5,7 @@ import com.bitsmi.springbootshowcase.sampleapps.domain.common.model.User;
 import java.time.LocalDateTime;
 import java.util.Collections;
 
-public class UserTestDataBuilder
+public class UserObjectMother
 {
     public static final Long ID_USER1 = 1001L;
     public static final String USERNAME_USER1 = "john.doe";
@@ -17,9 +17,9 @@ public class UserTestDataBuilder
                 .build();
     }
 
-    public static UserTestDataBuilder.Builder builder()
+    public static UserObjectMother.Builder builder()
     {
-        return new UserTestDataBuilder.Builder();
+        return new UserObjectMother.Builder();
     }
 
     public static final class Builder

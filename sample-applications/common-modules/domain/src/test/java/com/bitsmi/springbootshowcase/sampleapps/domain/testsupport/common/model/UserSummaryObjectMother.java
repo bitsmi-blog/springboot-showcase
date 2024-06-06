@@ -2,7 +2,7 @@ package com.bitsmi.springbootshowcase.sampleapps.domain.testsupport.common.model
 
 import com.bitsmi.springbootshowcase.sampleapps.domain.common.model.UserSummary;
 
-public class UserSummaryTestDataBuilder
+public class UserSummaryObjectMother
 {
     public static final String USERNAME_USER1 = "john.doe";
 
@@ -15,7 +15,7 @@ public class UserSummaryTestDataBuilder
 
     public static Builder builder()
     {
-        return new UserSummaryTestDataBuilder.Builder();
+        return new UserSummaryObjectMother.Builder();
     }
 
     public static final class Builder

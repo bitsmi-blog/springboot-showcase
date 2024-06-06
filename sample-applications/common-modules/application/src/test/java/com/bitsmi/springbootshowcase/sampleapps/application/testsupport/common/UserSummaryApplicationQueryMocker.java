@@ -16,9 +16,9 @@ import static org.mockito.Mockito.when;
 public class UserSummaryApplicationQueryMocker
 {
     private final IUserSummaryApplicationQuery mockedQuery;
-    private final IApplicationCommonTestScenario testScenario;
+    private final ApplicationCommonTestFixture testScenario;
 
-    private UserSummaryApplicationQueryMocker(IUserSummaryApplicationQuery queryInstance, IApplicationCommonTestScenario testScenario)
+    private UserSummaryApplicationQueryMocker(IUserSummaryApplicationQuery queryInstance, ApplicationCommonTestFixture testScenario)
     {
         if(!Mockito.mockingDetails(queryInstance).isMock()) {
             throw new IllegalArgumentException("Query instance must be a mock");
@@ -33,11 +33,11 @@ public class UserSummaryApplicationQueryMocker
         return mocker(null);
     }
 
-    public static UserSummaryApplicationQueryMocker mocker(IApplicationCommonTestScenario testScenario)
+    public static UserSummaryApplicationQueryMocker mocker(ApplicationCommonTestFixture testScenario)
     {
         return new UserSummaryApplicationQueryMocker(
                 mock(IUserSummaryApplicationQuery.class),
-                ObjectUtils.defaultIfNull(testScenario, IApplicationCommonTestScenario.getDefaultInstance())
+                ObjectUtils.defaultIfNull(testScenario, ApplicationCommonTestFixture.getDefaultInstance())
         );
     }
 
@@ -46,11 +46,11 @@ public class UserSummaryApplicationQueryMocker
         return fromMockedInstance(queryInstance, null);
     }
 
-    public static UserSummaryApplicationQueryMocker fromMockedInstance(IUserSummaryApplicationQuery queryInstance, IApplicationCommonTestScenario testScenario)
+    public static UserSummaryApplicationQueryMocker fromMockedInstance(IUserSummaryApplicationQuery queryInstance, ApplicationCommonTestFixture testScenario)
     {
         return new UserSummaryApplicationQueryMocker(
                 queryInstance,
-                ObjectUtils.defaultIfNull(testScenario, IApplicationCommonTestScenario.getDefaultInstance())
+                ObjectUtils.defaultIfNull(testScenario, ApplicationCommonTestFixture.getDefaultInstance())
         );
     }
 
