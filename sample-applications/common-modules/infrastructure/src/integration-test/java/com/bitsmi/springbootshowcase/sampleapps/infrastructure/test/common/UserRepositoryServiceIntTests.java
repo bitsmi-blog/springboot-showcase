@@ -138,7 +138,7 @@ public class UserRepositoryServiceIntTests
     }
 
     /*---------------------------*
-     * SETUP AND HELPERS
+     * TEST CONFIG AND HELPERS
      *---------------------------*/
     @TestConfiguration
     @Import({ InfrastructureModuleConfig.class })

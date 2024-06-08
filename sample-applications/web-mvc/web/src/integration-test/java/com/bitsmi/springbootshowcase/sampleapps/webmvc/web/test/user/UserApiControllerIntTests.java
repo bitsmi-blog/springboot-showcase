@@ -102,7 +102,7 @@ class UserApiControllerIntTests
     }
 
     /*---------------------------*
-     * SETUP AND HELPERS
+     * TEST CONFIG AND HELPERS
      *---------------------------*/
     @TestConfiguration
     @Import({

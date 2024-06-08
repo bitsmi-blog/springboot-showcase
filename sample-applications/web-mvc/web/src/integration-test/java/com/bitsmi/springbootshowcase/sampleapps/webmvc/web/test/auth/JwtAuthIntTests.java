@@ -121,7 +121,7 @@ public class JwtAuthIntTests
     }
 
     /*---------------------------*
-     * SETUP AND HELPERS
+     * TEST CONFIG AND HELPERS
      *---------------------------*/
     @TestConfiguration()
     @Import({

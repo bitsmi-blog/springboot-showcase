@@ -1,0 +1,7 @@
+= Dependency injection
+
+== Features
+
+* Multiple beans of the same type
+* Optional beans
+* Profile dependant beans
