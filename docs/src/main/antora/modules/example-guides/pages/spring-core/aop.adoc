@@ -1,0 +1,7 @@
+= AOP
+
+== Features
+
+* Annotation pointcut definition
+* Specific method pointcut definition
+* Before, After and Around execution interceptors

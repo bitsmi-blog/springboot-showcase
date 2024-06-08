@@ -6,6 +6,7 @@
 
 == Spring Core
 
+* xref:spring-core/aop.adoc[AOP]
 * xref:spring-core/dependency-injection.adoc[Dependency injection]
 
 == Spring Data JPA
