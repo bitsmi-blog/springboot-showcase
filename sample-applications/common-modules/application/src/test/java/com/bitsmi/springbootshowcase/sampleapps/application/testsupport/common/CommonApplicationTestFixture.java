@@ -2,11 +2,11 @@ package com.bitsmi.springbootshowcase.sampleapps.application.testsupport.common;
 
 import com.bitsmi.springbootshowcase.sampleapps.domain.testsupport.common.model.UserSummaryObjectMother;
 
-public interface ApplicationCommonTestFixture
+public interface CommonApplicationTestFixture
 {
-    static ApplicationCommonTestFixture getDefaultInstance()
+    static CommonApplicationTestFixture getDefaultInstance()
     {
-        return DefaultApplicationCommonTestFixture.INSTANCE;
+        return DefaultCommonApplicationTestFixture.INSTANCE;
     }
 
     default void configureUserDomainQueryServiceMocker(UserSummaryApplicationQueryMocker mocker)
@@ -15,10 +15,10 @@ public interface ApplicationCommonTestFixture
                 .whenFindUserSummaryByUsernameThenReturnUserSummary(UserSummaryObjectMother.USERNAME_USER1, UserSummaryObjectMother.user1());
     }
 
-    final class DefaultApplicationCommonTestFixture implements ApplicationCommonTestFixture
+    final class DefaultCommonApplicationTestFixture implements CommonApplicationTestFixture
     {
-        private static final DefaultApplicationCommonTestFixture INSTANCE = new DefaultApplicationCommonTestFixture();
+        private static final DefaultCommonApplicationTestFixture INSTANCE = new DefaultCommonApplicationTestFixture();
 
-        private DefaultApplicationCommonTestFixture() { }
+        private DefaultCommonApplicationTestFixture() { }
     }
 }

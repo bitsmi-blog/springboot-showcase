@@ -2,9 +2,11 @@ package com.bitsmi.springbootshowcase.sampleapps.domain.testsupport.common.model
 
 import com.bitsmi.springbootshowcase.sampleapps.domain.common.model.UserSummary;
 
-public class UserSummaryObjectMother
+public final class UserSummaryObjectMother
 {
     public static final String USERNAME_USER1 = "john.doe";
+
+    private UserSummaryObjectMother() { }
 
     public static UserSummary user1()
     {

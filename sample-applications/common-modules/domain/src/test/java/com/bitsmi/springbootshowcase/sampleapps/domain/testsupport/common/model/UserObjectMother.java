@@ -5,10 +5,12 @@ import com.bitsmi.springbootshowcase.sampleapps.domain.common.model.User;
 import java.time.LocalDateTime;
 import java.util.Collections;
 
-public class UserObjectMother
+public final class UserObjectMother
 {
     public static final Long ID_USER1 = 1001L;
     public static final String USERNAME_USER1 = "john.doe";
+
+    private UserObjectMother() { }
 
     public static User user1()
     {

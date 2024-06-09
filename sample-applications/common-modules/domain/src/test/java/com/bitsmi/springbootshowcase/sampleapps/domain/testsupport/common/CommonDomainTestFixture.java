@@ -3,11 +3,11 @@ package com.bitsmi.springbootshowcase.sampleapps.domain.testsupport.common;
 import com.bitsmi.springbootshowcase.sampleapps.domain.testsupport.common.model.UserSummaryObjectMother;
 import com.bitsmi.springbootshowcase.sampleapps.domain.testsupport.common.model.UserObjectMother;
 
-public interface DomainCommonTestFixture
+public interface CommonDomainTestFixture
 {
-    static DomainCommonTestFixture getDefaultInstance()
+    static CommonDomainTestFixture getDefaultInstance()
     {
-        return DefaultDomainCommonTestFixture.INSTANCE;
+        return DefaultCommonDomainTestFixture.INSTANCE;
     }
 
     default void configureUserDomainQueryServiceMocker(UserDomainQueryServiceMocker mocker)
@@ -17,10 +17,10 @@ public interface DomainCommonTestFixture
                 .whenFindUserSummaryByUsernameThenReturnUser(UserSummaryObjectMother.USERNAME_USER1, UserSummaryObjectMother.user1());
     }
 
-    final class DefaultDomainCommonTestFixture implements DomainCommonTestFixture
+    final class DefaultCommonDomainTestFixture implements CommonDomainTestFixture
     {
-        private static final DefaultDomainCommonTestFixture INSTANCE = new DefaultDomainCommonTestFixture();
+        private static final DefaultCommonDomainTestFixture INSTANCE = new DefaultCommonDomainTestFixture();
 
-        private DefaultDomainCommonTestFixture() { }
+        private DefaultCommonDomainTestFixture() { }
     }
 }

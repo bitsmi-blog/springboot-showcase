@@ -14,12 +14,12 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class UserDomainQueryServiceMocker
+public final class UserDomainQueryServiceMocker
 {
     private final IUserDomainQueryService mockedService;
-    private final DomainCommonTestFixture testFixture;
+    private final CommonDomainTestFixture testFixture;
 
-    private UserDomainQueryServiceMocker(IUserDomainQueryService serviceInstance, DomainCommonTestFixture testFixture)
+    private UserDomainQueryServiceMocker(IUserDomainQueryService serviceInstance, CommonDomainTestFixture testFixture)
     {
         if(!Mockito.mockingDetails(serviceInstance).isMock()) {
             throw new IllegalArgumentException("Service instance must be a mock");
@@ -33,11 +33,11 @@ public class UserDomainQueryServiceMocker
         return mocker(null);
     }
 
-    public static UserDomainQueryServiceMocker mocker(DomainCommonTestFixture testFixture)
+    public static UserDomainQueryServiceMocker mocker(CommonDomainTestFixture testFixture)
     {
         return new UserDomainQueryServiceMocker(
                 mock(IUserDomainQueryService.class),
-                ObjectUtils.defaultIfNull(testFixture, DomainCommonTestFixture.getDefaultInstance())
+                ObjectUtils.defaultIfNull(testFixture, CommonDomainTestFixture.getDefaultInstance())
         );
     }
 
@@ -46,11 +46,11 @@ public class UserDomainQueryServiceMocker
         return fromMockedInstance(serviceInstance, null);
     }
 
-    public static UserDomainQueryServiceMocker fromMockedInstance(IUserDomainQueryService serviceInstance, DomainCommonTestFixture testScenario)
+    public static UserDomainQueryServiceMocker fromMockedInstance(IUserDomainQueryService serviceInstance, CommonDomainTestFixture testScenario)
     {
         return new UserDomainQueryServiceMocker(
                 serviceInstance,
-                ObjectUtils.defaultIfNull(testScenario, DomainCommonTestFixture.getDefaultInstance())
+                ObjectUtils.defaultIfNull(testScenario, CommonDomainTestFixture.getDefaultInstance())
         );
     }
 
