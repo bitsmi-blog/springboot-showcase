@@ -9,5 +9,5 @@ import org.mapstruct.Mapper;
 )
 public interface IUserSummaryModelMapper
 {
-    UserSummary fromProjection(IUserSummaryProjection userSummaryProjection);
+    UserSummary mapDomainFromSummaryProjection(IUserSummaryProjection userSummaryProjection);
 }

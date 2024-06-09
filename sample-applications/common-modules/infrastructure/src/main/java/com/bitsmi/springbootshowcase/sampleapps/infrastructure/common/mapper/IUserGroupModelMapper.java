@@ -12,5 +12,5 @@ import org.mapstruct.Mapper;
 )
 public interface IUserGroupModelMapper
 {
-    UserGroup fromEntity(UserGroupEntity entity);
+    UserGroup mapDomainFromEntity(UserGroupEntity entity);
 }

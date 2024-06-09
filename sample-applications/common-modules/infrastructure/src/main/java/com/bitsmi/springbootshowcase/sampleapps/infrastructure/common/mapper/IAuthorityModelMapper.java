@@ -7,5 +7,5 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring", implementationName = "AuthorityModelMapperImpl")
 public interface IAuthorityModelMapper
 {
-    Authority fromEntity(AuthorityEntity entity);
+    Authority mapDomainFromEntity(AuthorityEntity entity);
 }

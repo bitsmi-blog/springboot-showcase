@@ -13,8 +13,8 @@ import org.mapstruct.Mapping;
 )
 public interface IUserModelMapper
 {
-    User fromEntity(UserEntity entity);
-    UserEntity fromDomain(User domain);
+    User mapDomainFromEntity(UserEntity entity);
+    UserEntity mapEntityFromDomain(User domain);
     @Mapping(target = "groups", ignore = true)
-    UserEntity fromDomainExcludingUserGroups(User domain);
+    UserEntity mapEntityFromDomainExcludingUserGroups(User domain);
 }

@@ -43,21 +43,21 @@ public class UserRepositoryServiceImpl implements IUserRepositoryService
     public Optional<User> findUserByUsername(@NotNull String username)
     {
         return userRepository.findByUsername(username)
-                .map(userModelMapper::fromEntity);
+                .map(userModelMapper::mapDomainFromEntity);
     }
 
     @Override
     public Optional<UserSummary> findUserSummaryByUsername(@NotNull String username)
     {
         return userRepository.findSummaryProjectionByUsername(username)
-                .map(userSummaryModelMapper::fromProjection);
+                .map(userSummaryModelMapper::mapDomainFromSummaryProjection);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public User createUser(@NotNull User user)
     {
-        UserEntity entity = userModelMapper.fromDomainExcludingUserGroups(user);
+        UserEntity entity = userModelMapper.mapEntityFromDomainExcludingUserGroups(user);
         Set<UserGroupEntity> groupEntities = user.groups()
                 .stream()
                 .map(UserGroup::name)
@@ -67,6 +67,6 @@ public class UserRepositoryServiceImpl implements IUserRepositoryService
         entity.setGroups(groupEntities);
         entity = userRepository.save(entity);
 
-        return userModelMapper.fromEntity(entity);
+        return userModelMapper.mapDomainFromEntity(entity);
     }
 }

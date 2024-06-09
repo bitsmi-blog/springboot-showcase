@@ -32,6 +32,6 @@ public class UserGroupRepositoryServiceImpl implements IUserGroupRepositoryServi
     public Optional<UserGroup> findUserGroupByName(@NotNull String name)
     {
         return userGroupRepository.findByName(name)
-                .map(userGroupModelMapper::fromEntity);
+                .map(userGroupModelMapper::mapDomainFromEntity);
     }
 }
