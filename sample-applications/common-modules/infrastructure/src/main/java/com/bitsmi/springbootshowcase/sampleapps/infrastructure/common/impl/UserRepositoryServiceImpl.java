@@ -8,10 +8,9 @@ import com.bitsmi.springbootshowcase.sampleapps.infrastructure.common.entity.Use
 import com.bitsmi.springbootshowcase.sampleapps.infrastructure.common.entity.UserGroupEntity;
 import com.bitsmi.springbootshowcase.sampleapps.infrastructure.common.mapper.IUserModelMapper;
 import com.bitsmi.springbootshowcase.sampleapps.infrastructure.common.mapper.IUserSummaryModelMapper;
-import com.bitsmi.springbootshowcase.sampleapps.infrastructure.common.repository.IUserGroupRepository;
-import com.bitsmi.springbootshowcase.sampleapps.infrastructure.common.repository.IUserRepository;
+import com.bitsmi.springbootshowcase.sampleapps.infrastructure.common.repository.UserGroupRepository;
+import com.bitsmi.springbootshowcase.sampleapps.infrastructure.common.repository.UserRepository;
 import jakarta.validation.constraints.NotNull;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
@@ -24,14 +23,22 @@ import java.util.stream.Collectors;
 @Validated
 public class UserRepositoryServiceImpl implements IUserRepositoryService
 {
-    @Autowired
-    private IUserRepository userRepository;
-    @Autowired
-    private IUserGroupRepository userGroupRepository;
-    @Autowired
-    private IUserModelMapper userModelMapper;
-    @Autowired
-    private IUserSummaryModelMapper userSummaryModelMapper;
+    private final UserRepository userRepository;
+    private final UserGroupRepository userGroupRepository;
+    private final IUserModelMapper userModelMapper;
+    private final IUserSummaryModelMapper userSummaryModelMapper;
+
+    public UserRepositoryServiceImpl(
+            UserRepository userRepository,
+            UserGroupRepository userGroupRepository,
+            IUserModelMapper userModelMapper,
+            IUserSummaryModelMapper userSummaryModelMapper
+    ) {
+        this.userRepository = userRepository;
+        this.userGroupRepository = userGroupRepository;
+        this.userModelMapper = userModelMapper;
+        this.userSummaryModelMapper = userSummaryModelMapper;
+    }
 
     @Override
     public Long countAllUsers()

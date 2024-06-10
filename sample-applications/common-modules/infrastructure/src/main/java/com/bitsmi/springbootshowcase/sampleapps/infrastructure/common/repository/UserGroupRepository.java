@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-public interface IUserGroupRepository extends JpaRepository<UserGroupEntity, Long>
+public interface UserGroupRepository extends JpaRepository<UserGroupEntity, Long>
 {
     Optional<UserGroupEntity> findByName(String name);
 }

@@ -4,7 +4,7 @@ import com.bitsmi.springbootshowcase.sampleapps.domain.common.model.UserGroup;
 import com.bitsmi.springbootshowcase.sampleapps.domain.common.spi.IUserGroupRepositoryService;
 import com.bitsmi.springbootshowcase.sampleapps.infrastructure.InfrastructureConstants;
 import com.bitsmi.springbootshowcase.sampleapps.infrastructure.common.mapper.IUserGroupModelMapper;
-import com.bitsmi.springbootshowcase.sampleapps.infrastructure.common.repository.IUserGroupRepository;
+import com.bitsmi.springbootshowcase.sampleapps.infrastructure.common.repository.UserGroupRepository;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -16,11 +16,11 @@ import java.util.Optional;
 @Validated
 public class UserGroupRepositoryServiceImpl implements IUserGroupRepositoryService
 {
-    private final IUserGroupRepository userGroupRepository;
+    private final UserGroupRepository userGroupRepository;
     private final IUserGroupModelMapper userGroupModelMapper;
 
     public UserGroupRepositoryServiceImpl(
-            IUserGroupRepository userGroupRepository,
+            UserGroupRepository userGroupRepository,
             IUserGroupModelMapper userGroupModelMapper
     ) {
         this.userGroupRepository = userGroupRepository;
