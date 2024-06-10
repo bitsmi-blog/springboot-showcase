@@ -1,5 +1,8 @@
 * Example guides
 
+** Clients
+*** xref:clients/openfeign.adoc[OpenFeign]
+
 ** Sample applications
 *** xref:sample-applications/web-mvc.adoc[Web MVC]
 

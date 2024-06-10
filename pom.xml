@@ -41,6 +41,8 @@
     </properties>
 
     <modules>
+        <module>clients/openfeign</module>
+
         <module>sample-applications/common-modules/domain</module>
         <module>sample-applications/common-modules/infrastructure</module>
         <module>sample-applications/common-modules/application</module>
