@@ -10,6 +10,8 @@ content:
 antora:
   extensions:
   - '@antora/collector-extension'
+  - require: '@antora/lunr-extension'
+    languages: [ en, es ]
 asciidoc:
   attributes:
     experimental: true

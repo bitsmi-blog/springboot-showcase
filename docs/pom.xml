@@ -16,6 +16,7 @@
 
     <dependencies>
         <!-- Include source dependencies, so they can be unpacked at target and accessed by antora as additional resources
+             Also, uncomment move-additional-docs configuration.
              E.G.
              <dependency>
                 <groupId>com.bitsmi.springboot-showcase</groupId>
@@ -78,11 +79,13 @@
                             <goal>run</goal>
                         </goals>
                         <configuration>
-                            <target>
+                            <!-- TODO Uncomment when the source dependencies included -->
+                            <!--<target>
                                 <move todir="${project.build.directory}/additional-sources">
                                     <fileset dir="${project.build.directory}/unpackaged-sources"/>
+                                    <failonerror>false</failonerror>
                                 </move>
-                            </target>
+                            </target>-->
                         </configuration>
                     </execution>
                 </executions>

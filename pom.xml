@@ -403,6 +403,7 @@
 									<argument>antora</argument>
 									<argument>antora-playbook.yml</argument>
 									<argument>--to-dir=target/generated-docs</argument>
+                                    <argument>--stacktrace</argument>
 								</arguments>
 							</configuration>
 						</execution>
