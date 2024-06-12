@@ -14,6 +14,11 @@
   <nav class="navbar">
     <div class="navbar-brand">
       <a class="navbar-item" href="../../..">Springboot-Showcase // Docs</a>
+      <div class="navbar-item search hide-for-print">
+        <div id="search-field" class="field">
+          <input id="search-input" type="text" placeholder="Search the docs">
+        </div>
+      </div>
       <button class="navbar-burger" aria-controls="topbar-nav" aria-expanded="false" aria-label="Toggle main menu">
         <span></span>
         <span></span>
@@ -38,6 +43,55 @@
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
     <a class="nav-link" href="../../index.html">Index</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Example guides</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Clients</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../example-guides/clients/openfeign.html">OpenFeign</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Sample applications</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../example-guides/sample-applications/web-mvc.html">Web MVC</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Spring Core</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../example-guides/spring-core/aop.html">AOP</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../example-guides/spring-core/dependency-injection.html">Dependency injection</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Spring Data JPA</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../example-guides/spring-data-jpa/repository-extension.html">Repository extension</a>
+  </li>
+</ul>
+  </li>
+</ul>
   </li>
 </ul>
   </li>
@@ -165,7 +219,7 @@ In production code this not needed as it&#8217;s auto-configured by Spring throu
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package com.bitsmi.springbootshowcase.application.dummy.aop;
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package com.bitsmi.springbootshowcase.sampleapps.application.dummy.aop;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -181,7 +235,7 @@ public class DummyAspect
 {
     private static final Logger LOGGER = LoggerFactory.getLogger(DummyAspect.class);
 
-    @Pointcut("within(com.bitsmi.springbootshowcase.application.dummy..*)")
+    @Pointcut("within(com.bitsmi.springbootshowcase.sampleapps.application.dummy..*)")
     public void dummyPackagePointcut() { }
 
     @Pointcut("within(@org.springframework.stereotype.Service *)")
@@ -206,7 +260,7 @@ public class DummyAspect
         return result;
     }
 
-    @Before("execution(* com.bitsmi.springbootshowcase.application.dummy.ISampleApplicationService.*(..))")
+    @Before("execution(* com.bitsmi.springbootshowcase.sampleapps.application.dummy.ISampleApplicationService.*(..))")
     public void beforeDummyServiceMethodExecution(JoinPoint joinPoint)
     {
         LOGGER.info("[beforeDummyApplicationServiceMethodExecution] Aspect executed before ({})", joinPoint.getSignature().getName());
@@ -219,9 +273,9 @@ public class DummyAspect
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package com.bitsmi.springbootshowcase.application.dummy.config;
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">package com.bitsmi.springbootshowcase.sampleapps.application.dummy.config;
 
-import com.bitsmi.springbootshowcase.application.dummy.aop.DummyAspect;
+import com.bitsmi.springbootshowcase.sampleapps.application.dummy.aop.DummyAspect;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -252,5 +306,9 @@ public class DummyAspectConfig
 </footer>
 <script id="site-script" src="../../../_/js/site.js" data-ui-root-path="../../../_"></script>
 <script async src="../../../_/js/vendor/highlight.js"></script>
+<script src="../../../_/js/vendor/lunr.js"></script>
+<script src="../../../_/js/vendor/lunr-languages.js"></script>
+<script src="../../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../../.." data-snippet-length="100" data-stylesheet="../../../_/css/search.css"></script>
+<script async src="../../../search-index.js"></script>
   </body>
 </html>
