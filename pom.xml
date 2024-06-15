@@ -41,6 +41,7 @@
     </properties>
 
     <modules>
+        <module>clients/fluent-client</module>
         <module>clients/openfeign</module>
 
         <module>sample-applications/common-modules/domain</module>

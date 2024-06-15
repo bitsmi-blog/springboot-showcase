@@ -35,7 +35,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ControllerIntegrationTest
-public class JwtAuthIntTests
+class JwtAuthIntTests
 {
     @Autowired
     private WebApplicationContext context;
@@ -51,12 +51,18 @@ public class JwtAuthIntTests
 
     private MockMvc mockMvc;
 
-    /*---------------------------*
-     * GET SCHEMAS
-     *---------------------------*/
+    @BeforeEach
+    void setup()
+    {
+        this.mockMvc = MockMvcBuilders
+                .webAppContextSetup(this.context)
+                .apply(springSecurity(springSecurityFilterChain))
+                .build();
+    }
+
     @Test
     @DisplayName("Auth should return JWT token given successful login")
-    public void authTest1() throws Exception
+    void authTest1() throws Exception
     {
         final String expectedUsername = "john.doe";
         final String expectedPassword = "password.john.doe";
@@ -77,7 +83,7 @@ public class JwtAuthIntTests
 
     @Test
     @DisplayName("Auth should return Unauthorized error code given wrong credentials")
-    public void authTest2() throws Exception
+    void authTest2() throws Exception
     {
         this.mockMvc.perform(post("/auth")
                         .header("Authorization", "Basic " + new String(Base64.encodeBase64("john.doe:not_valid".getBytes(StandardCharsets.UTF_8), false))))
@@ -86,7 +92,7 @@ public class JwtAuthIntTests
 
     @Test
     @DisplayName("Filter should authorize a request given a valid JWT token")
-    public void jwtTokenTest1() throws Exception
+    void jwtTokenTest1() throws Exception
     {
         final String expectedUsername = "john.doe";
         final String token = JWT.create()
@@ -107,7 +113,7 @@ public class JwtAuthIntTests
 
     @Test
     @DisplayName("Filter should deny a request given an invalid JWT token")
-    public void jwtTokenTest2() throws Exception
+    void jwtTokenTest2() throws Exception
     {
         final String expectedUsername = "john.doe";
         final String token = JWT.create()
@@ -133,14 +139,5 @@ public class JwtAuthIntTests
     static class TestConfig
     {
 
-    }
-
-    @BeforeEach
-    public void setup()
-    {
-        this.mockMvc = MockMvcBuilders
-                .webAppContextSetup(this.context)
-                .apply(springSecurity(springSecurityFilterChain))
-                .build();
     }
 }

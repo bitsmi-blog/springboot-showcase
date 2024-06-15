@@ -1,0 +1,22 @@
+{
+    "priority": 10,
+    "request": {
+        "method": "PUT",
+        "urlPathTemplate": "/api/category/{categoryId}",
+        "bodyPatterns": [
+            {
+                "equalToJson": {
+                    "externalId": "category-1",
+                    "name": "Modified test category 1"
+                }
+            }
+        ]
+    },
+    "response": {
+        "status": 201,
+        "headers": {
+            "Content-Type": "application/json"
+        },
+        "bodyFileName": "api/inventory/put_update_category_{{request.path.categoryId}}_body.json"
+    }
+}
