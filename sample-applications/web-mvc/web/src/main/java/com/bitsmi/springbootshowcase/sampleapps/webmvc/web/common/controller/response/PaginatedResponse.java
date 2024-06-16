@@ -8,7 +8,7 @@ import java.util.Optional;
 
 @Builder(toBuilder = true, builderClassName = "Builder")
 public record PaginatedResponse<T>(
-        List<T> content,
+        List<T> data,
         Pagination pagination,
         int pageCount,
         int totalPages,
