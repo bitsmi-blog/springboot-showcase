@@ -1,4 +1,4 @@
-package test.inventory;
+package com.bitsmi.springbootshowcase.clients.fluentclient.test.inventory;
 
 import com.bitsmi.springbootshowcase.clients.fluentclient.ServiceClient;
 import com.bitsmi.springbootshowcase.clients.fluentclient.common.response.PaginatedResponse;
@@ -7,7 +7,6 @@ import com.bitsmi.springbootshowcase.clients.fluentclient.inventory.request.Cate
 import com.bitsmi.springbootshowcase.clients.fluentclient.inventory.response.Category;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -19,7 +18,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Tag("ManualTest")
-public class InventoryApiWiremockDockerTests
+public class InventoryApiWiremockDockerManualTests
 {
     private static final String HOST = "http://localhost:8100";
 

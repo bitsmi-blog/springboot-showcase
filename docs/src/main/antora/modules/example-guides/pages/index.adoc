@@ -2,6 +2,7 @@
 
 == Clients
 
+* xref:clients/fluent-client.adoc[Fluent API client]
 * xref:clients/openfeign.adoc[OpenFeign]
 
 == Sample applications

@@ -1,4 +1,4 @@
-package test.info;
+package com.bitsmi.springbootshowcase.clients.fluentclient.test.info;
 
 import com.bitsmi.springbootshowcase.clients.fluentclient.ServiceClient;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Tag("ManualTest")
-public class InfoApiWiremockDockerTests
+public class InfoApiWiremockDockerManualTests
 {
     private static final String HOST = "http://localhost:8100";
     private ServiceClient client;
