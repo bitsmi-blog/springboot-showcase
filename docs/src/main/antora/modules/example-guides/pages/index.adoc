@@ -7,6 +7,7 @@
 
 == Sample applications
 
+* xref:sample-applications/kafka.adoc[Kafka]
 * xref:sample-applications/web-mvc.adoc[Web MVC]
 
 == Spring Core

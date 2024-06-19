@@ -29,7 +29,6 @@ import org.springframework.security.config.annotation.web.configurers.SessionMan
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
@@ -68,13 +67,14 @@ public class WebSecurityConfig
     // Default order = last
     public SecurityFilterChain securityFilterChainDefault(final HttpSecurity http,
                                                           final JWTProperties jwtProperties,
-                                                          final UserDetailsService userDetailsService) throws Exception
+                                                          final UserDetailsService userDetailsService,
+                                                          final PasswordEncoder passwordEncoder) throws Exception
     {
         http.securityMatcher("/api/**")
                 .authorizeHttpRequests(this::authorizeHttpRequestsDefault)
                 .csrf(this::csrf)
                 .exceptionHandling(this::exceptionHandlingDefault)
-                .addFilterBefore(new JWTAuthorizationFilter(authenticationManager(userDetailsService, passwordEncoder()),
+                .addFilterBefore(new JWTAuthorizationFilter(authenticationManager(userDetailsService, passwordEncoder),
                         userDetailsService,
                         jwtProperties), UsernamePasswordAuthenticationFilter.class)
                 .sessionManagement(this::sessionManagement);
@@ -144,12 +144,8 @@ public class WebSecurityConfig
         customizer.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 
-    @Bean
-    PasswordEncoder passwordEncoder()
-    {
-        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
-    }
-
+    /* PasswordEncoder is defined in Infrastructure module because is needed in domain layer
+     */
     @Bean
     AuthenticationManager authenticationManager(UserDetailsService myUserDetailsService, PasswordEncoder encoder)
     {

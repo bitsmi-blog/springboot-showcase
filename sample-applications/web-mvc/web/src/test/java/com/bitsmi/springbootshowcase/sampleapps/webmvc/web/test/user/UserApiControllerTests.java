@@ -1,6 +1,6 @@
 package com.bitsmi.springbootshowcase.sampleapps.webmvc.web.test.user;
 
-import com.bitsmi.springbootshowcase.sampleapps.application.common.IUserSummaryApplicationQuery;
+import com.bitsmi.springbootshowcase.sampleapps.application.common.UserSummaryApplicationQuery;
 import com.bitsmi.springbootshowcase.sampleapps.domain.common.model.UserSummary;
 import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.common.service.IAuthenticationPrincipalService;
 import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.user.controller.UserApiController;
@@ -25,7 +25,7 @@ public class UserApiControllerTests
     @Mock
     private IAuthenticationPrincipalService authenticationPrincipalService;
     @Mock
-    private IUserSummaryApplicationQuery userSummaryApplicationQuery;
+    private UserSummaryApplicationQuery userSummaryApplicationQuery;
 
     @InjectMocks
     private UserApiController userApiController;

@@ -1,0 +1,43 @@
+version: '3.8'
+name: springboot-showcase-sampleapps-kafka-dev
+
+networks:
+  application-network:
+    external: false
+
+services:
+  db:
+    image: postgres:16.0-alpine
+    container_name: showcase-db
+    ports:
+      - '5432:5432'
+    environment:
+      - POSTGRES_USER=showcase-db
+      - POSTGRES_PASSWORD=showcase-db
+    labels:
+      org.springframework.boot.service-connection: postgres
+  broker:
+    # Kafka image that doesn't need zookeeper (KRaft mode)
+    image: confluentinc/confluent-local:7.5.3
+    hostname: broker
+    container_name: broker
+    ports:
+      - "8082:8082"
+      - "9092:9092"
+    environment:
+      KAFKA_ADVERTISED_LISTENERS: 'PLAINTEXT://broker:29092,PLAINTEXT_HOST://localhost:9092'
+      KAFKA_CONTROLLER_QUORUM_VOTERS: '1@broker:29093'
+      KAFKA_LISTENERS: 'PLAINTEXT://broker:29092,CONTROLLER://broker:29093,PLAINTEXT_HOST://0.0.0.0:9092'
+    networks:
+      - application-network
+  kafka-ui:
+    container_name: kafka-ui
+    image: provectuslabs/kafka-ui:v0.7.1
+    ports:
+      - 8090:8080
+    environment:
+      DYNAMIC_CONFIG_ENABLED: true
+    volumes:
+      - ./kafka-ui-config-DEV.yml:/etc/kafkaui/dynamic_config.yaml
+    networks:
+      - application-network
