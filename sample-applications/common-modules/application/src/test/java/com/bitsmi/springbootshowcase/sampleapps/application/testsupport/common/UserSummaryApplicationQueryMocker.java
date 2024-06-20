@@ -1,6 +1,6 @@
 package com.bitsmi.springbootshowcase.sampleapps.application.testsupport.common;
 
-import com.bitsmi.springbootshowcase.sampleapps.application.common.IUserSummaryApplicationQuery;
+import com.bitsmi.springbootshowcase.sampleapps.application.common.UserSummaryApplicationQuery;
 import com.bitsmi.springbootshowcase.sampleapps.domain.common.model.UserSummary;
 import org.apache.commons.lang3.ObjectUtils;
 import org.mockito.Mockito;
@@ -15,17 +15,17 @@ import static org.mockito.Mockito.when;
 
 public final class UserSummaryApplicationQueryMocker
 {
-    private final IUserSummaryApplicationQuery mockedQuery;
-    private final CommonApplicationTestFixture testScenario;
+    private final UserSummaryApplicationQuery mockedQuery;
+    private final CommonApplicationTestFixture testFixture;
 
-    private UserSummaryApplicationQueryMocker(IUserSummaryApplicationQuery queryInstance, CommonApplicationTestFixture testScenario)
+    private UserSummaryApplicationQueryMocker(UserSummaryApplicationQuery queryInstance, CommonApplicationTestFixture testFixture)
     {
         if(!Mockito.mockingDetails(queryInstance).isMock()) {
             throw new IllegalArgumentException("Query instance must be a mock");
         }
 
         this.mockedQuery = queryInstance;
-        this.testScenario = testScenario;
+        this.testFixture = testFixture;
     }
 
     public static UserSummaryApplicationQueryMocker mocker()
@@ -33,34 +33,34 @@ public final class UserSummaryApplicationQueryMocker
         return mocker(null);
     }
 
-    public static UserSummaryApplicationQueryMocker mocker(CommonApplicationTestFixture testScenario)
+    public static UserSummaryApplicationQueryMocker mocker(CommonApplicationTestFixture testFixture)
     {
         return new UserSummaryApplicationQueryMocker(
-                mock(IUserSummaryApplicationQuery.class),
-                ObjectUtils.defaultIfNull(testScenario, CommonApplicationTestFixture.getDefaultInstance())
+                mock(UserSummaryApplicationQuery.class),
+                ObjectUtils.defaultIfNull(testFixture, CommonApplicationTestFixture.getDefaultInstance())
         );
     }
 
-    public static UserSummaryApplicationQueryMocker fromMockedInstance(IUserSummaryApplicationQuery queryInstance)
+    public static UserSummaryApplicationQueryMocker fromMockedInstance(UserSummaryApplicationQuery queryInstance)
     {
         return fromMockedInstance(queryInstance, null);
     }
 
-    public static UserSummaryApplicationQueryMocker fromMockedInstance(IUserSummaryApplicationQuery queryInstance, CommonApplicationTestFixture testScenario)
+    public static UserSummaryApplicationQueryMocker fromMockedInstance(UserSummaryApplicationQuery queryInstance, CommonApplicationTestFixture testFixture)
     {
         return new UserSummaryApplicationQueryMocker(
                 queryInstance,
-                ObjectUtils.defaultIfNull(testScenario, CommonApplicationTestFixture.getDefaultInstance())
+                ObjectUtils.defaultIfNull(testFixture, CommonApplicationTestFixture.getDefaultInstance())
         );
     }
 
     @BeforeTestExecution
     public void reset()
     {
-        testScenario.configureUserDomainQueryServiceMocker(this);
+        testFixture.configureUserDomainQueryServiceMocker(this);
     }
 
-    public UserSummaryApplicationQueryMocker configureMock(Consumer<IUserSummaryApplicationQuery> mockConsumer)
+    public UserSummaryApplicationQueryMocker configureMock(Consumer<UserSummaryApplicationQuery> mockConsumer)
     {
         mockConsumer.accept(mockedQuery);
         return this;

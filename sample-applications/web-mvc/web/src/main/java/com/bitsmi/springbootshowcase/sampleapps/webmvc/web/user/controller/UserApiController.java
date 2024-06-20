@@ -1,6 +1,6 @@
 package com.bitsmi.springbootshowcase.sampleapps.webmvc.web.user.controller;
 
-import com.bitsmi.springbootshowcase.sampleapps.application.common.IUserSummaryApplicationQuery;
+import com.bitsmi.springbootshowcase.sampleapps.application.common.UserSummaryApplicationQuery;
 import com.bitsmi.springbootshowcase.sampleapps.domain.common.UserConstants;
 import com.bitsmi.springbootshowcase.sampleapps.domain.common.model.UserSummary;
 import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.common.service.IAuthenticationPrincipalService;
@@ -24,11 +24,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserApiController
 {
     private final IAuthenticationPrincipalService authenticationPrincipalService;
-    private final IUserSummaryApplicationQuery userSummaryApplicationQuery;
+    private final UserSummaryApplicationQuery userSummaryApplicationQuery;
 
     public UserApiController(
             IAuthenticationPrincipalService authenticationPrincipalService,
-            IUserSummaryApplicationQuery userSummaryApplicationQuery
+            UserSummaryApplicationQuery userSummaryApplicationQuery
     ) {
         this.authenticationPrincipalService = authenticationPrincipalService;
         this.userSummaryApplicationQuery = userSummaryApplicationQuery;

@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 // @SpringBootApplication == { @Configuration @EnableAutoConfiguration @ComponentScan }
 @Configuration
 @EnableAutoConfiguration
-@ComponentScan(basePackageClasses = { IMainPackage.class })
+@ComponentScan(basePackageClasses = { MainPackage.class })
 public class MainProgram
 {
     public static void main(String...args) throws Exception

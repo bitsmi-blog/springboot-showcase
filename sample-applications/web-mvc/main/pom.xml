@@ -125,7 +125,7 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
-					<mainClass>com.bitsmi.springbootshowcase.sampleapps.main.MainProgram</mainClass>
+					<mainClass>com.bitsmi.springbootshowcase.sampleapps.webmvc.main.MainProgram</mainClass>
 					<layers>
 						<enabled>true</enabled>
 					</layers>
