@@ -66,6 +66,8 @@ class ProductServiceSpringValidationIntTests
                 .categories(List.of(
                         // Validation fail: Missing name
                         CategoryDto.builder().externalId("category-1").build(),
+                        CategoryDto.builder().externalId("category-2").name("Category 2").build(),
+                        // Validation fail: Non unique
                         CategoryDto.builder().externalId("category-2").name("Category 2").build()
                 ))
                 .quantity(100)
@@ -82,7 +84,8 @@ class ProductServiceSpringValidationIntTests
                 .containsExactlyInAnyOrder(
                         "createProduct.productDto.externalId: ExternalId must not be blank",
                         "createProduct.productDto.availableSince: AvailableSince must be a present or past date",
-                        "createProduct.productDto.categories[0].name: Name must not be null"
+                        "createProduct.productDto.categories[0].name: Name must not be null",
+                        "createProduct.productDto.categories: Values must be unique: category-2"
                 );
     }
 

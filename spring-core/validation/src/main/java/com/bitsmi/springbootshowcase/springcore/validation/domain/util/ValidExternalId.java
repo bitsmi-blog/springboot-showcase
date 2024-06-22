@@ -1,4 +1,4 @@
-package com.bitsmi.springbootshowcase.sampleapps.domain.common.util;
+package com.bitsmi.springbootshowcase.springcore.validation.domain.util;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
@@ -8,12 +8,12 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Target({ ElementType.METHOD, ElementType.FIELD, ElementType.PARAMETER })
+@Target({ ElementType.FIELD, ElementType.PARAMETER })
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = ValidToUpdateValidator.class)
-public @interface ValidToUpdate
+@Constraint(validatedBy = ExternalIdValidator.class)
+public @interface ValidExternalId
 {
-    String message() default "Invalid updatable record";
+    String message() default "Invalid External Id";
 
     Class<?>[] groups() default {};
 

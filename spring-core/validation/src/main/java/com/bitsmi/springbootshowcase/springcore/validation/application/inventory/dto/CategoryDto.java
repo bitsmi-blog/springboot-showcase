@@ -3,7 +3,6 @@ package com.bitsmi.springbootshowcase.springcore.validation.application.inventor
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.util.Objects;
 
@@ -18,10 +17,7 @@ public record CategoryDto(
     @Override
     public String toString()
     {
-        return new ToStringBuilder(this)
-                .append("externalId", externalId)
-                .append("name", name)
-                .build();
+        return externalId;
     }
 
     @Override

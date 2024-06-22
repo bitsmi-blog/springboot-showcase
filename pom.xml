@@ -27,6 +27,7 @@
         <plugin.version.maven-source-plugin>3.3.1</plugin.version.maven-source-plugin>
         <plugin.version.maven-surefire-plugin>3.2.1</plugin.version.maven-surefire-plugin>
 
+        <dependency.version.commons-beanutils>1.9.4</dependency.version.commons-beanutils>
         <dependency.version.commons-io>2.15.1</dependency.version.commons-io>
         <dependency.version.java-jwt>4.4.0</dependency.version.java-jwt>
         <dependency.version.lombok>1.18.30</dependency.version.lombok>
@@ -79,6 +80,11 @@
             </dependency>
 
             <!-- UTILS -->
+            <dependency>
+                <groupId>commons-beanutils</groupId>
+                <artifactId>commons-beanutils</artifactId>
+                <version>${dependency.version.commons-beanutils}</version>
+            </dependency>
             <dependency>
                 <groupId>commons-io</groupId>
                 <artifactId>commons-io</artifactId>
