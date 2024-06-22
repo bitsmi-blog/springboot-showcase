@@ -14,3 +14,6 @@
 
 ** Spring Data JPA
 *** xref:spring-data-jpa/repository-extension.adoc[Repository extension]
+
+** Testing
+*** xref:testing/testing.adoc[Testing]

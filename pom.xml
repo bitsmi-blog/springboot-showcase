@@ -57,6 +57,8 @@
 
         <module>spring-data-jpa/repository-extension</module>
 
+        <module>testing</module>
+
         <module>docs</module>
     </modules>
 
