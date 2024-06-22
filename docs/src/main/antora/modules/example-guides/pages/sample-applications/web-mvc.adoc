@@ -12,17 +12,17 @@
 ** Basic authentication
 ** JWT authentication
 * Bean and method parameters validation
-* #TODO# Cache management
+* [ ##TODO## ] Cache management
 * **Spring Data JPA** repositories
 * Metrics
 ** Endpoint metrics
-** #TODO# Custom metrics registration
+** [ ##TODO## ] Custom metrics registration
 * Observability & Tracing
-* #TODO# **Spring HATEOAS** support
+* [ ##TODO## ] **Spring HATEOAS** support
 * Web MVC REST endpoints
 
 === Test
 * H2 in-memory database support for tests
 * Integration tests using **Mock MVC**
 * **Testcontainers** database support (**Postgres**)
-* Test conventions described in #TODO# guide
+* Test conventions described in [ ##TODO## ] guide

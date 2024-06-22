@@ -1,32 +1,26 @@
-package com.bitsmi.springbootshowcase.clients.fluentclient.inventory.response;
+package com.bitsmi.springbootshowcase.springcore.validation.application.inventory.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Builder(toBuilder = true, builderClassName = "Builder")
-public record Product(
-        Long id,
-        @NotNull
+public record CategoryDto(
+        @NotBlank(message = "ExternalId must not be blank")
         String externalId,
-        @NotNull
-        String name,
-        LocalDateTime creationDate,
-        LocalDateTime lastUpdated
+        @NotNull(message = "Name must not be null")
+        String name
 )
 {
     @Override
     public String toString()
     {
         return new ToStringBuilder(this)
-                .append("id", id)
                 .append("externalId", externalId)
                 .append("name", name)
-                .append("creationDate", creationDate)
-                .append("lastUpdated", lastUpdated)
                 .build();
     }
 
@@ -40,7 +34,7 @@ public record Product(
     public boolean equals(Object o)
     {
         return this == o
-                || o instanceof Product other
+                || o instanceof CategoryDto other
                 && Objects.equals(externalId, other.externalId);
     }
 }

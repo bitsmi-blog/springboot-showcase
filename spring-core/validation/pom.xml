@@ -16,12 +16,16 @@
 	<dependencies>
         <!-- SPRING -->
         <dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context</artifactId>			
-		</dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
 
         <!-- UTILS -->
-		<dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>

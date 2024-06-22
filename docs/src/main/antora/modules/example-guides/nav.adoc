@@ -11,6 +11,7 @@
 ** Spring Core
 *** xref:spring-core/aop.adoc[AOP]
 *** xref:spring-core/dependency-injection.adoc[Dependency injection]
+*** xref:spring-core/validation.adoc[Validation]
 
 ** Spring Data JPA
 *** xref:spring-data-jpa/repository-extension.adoc[Repository extension]
