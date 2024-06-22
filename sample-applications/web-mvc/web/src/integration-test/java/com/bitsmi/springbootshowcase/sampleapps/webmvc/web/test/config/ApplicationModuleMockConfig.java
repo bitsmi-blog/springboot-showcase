@@ -1,6 +1,6 @@
 package com.bitsmi.springbootshowcase.sampleapps.webmvc.web.test.config;
 
-import com.bitsmi.springbootshowcase.sampleapps.application.common.IUserCreationApplicationCommand;
+import com.bitsmi.springbootshowcase.sampleapps.application.common.UserCreationApplicationCommand;
 import com.bitsmi.springbootshowcase.sampleapps.application.common.UserSummaryApplicationQuery;
 import com.bitsmi.springbootshowcase.sampleapps.application.testsupport.common.CommonApplicationTestFixture;
 import com.bitsmi.springbootshowcase.sampleapps.application.testsupport.common.UserSummaryApplicationQueryMocker;
@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @MockBean(UserSummaryApplicationQuery.class)
-@MockBean(IUserCreationApplicationCommand.class)
+@MockBean(UserCreationApplicationCommand.class)
 public class ApplicationModuleMockConfig
 {
     @Bean

@@ -7,10 +7,10 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring",
         implementationName = "UserGroupModelMapperImpl",
         uses = {
-            IAuthorityModelMapper.class
+            AuthorityModelMapper.class
         }
 )
-public interface IUserGroupModelMapper
+public interface UserGroupModelMapper
 {
     UserGroup mapDomainFromEntity(UserGroupEntity entity);
 }

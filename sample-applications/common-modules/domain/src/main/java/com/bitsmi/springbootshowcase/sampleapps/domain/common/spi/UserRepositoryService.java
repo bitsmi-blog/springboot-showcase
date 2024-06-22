@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotNull;
 
 import java.util.Optional;
 
-public interface IUserRepositoryService
+public interface UserRepositoryService
 {
     Long countAllUsers();
 

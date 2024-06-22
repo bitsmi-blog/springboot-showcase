@@ -1,7 +1,7 @@
 package com.bitsmi.springbootshowcase.sampleapps.webmvc.web.config;
 
 import com.bitsmi.springbootshowcase.sampleapps.domain.common.util.IgnoreOnComponentScan;
-import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.IWebPackage;
+import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.WebPackage;
 import org.apache.catalina.connector.Connector;
 import org.springframework.boot.autoconfigure.web.servlet.TomcatServletWebServerFactoryCustomizer;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
@@ -16,7 +16,7 @@ import org.springframework.web.servlet.mvc.WebContentInterceptor;
 
 @Configuration
 @ComponentScan(
-        basePackageClasses = { IWebPackage.class },
+        basePackageClasses = { WebPackage.class },
         excludeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION, classes = IgnoreOnComponentScan.class)
 )
 public class WebModuleConfig implements WebMvcConfigurer

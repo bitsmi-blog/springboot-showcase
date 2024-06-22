@@ -1,6 +1,6 @@
 package com.bitsmi.springbootshowcase.sampleapps.webmvc.web.setup.controller;
 
-import com.bitsmi.springbootshowcase.sampleapps.application.common.IUserCreationApplicationCommand;
+import com.bitsmi.springbootshowcase.sampleapps.application.common.UserCreationApplicationCommand;
 import com.bitsmi.springbootshowcase.sampleapps.domain.common.exception.ElementAlreadyExistsException;
 import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.setup.controller.request.CreateAdminUserRequest;
 import jakarta.validation.Valid;
@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class SetupApiController
 {
     @Autowired
-    private IUserCreationApplicationCommand userCreationApplicationCommand;
+    private UserCreationApplicationCommand userCreationApplicationCommand;
 
     @PostMapping(value = "/user")
     @ResponseStatus(HttpStatus.CREATED)

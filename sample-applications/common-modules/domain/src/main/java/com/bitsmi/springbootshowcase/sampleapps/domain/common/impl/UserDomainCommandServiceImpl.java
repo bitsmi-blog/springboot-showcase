@@ -1,25 +1,25 @@
 package com.bitsmi.springbootshowcase.sampleapps.domain.common.impl;
 
-import com.bitsmi.springbootshowcase.sampleapps.domain.common.IUserDomainCommandService;
+import com.bitsmi.springbootshowcase.sampleapps.domain.common.UserDomainCommandService;
 import com.bitsmi.springbootshowcase.sampleapps.domain.common.UserConstants;
 import com.bitsmi.springbootshowcase.sampleapps.domain.common.exception.ElementAlreadyExistsException;
 import com.bitsmi.springbootshowcase.sampleapps.domain.common.model.User;
 import com.bitsmi.springbootshowcase.sampleapps.domain.common.model.UserGroup;
-import com.bitsmi.springbootshowcase.sampleapps.domain.common.spi.IUserGroupRepositoryService;
-import com.bitsmi.springbootshowcase.sampleapps.domain.common.spi.IUserRepositoryService;
+import com.bitsmi.springbootshowcase.sampleapps.domain.common.spi.UserGroupRepositoryService;
+import com.bitsmi.springbootshowcase.sampleapps.domain.common.spi.UserRepositoryService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.nio.CharBuffer;
 import java.util.Set;
 
-public class UserDomainCommandServiceImpl implements IUserDomainCommandService
+public class UserDomainCommandServiceImpl implements UserDomainCommandService
 {
-    private final IUserRepositoryService userRepositoryService;
-    private final IUserGroupRepositoryService userGroupRepositoryService;
+    private final UserRepositoryService userRepositoryService;
+    private final UserGroupRepositoryService userGroupRepositoryService;
     private final PasswordEncoder passwordEncoder;
 
-    public UserDomainCommandServiceImpl(IUserRepositoryService userRepositoryService,
-                                        IUserGroupRepositoryService userGroupRepositoryService,
+    public UserDomainCommandServiceImpl(UserRepositoryService userRepositoryService,
+                                        UserGroupRepositoryService userGroupRepositoryService,
                                         PasswordEncoder passwordEncoder)
     {
         this.userRepositoryService = userRepositoryService;

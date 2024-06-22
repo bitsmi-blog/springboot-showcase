@@ -4,7 +4,7 @@ import com.bitsmi.springbootshowcase.sampleapps.domain.common.model.User;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
-public interface IUserCreationApplicationCommand
+public interface UserCreationApplicationCommand
 {
     User createAdminUser(@NotNull String username, @NotEmpty char[] password);
 }

@@ -3,11 +3,11 @@ package com.bitsmi.springbootshowcase.sampleapps.infrastructure.common.impl;
 import com.bitsmi.springbootshowcase.sampleapps.domain.common.model.User;
 import com.bitsmi.springbootshowcase.sampleapps.domain.common.model.UserGroup;
 import com.bitsmi.springbootshowcase.sampleapps.domain.common.model.UserSummary;
-import com.bitsmi.springbootshowcase.sampleapps.domain.common.spi.IUserRepositoryService;
+import com.bitsmi.springbootshowcase.sampleapps.domain.common.spi.UserRepositoryService;
 import com.bitsmi.springbootshowcase.sampleapps.infrastructure.common.entity.UserEntity;
 import com.bitsmi.springbootshowcase.sampleapps.infrastructure.common.entity.UserGroupEntity;
-import com.bitsmi.springbootshowcase.sampleapps.infrastructure.common.mapper.IUserModelMapper;
-import com.bitsmi.springbootshowcase.sampleapps.infrastructure.common.mapper.IUserSummaryModelMapper;
+import com.bitsmi.springbootshowcase.sampleapps.infrastructure.common.mapper.UserModelMapper;
+import com.bitsmi.springbootshowcase.sampleapps.infrastructure.common.mapper.UserSummaryModelMapper;
 import com.bitsmi.springbootshowcase.sampleapps.infrastructure.common.repository.UserGroupRepository;
 import com.bitsmi.springbootshowcase.sampleapps.infrastructure.common.repository.UserRepository;
 import jakarta.validation.constraints.NotNull;
@@ -21,18 +21,18 @@ import java.util.stream.Collectors;
 
 @Service
 @Validated
-public class UserRepositoryServiceImpl implements IUserRepositoryService
+public class UserRepositoryServiceImpl implements UserRepositoryService
 {
     private final UserRepository userRepository;
     private final UserGroupRepository userGroupRepository;
-    private final IUserModelMapper userModelMapper;
-    private final IUserSummaryModelMapper userSummaryModelMapper;
+    private final UserModelMapper userModelMapper;
+    private final UserSummaryModelMapper userSummaryModelMapper;
 
     public UserRepositoryServiceImpl(
             UserRepository userRepository,
             UserGroupRepository userGroupRepository,
-            IUserModelMapper userModelMapper,
-            IUserSummaryModelMapper userSummaryModelMapper
+            UserModelMapper userModelMapper,
+            UserSummaryModelMapper userSummaryModelMapper
     ) {
         this.userRepository = userRepository;
         this.userGroupRepository = userGroupRepository;

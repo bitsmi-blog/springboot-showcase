@@ -1,9 +1,9 @@
-package com.bitsmi.springbootshowcase.sampleapps.application;
+package com.bitsmi.springbootshowcase.sampleapps.webmvc.web;
 
 /**
  * Marker interface used by {@link org.springframework.context.annotation.ComponentScan} basePackages configurations
  */
-public interface IApplicationPackage
+public interface WebPackage
 {
 
 }

@@ -1,6 +1,6 @@
 package com.bitsmi.springbootshowcase.sampleapps.domain.common.util;
 
-public interface IUpdateValidationSupport
+public interface UpdateValidationSupport
 {
     Long getId();
 }

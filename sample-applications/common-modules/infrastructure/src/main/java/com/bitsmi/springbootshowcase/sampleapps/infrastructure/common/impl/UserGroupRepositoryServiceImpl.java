@@ -1,9 +1,9 @@
 package com.bitsmi.springbootshowcase.sampleapps.infrastructure.common.impl;
 
 import com.bitsmi.springbootshowcase.sampleapps.domain.common.model.UserGroup;
-import com.bitsmi.springbootshowcase.sampleapps.domain.common.spi.IUserGroupRepositoryService;
+import com.bitsmi.springbootshowcase.sampleapps.domain.common.spi.UserGroupRepositoryService;
 import com.bitsmi.springbootshowcase.sampleapps.infrastructure.InfrastructureConstants;
-import com.bitsmi.springbootshowcase.sampleapps.infrastructure.common.mapper.IUserGroupModelMapper;
+import com.bitsmi.springbootshowcase.sampleapps.infrastructure.common.mapper.UserGroupModelMapper;
 import com.bitsmi.springbootshowcase.sampleapps.infrastructure.common.repository.UserGroupRepository;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.cache.annotation.Cacheable;
@@ -14,14 +14,14 @@ import java.util.Optional;
 
 @Service
 @Validated
-public class UserGroupRepositoryServiceImpl implements IUserGroupRepositoryService
+public class UserGroupRepositoryServiceImpl implements UserGroupRepositoryService
 {
     private final UserGroupRepository userGroupRepository;
-    private final IUserGroupModelMapper userGroupModelMapper;
+    private final UserGroupModelMapper userGroupModelMapper;
 
     public UserGroupRepositoryServiceImpl(
             UserGroupRepository userGroupRepository,
-            IUserGroupModelMapper userGroupModelMapper
+            UserGroupModelMapper userGroupModelMapper
     ) {
         this.userGroupRepository = userGroupRepository;
         this.userGroupModelMapper = userGroupModelMapper;

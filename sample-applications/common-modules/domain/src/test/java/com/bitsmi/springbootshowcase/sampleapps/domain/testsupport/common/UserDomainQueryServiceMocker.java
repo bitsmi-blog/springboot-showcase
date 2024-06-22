@@ -1,6 +1,6 @@
 package com.bitsmi.springbootshowcase.sampleapps.domain.testsupport.common;
 
-import com.bitsmi.springbootshowcase.sampleapps.domain.common.IUserDomainQueryService;
+import com.bitsmi.springbootshowcase.sampleapps.domain.common.UserDomainQueryService;
 import com.bitsmi.springbootshowcase.sampleapps.domain.common.model.User;
 import com.bitsmi.springbootshowcase.sampleapps.domain.common.model.UserSummary;
 import org.apache.commons.lang3.ObjectUtils;
@@ -16,10 +16,10 @@ import static org.mockito.Mockito.when;
 
 public final class UserDomainQueryServiceMocker
 {
-    private final IUserDomainQueryService mockedService;
+    private final UserDomainQueryService mockedService;
     private final CommonDomainTestFixture testFixture;
 
-    private UserDomainQueryServiceMocker(IUserDomainQueryService serviceInstance, CommonDomainTestFixture testFixture)
+    private UserDomainQueryServiceMocker(UserDomainQueryService serviceInstance, CommonDomainTestFixture testFixture)
     {
         if(!Mockito.mockingDetails(serviceInstance).isMock()) {
             throw new IllegalArgumentException("Service instance must be a mock");
@@ -36,17 +36,17 @@ public final class UserDomainQueryServiceMocker
     public static UserDomainQueryServiceMocker mocker(CommonDomainTestFixture testFixture)
     {
         return new UserDomainQueryServiceMocker(
-                mock(IUserDomainQueryService.class),
+                mock(UserDomainQueryService.class),
                 ObjectUtils.defaultIfNull(testFixture, CommonDomainTestFixture.getDefaultInstance())
         );
     }
 
-    public static UserDomainQueryServiceMocker fromMockedInstance(IUserDomainQueryService serviceInstance)
+    public static UserDomainQueryServiceMocker fromMockedInstance(UserDomainQueryService serviceInstance)
     {
         return fromMockedInstance(serviceInstance, null);
     }
 
-    public static UserDomainQueryServiceMocker fromMockedInstance(IUserDomainQueryService serviceInstance, CommonDomainTestFixture testScenario)
+    public static UserDomainQueryServiceMocker fromMockedInstance(UserDomainQueryService serviceInstance, CommonDomainTestFixture testScenario)
     {
         return new UserDomainQueryServiceMocker(
                 serviceInstance,
@@ -60,7 +60,7 @@ public final class UserDomainQueryServiceMocker
         testFixture.configureUserDomainQueryServiceMocker(this);
     }
 
-    public UserDomainQueryServiceMocker configureMock(Consumer<IUserDomainQueryService> mockConsumer)
+    public UserDomainQueryServiceMocker configureMock(Consumer<UserDomainQueryService> mockConsumer)
     {
         mockConsumer.accept(mockedService);
         return this;

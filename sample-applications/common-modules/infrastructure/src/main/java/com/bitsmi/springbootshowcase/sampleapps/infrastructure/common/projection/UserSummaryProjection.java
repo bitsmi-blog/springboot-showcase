@@ -1,6 +1,6 @@
 package com.bitsmi.springbootshowcase.sampleapps.infrastructure.common.projection;
 
-public interface IUserSummaryProjection
+public interface UserSummaryProjection
 {
     String getUsername();
     String getCompleteName();

@@ -1,17 +1,17 @@
 package com.bitsmi.springbootshowcase.sampleapps.domain.common.impl;
 
-import com.bitsmi.springbootshowcase.sampleapps.domain.common.IUserDomainQueryService;
+import com.bitsmi.springbootshowcase.sampleapps.domain.common.UserDomainQueryService;
 import com.bitsmi.springbootshowcase.sampleapps.domain.common.model.User;
 import com.bitsmi.springbootshowcase.sampleapps.domain.common.model.UserSummary;
-import com.bitsmi.springbootshowcase.sampleapps.domain.common.spi.IUserRepositoryService;
+import com.bitsmi.springbootshowcase.sampleapps.domain.common.spi.UserRepositoryService;
 
 import java.util.Optional;
 
-public class UserDomainQueryServiceImpl implements IUserDomainQueryService
+public class UserDomainQueryServiceImpl implements UserDomainQueryService
 {
-    private final IUserRepositoryService userRepositoryService;
+    private final UserRepositoryService userRepositoryService;
 
-    public UserDomainQueryServiceImpl(IUserRepositoryService userRepositoryService)
+    public UserDomainQueryServiceImpl(UserRepositoryService userRepositoryService)
     {
         this.userRepositoryService = userRepositoryService;
     }

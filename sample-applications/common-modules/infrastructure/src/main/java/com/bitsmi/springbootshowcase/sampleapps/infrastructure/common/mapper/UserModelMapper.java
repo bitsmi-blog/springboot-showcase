@@ -8,10 +8,10 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring",
         implementationName = "UserModelMapperImpl",
         uses = {
-                IUserGroupModelMapper.class
+                UserGroupModelMapper.class
         }
 )
-public interface IUserModelMapper
+public interface UserModelMapper
 {
     User mapDomainFromEntity(UserEntity entity);
     UserEntity mapEntityFromDomain(User domain);

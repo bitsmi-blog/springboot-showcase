@@ -14,7 +14,7 @@ import java.util.List;
 @Mapper(componentModel = "spring",
         implementationName = "PaginationMapperImpl"
 )
-public interface IPaginationMapper
+public interface PaginationMapper
 {
     @Mapping(target = "pageNumber", source = "page")
     @Mapping(target = "sort", qualifiedByName = "MapRequestSortToDomainSort")

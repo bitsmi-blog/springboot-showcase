@@ -1,6 +1,6 @@
 package com.bitsmi.springbootshowcase.sampleapps.webmvc.web.common.service.impl;
 
-import com.bitsmi.springbootshowcase.sampleapps.domain.common.IUserDomainQueryService;
+import com.bitsmi.springbootshowcase.sampleapps.domain.common.UserDomainQueryService;
 import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.common.service.dto.UserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 public class UserDetailsServiceImpl implements UserDetailsService
 {
     @Autowired
-    private IUserDomainQueryService userDomainQueryService;
+    private UserDomainQueryService userDomainQueryService;
 
     @Override
     public UserDetails loadUserByUsername(String username)

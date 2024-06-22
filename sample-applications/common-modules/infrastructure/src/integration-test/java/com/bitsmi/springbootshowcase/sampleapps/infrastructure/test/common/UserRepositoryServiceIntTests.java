@@ -5,8 +5,8 @@ import com.bitsmi.springbootshowcase.sampleapps.domain.common.model.Authority;
 import com.bitsmi.springbootshowcase.sampleapps.domain.common.model.User;
 import com.bitsmi.springbootshowcase.sampleapps.domain.common.model.UserGroup;
 import com.bitsmi.springbootshowcase.sampleapps.domain.common.model.UserSummary;
-import com.bitsmi.springbootshowcase.sampleapps.domain.common.spi.IUserGroupRepositoryService;
-import com.bitsmi.springbootshowcase.sampleapps.domain.common.spi.IUserRepositoryService;
+import com.bitsmi.springbootshowcase.sampleapps.domain.common.spi.UserGroupRepositoryService;
+import com.bitsmi.springbootshowcase.sampleapps.domain.common.spi.UserRepositoryService;
 import com.bitsmi.springbootshowcase.sampleapps.domain.common.util.IgnoreOnComponentScan;
 import com.bitsmi.springbootshowcase.sampleapps.infrastructure.config.InfrastructureModuleConfig;
 import com.bitsmi.springbootshowcase.sampleapps.infrastructure.testsupport.internal.ServiceIntegrationTest;
@@ -36,9 +36,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class UserRepositoryServiceIntTests
 {
     @Autowired
-    private IUserRepositoryService userRepositoryService;
+    private UserRepositoryService userRepositoryService;
     @Autowired
-    private IUserGroupRepositoryService userGroupRepositoryService;
+    private UserGroupRepositoryService userGroupRepositoryService;
 
     @Test
     @DisplayName("countAllUsers should return existing users count")

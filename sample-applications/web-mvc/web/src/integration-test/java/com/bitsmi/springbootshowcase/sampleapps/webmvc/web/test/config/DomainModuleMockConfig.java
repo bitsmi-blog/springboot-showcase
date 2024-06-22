@@ -1,6 +1,6 @@
 package com.bitsmi.springbootshowcase.sampleapps.webmvc.web.test.config;
 
-import com.bitsmi.springbootshowcase.sampleapps.domain.common.IUserDomainQueryService;
+import com.bitsmi.springbootshowcase.sampleapps.domain.common.UserDomainQueryService;
 import com.bitsmi.springbootshowcase.sampleapps.domain.testsupport.common.CommonDomainTestFixture;
 import com.bitsmi.springbootshowcase.sampleapps.domain.testsupport.common.UserDomainQueryServiceMocker;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +11,7 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
-@MockBean(IUserDomainQueryService.class)
+@MockBean(UserDomainQueryService.class)
 public class DomainModuleMockConfig
 {
     @Bean
@@ -22,7 +22,7 @@ public class DomainModuleMockConfig
 
     @Bean
     public UserDomainQueryServiceMocker userDomainQueryServiceMocker(
-            IUserDomainQueryService userDomainQueryService,
+            UserDomainQueryService userDomainQueryService,
             @Autowired(required = false) CommonDomainTestFixture domainCommonTestFixture
     ) {
         return UserDomainQueryServiceMocker.fromMockedInstance(userDomainQueryService, domainCommonTestFixture);

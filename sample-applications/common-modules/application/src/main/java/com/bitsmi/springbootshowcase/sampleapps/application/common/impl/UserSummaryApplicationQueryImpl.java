@@ -1,7 +1,7 @@
 package com.bitsmi.springbootshowcase.sampleapps.application.common.impl;
 
 import com.bitsmi.springbootshowcase.sampleapps.application.common.UserSummaryApplicationQuery;
-import com.bitsmi.springbootshowcase.sampleapps.domain.common.IUserDomainQueryService;
+import com.bitsmi.springbootshowcase.sampleapps.domain.common.UserDomainQueryService;
 import com.bitsmi.springbootshowcase.sampleapps.domain.common.model.UserSummary;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,7 @@ import java.util.Optional;
 public class UserSummaryApplicationQueryImpl implements UserSummaryApplicationQuery
 {
     @Autowired
-    private IUserDomainQueryService userQueryDomainService;
+    private UserDomainQueryService userQueryDomainService;
 
     @Override
     public Optional<UserSummary> findUserSummaryByUsername(@NotNull String username)
