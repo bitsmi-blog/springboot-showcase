@@ -44,16 +44,13 @@
         <module>clients/fluent-client</module>
         <module>clients/openfeign</module>
 
-        <module>sample-applications/common-modules/domain</module>
-        <module>sample-applications/common-modules/infrastructure</module>
-        <module>sample-applications/common-modules/application</module>
-        <module>sample-applications/kafka/messaging</module>
-        <module>sample-applications/kafka/main</module>
-        <module>sample-applications/web-mvc/web</module>
-        <module>sample-applications/web-mvc/main</module>
+        <module>sample-applications/common-modules</module>
+        <module>sample-applications/kafka</module>
+        <module>sample-applications/web-mvc</module>
 
         <module>spring-core/aop</module>
         <module>spring-core/dependency-injection</module>
+        <module>spring-core/validation</module>
 
         <module>spring-data-jpa/repository-extension</module>
 
