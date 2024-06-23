@@ -1,4 +1,4 @@
-package com.bitsmi.springbootshowcase.springdatajpa.repositoryextension.infrastructure.inventory.entity;
+package com.bitsmi.springbootshowcase.springcore.cache.infrastructure.inventory.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -10,7 +10,6 @@ import jakarta.persistence.PreUpdate;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.persistence.Version;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -22,29 +21,27 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-@SequenceGenerator(name="CATEGORY_ID_GENERATOR",
-        sequenceName="SEQ_CATEGORY",
+@SequenceGenerator(name="PRODUCT_ID_GENERATOR",
+        sequenceName="SEQ_PRODUCT",
         allocationSize=1)
 @Entity
-@Table(name="CATEGORY")
+@Table(name="PRODUCT")
 @Getter
 @Setter
 @Builder(toBuilder = true, builderClassName = "Builder")
 @NoArgsConstructor
 @AllArgsConstructor
-public class CategoryEntity implements Serializable
+public class ProductEntity implements Serializable
 {
     @Id
-    @GeneratedValue(strategy= GenerationType.SEQUENCE, generator="CATEGORY_ID_GENERATOR")
+    @GeneratedValue(strategy= GenerationType.SEQUENCE, generator="USER_ID_GENERATOR")
     private Long id;
 
     @Version
     private Long version;
 
-    @NotNull
+    @Column(unique=true)
     private String externalId;
-
-    @NotNull
     private String name;
 
     @Column
@@ -70,7 +67,6 @@ public class CategoryEntity implements Serializable
                 .append("id", id)
                 .append("version", version)
                 .append("externalId", externalId)
-                .append("name", name)
                 .append("creationDate", creationDate)
                 .append("lastUpdated", lastUpdated)
                 .build();
@@ -79,14 +75,14 @@ public class CategoryEntity implements Serializable
     @Override
     public int hashCode()
     {
-        return Objects.hash(id);
+        return Objects.hash(externalId);
     }
 
     @Override
     public boolean equals(Object o)
     {
         return this == o
-                || o instanceof CategoryEntity other
-                && Objects.equals(id, other.id);
+                || o instanceof ProductEntity other
+                && Objects.equals(externalId, other.externalId);
     }
 }

@@ -1,11 +1,12 @@
-package com.bitsmi.springbootshowcase.sampleapps.infrastructure.common.mapper;
+package com.bitsmi.springbootshowcase.springcore.cache.infrastructure.common.mapper;
 
-import com.bitsmi.springbootshowcase.sampleapps.domain.common.dto.PaginatedData;
-import com.bitsmi.springbootshowcase.sampleapps.domain.common.dto.Pagination;
-import com.bitsmi.springbootshowcase.sampleapps.domain.common.dto.Sort;
-import com.bitsmi.springbootshowcase.sampleapps.domain.common.dto.Sort.Direction;
-import com.bitsmi.springbootshowcase.sampleapps.domain.common.dto.Sort.NullHandling;
-import com.bitsmi.springbootshowcase.sampleapps.domain.common.dto.Sort.Order;
+
+import com.bitsmi.springbootshowcase.springcore.cache.domain.common.dto.PaginatedData;
+import com.bitsmi.springbootshowcase.springcore.cache.domain.common.dto.Pagination;
+import com.bitsmi.springbootshowcase.springcore.cache.domain.common.dto.Sort;
+import com.bitsmi.springbootshowcase.springcore.cache.domain.common.dto.Sort.Direction;
+import com.bitsmi.springbootshowcase.springcore.cache.domain.common.dto.Sort.NullHandling;
+import com.bitsmi.springbootshowcase.springcore.cache.domain.common.dto.Sort.Order;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
@@ -14,7 +15,7 @@ import java.util.List;
 import java.util.function.Function;
 
 @Component
-public class SpringPaginatedDataMapper
+public class PaginatedDataMapper
 {
     public <T, R> PaginatedData<R> fromPage(Page<T> page, Function<T, R> elementMapper)
     {

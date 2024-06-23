@@ -50,6 +50,7 @@
         <module>sample-applications/web-mvc</module>
 
         <module>spring-core/aop</module>
+        <module>spring-core/cache</module>
         <module>spring-core/dependency-injection</module>
         <module>spring-core/validation</module>
 
