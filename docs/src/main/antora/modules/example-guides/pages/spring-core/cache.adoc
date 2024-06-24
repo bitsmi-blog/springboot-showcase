@@ -1,0 +1,14 @@
+= Cache
+
+== Features
+
+* Cache manager customization
+* Cache values by key using `@Cacheable` and evict on modify using `@CacheEvict`
+* Optional request scoped memoize cache
+* Decorate a `@Service` to use caches
+
+== Related documentation
+
+* xref:spring-docs:how-to/dependency-injection.adoc[Dependency Injection how-to]
+* xref:spring-docs:tutorial/spring-core/decorate_a_spring_bean.adoc[Decorate a Spring bean tutorial]
+

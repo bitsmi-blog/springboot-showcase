@@ -13,9 +13,6 @@ import com.bitsmi.springbootshowcase.springcore.cache.infrastructure.inventory.m
 import com.bitsmi.springbootshowcase.springcore.cache.infrastructure.inventory.repository.ProductRepository;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.cache.annotation.Caching;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -46,7 +43,6 @@ public class ProductRepositoryServiceImpl implements ProductRepositoryService
         this.springPaginatedDataMapper = paginatedDataMapper;
     }
 
-    @Cacheable(cacheNames = CACHE_ALL_PRODUCTS, key = "#pagination.pageNumber")
     @Override
     public PaginatedData<Product> findAllItemSchemas(@NotNull Pagination pagination)
     {
@@ -57,7 +53,6 @@ public class ProductRepositoryServiceImpl implements ProductRepositoryService
         return springPaginatedDataMapper.fromPage(entityPage, productModelMapper::mapDomainFromEntity);
     }
 
-    @Cacheable(cacheNames = CACHE_PRODUCT_BY_EXTERNAL_ID)
     @Override
     public Optional<Product> findProductByExternalId(@NotNull String externalId)
     {
@@ -66,7 +61,6 @@ public class ProductRepositoryServiceImpl implements ProductRepositoryService
     }
 
     @Transactional(rollbackFor = Exception.class)
-    @CacheEvict(cacheNames = CACHE_ALL_PRODUCTS, allEntries = true)
     @Override
     public Product createProduct(@Valid Product product)
     {
@@ -83,10 +77,6 @@ public class ProductRepositoryServiceImpl implements ProductRepositoryService
     }
 
     @Transactional(rollbackFor = Exception.class)
-    @Caching(evict = {
-            @CacheEvict(cacheNames = CACHE_ALL_PRODUCTS, allEntries = true),
-            @CacheEvict(cacheNames = CACHE_PRODUCT_BY_EXTERNAL_ID, key = "#product.externalId")
-    })
     @Override
     public Product updateProduct(@NotNull Long id, @Valid Product product)
     {
