@@ -57,6 +57,9 @@
     <span class="nav-text">Clients</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../example-guides/clients/fluent-client.html">Fluent API client</a>
+  </li>
+  <li class="nav-item" data-depth="3">
     <a class="nav-link" href="../../example-guides/clients/openfeign.html">OpenFeign</a>
   </li>
 </ul>
@@ -65,6 +68,9 @@
     <button class="nav-item-toggle"></button>
     <span class="nav-text">Sample applications</span>
 <ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../example-guides/sample-applications/kafka.html">Kafka</a>
+  </li>
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="../../example-guides/sample-applications/web-mvc.html">Web MVC</a>
   </li>
@@ -78,7 +84,13 @@
     <a class="nav-link" href="../../example-guides/spring-core/aop.html">AOP</a>
   </li>
   <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../example-guides/spring-core/cache.html">Cache</a>
+  </li>
+  <li class="nav-item" data-depth="3">
     <a class="nav-link" href="../../example-guides/spring-core/dependency-injection.html">Dependency injection</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../example-guides/spring-core/validation.html">Validation</a>
   </li>
 </ul>
   </li>
@@ -88,6 +100,15 @@
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="../../example-guides/spring-data-jpa/repository-extension.html">Repository extension</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Testing</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../example-guides/testing/testing.html">Testing</a>
   </li>
 </ul>
   </li>
@@ -141,6 +162,9 @@
   </li>
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="../../spring-docs/how-to/aop.html">AOP</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../spring-docs/how-to/dependency-injection.html">Dependency injection</a>
   </li>
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="../../spring-docs/how-to/observability.html">Observability</a>
@@ -341,9 +365,9 @@ a request is selectable for this expectation, including:</p>
 <div class="sect3">
 <h4 id="example"><a class="anchor" href="#example"></a>Example</h4>
 <div class="paragraph">
-<p>The following example matches a request to the <code>/api/content</code> endpoint that provides <code>selector</code>, <code>page</code> and <code>pageSize</code> query parameters
+<p>The following example matches a request to the <code>/api/inventory</code> endpoint that provides <code>selector</code>, <code>page</code> and <code>pageSize</code> query parameters
 that matches exactly the specified values. A response with status code <code>200</code> and a JSON body will bre returned.
-The content of this response is located in <code>api/content/get_list_body.json</code> file located in the <code>__files</code> folder.</p>
+The content of this response is located in <code>api/inventory/get_list_body.json</code> file located in the <code>__files</code> folder.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -351,7 +375,7 @@ The content of this response is located in <code>api/content/get_list_body.json<
     "priority": 10,
     "request": {
         "method": "GET",
-        "urlPath": "/api/content",
+        "urlPath": "/api/inventory",
         "queryParameters": {
             "selector": {
                 "equalTo": "id EQUALS 1"
@@ -369,7 +393,7 @@ The content of this response is located in <code>api/content/get_list_body.json<
         "headers": {
             "Content-Type": "application/json"
         },
-        "bodyFileName": "api/content/get_list_body.json"
+        "bodyFileName": "api/inventory/get_list_body.json"
     }
 }</code></pre>
 </div>

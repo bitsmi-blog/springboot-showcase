@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Dependency injection :: Springboot-Showcase // Docs</title>
+    <link rel="prev" href="aop.html">
+    <link rel="next" href="observability.html">
+    <meta name="generator" content="Antora 3.1.7">
+    <link rel="stylesheet" href="../../../_/css/site.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="../../..">Springboot-Showcase // Docs</a>
+      <div class="navbar-item search hide-for-print">
+        <div id="search-field" class="field">
+          <input id="search-input" type="text" placeholder="Search the docs">
+        </div>
+      </div>
+      <button class="navbar-burger" aria-controls="topbar-nav" aria-expanded="false" aria-label="Toggle main menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="springboot-showcase" data-version="">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
+    <h3 class="title"><a href="../../index.html">Springboot Showcase</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../index.html">Index</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Example guides</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Clients</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../example-guides/clients/fluent-client.html">Fluent API client</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../example-guides/clients/openfeign.html">OpenFeign</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Sample applications</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../example-guides/sample-applications/kafka.html">Kafka</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../example-guides/sample-applications/web-mvc.html">Web MVC</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Spring Core</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../example-guides/spring-core/aop.html">AOP</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../example-guides/spring-core/cache.html">Cache</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../example-guides/spring-core/dependency-injection.html">Dependency injection</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../example-guides/spring-core/validation.html">Validation</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Spring Data JPA</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../example-guides/spring-data-jpa/repository-extension.html">Repository extension</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Testing</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../example-guides/testing/testing.html">Testing</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Ways of working</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Explanation guides</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../ways-of-working/explanation/architecture.html">Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../ways-of-working/explanation/fluent_rest_api_client.html">Fluent REST API client</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">How-to guides</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../ways-of-working/how-to/mocking_an_external_service.html">Mocking an external client</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Spring guides</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">How-to guides</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="actuators.html">Actuators</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="aop.html">AOP</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="3">
+    <a class="nav-link" href="dependency-injection.html">Dependency injection</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="observability.html">Observability</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="testing.html">Testing</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">References</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../reference/spring_data.html">Spring Data</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../tutorial/index.html">Tutorials</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../../index.html">Springboot Showcase</a></li>
+    <li>Spring guides</li>
+    <li>How-to guides</li>
+    <li><a href="dependency-injection.html">Dependency injection</a></li>
+  </ul>
+</nav>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Dependency injection</h1>
+<div class="sect1">
+<h2 id="introduction"><a class="anchor" href="#introduction"></a>Introduction</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong>Spring Dependency Injection</strong> capabilities allow us to manage bean bindings in different ways. Here is a basic guide on how to:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Having a single bean candidate and a single injection point, that is the base case when we define
+a bean and use <code>@Autowired</code> annotation to inject it</p>
+</li>
+<li>
+<p>Having multiple bean candidates of the same type and a single injection point. Here we can define
+a default bean or use identifiers to select which one will be injected</p>
+</li>
+<li>
+<p>Having zero bean candidates for a type and a single injection point, which means that we can have
+optional beans</p>
+</li>
+<li>
+<p>Having multiple bean candidates of the same type and a multiple injection point, allowing accessing
+all beans for the specified type in the same injection point</p>
+</li>
+<li>
+<p>Having conditional bean candidates that are only available when a condition is met</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="optional-and-multiple-bindings"><a class="anchor" href="#optional-and-multiple-bindings"></a>Optional and multiple bindings</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="primary-bean"><a class="anchor" href="#primary-bean"></a>Primary bean</h3>
+<div class="paragraph">
+<p>We can use <strong>Spring</strong>'s <code>@Primary</code> annotation to mark a specific bean to be the default candidate
+to be injected in single injection points.</p>
+</div>
+<div class="paragraph">
+<p><strong>Definition</strong>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Service
+@Primary
+public class MainProductServiceImpl implements ProductService
+{
+    // . . .
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Injection (Field)</strong>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Service
+public class Store
+{
+    @Autowired
+    private ProductService defaultProductService;
+
+    // . . .
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Injection (Constructor)</strong>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Service
+public class Store
+{
+    private final ProductService productService;
+
+    public Store(ProductService productService) {
+        this.productService = productService;
+    }
+
+    // . . .
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="qualifiers"><a class="anchor" href="#qualifiers"></a>Qualifiers</h3>
+<div class="paragraph">
+<p>Individual beans for a same type are still available if we use the <code>@Qualifier</code> annotation.
+In that case, we need to specify an identifier for the individual bean and use it at definition
+and injection points.</p>
+</div>
+<div class="paragraph">
+<p><strong>Definition</strong>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Service
+@Qualifier("ADDITIONAL_PRODUCT")
+public class AdditionalProductServiceImpl implements ProductService
+{
+    // . . .
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Injection (Field)</strong>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Service
+public class Store
+{
+    @Autowired
+    @Qualifier("ADDITIONAL_PRODUCT")
+    private ProductService additionalProductService;
+
+    // . . .
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Injection (Constructor)</strong>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Service
+public class Store
+{
+    private final ProductService additionalProductService;
+
+    public Store(@Qualifier("ADDITIONAL_PRODUCT") ProductService additionalProductService) {
+        this.additionalProductService = additionalProductService;
+    }
+
+    // . . .
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="injecting-optional-list-and-objectprovider"><a class="anchor" href="#injecting-optional-list-and-objectprovider"></a>Injecting <code>Optional</code>, <code>List</code> and <code>ObjectProvider</code></h3>
+<div class="paragraph">
+<p>In case we have no bean candidates for a type, it is required to use the <code>required = false</code> flag in <code>@Autowired</code> annotation</p>
+</div>
+<div class="paragraph">
+<p><strong>Injection (Field)</strong>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Service
+public class Store
+{
+    @Autowired(required = false)
+    private ProductService defaultProductService;
+
+    // . . .
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Injection (Constructor)</strong>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Service
+public class Store
+{
+    private final ProductService productService;
+
+    public Store(@Autowired(required = false) ProductService productService) {
+        this.productService = productService;
+    }
+
+    // . . .
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In that case the bean instance will be <code>null</code> at runtime. We have to handle this every time that we want to use it in the code.
+Alternatively, we can wrap the bean instance with an <code>Optional</code> or <code>ObjectProvider</code> so we can handle easily the <code>null</code> case:</p>
+</div>
+<div class="paragraph">
+<p><strong>Injection of an Optional</strong>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Service
+public class Store
+{
+    @Autowired
+    private Optional&lt;ProductService&gt; productService;
+
+    // . . .
+
+    public Optional&lt;String&gt; getProductName() {
+        return productService
+                .map(ProductService::getProductName);
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Injection of an ObjectProvider</strong>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Service
+public class Store
+{
+    @Autowired
+    private ObjectProvider&lt;ProductService&gt; productService;
+
+    // . . .
+
+    public Optional&lt;String&gt; getProductName() {
+        return productService.stream()
+            .findAny()
+            .map(ProductService::getProductName);
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We can also use <code>ObjectProvider</code> and a <code>Collection</code> when we have multiple beans of the same type:</p>
+</div>
+<div class="paragraph">
+<p><strong>Injection of an ObjectProvider</strong>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Service
+public class Store
+{
+    @Autowired
+    private ObjectProvider&lt;ProductService&gt; productService;
+
+    // . . .
+
+    public List&lt;String&gt; getProductNames() {
+        return productService.stream()
+            .map(ProductService::getProductName)
+            .toList();
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Injection of a List</strong>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Service
+public class Store
+{
+    @Autowired
+    private List&lt;ProductService&gt; productService;
+
+    // . . .
+
+    public List&lt;String&gt; getProductNames() {
+        return productService.stream()
+            .map(ProductService::getProductName)
+            .toList();
+    }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="conditional-binding"><a class="anchor" href="#conditional-binding"></a>Conditional binding</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Using conditional binding allow us to create a bean instance only if a condition is met. We can add a condition to any bean defined with a stereotype annotation (<code>@Component</code>, <code>@Service</code>, <code>@Repository</code>, <code>@Controller</code>), a <code>@Configuration</code> or a <code>@Bean</code> creation.</p>
+</div>
+<div class="paragraph">
+<p><strong>Spring-boot</strong> provides many built-in conditions such as:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Conditional on profile</strong></p>
+<div class="paragraph">
+<p>Beans annotated with <code>@Profile("&lt;PROFILE_NAME&gt;")</code> will only be available if the specified Spring profile is active.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Service
+@Profile("profile1")
+public class StoreService {
+  // . . .
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>@Profile</code> annotation accepts also an expression involving multiple profiles and logical operations AND (<code>&amp;</code>), OR (<code>|</code>) and NOT (<code>!</code>)</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Service
+@Profile("!profile1 &amp; (profile2 | profile3)")
+public class StoreService {
+  // . . .
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Or an array of multiple profiles, resolved as a logical AND between the specified values</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Service
+@Profile({ "profile1", "profile2" })
+public class StoreService {
+  // . . .
+}</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p><strong>Conditional on property</strong></p>
+<div class="paragraph">
+<p><code>@ConditionalOnProperty</code> annotation allows to load beans conditionally depending on a certain environment property</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Service
+@ConditionalOnProperty(
+    value = "store.service.enabled"
+)
+public class StoreService {
+  // . . .
+}</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p><strong>Conditional on expression</strong></p>
+<div class="paragraph">
+<p>If we have a logical expression involving more than one property, we can use <code>@ConditionalOnExpression</code> annotation instead of @ConditionalOnProperty` and use <strong>Spring Expression Language</strong> (SpEL) to write the condition</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Service
+@ConditionalOnExpression(
+    "${store.module.enabled:true} and ${store.service.enabled:true}"
+)
+public class StoreService {
+  // . . .
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In that example, condition will evaluate to true if both <code>some.module.enabled</code> and <code>some.service.enabled</code> properties are <code>true</code>, taking <code>true</code> as default value if the property is not present.</p>
+</div>
+</li>
+<li>
+<p><strong>Conditional on bean or on a missing bean</strong></p>
+<div class="paragraph">
+<p><code>@ConditionalOnBean</code> annotation allows to load beans conditionally depending on the presence of a specific bean in the context</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Service
+@ConditionalOnBean(ProductService.class)
+public class ProductStoreService {
+  // . . .
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Alternatively we can use <code>@ConditionalOnMissingBean</code> to load when the required bean is missing</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Service
+@ConditionalOnMissingBean(ProductService.class)
+public class EmptyStoreService {
+  // . . .
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Both annotations accept more than 1 bean. All specified beans must (not)exists so that the condition resolves to <code>true</code></p>
+</div>
+</li>
+<li>
+<p><strong>Conditional on class or on a missing class</strong></p>
+<div class="paragraph">
+<p><code>@ConditionalOnClass</code> annotation allows to load beans conditionally depending on the presence of a specific class in classpath</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Service
+@ConditionalOnClass("com.bitsmi.store.ProductService")
+public class ProductStoreService {
+  // . . .
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Alternatively we can use <code>@ConditionalOnMissingClass</code> to load when the required class is missing</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Service
+@ConditionalOnMissingClass("com.bitsmi.store.ProductService")
+public class EmptyStoreService {
+  // . . .
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Both annotations accept more than 1 class. All specified classes must (not)exists so that the condition resolves to <code>true</code></p>
+</div>
+</li>
+<li>
+<p><strong>Conditional on resource</strong></p>
+<div class="paragraph">
+<p><code>@ConditionalOnResource</code> annotation allows to load beans conditionally depending on the presence of a specific resource on classpath</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Service
+@ConditionalOnResource(
+    "logback.xml"
+)
+public class LogbackService {
+  // . . .
+}</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p><strong>Conditional on Java version</strong></p>
+<div class="paragraph">
+<p><code>@ConditionalOnJava</code> annotation allows to load beans conditionally only if running a certain version of Java</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import org.springframework.boot.system.JavaVersion;
+
+@Service
+@ConditionalOnJava(JavaVersion.SEVENTEEN)
+public class StoreServiceJava17Impl {
+  // . . .
+}</code></pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="custom-conditions"><a class="anchor" href="#custom-conditions"></a>Custom conditions</h3>
+<div class="paragraph">
+<p>In addition to <strong>Spring</strong>'s built-in conditions, we can create our own ones implementing <code>Condition</code> interface:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import org.apache.commons.lang3.SystemUtils;
+
+class OnUnixCondition implements Condition {
+
+    @Override
+    public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata) {
+  	  return SystemUtils.IS_OS_LINUX;
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// . . .
+@Bean
+@Conditional(OnUnixCondition.class)
+UnixService unixService() {
+  return new UnixService();
+}
+// . . .</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In case of be necessary, we can create an annotation to provide additional data that will take part in the resolution of condition. We will know these annotations as <code>@ConditionalOn&#8230;&#8203;</code></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Target({ ElementType.TYPE, ElementType.METHOD })
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+@Conditional(OnSystemNameCondition.class)
+public @interface ConditionalOnSystemName {
+    String[] value();
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import org.springframework.core.type.AnnotatedTypeMetadata;
+import org.springframework.util.MultiValueMap;
+
+class OnSystemNameCondition implements Condition {
+
+    @Override
+    public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata) {
+        boolean matches = false;
+
+  	    MultiValueMap&lt;String, Object&gt; attrs = metadata.getAllAnnotationAttributes(ConditionalOnSystemName.class.getName());
+		if (attrs != null) {
+            // Annotation attribute values
+            String[] osNames = (String[])attrs.get("value");
+
+            matches = isAcceptedOs(osNames);
+		}
+		return matches;
+    }
+
+    // . . .
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Service
+@ConditionalOnSystemName({ "Windows", "Linux" })
+public class SystemDependantService {
+    // . . .
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="combining-conditions"><a class="anchor" href="#combining-conditions"></a>Combining conditions</h3>
+<div class="paragraph">
+<p>We can specify multiple conditions that will be evaluated in order to resolve if the bean will be available.</p>
+</div>
+<div class="paragraph">
+<p>If we want to achieve an <code>OR</code> logic, we will have to create a new condition that extends <code>AnyNestedCondition</code> and wraps individual conditions as nested classes</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">class OnTestOrDevProfileCondition extends AnyNestedCondition {
+
+  OnTestOrDevCondition() {
+    super(ConfigurationPhase.REGISTER_BEAN);
+  }
+
+  @Profile("DEV")
+  static class OnDev {}
+
+  @Profile("Test")
+  static class OnTest {}
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Service
+@Conditional(OnTestOrDevProfileCondition.class)
+public class DevOrTestService {
+    // . . .
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The same approach can be followed to create a custom annotation combining multiple conditions in a single <code>@ConditionalOn&#8230;&#8203;</code> annotation using <code>AND</code> logic, extending <code>AllNestedConditions</code> class, or a <code>NONE</code> logic extending <code>NoneNestedCondition</code> class.</p>
+</div>
+<div class="paragraph">
+<p><strong>AND combined conditions</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">class OnTestingJava17Condition extends AllNestedCondition {
+
+  OnTestingJava8Condition() {
+    super(ConfigurationPhase.REGISTER_BEAN);
+  }
+
+  @Profile("TEST")
+  static class OnTest {}
+
+  @ConditionalOnJava(JavaVersion.SEVENTEEN)
+  static class OnJava17 {}
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Service
+@Conditional(OnTestingJava17Condition.class)
+public class Java17TestService {
+    // . . .
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>NONE combined conditions</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">class OnUnsupportedJavaVersionCondition extends NoneNestedCondition {
+
+  OnUnsupportedJavaVersionCondition() {
+    super(ConfigurationPhase.REGISTER_BEAN);
+  }
+
+  @ConditionalOnJava(JavaVersion.SEVENTEEN)
+  static class OnJava17 {}
+
+  @ConditionalOnJava(JavaVersion.TWENTY_ONE)
+  static class OnJava21 {}
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Service
+@Conditional(OnUnsupportedJavaVersionCondition.class)
+public class UnsupportedJavaVersionTestService {
+    // . . .
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>By default, if we add multiple <code>@ConditionalOn&#8230;&#8203;</code> annotations to a bean, they will be combined using <code>AND</code> logic</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>As <code>@Conditional</code> annotation cannot be specified multiple types in a class / method, we only use custom <code>@ConditionalOn&#8230;&#8203;</code> annotations
+to achieve this (or one <code>@Conditional</code> plus other <code>@ConditionalOn&#8230;&#8203;</code> for each additional condition)</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="aop.html">AOP</a></span>
+  <span class="next"><a href="observability.html">Observability</a></span>
+</nav>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script id="site-script" src="../../../_/js/site.js" data-ui-root-path="../../../_"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+<script src="../../../_/js/vendor/lunr.js"></script>
+<script src="../../../_/js/vendor/lunr-languages.js"></script>
+<script src="../../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../../.." data-snippet-length="100" data-stylesheet="../../../_/css/search.css"></script>
+<script async src="../../../search-index.js"></script>
+  </body>
+</html>

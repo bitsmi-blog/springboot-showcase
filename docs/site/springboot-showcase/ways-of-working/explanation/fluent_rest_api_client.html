@@ -57,6 +57,9 @@
     <span class="nav-text">Clients</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../example-guides/clients/fluent-client.html">Fluent API client</a>
+  </li>
+  <li class="nav-item" data-depth="3">
     <a class="nav-link" href="../../example-guides/clients/openfeign.html">OpenFeign</a>
   </li>
 </ul>
@@ -65,6 +68,9 @@
     <button class="nav-item-toggle"></button>
     <span class="nav-text">Sample applications</span>
 <ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../example-guides/sample-applications/kafka.html">Kafka</a>
+  </li>
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="../../example-guides/sample-applications/web-mvc.html">Web MVC</a>
   </li>
@@ -78,7 +84,13 @@
     <a class="nav-link" href="../../example-guides/spring-core/aop.html">AOP</a>
   </li>
   <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../example-guides/spring-core/cache.html">Cache</a>
+  </li>
+  <li class="nav-item" data-depth="3">
     <a class="nav-link" href="../../example-guides/spring-core/dependency-injection.html">Dependency injection</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../example-guides/spring-core/validation.html">Validation</a>
   </li>
 </ul>
   </li>
@@ -88,6 +100,15 @@
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="../../example-guides/spring-data-jpa/repository-extension.html">Repository extension</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Testing</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../example-guides/testing/testing.html">Testing</a>
   </li>
 </ul>
   </li>
@@ -141,6 +162,9 @@
   </li>
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="../../spring-docs/how-to/aop.html">AOP</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../spring-docs/how-to/dependency-injection.html">Dependency injection</a>
   </li>
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="../../spring-docs/how-to/observability.html">Observability</a>
@@ -205,7 +229,7 @@
 <ul class="sectlevel2">
 <li><a href="#client-2">Client</a></li>
 <li><a href="#info-api">Info API</a></li>
-<li><a href="#schema-api">Schema API</a></li>
+<li><a href="#category-api">Category API</a></li>
 </ul>
 </li>
 </ul>
@@ -222,11 +246,11 @@
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Resource</strong>: Full path to the resource. E.G. <code>/schema/1</code></p>
+<p><strong>Resource</strong>: Full path to the resource. E.G. <code>/category/1</code></p>
 </li>
 <li>
-<p><strong>(Sub)domain</strong>: URL path that groups resources. E.G. The <code>/schema/1</code> resource is defined under <code>/schema</code> domain.
-Also, we can define subdomains under a main domain. E.G.  we can have <code>/field</code> subdomain under <code>/schema/{id}</code> domain (<code>/schema/{id}/field</code>)</p>
+<p><strong>(Sub)domain</strong>: URL path that groups resources. E.G. The <code>/category/1</code> resource is defined under <code>/category</code> domain.
+Also, we can define subdomains under a main domain. E.G.  we can have <code>/product</code> subdomain under <code>/category/{id}</code> domain (<code>/category/{id}/product</code>)</p>
 </li>
 <li>
 <p><strong>Operation</strong>: Action to be done on the resource or (sub)domain, usually a CRUD operation.</p>
@@ -234,12 +258,12 @@ Also, we can define subdomains under a main domain. E.G.  we can have <code>/fie
 </ul>
 </div>
 <div class="paragraph">
-<p>In order to illustrate the design, we introduce the following service API:</p>
+<p>In order to illustrate the design, we introduce the following API that models a service to operate with categorized products:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>We have a remote service API that defines 2 main domains: <code>/info</code> and <code>/schema</code>:</p>
+<p>We have a remote service API that defines 2 main domains: <code>/info</code> and <code>/category</code>:</p>
 </li>
 <li>
 <p><code>/info</code> domain defines the following operation:</p>
@@ -252,36 +276,36 @@ Also, we can define subdomains under a main domain. E.G.  we can have <code>/fie
 </div>
 </li>
 <li>
-<p><code>/schema</code> domain defines the following operations:</p>
+<p><code>/category</code> domain defines the following operations:</p>
 <div class="ulist">
 <ul>
 <li>
-<p><code>list</code> schemas doing a <code>GET</code> request to the <code>/schema</code> endpoint</p>
+<p><code>list</code> categories doing a <code>GET</code> request to the <code>/category</code> endpoint</p>
 </li>
 <li>
-<p>get an specific schema <code>detail</code> doing a <code>GET</code> request to the <code>/schema/{id}</code> endpoint</p>
+<p>get an specific category <code>detail</code> doing a <code>GET</code> request to the <code>/category/{id}</code> endpoint</p>
 </li>
 <li>
-<p><code>create</code> a new schema doing a <code>POST</code> request to the <code>/schema</code> endpoint</p>
+<p><code>create</code> a new category doing a <code>POST</code> request to the <code>/category</code> endpoint</p>
 </li>
 <li>
-<p><code>update</code> an existent schema doing a <code>PUT</code> request to the <code>/schema/{id}</code> endpoint</p>
+<p><code>update</code> an existent category doing a <code>PUT</code> request to the <code>/category/{id}</code> endpoint</p>
 </li>
 <li>
-<p><code>delete</code> an existent doing a <code>DELETE</code> request to the <code>/schema/{id}</code> endpoint</p>
+<p><code>delete</code> an existent category doing a <code>DELETE</code> request to the <code>/category/{id}</code> endpoint</p>
 </li>
 </ul>
 </div>
 </li>
 <li>
-<p><code>/schema</code> domain defines the subdomain <code>/field</code> for each element on it</p>
+<p><code>/category</code> domain defines the subdomain <code>/product</code> for each element on it</p>
 </li>
 <li>
-<p><code>/schema/field</code> subdomain defines the following operations:</p>
+<p><code>/category/product</code> subdomain defines the following operations:</p>
 <div class="ulist">
 <ul>
 <li>
-<p><code>list</code> fields belonging to a schema doing a <code>GET</code> request to the <code>/schema/{schema id}/field</code> endpoint</p>
+<p><code>list</code> fields belonging to a product doing a <code>GET</code> request to the <code>/category/{category id}/product</code> endpoint</p>
 </li>
 </ul>
 </div>
@@ -293,7 +317,7 @@ Also, we can define subdomains under a main domain. E.G.  we can have <code>/fie
 </div>
 <div class="imageblock kroki">
 <div class="content">
-<img src="../_images/diag-a5758d6862619ca2e9cae4448431369d5dfd49f5.svg" alt="Diagram">
+<img src="../_images/diag-ccbf1ceebce42efd9430faf2a929cd736bc32f64.svg" alt="Diagram">
 </div>
 </div>
 <div class="paragraph">
@@ -378,11 +402,11 @@ or <code>sort(&#8230;&#8203;)</code> that configure the pagination parameters of
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class Client {
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class ServiceClient {
     // Underlying HTTP client instance
     private final RestClient restClient;
 
-    private ContentServiceClient(RestClient restClient) {
+    private ServiceClient(RestClient restClient) {
         this.restClient = restClient;
     }
 
@@ -396,20 +420,20 @@ or <code>sort(&#8230;&#8203;)</code> that configure the pagination parameters of
         return new InfoApiBuilder(restClient);
     }
 
-    public SchemaSetApiBuilder schemas() {
-        return new SchemaSetApiBuilder(restClient);
+    public CategorySetApiBuilder categories() {
+        return new CategorySetApiBuilder(restClient);
     }
 
-    public SchemaSetApiBuilder schemas(SchemaSetSelector selector) {
-        return new SchemaSetApiBuilder(restClient, selector);
+    public CategorySetApiBuilder categories(CategorySetSelector selector) {
+        return new CategorySetApiBuilder(restClient, selector);
     }
 
-    public SchemaElementApiBuilder schema(Long id) {
-        return new SchemaElementApiBuilder(restClient, id);
+    public CategoryElementApiBuilder category(Long id) {
+        return new CategoryElementApiBuilder(restClient, id);
     }
 
-    public SchemaCreationApiBuilder schema(ItemSchemaData data) {
-        return new SchemaCreationApiBuilder(restClient, data);
+    public CategoryCreationApiBuilder category(CategoryData data) {
+        return new CategoryCreationApiBuilder(restClient, data);
     }
 
     /* Builder allowing to configure the underlying client
@@ -425,7 +449,7 @@ or <code>sort(&#8230;&#8203;)</code> that configure the pagination parameters of
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">ContentServiceClient client = ContentServiceClient.builder()
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">ServiceClient client = ServiceClient.builder()
 		.withBaseUrl(remoteServiceUrl)
 		.build();</code></pre>
 </div>
@@ -486,47 +510,47 @@ or <code>sort(&#8230;&#8203;)</code> that configure the pagination parameters of
 </div>
 </div>
 <div class="sect2">
-<h3 id="schema-api"><a class="anchor" href="#schema-api"></a>Schema API</h3>
+<h3 id="category-api"><a class="anchor" href="#category-api"></a>Category API</h3>
 <div class="paragraph">
-<p><code>SchemaSetApiBuilder</code> is a more complex example of a <code>API Builder</code> supporting parameters, allowing filtering the result set, and a configurable operation with additional intermediate methods:</p>
+<p><code>CategorySetApiBuilder</code> is a more complex example of a <code>API Builder</code> supporting parameters, allowing filtering the result set, and a configurable operation with additional intermediate methods:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class SchemaSetApiBuilder
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class CategorySetApiBuilder
 {
     private final RestClient restClient;
     // Selector parameter received from Client that will be passed to downstream operations
-    private final SchemaSetSelector selector;
+    private final CategorySetSelector selector;
 
-    public SchemaSetApiBuilder(RestClient restClient) {
+    public CategorySetApiBuilder(RestClient restClient) {
         this(restClient, null);
     }
 
-    public SchemaSetApiBuilder(RestClient restClient, SchemaSetSelector selector) {
+    public CategorySetApiBuilder(RestClient restClient, CategorySetSelector selector) {
         this.restClient = restClient;
         this.selector = selector;
     }
 
     /* Selects the domain operation to execute
      */
-    public SchemaListOperation list() {
-        return new SchemaListOperation(restClient, validator, selector);
+    public CategoryListOperation list() {
+        return new CategoryListOperation(restClient, validator, selector);
     }
 }</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class SchemaListOperation
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class CategoryListOperation
 {
-    public static final String ENDPOINT_PATH = "/api/schema";
+    public static final String ENDPOINT_PATH = "/api/category";
 
     private final RestClient restClient;
-    private final SchemaSetSelector selector;
+    private final CategorySetSelector selector;
     private Integer pageNumber;
     private Integer pageSize;
 
-    SchemaListOperation(RestClient restClient, SchemaSetSelector selector)
+    CategoryListOperation(RestClient restClient, CategorySetSelector selector)
     {
         this.restClient = restClient;
         this.selector = selector;
@@ -535,7 +559,7 @@ or <code>sort(&#8230;&#8203;)</code> that configure the pagination parameters of
     /* Intermediate operation that allows specifying
      * additional parameters to the request
      */
-    public SchemaListOperation paginate(int pageNumber, int pageSize)
+    public CategoryListOperation paginate(int pageNumber, int pageSize)
     {
         this.pageNumber = pageNumber;
         this.pageSize = pageSize;
@@ -544,12 +568,12 @@ or <code>sort(&#8230;&#8203;)</code> that configure the pagination parameters of
 
     /* Method that executes the operation sending the request to the remote service
      */
-    public PagedResponse&lt;ItemSchema&gt; get()
+    public PaginatedResponse&lt;Category&gt; get()
     {
         return restClient.get()
                 .uri(this::buildURI)
                 .retrieve()
-                .body(new ParameterizedTypeReference&lt;PagedResponse&lt;ItemSchema&gt;&gt;(){});
+                .body(new ParameterizedTypeReference&lt;PaginatedResponse&lt;Category&gt;&gt;(){});
     }
 
     private URI buildURI(UriBuilder uriBuilder) {
@@ -570,15 +594,15 @@ or <code>sort(&#8230;&#8203;)</code> that configure the pagination parameters of
 </div>
 </div>
 <div class="paragraph">
-<p><code>SchemaElementApiBuilder</code> is an example of how we can implement multiple operations, with the possibility to bypass the operation, and subdomain `API Builder`s</p>
+<p><code>CategoryElementApiBuilder</code> is an example of how we can implement multiple operations, with the possibility to bypass the operation, and subdomain `API Builder`s</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class SchemaElementApiBuilder {
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class CategoryElementApiBuilder {
     private final RestClient restClient;
     private final Long id;
 
-    public SchemaElementApiBuilder(RestClient restClient, Long id) {
+    public CategoryElementApiBuilder(RestClient restClient, Long id) {
         this.restClient = restClient;
         this.id = id;
     }
@@ -586,25 +610,25 @@ or <code>sort(&#8230;&#8203;)</code> that configure the pagination parameters of
     /* Bypass operation and execute the operation directly, as this
      * operation is not configurable and doesn't provide additional methods
      */
-    public Optional&lt;ItemSchema&gt; get() {
-        return new SchemaGetOperation(restClient, id).get();
+    public Optional&lt;Category&gt; get() {
+        return new CategoryGetOperation(restClient, id).get();
     }
 
-    public ItemSchema update(ItemSchemaData data) {
-        return new SchemaUpdateOperation(restClient, id, data)
+    public Category update(CategoryData data) {
+        return new CategoryUpdateOperation(restClient, id, data)
                 .update();
     }
 
     public void delete() {
-        return new SchemaUpdateOperation(restClient, id)
+        return new CategoryDeleteOperation(restClient, id)
                 .delete();
     }
 
-    /* Provide access to "field" subdomain API Builder. Parameters
+    /* Provide access to "product" subdomain API Builder. Parameters
      * received by this API Builder are propagated to the downstream API Builder
      */
-    public SchemaFieldSetApiBuilder fields() {
-        return new SchemaFieldSetApiBuilder(restClient, id);
+    public ProductSetApiBuilder products() {
+        return new ProductSetApiBuilder(restClient, id);
     }
 }</code></pre>
 </div>
@@ -614,24 +638,24 @@ or <code>sort(&#8230;&#8203;)</code> that configure the pagination parameters of
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class SchemaGetOperation {
-    public static final String ENDPOINT_PATH = "/api/schema/{id}";
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class CategoryGetOperation {
+    public static final String ENDPOINT_PATH = "/api/category/{id}";
 
     private final RestClient restClient;
     private final Long id;
 
-    SchemaGetOperation(RestClient restClient, Long id) {
+    CategoryGetOperation(RestClient restClient, Long id) {
         this.restClient = restClient;
         this.id = id;
     }
 
-    public Optional&lt;ItemSchema&gt; get()
+    public Optional&lt;Category&gt; get()
     {
     	return Optional.ofNullable(
             restClient.get()
                 .uri(this::buildURI)
                 .retrieve()
-                .body(ItemSchema.class)
+                .body(Category.class)
         );
     }
 
@@ -644,26 +668,26 @@ or <code>sort(&#8230;&#8203;)</code> that configure the pagination parameters of
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class SchemaUpdateOperation {
-    public static final String ENDPOINT_PATH = "/api/schema/{id}";
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class CategoryUpdateOperation {
+    public static final String ENDPOINT_PATH = "/api/category/{id}";
 
     private final RestClient restClient;
     private final Long id;
-    private final ItemSchemaData data;
+    private final CategoryData data;
 
-    SchemaUpdateOperation(RestClient restClient, Long id, ItemSchemaData data) {
+    CategoryUpdateOperation(RestClient restClient, Long id, CategoryData data) {
         this.restClient = restClient;
         this.id = id;
         this.data = data;
     }
 
-    public ItemSchema update()
+    public Category update()
     {
         return restClient.put()
                 .uri(this::buildURI)
                 .body(data)
                 .retrieve()
-                .body(ItemSchema.class);
+                .body(Category.class);
     }
 
     private URI buildURI(UriBuilder uriBuilder) {
@@ -675,14 +699,14 @@ or <code>sort(&#8230;&#8203;)</code> that configure the pagination parameters of
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class SchemaDeleteOperation
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class CategoryDeleteOperation
 {
-    public static final String ENDPOINT_PATH = "/api/schema/{id}";
+    public static final String ENDPOINT_PATH = "/api/category/{id}";
 
     private final RestClient restClient;
     private final Long id;
 
-    SchemaDeleteOperation(RestClient restClient, Long id)
+    CategoryDeleteOperation(RestClient restClient, Long id)
     {
         this.restClient = restClient;
         this.id = id;
@@ -708,69 +732,69 @@ or <code>sort(&#8230;&#8203;)</code> that configure the pagination parameters of
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class SchemaFieldSetApiBuilder {
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class ProductSetApiBuilder {
     private final RestClient restClient;
-    private final Long schemaId;
+    private final Long categoryId;
 
-    public SchemaElementApiBuilder(RestClient restClient, Long schemaId) {
+    public ProductSetApiBuilder(RestClient restClient, Long categoryId) {
         this.restClient = restClient;
-        this.schemaId = schemaId;
+        this.categoryId = categoryId;
     }
 
-    public PagedResponse&lt;ItemSchemaField&gt; list() {
-        return new SchemaFieldListOperation(restClient, schemaId).get();
+    public PaginatedResponse&lt;Product&gt; list() {
+        return new ProductListOperation(restClient, categoryId).get();
     }
 }</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class SchemaFieldListOperation
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class ProductListOperation
 {
-    public static final String ENDPOINT_PATH = "/api/schema/{schemaId}/field";
+    public static final String ENDPOINT_PATH = "/api/category/{categoryId}/product";
 
     private final RestClient restClient;
-    private final Long schemaId;
+    private final Long categoryId;
 
-    SchemaFieldListOperation(RestClient restClient, Long schemaId)
+    ProductListOperation(RestClient restClient, Long categoryId)
     {
         this.restClient = restClient;
-        this.schemaId = schemaId;
+        this.categoryId = categoryId;
     }
 
-    public PagedResponse&lt;ItemSchemaField&gt; get()
+    public PaginatedResponse&lt;Product&gt; get()
     {
         return restClient.get()
                 .uri(this::buildURI)
                 .retrieve()
-                .body(new ParameterizedTypeReference&lt;PagedResponse&lt;ItemSchemaField&gt;&gt;(){});
+                .body(new ParameterizedTypeReference&lt;PaginatedResponse&lt;Product&gt;&gt;(){});
     }
 
     private URI buildURI(UriBuilder uriBuilder) {
         uriBuilder.path(ENDPOINT_PATH);
-        return uriBuilder.build(schemaId);
+        return uriBuilder.build(categoryId);
     }
 }</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p><code>SchemaCreationApiBuilder</code> is another example of a <code>API Builder</code> bypassing operations, as the required data is obtained at the top level client call</p>
+<p><code>CategoryCreationApiBuilder</code> is another example of a <code>API Builder</code> bypassing operations, as the required data is obtained at the top level client call</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class SchemaCreationApiBuilder {
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class CategoryCreationApiBuilder {
     private final RestClient restClient;
-    private final ItemSchemaData data;
+    private final CategoryData data;
 
-    public SchemaCreationApiBuilder(RestClient restClient, ItemSchemaData data)
+    public CategoryCreationApiBuilder(RestClient restClient, CategoryData data)
     {
         this.restClient = restClient;
         this.data = data;
     }
 
-    public ItemSchema create()
+    public Category create()
     {
-        return new SchemaCreateOperation(restClient, data)
+        return new CategoryCreateOperation(restClient, data)
                 .create();
     }
 }</code></pre>
@@ -778,24 +802,24 @@ or <code>sort(&#8230;&#8203;)</code> that configure the pagination parameters of
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class SchemaCreateOperation {
-    public static final String ENDPOINT_PATH = "/api/schema";
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class CategoryCreateOperation {
+    public static final String ENDPOINT_PATH = "/api/category";
 
     private final RestClient restClient;
-    private final ItemSchemaData data;
+    private final CategoryData data;
 
-    SchemaCreateOperation(RestClient restClient, ItemSchemaData data) {
+    CategoryCreateOperation(RestClient restClient, CategoryData data) {
         this.restClient = restClient;
         this.data = data;
     }
 
-    public ItemSchema create()
+    public Category create()
     {
         return restClient.post()
                 .uri(this::buildURI)
                 .body(data)
                 .retrieve()
-                .body(ItemSchema.class);
+                .body(Category.class);
     }
 
     private URI buildURI(UriBuilder uriBuilder) {
@@ -810,25 +834,25 @@ or <code>sort(&#8230;&#8203;)</code> that configure the pagination parameters of
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// Schema list
-PagedResponse&lt;ItemSchema&gt; response = client.schemas()
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// Category list
+PaginatedResponse&lt;Category&gt; response = client.categories()
 		.list()
 		.paginate(0, 10)
 		.get();
 
-// Schema field list
-PagedResponse&lt;ItemSchemaField&gt; response = client.schema(1001L)
-		.fields()
+// Product list
+PaginatedResponse&lt;Product&gt; response = client.category(1001L)
+		.products()
 		.list();
 
-ItemSchemaData schemaData = buildSchemaData();
-// Schema creation
-ItemSchema response = client.schema(schemaData)
+CategoryData categoryData = buildCategoryData();
+// Category creation
+Category response = client.category(categoryData)
 		.create();
 
-// Schema update
-ItemSchema response = client.schema(1001L)
-		.update(schemaData);</code></pre>
+// Category update
+Category response = client.category(1001L)
+		.update(categoryData);</code></pre>
 </div>
 </div>
 </div>
