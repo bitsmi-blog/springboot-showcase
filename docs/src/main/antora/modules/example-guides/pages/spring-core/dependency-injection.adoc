@@ -1,0 +1,58 @@
+= Dependency injection
+
+== Features
+
+* Multiple beans of the same type
+* Optional beans
+* Profile dependant beans
+* Use Spring profiles in tests
+* Test soft assertions using **AssertJ** library
+
+== Relevant code in this example
+
+[NOTE]
+====
+In order to be less verbose, the package common part is omitted when a class name is specified (`com.bitsmi.springbootshowcase.springcore.dependencyinjection`).
+
+E.G:
+
+`service.ProductService` corresponds to `com.bitsmi.springbootshowcase.springcore.dependencyinjection.service.ProductService`
+====
+
+* `service.ProductService`
++
+Interface shared by the multiple implementation beans
+
+* `service.impl.MainProductServiceImpl`
++
+Primary bean implementation that will be autowired in single injections points when no `@Qualifier`
+is specified
+
+* `service.impl.AdditionalProductServiceImpl` & `service.impl.AlternativeProductServiceImpl`
++
+Qualified bean implementations. They can be selected individually for injection using their `@Qualifier`
+
+* `service.impl.OptionalProfileProductServiceImpl`
++
+Bean attached to a profile. It will be only available when the specified profile is active
+
+[id=ProductServicesIntTests]
+* `test.service.impl.ProductServicesIntTests` (Integration test)
++
+Shows how to autowire beans using:
+
+** Multiple injection point of all bean candidates for a specific type using Java's `Collection`
+** `@Autowired(required = false)` annotation for optional single injection point
+** Optional single injection point using `ObjectProvider`
+** Optional single injection point using Java's `Optional`
+** Injection of a `@Primary` bean when multiple beans for the same type are present
+** Injection of qualified beans when multiple beans for the same type are present
+
+* `test.service.impl.ProfileServicesOptionalProfileIntTests` (Integration test)
++
+Similar to xref:ProductServicesIntTests[ProductServicesIntTests] but including the definition of a **Spring profile** that enables an additional bean (`service.impl.OptionalProfileProductServiceImpl`)
+
+== Related documentation
+
+* xref:spring-docs:how-to/dependency-injection.adoc[Dependency Injection how-to]
+* Spring Testing [ ##TODO## ]

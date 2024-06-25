@@ -1,0 +1,27 @@
+= Example guides
+
+== Clients
+
+* xref:clients/fluent-client.adoc[Fluent API client]
+* xref:clients/openfeign.adoc[OpenFeign]
+
+== Sample applications
+
+* xref:sample-applications/kafka.adoc[Kafka]
+* xref:sample-applications/web-mvc.adoc[Web MVC]
+
+== Spring Core
+
+* xref:spring-core/aop.adoc[AOP]
+* xref:spring-core/cache.adoc[Cache]
+* xref:spring-core/dependency-injection.adoc[Dependency injection]
+* xref:spring-core/validation.adoc[Validation]
+
+== Spring Data JPA
+
+* xref:spring-data-jpa/repository-extension.adoc[Repository extension]
+
+== Testing
+
+* xref:testing/testing.adoc[Testing]
+

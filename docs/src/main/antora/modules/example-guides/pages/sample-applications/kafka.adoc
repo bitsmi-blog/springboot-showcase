@@ -1,0 +1,20 @@
+= Kafka Sample Application
+
+== Features
+
+=== Project
+* **Docker Compose** dev support
+* Docker image generation for the main artifact
+* Application modularization following xref:ways-of-working:explanation/architecture.adoc[Architecture] guide
+
+=== Spring
+* Kafka Producer & Consumer Spring configuration
+* Consume / Produce Kafka messages inside a **Spring Transaction**
+* Use `KafkaTemplate` to produce Kafka messages
+* `@KafkaListener` topic consumers
+* `@KafkaHandler` by message type & default
+* Automatic message resend form a `@KafkaHandler` method to a specific topic
+* Kafka health indicator
+
+=== Other
+* `provectuslabs/kafka-ui` Docker image

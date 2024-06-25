@@ -1,0 +1,25 @@
+{
+    "data" : [ {
+        "id" : 1001,
+        "externalId" : "category-1",
+        "name" : "Test category 1",
+        "creationDate" : [ 2024, 1, 2, 10, 20 ],
+        "lastUpdated" : [ 2024, 1, 2, 10, 20 ]
+    }, {
+        "id" : 1002,
+        "externalId" : "category-2",
+        "name" : "Test category 2",
+        "creationDate" : [ 2024, 1, 2, 10, 20 ],
+        "lastUpdated" : [ 2024, 1, 2, 10, 20 ]
+    } ],
+    "pagination" : {
+        "pageNumber" : 0,
+        "pageSize" : 10,
+        "sort" : {
+            "orders" : [ ]
+        }
+    },
+    "pageCount" : 2,
+    "totalPages" : 1,
+    "totalCount" : 2
+}

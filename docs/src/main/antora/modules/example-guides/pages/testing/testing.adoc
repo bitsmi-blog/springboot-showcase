@@ -1,0 +1,5 @@
+= Testing
+
+== Features
+
+* Conditional Spring tests using `org.springframework.test.context.junit.jupiter.EnabledIf`

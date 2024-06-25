@@ -1,0 +1,18 @@
+version: '3.8'
+name: springboot-showcase-clients-fluent-client
+
+networks:
+  application-network:
+    external: false
+
+services:
+  wiremock:
+    container_name: wiremock
+    image: "wiremock/wiremock:3.4.2-1"
+    ports:
+      - 8100:8080
+    entrypoint: [ "/docker-entrypoint.sh", "--global-response-templating", "--disable-gzip", "--verbose" ]
+    volumes:
+      - ./wiremock/extensions:/var/wiremock/extensions
+      - ./wiremock/__files:/home/wiremock/__files
+      - ./wiremock/mappings:/home/wiremock/mappings

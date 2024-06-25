@@ -1,0 +1,7 @@
+= Repository extension
+
+== Features
+
+* Repository custom base class
+* Repository interface composition
+* Projections

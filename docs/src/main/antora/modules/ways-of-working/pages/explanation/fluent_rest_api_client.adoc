@@ -7,25 +7,25 @@ This document introduces the design for a fluent API allowing executing differen
 
 Given a remote service API, we can define the following concepts:
 
-* **Resource**: Full path to the resource. E.G. `/schema/1`
-* **(Sub)domain**: URL path that groups resources. E.G. The `/schema/1` resource is defined under `/schema` domain. 
-Also, we can define subdomains under a main domain. E.G.  we can have `/field` subdomain under `/schema/{id}` domain (`/schema/{id}/field`)
+* **Resource**: Full path to the resource. E.G. `/category/1`
+* **(Sub)domain**: URL path that groups resources. E.G. The `/category/1` resource is defined under `/category` domain.
+Also, we can define subdomains under a main domain. E.G.  we can have `/product` subdomain under `/category/{id}` domain (`/category/{id}/product`)
 * **Operation**: Action to be done on the resource or (sub)domain, usually a CRUD operation. 
 
-In order to illustrate the design, we introduce the following service API:
+In order to illustrate the design, we introduce the following API that models a service to operate with categorized products:
 
-* We have a remote service API that defines 2 main domains: `/info` and `/schema`:
+* We have a remote service API that defines 2 main domains: `/info` and `/category`:
 * `/info` domain defines the following operation:
 	** `get version` doing a `GET` request to the `/info/version` endpoint
-* `/schema` domain defines the following operations:
-	** `list` schemas doing a `GET` request to the `/schema` endpoint
-	** get an specific schema `detail` doing a `GET` request to the `/schema/{id}` endpoint
-	** `create` a new schema doing a `POST` request to the `/schema` endpoint
-	** `update` an existent schema doing a `PUT` request to the `/schema/{id}` endpoint
-	** `delete` an existent doing a `DELETE` request to the `/schema/{id}` endpoint
-* `/schema` domain defines the subdomain `/field` for each element on it
-* `/schema/field` subdomain defines the following operations:
-	** `list` fields belonging to a schema doing a `GET` request to the `/schema/{schema id}/field` endpoint
+* `/category` domain defines the following operations:
+	** `list` categories doing a `GET` request to the `/category` endpoint
+	** get an specific category `detail` doing a `GET` request to the `/category/{id}` endpoint
+	** `create` a new category doing a `POST` request to the `/category` endpoint
+	** `update` an existent category doing a `PUT` request to the `/category/{id}` endpoint
+	** `delete` an existent category doing a `DELETE` request to the `/category/{id}` endpoint
+* `/category` domain defines the subdomain `/product` for each element on it
+* `/category/product` subdomain defines the following operations:
+	** `list` fields belonging to a product doing a `GET` request to the `/category/{category id}/product` endpoint
 	
 In a schematic way:
 
@@ -35,13 +35,13 @@ In a schematic way:
 * /
 **[#lightblue] info
 ***[#lightgreen] getVersion
-**[#lightblue] schema
+**[#lightblue] category
 ***[#lightgreen]< list
 ***[#lightgreen]< detail
 ***[#lightgreen]< create
 ***[#lightgreen]< update
 ***[#lightgreen]< delete
-***[#lightblue] field
+***[#lightblue] product
 ****[#lightgreen] list
 
 legend left
@@ -108,11 +108,11 @@ Entrypoint of client API. Provides methods to give access to the `API Builders` 
 
 [source,java]
 ----
-public class Client {
+public class ServiceClient {
     // Underlying HTTP client instance
     private final RestClient restClient;
 
-    private ContentServiceClient(RestClient restClient) {
+    private ServiceClient(RestClient restClient) {
         this.restClient = restClient;
     }
 
@@ -126,20 +126,20 @@ public class Client {
         return new InfoApiBuilder(restClient);
     }
 
-    public SchemaSetApiBuilder schemas() {
-        return new SchemaSetApiBuilder(restClient);
+    public CategorySetApiBuilder categories() {
+        return new CategorySetApiBuilder(restClient);
     }
 
-    public SchemaSetApiBuilder schemas(SchemaSetSelector selector) {
-        return new SchemaSetApiBuilder(restClient, selector);
+    public CategorySetApiBuilder categories(CategorySetSelector selector) {
+        return new CategorySetApiBuilder(restClient, selector);
     }
 
-    public SchemaElementApiBuilder schema(Long id) {
-        return new SchemaElementApiBuilder(restClient, id);
+    public CategoryElementApiBuilder category(Long id) {
+        return new CategoryElementApiBuilder(restClient, id);
     }
 
-    public SchemaCreationApiBuilder schema(ItemSchemaData data) {
-        return new SchemaCreationApiBuilder(restClient, data);
+    public CategoryCreationApiBuilder category(CategoryData data) {
+        return new CategoryCreationApiBuilder(restClient, data);
     }
 
     /* Builder allowing to configure the underlying client
@@ -154,7 +154,7 @@ Once implemented, we can get an instance of our client as follows:
 
 [source,java]
 ----
-ContentServiceClient client = ContentServiceClient.builder()
+ServiceClient client = ServiceClient.builder()
 		.withBaseUrl(remoteServiceUrl)
 		.build();
 ----
@@ -209,47 +209,47 @@ String actualServiceVersion = client.info()
 	.get();
 ----
 
-=== Schema API
+=== Category API
 
-`SchemaSetApiBuilder` is a more complex example of a `API Builder` supporting parameters, allowing filtering the result set, and a configurable operation with additional intermediate methods:
+`CategorySetApiBuilder` is a more complex example of a `API Builder` supporting parameters, allowing filtering the result set, and a configurable operation with additional intermediate methods:
 
 [source,java]
 ----
-public class SchemaSetApiBuilder
+public class CategorySetApiBuilder
 {
     private final RestClient restClient;
     // Selector parameter received from Client that will be passed to downstream operations
-    private final SchemaSetSelector selector;
+    private final CategorySetSelector selector;
 
-    public SchemaSetApiBuilder(RestClient restClient) {
+    public CategorySetApiBuilder(RestClient restClient) {
         this(restClient, null);
     }
 
-    public SchemaSetApiBuilder(RestClient restClient, SchemaSetSelector selector) {
+    public CategorySetApiBuilder(RestClient restClient, CategorySetSelector selector) {
         this.restClient = restClient;
         this.selector = selector;
     }
 
     /* Selects the domain operation to execute
      */
-    public SchemaListOperation list() {
-        return new SchemaListOperation(restClient, validator, selector);
+    public CategoryListOperation list() {
+        return new CategoryListOperation(restClient, validator, selector);
     }
 }
 ----
 
 [source,java]
 ----
-public class SchemaListOperation
+public class CategoryListOperation
 {
-    public static final String ENDPOINT_PATH = "/api/schema";
+    public static final String ENDPOINT_PATH = "/api/category";
 
     private final RestClient restClient;
-    private final SchemaSetSelector selector;
+    private final CategorySetSelector selector;
     private Integer pageNumber;
     private Integer pageSize;
 
-    SchemaListOperation(RestClient restClient, SchemaSetSelector selector)
+    CategoryListOperation(RestClient restClient, CategorySetSelector selector)
     {
         this.restClient = restClient;
         this.selector = selector;
@@ -258,7 +258,7 @@ public class SchemaListOperation
     /* Intermediate operation that allows specifying
      * additional parameters to the request
      */
-    public SchemaListOperation paginate(int pageNumber, int pageSize)
+    public CategoryListOperation paginate(int pageNumber, int pageSize)
     {
         this.pageNumber = pageNumber;
         this.pageSize = pageSize;
@@ -267,12 +267,12 @@ public class SchemaListOperation
 
     /* Method that executes the operation sending the request to the remote service
      */
-    public PagedResponse<ItemSchema> get()
+    public PaginatedResponse<Category> get()
     {
         return restClient.get()
                 .uri(this::buildURI)
                 .retrieve()
-                .body(new ParameterizedTypeReference<PagedResponse<ItemSchema>>(){});
+                .body(new ParameterizedTypeReference<PaginatedResponse<Category>>(){});
     }
 
     private URI buildURI(UriBuilder uriBuilder) {
@@ -292,15 +292,15 @@ public class SchemaListOperation
 }
 ----
 
-`SchemaElementApiBuilder` is an example of how we can implement multiple operations, with the possibility to bypass the operation, and subdomain `API Builder`s
+`CategoryElementApiBuilder` is an example of how we can implement multiple operations, with the possibility to bypass the operation, and subdomain `API Builder`s
 
 [source,java]
 ----
-public class SchemaElementApiBuilder {
+public class CategoryElementApiBuilder {
     private final RestClient restClient;
     private final Long id;
 
-    public SchemaElementApiBuilder(RestClient restClient, Long id) {
+    public CategoryElementApiBuilder(RestClient restClient, Long id) {
         this.restClient = restClient;
         this.id = id;
     }
@@ -308,25 +308,25 @@ public class SchemaElementApiBuilder {
     /* Bypass operation and execute the operation directly, as this
      * operation is not configurable and doesn't provide additional methods
      */
-    public Optional<ItemSchema> get() {
-        return new SchemaGetOperation(restClient, id).get();
+    public Optional<Category> get() {
+        return new CategoryGetOperation(restClient, id).get();
     }
 
-    public ItemSchema update(ItemSchemaData data) {
-        return new SchemaUpdateOperation(restClient, id, data)
+    public Category update(CategoryData data) {
+        return new CategoryUpdateOperation(restClient, id, data)
                 .update();
     }
 
     public void delete() {
-        return new SchemaUpdateOperation(restClient, id)
+        return new CategoryDeleteOperation(restClient, id)
                 .delete();
     }
 
-    /* Provide access to "field" subdomain API Builder. Parameters
+    /* Provide access to "product" subdomain API Builder. Parameters
      * received by this API Builder are propagated to the downstream API Builder
      */
-    public SchemaFieldSetApiBuilder fields() {
-        return new SchemaFieldSetApiBuilder(restClient, id);
+    public ProductSetApiBuilder products() {
+        return new ProductSetApiBuilder(restClient, id);
     }
 }
 
@@ -336,24 +336,24 @@ Bypassed `Operation` classes only have a method to execute the request on remote
 
 [source,java]
 ----
-public class SchemaGetOperation {
-    public static final String ENDPOINT_PATH = "/api/schema/{id}";
+public class CategoryGetOperation {
+    public static final String ENDPOINT_PATH = "/api/category/{id}";
 
     private final RestClient restClient;
     private final Long id;
 
-    SchemaGetOperation(RestClient restClient, Long id) {
+    CategoryGetOperation(RestClient restClient, Long id) {
         this.restClient = restClient;
         this.id = id;
     }
 
-    public Optional<ItemSchema> get()
+    public Optional<Category> get()
     {
     	return Optional.ofNullable(
             restClient.get()
                 .uri(this::buildURI)
                 .retrieve()
-                .body(ItemSchema.class)
+                .body(Category.class)
         );
     }
 
@@ -366,26 +366,26 @@ public class SchemaGetOperation {
 
 [source,java]
 ----
-public class SchemaUpdateOperation {
-    public static final String ENDPOINT_PATH = "/api/schema/{id}";
+public class CategoryUpdateOperation {
+    public static final String ENDPOINT_PATH = "/api/category/{id}";
 
     private final RestClient restClient;
     private final Long id;
-    private final ItemSchemaData data;
+    private final CategoryData data;
 
-    SchemaUpdateOperation(RestClient restClient, Long id, ItemSchemaData data) {
+    CategoryUpdateOperation(RestClient restClient, Long id, CategoryData data) {
         this.restClient = restClient;
         this.id = id;
         this.data = data;
     }
 
-    public ItemSchema update()
+    public Category update()
     {
         return restClient.put()
                 .uri(this::buildURI)
                 .body(data)
                 .retrieve()
-                .body(ItemSchema.class);
+                .body(Category.class);
     }
 
     private URI buildURI(UriBuilder uriBuilder) {
@@ -397,14 +397,14 @@ public class SchemaUpdateOperation {
 
 [source,java]
 ----
-public class SchemaDeleteOperation
+public class CategoryDeleteOperation
 {
-    public static final String ENDPOINT_PATH = "/api/schema/{id}";
+    public static final String ENDPOINT_PATH = "/api/category/{id}";
 
     private final RestClient restClient;
     private final Long id;
 
-    SchemaDeleteOperation(RestClient restClient, Long id)
+    CategoryDeleteOperation(RestClient restClient, Long id)
     {
         this.restClient = restClient;
         this.id = id;
@@ -429,68 +429,68 @@ Here we have the subdomain `API Builder` that is called from the main domain `AP
 
 [source,java]
 ----
-public class SchemaFieldSetApiBuilder {
+public class ProductSetApiBuilder {
     private final RestClient restClient;
-    private final Long schemaId;
+    private final Long categoryId;
 
-    public SchemaElementApiBuilder(RestClient restClient, Long schemaId) {
+    public ProductSetApiBuilder(RestClient restClient, Long categoryId) {
         this.restClient = restClient;
-        this.schemaId = schemaId;
+        this.categoryId = categoryId;
     }
 
-    public PagedResponse<ItemSchemaField> list() {
-        return new SchemaFieldListOperation(restClient, schemaId).get();
+    public PaginatedResponse<Product> list() {
+        return new ProductListOperation(restClient, categoryId).get();
     }
 }
 ----
 
 [source,java]
 ----
-public class SchemaFieldListOperation
+public class ProductListOperation
 {
-    public static final String ENDPOINT_PATH = "/api/schema/{schemaId}/field";
+    public static final String ENDPOINT_PATH = "/api/category/{categoryId}/product";
 
     private final RestClient restClient;
-    private final Long schemaId;
+    private final Long categoryId;
 
-    SchemaFieldListOperation(RestClient restClient, Long schemaId)
+    ProductListOperation(RestClient restClient, Long categoryId)
     {
         this.restClient = restClient;
-        this.schemaId = schemaId;
+        this.categoryId = categoryId;
     }
 
-    public PagedResponse<ItemSchemaField> get()
+    public PaginatedResponse<Product> get()
     {
         return restClient.get()
                 .uri(this::buildURI)
                 .retrieve()
-                .body(new ParameterizedTypeReference<PagedResponse<ItemSchemaField>>(){});
+                .body(new ParameterizedTypeReference<PaginatedResponse<Product>>(){});
     }
 
     private URI buildURI(UriBuilder uriBuilder) {
         uriBuilder.path(ENDPOINT_PATH);
-        return uriBuilder.build(schemaId);
+        return uriBuilder.build(categoryId);
     }
 }
 ----
 
-`SchemaCreationApiBuilder` is another example of a `API Builder` bypassing operations, as the required data is obtained at the top level client call
+`CategoryCreationApiBuilder` is another example of a `API Builder` bypassing operations, as the required data is obtained at the top level client call
 
 [source,java]
 ----
-public class SchemaCreationApiBuilder {
+public class CategoryCreationApiBuilder {
     private final RestClient restClient;
-    private final ItemSchemaData data;
+    private final CategoryData data;
 
-    public SchemaCreationApiBuilder(RestClient restClient, ItemSchemaData data)
+    public CategoryCreationApiBuilder(RestClient restClient, CategoryData data)
     {
         this.restClient = restClient;
         this.data = data;
     }
 
-    public ItemSchema create()
+    public Category create()
     {
-        return new SchemaCreateOperation(restClient, data)
+        return new CategoryCreateOperation(restClient, data)
                 .create();
     }
 }
@@ -499,24 +499,24 @@ public class SchemaCreationApiBuilder {
 
 [source,java]
 ----
-public class SchemaCreateOperation {
-    public static final String ENDPOINT_PATH = "/api/schema";
+public class CategoryCreateOperation {
+    public static final String ENDPOINT_PATH = "/api/category";
 
     private final RestClient restClient;
-    private final ItemSchemaData data;
+    private final CategoryData data;
 
-    SchemaCreateOperation(RestClient restClient, ItemSchemaData data) {
+    CategoryCreateOperation(RestClient restClient, CategoryData data) {
         this.restClient = restClient;
         this.data = data;
     }
 
-    public ItemSchema create()
+    public Category create()
     {
         return restClient.post()
                 .uri(this::buildURI)
                 .body(data)
                 .retrieve()
-                .body(ItemSchema.class);
+                .body(Category.class);
     }
 
     private URI buildURI(UriBuilder uriBuilder) {
@@ -531,23 +531,23 @@ Some usage examples:
 [source,java]
 ----
 
-// Schema list
-PagedResponse<ItemSchema> response = client.schemas()
+// Category list
+PaginatedResponse<Category> response = client.categories()
 		.list()
 		.paginate(0, 10)
 		.get();
 
-// Schema field list
-PagedResponse<ItemSchemaField> response = client.schema(1001L)
-		.fields()
+// Product list
+PaginatedResponse<Product> response = client.category(1001L)
+		.products()
 		.list();
 
-ItemSchemaData schemaData = buildSchemaData();
-// Schema creation
-ItemSchema response = client.schema(schemaData)
+CategoryData categoryData = buildCategoryData();
+// Category creation
+Category response = client.category(categoryData)
 		.create();
 
-// Schema update
-ItemSchema response = client.schema(1001L)
-		.update(schemaData);
+// Category update
+Category response = client.category(1001L)
+		.update(categoryData);
 ----

@@ -241,14 +241,14 @@ management.health.kafka.enabled=true
 WARNING: If an indicator is disabled, remove it from groups, otherwise it will raise an error and application won't start.
 
 === Metrics
-TODO
+[ ##TODO## ]
 
 - `/actuator/metrics`
 - `/actuator/metrics/userApiController`
 - `/actuator/metrics/userApiController?tag=error%3AIllegalStateException`
 
 === Custom actuators
-TODO
+[ ##TODO## ]
 
 == References
 - https://docs.spring.io/spring-boot/docs/3.2.x/actuator-api/htmlsingle/#overview[Actuator overview]

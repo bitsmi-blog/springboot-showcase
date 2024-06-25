@@ -3,6 +3,7 @@
 ** How-to guides
 *** xref:how-to/actuators.adoc[Actuators]
 *** xref:how-to/aop.adoc[AOP]
+*** xref:how-to/dependency-injection.adoc[Dependency injection]
 *** xref:how-to/observability.adoc[Observability]
 *** xref:how-to/testing.adoc[Testing]
 

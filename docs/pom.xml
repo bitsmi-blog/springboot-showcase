@@ -11,70 +11,20 @@
 	<parent>
     	<groupId>com.bitsmi.springboot-showcase</groupId>
     	<artifactId>springboot-showcase-parent</artifactId>
-    	<version>2.0.0-SNAPSHOT</version>
+    	<version>3.0.0-SNAPSHOT</version>
     </parent>
 
     <dependencies>
-        <dependency>
-            <groupId>com.bitsmi.springboot-showcase</groupId>
-            <artifactId>springboot-showcase-content-service-client</artifactId>
-            <version>2.0.0-SNAPSHOT</version>
-            <classifier>sources</classifier>
-        </dependency>
-        <dependency>
-            <groupId>com.bitsmi.springboot-showcase</groupId>
-            <artifactId>springboot-showcase-domain</artifactId>
-            <version>2.0.0-SNAPSHOT</version>
-            <classifier>sources</classifier>
-        </dependency>
-        <dependency>
-            <groupId>com.bitsmi.springboot-showcase</groupId>
-            <artifactId>springboot-showcase-infrastructure</artifactId>
-            <version>2.0.0-SNAPSHOT</version>
-            <classifier>sources</classifier>
-        </dependency>
-        <dependency>
-            <groupId>com.bitsmi.springboot-showcase</groupId>
-            <artifactId>springboot-showcase-application</artifactId>
-            <version>2.0.0-SNAPSHOT</version>
-            <classifier>sources</classifier>
-        </dependency>
-        <dependency>
-            <groupId>com.bitsmi.springboot-showcase</groupId>
-            <artifactId>springboot-showcase-api</artifactId>
-            <version>2.0.0-SNAPSHOT</version>
-            <classifier>sources</classifier>
-        </dependency>
-        <dependency>
-            <groupId>com.bitsmi.springboot-showcase</groupId>
-            <artifactId>springboot-showcase-api-client-openfeign</artifactId>
-            <version>2.0.0-SNAPSHOT</version>
-            <classifier>sources</classifier>
-        </dependency>
-        <dependency>
-            <groupId>com.bitsmi.springboot-showcase</groupId>
-            <artifactId>springboot-showcase-web</artifactId>
-            <version>2.0.0-SNAPSHOT</version>
-            <classifier>sources</classifier>
-        </dependency>
-        <dependency>
-            <groupId>com.bitsmi.springboot-showcase</groupId>
-            <artifactId>springboot-showcase-messaging</artifactId>
-            <version>2.0.0-SNAPSHOT</version>
-            <classifier>sources</classifier>
-        </dependency>
-        <dependency>
-            <groupId>com.bitsmi.springboot-showcase</groupId>
-            <artifactId>springboot-showcase-main</artifactId>
-            <version>2.0.0-SNAPSHOT</version>
-            <classifier>sources</classifier>
-        </dependency>
-        <dependency>
-            <groupId>com.bitsmi.springboot-showcase</groupId>
-            <artifactId>springboot-showcase-utils</artifactId>
-            <version>2.0.0-SNAPSHOT</version>
-            <classifier>sources</classifier>
-        </dependency>
+        <!-- Include source dependencies, so they can be unpacked at target and accessed by antora as additional resources
+             Also, uncomment move-additional-docs configuration.
+             E.G.
+             <dependency>
+                <groupId>com.bitsmi.springboot-showcase</groupId>
+                <artifactId>springboot-showcase-sampleapps-domain</artifactId>
+                <version>3.0.0-SNAPSHOT</version>
+                <classifier>sources</classifier>
+             </dependency>
+          -->
     </dependencies>
 
     <build>
@@ -129,11 +79,13 @@
                             <goal>run</goal>
                         </goals>
                         <configuration>
-                            <target>
+                            <!-- TODO Uncomment when the source dependencies included -->
+                            <!--<target>
                                 <move todir="${project.build.directory}/additional-sources">
                                     <fileset dir="${project.build.directory}/unpackaged-sources"/>
+                                    <failonerror>false</failonerror>
                                 </move>
-                            </target>
+                            </target>-->
                         </configuration>
                     </execution>
                 </executions>

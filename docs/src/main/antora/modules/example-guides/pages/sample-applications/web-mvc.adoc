@@ -1,0 +1,28 @@
+= Web MVC Sample Application
+
+== Features
+
+=== Project
+* **Docker Compose** dev support
+* Docker image generation for the main artifact
+* Application modularization following xref:ways-of-working:explanation/architecture.adoc[Architecture] guide
+
+=== Spring
+* Authentication using **Spring-security** including:
+** Basic authentication
+** JWT authentication
+* Bean and method parameters validation
+* [ ##TODO## ] Cache management
+* **Spring Data JPA** repositories
+* Metrics
+** Endpoint metrics
+** [ ##TODO## ] Custom metrics registration
+* Observability & Tracing
+* [ ##TODO## ] **Spring HATEOAS** support
+* Web MVC REST endpoints
+
+=== Test
+* H2 in-memory database support for tests
+* Integration tests using **Mock MVC**
+* **Testcontainers** database support (**Postgres**)
+* Test conventions described in [ ##TODO## ] guide

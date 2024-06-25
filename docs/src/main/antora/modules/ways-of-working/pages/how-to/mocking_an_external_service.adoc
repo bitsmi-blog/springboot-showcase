@@ -79,9 +79,9 @@ The response that will be returned as the result of the matching expectation can
 
 ==== Example
 
-The following example matches a request to the `/api/content` endpoint that provides `selector`, `page` and `pageSize` query parameters
+The following example matches a request to the `/api/inventory` endpoint that provides `selector`, `page` and `pageSize` query parameters
 that matches exactly the specified values. A response with status code `200` and a JSON body will bre returned.
-The content of this response is located in `api/content/get_list_body.json` file located in the `__files` folder.
+The content of this response is located in `api/inventory/get_list_body.json` file located in the `__files` folder.
 
 [source,json]
 ----
@@ -89,7 +89,7 @@ The content of this response is located in `api/content/get_list_body.json` file
     "priority": 10,
     "request": {
         "method": "GET",
-        "urlPath": "/api/content",
+        "urlPath": "/api/inventory",
         "queryParameters": {
             "selector": {
                 "equalTo": "id EQUALS 1"
@@ -107,7 +107,7 @@ The content of this response is located in `api/content/get_list_body.json` file
         "headers": {
             "Content-Type": "application/json"
         },
-        "bodyFileName": "api/content/get_list_body.json"
+        "bodyFileName": "api/inventory/get_list_body.json"
     }
 }
 ----

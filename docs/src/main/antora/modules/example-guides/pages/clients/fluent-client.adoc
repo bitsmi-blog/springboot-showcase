@@ -1,0 +1,7 @@
+= Fluent API client
+
+== Features
+
+* Fluent API client definition and usage examples
+* Wiremock Docker service
+* Integration tests using Wiremock Java API

@@ -1,0 +1,37 @@
+{
+    "priority": 10,
+    "request": {
+        "method": "GET",
+        "urlPath": "/api/category",
+        "queryParameters": {
+            "selector": {
+                "or": [{
+                    "equalTo": "id EQUALS 1001"
+                }, {
+                    "equalTo": "externalId EQUALS 'category-1'"
+                }]
+            },
+            "page": {
+                "or": [{
+                    "absent": true
+                }, {
+                    "equalTo": "0"
+                }]
+            },
+            "pageSize": {
+                "or": [{
+                    "absent": true
+                }, {
+                    "equalTo": "10"
+                }]
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "Content-Type": "application/json"
+        },
+        "bodyFileName": "api/inventory/get_categories_list_selector_body.json"
+    }
+}

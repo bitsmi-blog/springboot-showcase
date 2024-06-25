@@ -1,0 +1,6 @@
+= Validation
+
+== Features
+
+* Spring `@Validated` bean parameters
+* Custom validation annotations

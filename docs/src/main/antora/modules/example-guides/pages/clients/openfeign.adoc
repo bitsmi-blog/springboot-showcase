@@ -1,0 +1,9 @@
+= OpenFeign
+
+== Features
+
+* OpenFeign clients from Service interfaces
+* Spring MVC Rest Controller from Service interfaces
+* Client integration test using **Wiremock**
+* Server endpoints integration test using **MockMVC**
+* Dynamic Spring test properties definition using `@DynamicPropertySource`

@@ -1,6 +1,6 @@
-package com.bitsmi.springbootshowcase.application.dummy.config;
+package com.bitsmi.springbootshowcase.sampleapps.application.dummy.config;
 
-import com.bitsmi.springbootshowcase.application.dummy.aop.DummyAspect;
+import com.bitsmi.springbootshowcase.sampleapps.application.dummy.aop.DummyAspect;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

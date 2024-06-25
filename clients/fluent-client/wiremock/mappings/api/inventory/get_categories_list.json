@@ -1,0 +1,22 @@
+{
+    "priority": 10,
+    "request": {
+        "method": "GET",
+        "urlPath": "/api/category",
+        "queryParameters": {
+            "page": {
+                "equalTo": "0"
+            },
+            "pageSize": {
+                "equalTo": "10"
+            }
+        }
+    },
+    "response": {
+        "status": 200,
+        "headers": {
+            "Content-Type": "application/json"
+        },
+        "bodyFileName": "api/inventory/get_categories_list_body.json"
+    }
+}
