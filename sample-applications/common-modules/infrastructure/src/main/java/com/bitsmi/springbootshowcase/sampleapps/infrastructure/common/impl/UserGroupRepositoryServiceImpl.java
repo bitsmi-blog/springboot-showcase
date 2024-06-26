@@ -1,7 +1,7 @@
 package com.bitsmi.springbootshowcase.sampleapps.infrastructure.common.impl;
 
 import com.bitsmi.springbootshowcase.sampleapps.domain.common.model.UserGroup;
-import com.bitsmi.springbootshowcase.sampleapps.domain.common.spi.UserGroupRepositoryService;
+import com.bitsmi.springbootshowcase.sampleapps.domain.common.UserGroupRepositoryService;
 import com.bitsmi.springbootshowcase.sampleapps.infrastructure.InfrastructureConstants;
 import com.bitsmi.springbootshowcase.sampleapps.infrastructure.common.mapper.UserGroupModelMapper;
 import com.bitsmi.springbootshowcase.sampleapps.infrastructure.common.repository.UserGroupRepository;

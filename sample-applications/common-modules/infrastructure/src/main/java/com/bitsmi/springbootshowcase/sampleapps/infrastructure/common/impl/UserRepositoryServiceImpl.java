@@ -3,7 +3,7 @@ package com.bitsmi.springbootshowcase.sampleapps.infrastructure.common.impl;
 import com.bitsmi.springbootshowcase.sampleapps.domain.common.model.User;
 import com.bitsmi.springbootshowcase.sampleapps.domain.common.model.UserGroup;
 import com.bitsmi.springbootshowcase.sampleapps.domain.common.model.UserSummary;
-import com.bitsmi.springbootshowcase.sampleapps.domain.common.spi.UserRepositoryService;
+import com.bitsmi.springbootshowcase.sampleapps.domain.common.UserRepositoryService;
 import com.bitsmi.springbootshowcase.sampleapps.infrastructure.common.entity.UserEntity;
 import com.bitsmi.springbootshowcase.sampleapps.infrastructure.common.entity.UserGroupEntity;
 import com.bitsmi.springbootshowcase.sampleapps.infrastructure.common.mapper.UserModelMapper;

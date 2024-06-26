@@ -1,4 +1,4 @@
-package com.bitsmi.springbootshowcase.sampleapps.domain.common.spi;
+package com.bitsmi.springbootshowcase.sampleapps.domain.common;
 
 import com.bitsmi.springbootshowcase.sampleapps.domain.common.model.User;
 import com.bitsmi.springbootshowcase.sampleapps.domain.common.model.UserSummary;

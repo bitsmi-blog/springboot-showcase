@@ -3,7 +3,7 @@ package com.bitsmi.springbootshowcase.sampleapps.domain.common.impl;
 import com.bitsmi.springbootshowcase.sampleapps.domain.common.UserDomainQueryService;
 import com.bitsmi.springbootshowcase.sampleapps.domain.common.model.User;
 import com.bitsmi.springbootshowcase.sampleapps.domain.common.model.UserSummary;
-import com.bitsmi.springbootshowcase.sampleapps.domain.common.spi.UserRepositoryService;
+import com.bitsmi.springbootshowcase.sampleapps.domain.common.UserRepositoryService;
 
 import java.util.Optional;
 
