@@ -4,7 +4,7 @@ import com.bitsmi.springbootshowcase.sampleapps.application.common.UserCreationA
 import com.bitsmi.springbootshowcase.sampleapps.domain.common.UserDomainFactory;
 import com.bitsmi.springbootshowcase.sampleapps.domain.common.exception.ElementAlreadyExistsException;
 import com.bitsmi.springbootshowcase.sampleapps.domain.common.model.User;
-import com.bitsmi.springbootshowcase.sampleapps.domain.common.UserRepositoryService;
+import com.bitsmi.springbootshowcase.sampleapps.domain.common.UserDomainRepository;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.stereotype.Component;
@@ -16,11 +16,11 @@ import org.springframework.validation.annotation.Validated;
 public class UserCreationApplicationCommandImpl implements UserCreationApplicationCommand
 {
     private final UserDomainFactory userDomainFactory;
-    private final UserRepositoryService userRepositoryService;
+    private final UserDomainRepository userRepositoryService;
 
     public UserCreationApplicationCommandImpl(
             UserDomainFactory userDomainFactory,
-            UserRepositoryService userRepositoryService
+            UserDomainRepository userRepositoryService
     ) {
         this.userDomainFactory = userDomainFactory;
         this.userRepositoryService = userRepositoryService;

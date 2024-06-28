@@ -5,7 +5,7 @@ import com.bitsmi.springbootshowcase.springcore.cache.domain.common.dto.Paginati
 import com.bitsmi.springbootshowcase.springcore.cache.domain.common.exception.ElementAlreadyExistsException;
 import com.bitsmi.springbootshowcase.springcore.cache.domain.common.exception.ElementNotFoundException;
 import com.bitsmi.springbootshowcase.springcore.cache.domain.inventory.model.Product;
-import com.bitsmi.springbootshowcase.springcore.cache.domain.inventory.spi.ProductRepositoryService;
+import com.bitsmi.springbootshowcase.springcore.cache.domain.inventory.ProductDomainRepository;
 import com.bitsmi.springbootshowcase.springcore.cache.infrastructure.common.mapper.PageRequestMapper;
 import com.bitsmi.springbootshowcase.springcore.cache.infrastructure.common.mapper.PaginatedDataMapper;
 import com.bitsmi.springbootshowcase.springcore.cache.infrastructure.inventory.entity.ProductEntity;
@@ -21,7 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 
 @Service
-public class ProductRepositoryServiceImpl implements ProductRepositoryService
+public class ProductDomainRepositoryImpl implements ProductDomainRepository
 {
     private static final String CACHE_ALL_PRODUCTS = "allProducts";
     private static final String CACHE_PRODUCT_BY_EXTERNAL_ID = "productByExternalId";
@@ -31,7 +31,7 @@ public class ProductRepositoryServiceImpl implements ProductRepositoryService
     private final PageRequestMapper pageRequestMapper;
     private final PaginatedDataMapper springPaginatedDataMapper;
 
-    public ProductRepositoryServiceImpl(
+    public ProductDomainRepositoryImpl(
             ProductRepository productRepository,
             ProductModelMapper productModelMapper,
             PageRequestMapper pageRequestMapper,

@@ -1,4 +1,4 @@
-package com.bitsmi.springbootshowcase.springcore.cache.domain.inventory.spi;
+package com.bitsmi.springbootshowcase.springcore.cache.domain.inventory;
 
 import com.bitsmi.springbootshowcase.springcore.cache.domain.common.dto.PaginatedData;
 import com.bitsmi.springbootshowcase.springcore.cache.domain.common.dto.Pagination;
@@ -8,7 +8,7 @@ import jakarta.validation.constraints.NotNull;
 
 import java.util.Optional;
 
-public interface ProductRepositoryService
+public interface ProductDomainRepository
 {
     PaginatedData<Product> findAllItemSchemas(@NotNull Pagination pagination);
 

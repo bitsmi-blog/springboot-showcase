@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotNull;
 
 import java.util.Optional;
 
-public interface UserGroupRepositoryService
+public interface UserGroupDomainRepository
 {
     Optional<UserGroup> findUserGroupByName(@NotNull String name);
 }

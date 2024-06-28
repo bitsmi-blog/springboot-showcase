@@ -1,7 +1,7 @@
 package com.bitsmi.springbootshowcase.sampleapps.infrastructure.common.impl;
 
 import com.bitsmi.springbootshowcase.sampleapps.domain.common.model.UserGroup;
-import com.bitsmi.springbootshowcase.sampleapps.domain.common.UserGroupRepositoryService;
+import com.bitsmi.springbootshowcase.sampleapps.domain.common.UserGroupDomainRepository;
 import com.bitsmi.springbootshowcase.sampleapps.infrastructure.InfrastructureConstants;
 import com.bitsmi.springbootshowcase.sampleapps.infrastructure.common.mapper.UserGroupModelMapper;
 import com.bitsmi.springbootshowcase.sampleapps.infrastructure.common.repository.UserGroupRepository;
@@ -14,12 +14,12 @@ import java.util.Optional;
 
 @Service
 @Validated
-public class UserGroupRepositoryServiceImpl implements UserGroupRepositoryService
+public class UserGroupDomainRepositoryImpl implements UserGroupDomainRepository
 {
     private final UserGroupRepository userGroupRepository;
     private final UserGroupModelMapper userGroupModelMapper;
 
-    public UserGroupRepositoryServiceImpl(
+    public UserGroupDomainRepositoryImpl(
             UserGroupRepository userGroupRepository,
             UserGroupModelMapper userGroupModelMapper
     ) {

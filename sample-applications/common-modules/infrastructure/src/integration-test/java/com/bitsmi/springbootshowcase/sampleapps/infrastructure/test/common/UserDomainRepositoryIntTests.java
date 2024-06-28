@@ -5,8 +5,8 @@ import com.bitsmi.springbootshowcase.sampleapps.domain.common.model.Authority;
 import com.bitsmi.springbootshowcase.sampleapps.domain.common.model.User;
 import com.bitsmi.springbootshowcase.sampleapps.domain.common.model.UserGroup;
 import com.bitsmi.springbootshowcase.sampleapps.domain.common.model.UserSummary;
-import com.bitsmi.springbootshowcase.sampleapps.domain.common.UserGroupRepositoryService;
-import com.bitsmi.springbootshowcase.sampleapps.domain.common.UserRepositoryService;
+import com.bitsmi.springbootshowcase.sampleapps.domain.common.UserGroupDomainRepository;
+import com.bitsmi.springbootshowcase.sampleapps.domain.common.UserDomainRepository;
 import com.bitsmi.springbootshowcase.sampleapps.domain.common.util.IgnoreOnComponentScan;
 import com.bitsmi.springbootshowcase.sampleapps.infrastructure.config.InfrastructureModuleConfig;
 import com.bitsmi.springbootshowcase.sampleapps.infrastructure.testsupport.internal.ServiceIntegrationTest;
@@ -30,15 +30,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ServiceIntegrationTest
 @TestPropertySource(
     properties = {
-        "spring.liquibase.change-log=classpath:db/changelogs/infrastructure/test/common/user_repository_service_tests.xml"
+        "spring.liquibase.change-log=classpath:db/changelogs/infrastructure/test/common/user_domain_repository_tests.xml"
     }
 )
-public class UserRepositoryServiceIntTests
+public class UserDomainRepositoryIntTests
 {
     @Autowired
-    private UserRepositoryService userRepositoryService;
+    private UserDomainRepository userRepositoryService;
     @Autowired
-    private UserGroupRepositoryService userGroupRepositoryService;
+    private UserGroupDomainRepository userGroupRepositoryService;
 
     @Test
     @DisplayName("countAllUsers should return existing users count")

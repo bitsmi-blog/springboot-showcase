@@ -3,6 +3,8 @@
 
 == Modules
 
+Application's modules have the following dependency diagram:
+
 [plantuml]
 ----
 @startuml
@@ -16,8 +18,9 @@ rectangle " " as setup {
 
 main .right.> setup : "assembles"
 web --> application
+web --> infrastructure : "optional"
 application --> domain
-infrastructure --|> domain
+infrastructure --> domain
 @enduml
 ----
 
@@ -46,56 +49,86 @@ public class MainModuleConfig
 
 ----
 
-**What's inside**
+**Responsibilities**
 
-* Configurations related application's assembly
-* Docker & Docker compose configurations related to application's deployment
+* Configure application assembly
+* Define Docker & Docker compose configurations related to application's deployment
 
 === Application
 **Purpose**
 
-`Application` module is used to define application flows so that every endpoint module such as `web`, `messaging`, etc. is able to access to the flow entry point.
+`Application` module is where application's use cases are implemented. This module depends on `Domain` module that provides
+components implementing the required business logic for the use cases.
 
-**What's inside**
+`Application` module is also responsible for manage transactionality and event publication.
+Every endpoint module such as `web`, `messaging`, etc. should depend on this module where they can found the implementations of required use cases.
 
-* Entry point services to application flows that coordinates application level activities. This layer should not implement business logic related to Domain. It should delegate it to `domain` module components
+**Responsibilities**
+
+* Implement application use cases. This layer should not implement business logic related to domain. It should delegate it to `Domain` module components
 * Implement top level transactionality when needed
-* Interfaces that top level modules (web, messaging...) should implement to provide specific functionality related to them. E.G. Memoize cache provider implementing request scoped caches provided by Web module
+* Publish related internal / external events
+
+**Key components**
+* `ApplicationCommand` and `ApplicationQuery` components that implement a specific use case.
+`ApplicationCommands` will implement actions that modify application state / data
+and `ApplicationQuery` will be used for data retrieval
+E.G. `UserCreationApplicationCommand` will implement the use case `create an user`
 
 === Infrastructure
 **Purpose**
 
 `Infrastructure` module contains all infrastructure related configurations
 
-**What's inside**
+**Responsibilities**
 
-* Persistence support (JPA, Mongo...)
-* Configurations about transversal services like Caches, Observability...
+* Implement persistence support (JPA, Mongo...)
+* Configure transversal services like Caches, Observability...
 Each of this configurations should be made in a separate configuration so dependant modules can import them to used in, for example, integration tests
-* Configuration of Domain related managed beans E.G. make Domain Commands & Queries available to be injected in Application Flow components
-* Attach Domain SPI service interfaces to corresponding Infrastructure implementation
+* Configuration of `Domain` module's related managed beans E.G. make `Domain Services` available to be injected in `Application Services`
+* Attach `Domain Service` interfaces to corresponding `Infrastructure` implementation. E.G. `Repository Services`
+
+**Key components**
+* `Config` to configure related traversal infrastructure features like persistence, observability, validation, etc.
+* `Entity` classes. E.G. `UserEntity`
+* `Repository` classes that manage entities. These classes are not exposed to outside
+* `DomainRepository` classes. Wrap raw `Repository` classes and are also in charge of transform `entities` to `model` classes
+* `ModelMapper` classes in charge of `entity` to `model` transformation done in `DomainRepository`s
 
 === Domain
 **Purpose**
 
-`Domain` module implements applications business logic in an agnostic way, try to not be dependant of frameworks
+`Domain` module implements applications business logic in an agnostic way, trying to not be dependant of frameworks
 
-**What's inside**
+**Responsibilities**
 
-* Model classes
-* Query & Commands for different use cases involving domain model classes
-* SPI interfaces that will be implemented in `Infrastructure` module for infrastructure dependant components like persistence or event publishing
+* Implement model classes
+* Implement domain business logic in `DomainService`s (Queries & Commands)
+* Implement validators & model object factories
+* Define interfaces that will be implemented in `Infrastructure` module for infrastructure dependant components like persistence or event publishing
+
+**Key components**
+* `DomainCommandService` and `DomainQueryService` implements business logic for actions and data retrieval
+* `DomainFactory` classes that implement the creation of domain model objects. E.G. `UserDomainFactory`
+* `DomainRepository` interfaces that should be implemented in `Infrastrcture` module.
+These interfaces are part of the public interface of the module and can be used in `Application module`
 
 === Web
 **Purpose**
 
-`Web` module exposes rest service entrypoints to Applications module defined flows
+`Web module` is a mix between `Infrastructure` and `Application` modules
+as it's in charge of configure web infrastructure components like web security and implement controllers
+that are the entry points to execute use cases.
 
-**What's inside**
+**Responsibilities**
 
 * Spring web configurations
 * Spring rest based controllers definition
 * Spring security configuration, including basic & JWT auth
+
+**Key components**
+* `Controller` classes
+* `Config` classes for infrastructure features. E.G. `WebSecurityConfig`
 
 == Module general structure
 
@@ -127,10 +160,8 @@ legend
     |_ <:file_folder:> config
     |_ <:file_folder:> event
     |_ <:file_folder:> impl
-      |_ <:page_facing_up:> Input Port Impl
-    |_ <:file_folder:> spi
-      |_ <:page_facing_up:> Output Port Interface
-    |_ <:page_facing_up:>Input Port Interface
+      |_ <:page_facing_up:> Service Impl
+    |_ <:page_facing_up:>Exposed Service Interface
   |_ <:page_facing_up:> Module Package Marker Interface
 
 end legend
@@ -146,8 +177,8 @@ or in **Infrastructure** module if it's a global feature (E.G. **AOP**, **Observ
 as entry point for an external general event, such as Spring's lifecycle events (E.G. **ApplicationStartedEvent**)
 that can be used to trigger module general actions. Context specific event definitions / listeners must be defined in context related subpackage
 * **Contexts**: A context should contain components related to a specific bounded context of the domain or concept in the application.
-Every context can define its **Input Ports** service interfaces at the root of the module and its **Output ports** in `spi` subpackage.
-Implementations for own **Input ports** and external **output ports** will be placed in `impl` subpackage.
+Every context can define its **Exposed service interfaces** at the root of the module.
+Implementations for own **Service interfaces** will be placed in `impl` subpackage.
 Also, a special context named **Common** can be defined as a place to put shared components that can be used by other contexts and doesn't have
 enough meaning to put then in its own context. **Common** context will not contain general configs or event listeners because they aren't dependencies of other contexts.
 In that case, these components can be placed in top `config` and `event/listeners` packages of the module
@@ -180,34 +211,12 @@ public class WebModuleConfig {
 
 As explained in xref:_main_module_description[Main module]'s description section, all module configurations will be assembled in the `MainModuleConfig` class using `@Import` annotation.
 
-== Components
-
-Each module defines a number of different components in the application that interact with each other:
-
-=== Web
-* Controller
-
-=== Application
-* Application Query
-* Application Command
-
-=== Domain
-* Input Port Interface
-** Domain Query Service
-** Domain Command Service
-
-* Output Port Interface
-** Repository Service
-** Event Service
-
-=== Infrastructure
-* Domain Output Port Service Implementation
-** Repository Service Implementation
-** Event Service Implementation
-
 === Interactions
 
-image::explanation/architecture/component_interactions.drawio.svg[Interactions diagram,align="center"]
+The modules presented in this document follow the `Onion Architecture` schema.
+The execution flow goes from the outermost part of the "onion" to the inside, from left to right.
+
+image::explanation/architecture/onion_architecture.drawio.svg[Interactions diagram,align="center"]
 
 == Variations
 
@@ -226,9 +235,9 @@ skinparam Legend {
 }
 legend
 
-<:package:> account-ng-server
+<:package:> example-webservice
 |_ <:file_folder:> src/main/java
-  |_ <:file_folder:> com.bitsmi.accountng.server
+  |_ <:file_folder:> com.example.example.webservice
     |_ <:file_folder:> main
       |_ <:file_folder:> config
       |_ <:page_facing_up:> MainProgram
@@ -249,4 +258,16 @@ end legend
 @end uml
 ----
 
-It is also possible que have only `Domain` layer in a separate module and put the others in a common module. By this way, we can isolate domain business logic from framework dependant components.
+=== Split / merge modules
+
+The same way that we can have a single layered module, we can also merge / split the modules
+explained before.
+
+**Examples of merge modules**:
+
+- `Web module` can be integrated into `Infrastructure` and `Application`
+modules, putting configurations in the first one and controllers in the second.
+- Define the `Domain layer` in a separate module and put the others in a common module.
+By this way, we can isolate domain business logic from framework dependant components.
+- Merge `Application` and `Domain` layers in a `Core module` so that application's use cases
+and business logic are isolated from input / output (E.G. web controllers and persistence)

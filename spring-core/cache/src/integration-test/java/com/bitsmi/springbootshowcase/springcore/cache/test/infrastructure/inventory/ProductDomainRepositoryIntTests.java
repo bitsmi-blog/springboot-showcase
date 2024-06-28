@@ -2,7 +2,7 @@ package com.bitsmi.springbootshowcase.springcore.cache.test.infrastructure.inven
 
 import com.bitsmi.springbootshowcase.springcore.cache.domain.common.util.IgnoreOnComponentScan;
 import com.bitsmi.springbootshowcase.springcore.cache.domain.inventory.model.Product;
-import com.bitsmi.springbootshowcase.springcore.cache.domain.inventory.spi.ProductRepositoryService;
+import com.bitsmi.springbootshowcase.springcore.cache.domain.inventory.ProductDomainRepository;
 import com.bitsmi.springbootshowcase.springcore.cache.infrastructure.config.InfrastructureModuleConfig;
 import com.bitsmi.springbootshowcase.springcore.cache.infrastructure.inventory.entity.ProductEntity;
 import com.bitsmi.springbootshowcase.springcore.cache.infrastructure.inventory.repository.ProductRepository;
@@ -50,13 +50,13 @@ import static org.mockito.Mockito.when;
 @Import({ ValidationAutoConfiguration.class })
 
 @Tag("IntegrationTest")
-class ProductRepositoryServiceIntTests
+class ProductDomainRepositoryIntTests
 {
     @MockBean
     private ProductRepository productRepository;
 
     @Autowired
-    private ProductRepositoryService sut;
+    private ProductDomainRepository sut;
 
     @Autowired
     private CacheManager cacheManager;

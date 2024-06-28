@@ -5,8 +5,8 @@ import com.bitsmi.springbootshowcase.sampleapps.domain.common.UserDomainFactory;
 import com.bitsmi.springbootshowcase.sampleapps.domain.common.exception.ElementAlreadyExistsException;
 import com.bitsmi.springbootshowcase.sampleapps.domain.common.model.User;
 import com.bitsmi.springbootshowcase.sampleapps.domain.common.model.UserGroup;
-import com.bitsmi.springbootshowcase.sampleapps.domain.common.UserGroupRepositoryService;
-import com.bitsmi.springbootshowcase.sampleapps.domain.common.UserRepositoryService;
+import com.bitsmi.springbootshowcase.sampleapps.domain.common.UserGroupDomainRepository;
+import com.bitsmi.springbootshowcase.sampleapps.domain.common.UserDomainRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.nio.CharBuffer;
@@ -14,12 +14,12 @@ import java.util.Set;
 
 public class UserDomainFactoryImpl implements UserDomainFactory
 {
-    private final UserRepositoryService userRepositoryService;
-    private final UserGroupRepositoryService userGroupRepositoryService;
+    private final UserDomainRepository userRepositoryService;
+    private final UserGroupDomainRepository userGroupRepositoryService;
     private final PasswordEncoder passwordEncoder;
 
-    public UserDomainFactoryImpl(UserRepositoryService userRepositoryService,
-                                 UserGroupRepositoryService userGroupRepositoryService,
+    public UserDomainFactoryImpl(UserDomainRepository userRepositoryService,
+                                 UserGroupDomainRepository userGroupRepositoryService,
                                  PasswordEncoder passwordEncoder)
     {
         this.userRepositoryService = userRepositoryService;

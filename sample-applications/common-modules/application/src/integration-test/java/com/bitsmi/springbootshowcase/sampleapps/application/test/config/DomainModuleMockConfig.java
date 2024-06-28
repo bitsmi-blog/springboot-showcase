@@ -2,9 +2,9 @@ package com.bitsmi.springbootshowcase.sampleapps.application.test.config;
 
 import com.bitsmi.springbootshowcase.sampleapps.domain.common.UserDomainFactory;
 import com.bitsmi.springbootshowcase.sampleapps.domain.common.UserDomainQueryService;
-import com.bitsmi.springbootshowcase.sampleapps.domain.common.UserRepositoryService;
+import com.bitsmi.springbootshowcase.sampleapps.domain.common.UserDomainRepository;
 import com.bitsmi.springbootshowcase.sampleapps.domain.testsupport.common.UserDomainQueryServiceMocker;
-import com.bitsmi.springbootshowcase.sampleapps.domain.testsupport.common.UserRepositoryServiceMocker;
+import com.bitsmi.springbootshowcase.sampleapps.domain.testsupport.common.UserDomainRepositoryMocker;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @MockBean(UserDomainQueryService.class)
 @MockBean(UserDomainFactory.class)
-@MockBean(UserRepositoryService.class)
+@MockBean(UserDomainRepository.class)
 public class DomainModuleMockConfig
 {
     @Bean
@@ -22,8 +22,8 @@ public class DomainModuleMockConfig
     }
 
     @Bean
-    public UserRepositoryServiceMocker userRepositoryServiceMocker(UserRepositoryService userRepositoryService)
+    public UserDomainRepositoryMocker userRepositoryServiceMocker(UserDomainRepository userRepositoryService)
     {
-        return UserRepositoryServiceMocker.fromMockedInstance(userRepositoryService);
+        return UserDomainRepositoryMocker.fromMockedInstance(userRepositoryService);
     }
 }

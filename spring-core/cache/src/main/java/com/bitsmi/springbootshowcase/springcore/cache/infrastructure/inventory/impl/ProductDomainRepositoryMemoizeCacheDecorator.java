@@ -3,11 +3,12 @@ package com.bitsmi.springbootshowcase.springcore.cache.infrastructure.inventory.
 import com.bitsmi.springbootshowcase.springcore.cache.domain.common.dto.PaginatedData;
 import com.bitsmi.springbootshowcase.springcore.cache.domain.common.dto.Pagination;
 import com.bitsmi.springbootshowcase.springcore.cache.domain.inventory.model.Product;
-import com.bitsmi.springbootshowcase.springcore.cache.domain.inventory.spi.ProductRepositoryService;
+import com.bitsmi.springbootshowcase.springcore.cache.domain.inventory.ProductDomainRepository;
+import com.bitsmi.springbootshowcase.springcore.cache.infrastructure.InfrastructureConstants;
 import com.bitsmi.springbootshowcase.springcore.cache.infrastructure.config.MemoizeCacheManagerProvider;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
@@ -18,27 +19,27 @@ import java.util.Optional;
 
 @Service
 @Primary
-@ConditionalOnMissingBean(MemoizeCacheManagerProvider.class)
-public class ProductRepositoryServiceCacheDecorator implements ProductRepositoryService
+@ConditionalOnBean(MemoizeCacheManagerProvider.class)
+public class ProductDomainRepositoryMemoizeCacheDecorator implements ProductDomainRepository
 {
     private static final String CACHE_ALL_PRODUCTS = "allProducts";
     private static final String CACHE_PRODUCT_BY_EXTERNAL_ID = "productByExternalId";
 
-    private final ProductRepositoryServiceImpl delegate;
+    private final ProductDomainRepositoryImpl delegate;
 
-    public ProductRepositoryServiceCacheDecorator(ProductRepositoryServiceImpl delegate)
+    public ProductDomainRepositoryMemoizeCacheDecorator(ProductDomainRepositoryImpl delegate)
     {
         this.delegate = delegate;
     }
 
-    @Cacheable(cacheNames = CACHE_ALL_PRODUCTS, key = "#pagination.pageNumber")
+    @Cacheable(cacheManager = InfrastructureConstants.CACHE_MANAGER_MEMOIZE, cacheNames = CACHE_ALL_PRODUCTS, key = "#pagination.pageNumber")
     @Override
     public PaginatedData<Product> findAllItemSchemas(@NotNull Pagination pagination)
     {
         return delegate.findAllItemSchemas(pagination);
     }
 
-    @Cacheable(cacheNames = CACHE_PRODUCT_BY_EXTERNAL_ID)
+    @Cacheable(cacheManager = InfrastructureConstants.CACHE_MANAGER_MEMOIZE, cacheNames = CACHE_PRODUCT_BY_EXTERNAL_ID)
     @Override
     public Optional<Product> findProductByExternalId(@NotNull String externalId)
     {
@@ -53,8 +54,8 @@ public class ProductRepositoryServiceCacheDecorator implements ProductRepository
     }
 
     @Caching(evict = {
-            @CacheEvict(cacheNames = CACHE_ALL_PRODUCTS, allEntries = true),
-            @CacheEvict(cacheNames = CACHE_PRODUCT_BY_EXTERNAL_ID, key = "#product.externalId")
+            @CacheEvict(cacheManager = InfrastructureConstants.CACHE_MANAGER_MEMOIZE, cacheNames = CACHE_ALL_PRODUCTS, allEntries = true),
+            @CacheEvict(cacheManager = InfrastructureConstants.CACHE_MANAGER_MEMOIZE, cacheNames = CACHE_PRODUCT_BY_EXTERNAL_ID, key = "#product.externalId")
     })
     @Override
     public Product updateProduct(@NotNull Long id, @Valid Product product)

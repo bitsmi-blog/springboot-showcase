@@ -2,13 +2,13 @@ package com.bitsmi.springbootshowcase.sampleapps.infrastructure.config;
 
 import com.bitsmi.springbootshowcase.sampleapps.domain.common.UserDomainFactory;
 import com.bitsmi.springbootshowcase.sampleapps.domain.common.UserDomainQueryService;
-import com.bitsmi.springbootshowcase.sampleapps.domain.common.UserGroupRepositoryService;
-import com.bitsmi.springbootshowcase.sampleapps.domain.common.UserRepositoryService;
+import com.bitsmi.springbootshowcase.sampleapps.domain.common.UserGroupDomainRepository;
+import com.bitsmi.springbootshowcase.sampleapps.domain.common.UserDomainRepository;
 import com.bitsmi.springbootshowcase.sampleapps.domain.common.config.DomainConfig;
 import com.bitsmi.springbootshowcase.sampleapps.infrastructure.common.config.CommonMapperDependencies;
 import com.bitsmi.springbootshowcase.sampleapps.infrastructure.common.config.CommonRepositoryDependencies;
-import com.bitsmi.springbootshowcase.sampleapps.infrastructure.common.impl.UserGroupRepositoryServiceImpl;
-import com.bitsmi.springbootshowcase.sampleapps.infrastructure.common.impl.UserRepositoryServiceImpl;
+import com.bitsmi.springbootshowcase.sampleapps.infrastructure.common.impl.UserGroupDomainRepositoryImpl;
+import com.bitsmi.springbootshowcase.sampleapps.infrastructure.common.impl.UserDomainRepositoryImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -29,7 +29,7 @@ public class DomainConfigImpl implements DomainConfig
 
     @Bean
     @Override
-    public UserDomainQueryService userQueryDomainService(UserRepositoryService userRepositoryService)
+    public UserDomainQueryService userQueryDomainService(UserDomainRepository userRepositoryService)
     {
         return userDomainQueryServiceImpl(userRepositoryService);
     }
@@ -37,8 +37,8 @@ public class DomainConfigImpl implements DomainConfig
     @Bean
     @Override
     public UserDomainFactory userDomainFactory(
-            UserRepositoryService userRepositoryService,
-            UserGroupRepositoryService userGroupRepositoryService,
+            UserDomainRepository userRepositoryService,
+            UserGroupDomainRepository userGroupRepositoryService,
             PasswordEncoder passwordEncoder
     )
     {
@@ -47,9 +47,9 @@ public class DomainConfigImpl implements DomainConfig
 
     @Bean
     @Override
-    public UserRepositoryService userRepositoryService()
+    public UserDomainRepository userRepositoryService()
     {
-        return new UserRepositoryServiceImpl(
+        return new UserDomainRepositoryImpl(
                 commonRepositoryDependencies.getUserRepository(),
                 commonRepositoryDependencies.getUserGroupRepository(),
                 commonMapperDependencies.getUserModelMapper(),
@@ -59,9 +59,9 @@ public class DomainConfigImpl implements DomainConfig
 
     @Bean
     @Override
-    public UserGroupRepositoryService userGroupRepositoryService()
+    public UserGroupDomainRepository userGroupRepositoryService()
     {
-        return new UserGroupRepositoryServiceImpl(
+        return new UserGroupDomainRepositoryImpl(
                 commonRepositoryDependencies.getUserGroupRepository(),
                 commonMapperDependencies.getUserGroupModelMapper()
         );

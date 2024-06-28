@@ -18,7 +18,7 @@ public interface CommonDomainTestFixture
                 .whenFindUserSummaryByUsernameThenReturnUser(UserSummaryObjectMother.USERNAME_USER1, UserSummaryObjectMother.user1());
     }
 
-    default void configureUserRepositoryServiceMocker(UserRepositoryServiceMocker mocker)
+    default void configureUserDomainRepositoryMocker(UserDomainRepositoryMocker mocker)
     {
         final User user1 = UserObjectMother.user1();
         mocker.whenFindUserByUsernameGivenAnyUsernameThenReturnEmpty()
