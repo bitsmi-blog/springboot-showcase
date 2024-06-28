@@ -231,20 +231,13 @@
 <ul class="sectlevel2">
 <li><a href="#packages">Packages</a></li>
 <li><a href="#configuration">Configuration</a></li>
-</ul>
-</li>
-<li><a href="#components">Components</a>
-<ul class="sectlevel2">
-<li><a href="#web-2">Web</a></li>
-<li><a href="#application-2">Application</a></li>
-<li><a href="#domain-2">Domain</a></li>
-<li><a href="#infrastructure-2">Infrastructure</a></li>
 <li><a href="#interactions">Interactions</a></li>
 </ul>
 </li>
 <li><a href="#variations">Variations</a>
 <ul class="sectlevel2">
 <li><a href="#layered-module">Layered module</a></li>
+<li><a href="#split-merge-modules">Split / merge modules</a></li>
 </ul>
 </li>
 </ul>
@@ -252,9 +245,12 @@
 <div class="sect1">
 <h2 id="modules"><a class="anchor" href="#modules"></a>Modules</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>Application&#8217;s modules have the following dependency diagram:</p>
+</div>
 <div class="imageblock kroki">
 <div class="content">
-<img src="../_images/diag-fec61dd907a42a10927ca67acd58b0afa92b59aa.svg" alt="Diagram">
+<img src="../_images/diag-41144b551f0da0c52931a81e1d916b53a4a78d38.svg" alt="Diagram">
 </div>
 </div>
 <div class="sect2">
@@ -285,15 +281,15 @@ public class MainModuleConfig
 </div>
 </div>
 <div class="paragraph">
-<p><strong>What&#8217;s inside</strong></p>
+<p><strong>Responsibilities</strong></p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Configurations related application&#8217;s assembly</p>
+<p>Configure application assembly</p>
 </li>
 <li>
-<p>Docker &amp; Docker compose configurations related to application&#8217;s deployment</p>
+<p>Define Docker &amp; Docker compose configurations related to application&#8217;s deployment</p>
 </li>
 </ul>
 </div>
@@ -304,23 +300,35 @@ public class MainModuleConfig
 <p><strong>Purpose</strong></p>
 </div>
 <div class="paragraph">
-<p><code>Application</code> module is used to define application flows so that every endpoint module such as <code>web</code>, <code>messaging</code>, etc. is able to access to the flow entry point.</p>
+<p><code>Application</code> module is where application&#8217;s use cases are implemented. This module depends on <code>Domain</code> module that provides
+components implementing the required business logic for the use cases.</p>
 </div>
 <div class="paragraph">
-<p><strong>What&#8217;s inside</strong></p>
+<p><code>Application</code> module is also responsible for manage transactionality and event publication.
+Every endpoint module such as <code>web</code>, <code>messaging</code>, etc. should depend on this module where they can found the implementations of required use cases.</p>
+</div>
+<div class="paragraph">
+<p><strong>Responsibilities</strong></p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Entry point services to application flows that coordinates application level activities. This layer should not implement business logic related to Domain. It should delegate it to <code>domain</code> module components</p>
+<p>Implement application use cases. This layer should not implement business logic related to domain. It should delegate it to <code>Domain</code> module components</p>
 </li>
 <li>
 <p>Implement top level transactionality when needed</p>
 </li>
 <li>
-<p>Interfaces that top level modules (web, messaging&#8230;&#8203;) should implement to provide specific functionality related to them. E.G. Memoize cache provider implementing request scoped caches provided by Web module</p>
+<p>Publish related internal / external events</p>
 </li>
 </ul>
+</div>
+<div class="paragraph">
+<p><strong>Key components</strong>
+* <code>ApplicationCommand</code> and <code>ApplicationQuery</code> components that implement a specific use case.
+<code>ApplicationCommands</code> will implement actions that modify application state / data
+and <code>ApplicationQuery</code> will be used for data retrieval
+E.G. <code>UserCreationApplicationCommand</code> will implement the use case <code>create an user</code></p>
 </div>
 </div>
 <div class="sect2">
@@ -332,24 +340,32 @@ public class MainModuleConfig
 <p><code>Infrastructure</code> module contains all infrastructure related configurations</p>
 </div>
 <div class="paragraph">
-<p><strong>What&#8217;s inside</strong></p>
+<p><strong>Responsibilities</strong></p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Persistence support (JPA, Mongo&#8230;&#8203;)</p>
+<p>Implement persistence support (JPA, Mongo&#8230;&#8203;)</p>
 </li>
 <li>
-<p>Configurations about transversal services like Caches, Observability&#8230;&#8203;
+<p>Configure transversal services like Caches, Observability&#8230;&#8203;
 Each of this configurations should be made in a separate configuration so dependant modules can import them to used in, for example, integration tests</p>
 </li>
 <li>
-<p>Configuration of Domain related managed beans E.G. make Domain Commands &amp; Queries available to be injected in Application Flow components</p>
+<p>Configuration of <code>Domain</code> module&#8217;s related managed beans E.G. make <code>Domain Services</code> available to be injected in <code>Application Services</code></p>
 </li>
 <li>
-<p>Attach Domain SPI service interfaces to corresponding Infrastructure implementation</p>
+<p>Attach <code>Domain Service</code> interfaces to corresponding <code>Infrastructure</code> implementation. E.G. <code>Repository Services</code></p>
 </li>
 </ul>
+</div>
+<div class="paragraph">
+<p><strong>Key components</strong>
+* <code>Config</code> to configure related traversal infrastructure features like persistence, observability, validation, etc.
+* <code>Entity</code> classes. E.G. <code>UserEntity</code>
+* <code>Repository</code> classes that manage entities. These classes are not exposed to outside
+* <code>DomainRepository</code> classes. Wrap raw <code>Repository</code> classes and are also in charge of transform <code>entities</code> to <code>model</code> classes
+* <code>ModelMapper</code> classes in charge of <code>entity</code> to <code>model</code> transformation done in `DomainRepository`s</p>
 </div>
 </div>
 <div class="sect2">
@@ -358,23 +374,33 @@ Each of this configurations should be made in a separate configuration so depend
 <p><strong>Purpose</strong></p>
 </div>
 <div class="paragraph">
-<p><code>Domain</code> module implements applications business logic in an agnostic way, try to not be dependant of frameworks</p>
+<p><code>Domain</code> module implements applications business logic in an agnostic way, trying to not be dependant of frameworks</p>
 </div>
 <div class="paragraph">
-<p><strong>What&#8217;s inside</strong></p>
+<p><strong>Responsibilities</strong></p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Model classes</p>
+<p>Implement model classes</p>
 </li>
 <li>
-<p>Query &amp; Commands for different use cases involving domain model classes</p>
+<p>Implement domain business logic in `DomainService`s (Queries &amp; Commands)</p>
 </li>
 <li>
-<p>SPI interfaces that will be implemented in <code>Infrastructure</code> module for infrastructure dependant components like persistence or event publishing</p>
+<p>Implement validators &amp; model object factories</p>
+</li>
+<li>
+<p>Define interfaces that will be implemented in <code>Infrastructure</code> module for infrastructure dependant components like persistence or event publishing</p>
 </li>
 </ul>
+</div>
+<div class="paragraph">
+<p><strong>Key components</strong>
+* <code>DomainCommandService</code> and <code>DomainQueryService</code> implements business logic for actions and data retrieval
+* <code>DomainFactory</code> classes that implement the creation of domain model objects. E.G. <code>UserDomainFactory</code>
+* <code>DomainRepository</code> interfaces that should be implemented in <code>Infrastrcture</code> module.
+These interfaces are part of the public interface of the module and can be used in <code>Application module</code></p>
 </div>
 </div>
 <div class="sect2">
@@ -383,10 +409,12 @@ Each of this configurations should be made in a separate configuration so depend
 <p><strong>Purpose</strong></p>
 </div>
 <div class="paragraph">
-<p><code>Web</code> module exposes rest service entrypoints to Applications module defined flows</p>
+<p><code>Web module</code> is a mix between <code>Infrastructure</code> and <code>Application</code> modules
+as it&#8217;s in charge of configure web infrastructure components like web security and implement controllers
+that are the entry points to execute use cases.</p>
 </div>
 <div class="paragraph">
-<p><strong>What&#8217;s inside</strong></p>
+<p><strong>Responsibilities</strong></p>
 </div>
 <div class="ulist">
 <ul>
@@ -401,6 +429,11 @@ Each of this configurations should be made in a separate configuration so depend
 </li>
 </ul>
 </div>
+<div class="paragraph">
+<p><strong>Key components</strong>
+* <code>Controller</code> classes
+* <code>Config</code> classes for infrastructure features. E.G. <code>WebSecurityConfig</code></p>
+</div>
 </div>
 </div>
 </div>
@@ -414,7 +447,7 @@ Each of this configurations should be made in a separate configuration so depend
 </div>
 <div class="imageblock kroki">
 <div class="content">
-<img src="../_images/diag-1a9913037479e8c34c8626d22b261b3406369b0e.svg" alt="Diagram">
+<img src="../_images/diag-86bef23b8d90201210887f1c5bf1b9b463b77ab4.svg" alt="Diagram">
 </div>
 </div>
 <div class="ulist">
@@ -433,8 +466,8 @@ that can be used to trigger module general actions. Context specific event defin
 </li>
 <li>
 <p><strong>Contexts</strong>: A context should contain components related to a specific bounded context of the domain or concept in the application.
-Every context can define its <strong>Input Ports</strong> service interfaces at the root of the module and its <strong>Output ports</strong> in <code>spi</code> subpackage.
-Implementations for own <strong>Input ports</strong> and external <strong>output ports</strong> will be placed in <code>impl</code> subpackage.
+Every context can define its <strong>Exposed service interfaces</strong> at the root of the module.
+Implementations for own <strong>Service interfaces</strong> will be placed in <code>impl</code> subpackage.
 Also, a special context named <strong>Common</strong> can be defined as a place to put shared components that can be used by other contexts and doesn&#8217;t have
 enough meaning to put then in its own context. <strong>Common</strong> context will not contain general configs or event listeners because they aren&#8217;t dependencies of other contexts.
 In that case, these components can be placed in top <code>config</code> and <code>event/listeners</code> packages of the module
@@ -476,95 +509,15 @@ public class WebModuleConfig {
 <p>As explained in <a href="#_main_module_description">Main module</a>'s description section, all module configurations will be assembled in the <code>MainModuleConfig</code> class using <code>@Import</code> annotation.</p>
 </div>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="components"><a class="anchor" href="#components"></a>Components</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Each module defines a number of different components in the application that interact with each other:</p>
-</div>
-<div class="sect2">
-<h3 id="web-2"><a class="anchor" href="#web-2"></a>Web</h3>
-<div class="ulist">
-<ul>
-<li>
-<p>Controller</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect2">
-<h3 id="application-2"><a class="anchor" href="#application-2"></a>Application</h3>
-<div class="ulist">
-<ul>
-<li>
-<p>Application Query</p>
-</li>
-<li>
-<p>Application Command</p>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect2">
-<h3 id="domain-2"><a class="anchor" href="#domain-2"></a>Domain</h3>
-<div class="ulist">
-<ul>
-<li>
-<p>Input Port Interface</p>
-<div class="ulist">
-<ul>
-<li>
-<p>Domain Query Service</p>
-</li>
-<li>
-<p>Domain Command Service</p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>Output Port Interface</p>
-<div class="ulist">
-<ul>
-<li>
-<p>Repository Service</p>
-</li>
-<li>
-<p>Event Service</p>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
-</div>
-<div class="sect2">
-<h3 id="infrastructure-2"><a class="anchor" href="#infrastructure-2"></a>Infrastructure</h3>
-<div class="ulist">
-<ul>
-<li>
-<p>Domain Output Port Service Implementation</p>
-<div class="ulist">
-<ul>
-<li>
-<p>Repository Service Implementation</p>
-</li>
-<li>
-<p>Event Service Implementation</p>
-</li>
-</ul>
-</div>
-</li>
-</ul>
-</div>
-</div>
 <div class="sect2">
 <h3 id="interactions"><a class="anchor" href="#interactions"></a>Interactions</h3>
+<div class="paragraph">
+<p>The modules presented in this document follow the <code>Onion Architecture</code> schema.
+The execution flow goes from the outermost part of the "onion" to the inside, from left to right.</p>
+</div>
 <div class="imageblock text-center">
 <div class="content">
-<img src="../_images/explanation/architecture/component_interactions.drawio.svg" alt="Interactions diagram">
+<img src="../_images/explanation/architecture/onion_architecture.drawio.svg" alt="Interactions diagram">
 </div>
 </div>
 </div>
@@ -582,11 +535,34 @@ in a subpackage.</p>
 </div>
 <div class="imageblock kroki">
 <div class="content">
-<img src="../_images/diag-49e9cb327e09721c2e24cdc91b64679e9f522895.svg" alt="Diagram">
+<img src="../_images/diag-a935f73035deab5850bc09bc312b64daa6fbbdee.svg" alt="Diagram">
 </div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="split-merge-modules"><a class="anchor" href="#split-merge-modules"></a>Split / merge modules</h3>
+<div class="paragraph">
+<p>The same way that we can have a single layered module, we can also merge / split the modules
+explained before.</p>
 </div>
 <div class="paragraph">
-<p>It is also possible que have only <code>Domain</code> layer in a separate module and put the others in a common module. By this way, we can isolate domain business logic from framework dependant components.</p>
+<p><strong>Examples of merge modules</strong>:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Web module</code> can be integrated into <code>Infrastructure</code> and <code>Application</code>
+modules, putting configurations in the first one and controllers in the second.</p>
+</li>
+<li>
+<p>Define the <code>Domain layer</code> in a separate module and put the others in a common module.
+By this way, we can isolate domain business logic from framework dependant components.</p>
+</li>
+<li>
+<p>Merge <code>Application</code> and <code>Domain</code> layers in a <code>Core module</code> so that application&#8217;s use cases
+and business logic are isolated from input / output (E.G. web controllers and persistence)</p>
+</li>
+</ul>
 </div>
 </div>
 </div>
