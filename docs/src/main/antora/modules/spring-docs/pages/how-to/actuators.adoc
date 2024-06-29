@@ -1,5 +1,4 @@
 = Actuators
-:toc:
 
 == Configuration
 Actuator endpoints must be enabled in `application.properties` exposing only necessary endpoints.

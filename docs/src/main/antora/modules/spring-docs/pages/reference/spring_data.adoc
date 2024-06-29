@@ -1,5 +1,4 @@
 # Spring Data
-:toc:
 
 ## Spring JPA
 

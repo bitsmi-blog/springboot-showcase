@@ -1,5 +1,4 @@
 = Mocking external services
-:toc:
 
 == Wiremock
 

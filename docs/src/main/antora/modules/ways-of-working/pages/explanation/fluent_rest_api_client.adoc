@@ -1,5 +1,4 @@
 = Fluent REST API client
-:toc:
 
 == Concept
 
