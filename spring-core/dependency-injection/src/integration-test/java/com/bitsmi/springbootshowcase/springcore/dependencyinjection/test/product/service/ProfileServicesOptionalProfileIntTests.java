@@ -1,8 +1,8 @@
-package com.bitsmi.springbootshowcase.springcore.dependencyinjection.test.service;
+package com.bitsmi.springbootshowcase.springcore.dependencyinjection.test.product.service;
 
 import com.bitsmi.springbootshowcase.springcore.dependencyinjection.Constants;
-import com.bitsmi.springbootshowcase.springcore.dependencyinjection.config.ProductServiceConfig;
-import com.bitsmi.springbootshowcase.springcore.dependencyinjection.service.ProductService;
+import com.bitsmi.springbootshowcase.springcore.dependencyinjection.product.config.ProductServiceConfig;
+import com.bitsmi.springbootshowcase.springcore.dependencyinjection.product.service.ProductService;
 import com.bitsmi.springbootshowcase.springcore.dependencyinjection.util.IgnoreOnComponentScan;
 import org.assertj.core.api.SoftAssertions;
 import org.assertj.core.api.junit.jupiter.InjectSoftAssertions;
@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Import;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
@@ -25,20 +26,14 @@ import java.util.Optional;
 
 @ExtendWith({SpringExtension.class, SoftAssertionsExtension.class})
 @ContextConfiguration(loader = AnnotationConfigContextLoader.class)
+@ActiveProfiles({ Constants.PROFILE_OPTIONAL })
 @Tag("IntegrationTest")
-class ProductServicesIntTests
+class ProfileServicesOptionalProfileIntTests
 {
     @Autowired
-    private ProductService defaultProductService;
-    @Autowired
-    @Qualifier(Constants.QUALIFIER_ALTERNATIVE_PRODUCT)
-    private ProductService alternativeProductService;
-    @Autowired
-    private List<ProductService> allProductServicesAsList;
-    @Autowired
-    private ObjectProvider<ProductService> allProductServicesProvider;
+    private List<ProductService> allProductServices;
 
-    // Optional service should not be present as OPTIONAL profile is not specified in test
+    // Optional service should be present as OPTIONAL profile is specified in test
     @Autowired(required = false)
     @Qualifier(Constants.QUALIFIER_OPTIONAL_PRODUCT)
     private ProductService optionalProductService;
@@ -53,66 +48,55 @@ class ProductServicesIntTests
     private SoftAssertions softly;
 
     @Test
-    @DisplayName("should inject the main product service")
+    @DisplayName("should inject multiple product services when list is used")
     void productServiceInjectionTest1()
     {
-        String actualProductName = defaultProductService.getProductName();
-        softly.assertThat(actualProductName)
-                .as("Actual product name")
-                .isEqualTo("Main Product");
+        List<String> actualProducts = allProductServices.stream()
+                .map(ProductService::getProductName)
+                .toList();
+
+        softly.assertThat(actualProducts)
+                .as("Actual product names")
+                .hasSize(4)
+                .containsExactlyInAnyOrder("Main Product", "Additional Product", "Alternative Product", "Optional Product");
     }
 
     @Test
     @DisplayName("should inject the qualified product service")
     void productServiceInjectionTest2()
     {
-        String actualProductName = alternativeProductService.getProductName();
+        String actualProductName = optionalProductService.getProductName();
         softly.assertThat(actualProductName)
                 .as("Actual product name")
-                .isEqualTo("Alternative Product");
+                .isEqualTo("Optional Product");
     }
 
     @Test
-    @DisplayName("should inject multiple product services when list is used")
-    void productServiceInjectionTest3()
-    {
-        List<String> actualProducts = allProductServicesAsList.stream()
-                .map(ProductService::getProductName)
-                .toList();
-
-        softly.assertThat(actualProducts)
-                .as("Actual product names")
-                .hasSize(3)
-                .containsExactlyInAnyOrder("Main Product", "Additional Product", "Alternative Product");
-    }
-
-    @Test
-    @DisplayName("should inject multiple product services when provider is used")
-    void productServiceInjectionTest4()
-    {
-        List<String> actualProducts = allProductServicesProvider.stream()
-                .map(ProductService::getProductName)
-                .toList();
-
-        softly.assertThat(actualProducts)
-                .as("Actual product names")
-                .hasSize(3)
-                .containsExactlyInAnyOrder("Main Product", "Additional Product", "Alternative Product");
-    }
-
-    @Test
-    @DisplayName("should not inject optional service given no OPTIONAL profile")
+    @DisplayName("should inject optional service given OPTIONAL profile")
     void productServiceInjectionTest5()
     {
         softly.assertThat(optionalProductService)
                 .as("Instance")
-                .isNull();
+                .isNotNull();
         softly.assertThat(optionalProductServiceProvider.stream())
                 .as("Provider")
-                .isEmpty();
+                .hasSize(1);
         softly.assertThat(optOptionalProductService)
                 .as("Optional")
-                .isEmpty();
+                .isPresent();
+    }
+
+    @Test
+    @DisplayName("optionalProductServiceProvider should return same instance when call multiple times")
+    void test()
+    {
+        ProductService actualInstance1 = optionalProductServiceProvider.getObject();
+        ProductService actualInstance2 = optionalProductServiceProvider.getObject();
+
+        softly.assertThat(actualInstance1).isNotNull();
+        softly.assertThat(actualInstance2)
+                .isNotNull()
+                .isSameAs(actualInstance1);
     }
 
     /*---------------------------*

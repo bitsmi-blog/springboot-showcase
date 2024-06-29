@@ -13,6 +13,7 @@ optional beans
 * Having multiple bean candidates of the same type and a multiple injection point, allowing accessing
 all beans for the specified type in the same injection point
 * Having conditional bean candidates that are only available when a condition is met
+* Create and inject prototype scoped beans
 
 == Optional and multiple bindings
 
@@ -546,3 +547,142 @@ By default, if we add multiple `@ConditionalOn...` annotations to a bean, they w
 As `@Conditional` annotation cannot be specified multiple types in a class / method, we only use custom `@ConditionalOn...` annotations
 to achieve this (or one `@Conditional` plus other `@ConditionalOn...` for each additional condition)
 ====
+
+== Prototype scoped beans
+
+**Spring context** allows us to get unique instances of the same bean every time we ask for it
+when they are scoped as **prototype beans**.
+
+This scope is specified using `@Scope(BeanDefinition.SCOPE_PROTOTYPE)` in the bean definition along with
+`@Service`, `@Component`, `@Bean`, `@Repository` annotations in bean definition:
+
+[source,java]
+----
+@Service
+@Scope(BeanDefinition.SCOPE_PROTOTYPE)
+public class PrototypeServiceImpl implements PrototypeService {
+    // . . .
+}
+----
+
+[source,java]
+----
+@Configuration
+public class ServiceConfig
+{
+    @Bean
+    @Scope(BeanDefinition.SCOPE_PROTOTYPE)
+    public PrototypeService simplePrototypeService()
+    {
+        return new PrototypeServiceImpl();
+    }
+}
+----
+
+We can obtain an instance of them in multiple ways:
+
+* Using `@Autowired` annotation. This will inject a unique instance that will not be shared in other injection points.
++
+This example code injects instances of the same type for a prototype bean. As prototype beans are not shared
+across multiple injections points, the injected services are different instances.
++
+[source,java]
+----
+@Service
+class ExampleService {
+    @Autowired
+    private PrototypeService serviceInstance1;
+    @Autowired
+    private PrototypeService serviceInstance2;
+}
+----
+
+* Using `ObjectProvider`. We will obtain a new instance every time we call `getObject` method. E.G:
++
+[source,java]
+----
+import org.springframework.beans.factory.ObjectProvider;
+
+@Service
+class ExampleService {
+    @Autowired
+    private ObjectProvider<PrototypeService> prototypeServices;
+
+    public void doSomething() {
+        final PrototypeService instance = prototypeServices.getObject();
+        // . . .
+    }
+}
+----
+
+* Directly from **Spring**'s `ApplicationContext`, every time we call `getBean()` method. E.G:
++
+[source,java]
+----
+import org.springframework.context.ApplicationContext;
+
+@Service
+class ExampleService {
+    @Autowired
+    private ObjectProvider<PrototypeService> prototypeServices;
+
+    public void doSomething() {
+        final PrototypeService instance = applicationContext.getBean(PrototypeService.class);
+        // . . .
+    }
+}
+----
+
+* Using a custom **factory**. This also allows to parameterize bean creation:
++
+[source,java]
+----
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Scope;
+
+@Configuration
+public class ParameterizedServicePrototypeFactory
+{
+    @Bean
+    @Scope(BeanDefinition.SCOPE_PROTOTYPE)
+    public ParameterizedService get(String parameter)
+    {
+        return new ParameterizedServiceImpl(parameter);
+    }
+}
+----
++
+[source,java]
+----
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Scope;
+
+@Service
+class ExampleService {
+    @Autowired
+    private ParameterizedServicePrototypeFactory serviceFactory;
+
+    public void doSomething() {
+        final ParameterizedService actualInstance1 = parameterizedServicePrototypeFactory.get("A_PARAMETER");
+        // . . .
+    }
+}
+----
++
+In this case we will not mark bean implementation with any stereotype like `@Service`, `@Component`, etc.
+as the factory is in charge of create the bean:
++
+[source,java]
+----
+public class ParameterizedServiceImpl implements ParameterizedService {
+    private final String name;
+
+    public ParameterizedServiceImpl(String name) {
+        this.name = name;
+    }
+
+    // . . .
+}
+----

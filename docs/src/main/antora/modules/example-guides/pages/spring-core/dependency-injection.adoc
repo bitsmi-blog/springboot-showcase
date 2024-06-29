@@ -2,10 +2,12 @@
 
 == Features
 
-* Multiple beans of the same type
-* Optional beans
-* Profile dependant beans
-* Use Spring profiles in tests
+* xref:multiple-optional-beans[Multiple beans of the same type]
+* xref:multiple-optional-beans[Optional beans]
+* xref:prototype-scoped-beans[Prototype scoped beans injection]
+* xref:prototype-scoped-beans[Parameterized prototype bean factories]
+* xref:multiple-optional-beans[Profile dependant beans]
+* xref:multiple-optional-beans[Use Spring profiles in tests]
 * Test soft assertions using **AssertJ** library
 
 == Relevant code in this example
@@ -16,28 +18,31 @@ In order to be less verbose, the package common part is omitted when a class nam
 
 E.G:
 
-`service.ProductService` corresponds to `com.bitsmi.springbootshowcase.springcore.dependencyinjection.service.ProductService`
+`product.service.ProductService` corresponds to `com.bitsmi.springbootshowcase.springcore.dependencyinjection.product.service.ProductService`
 ====
 
-* `service.ProductService`
+[id=multiple-optional-beans]
+=== Multiple & Optional beans
+
+* `product.service.ProductService`
 +
 Interface shared by the multiple implementation beans
 
-* `service.impl.MainProductServiceImpl`
+* `product.service.impl.MainProductServiceImpl`
 +
 Primary bean implementation that will be autowired in single injections points when no `@Qualifier`
 is specified
 
-* `service.impl.AdditionalProductServiceImpl` & `service.impl.AlternativeProductServiceImpl`
+* `product.service.impl.AdditionalProductServiceImpl` & `product.service.impl.AlternativeProductServiceImpl`
 +
 Qualified bean implementations. They can be selected individually for injection using their `@Qualifier`
 
-* `service.impl.OptionalProfileProductServiceImpl`
+* `product.service.impl.OptionalProfileProductServiceImpl`
 +
 Bean attached to a profile. It will be only available when the specified profile is active
 
-[id=ProductServicesIntTests]
-* `test.service.impl.ProductServicesIntTests` (Integration test)
+[id=product-services-int-tests]
+* `test.product.service.ProductServicesIntTests` (Integration test)
 +
 Shows how to autowire beans using:
 
@@ -48,9 +53,47 @@ Shows how to autowire beans using:
 ** Injection of a `@Primary` bean when multiple beans for the same type are present
 ** Injection of qualified beans when multiple beans for the same type are present
 
-* `test.service.impl.ProfileServicesOptionalProfileIntTests` (Integration test)
+* `test.product.service.impl.ProfileServicesOptionalProfileIntTests` (Integration test)
 +
-Similar to xref:ProductServicesIntTests[ProductServicesIntTests] but including the definition of a **Spring profile** that enables an additional bean (`service.impl.OptionalProfileProductServiceImpl`)
+Similar to xref:product-services-int-tests[ProductServicesIntTests] but including the definition of a **Spring profile** that enables an additional bean (`service.impl.OptionalProfileProductServiceImpl`)
+
+[id=prototype-scoped-beans]
+=== Prototype scoped beans
+
+* `scoped.service.PrototypeService`
++
+Simple interface to designate a type to retrieve `SimplePrototypeServiceImpl` instances from **Spring Context**
+
+* `scoped.service.ParameterizedService`
++
+Simple interface to designate a type to retrieve `ParameterizedServiceImpl` instances from **Spring Context**
+
+* `scoped.service.impl.SimplePrototypeServiceImpl`
++
+Simple implementation for a **prototype scoped service**. The main point in this is class is the usage
+of `@Scope(BeanDefinition.SCOPE_PROTOTYPE)` along with `@Service` to include the bean in this scope
+
+* `scoped.service.impl.ParameterizedServiceImpl`
++
+Parameterized service implementation that receives parameters at construction time.
+It will be used to demonstrate how to produce parameterized prototype beans at runtime.
++
+It has no `@Service` annotation as its instance as a bean is done through a `ObjectProvider` / xref:parameterized-service-prototype-factory[Factory].
+
+[id=parameterized-service-prototype-factory]
+* `scoped.service.ParameterizedServicePrototypeFactory`
++
+Example of usage of `@Configuration` annotation to create a **Factory** that allow us to retrieve
+parameterized instances of a **prototype bean** defined in a **bean factory method** annotated with `@Bean` and `@Scope(BeanDefinition.SCOPE_PROTOTYPE)`
+
+* `test.scoped.service.PrototypeServicesIntTests` (Integration test)
++
+Shows how to retrieve prototype beans using:
+
+** Direct injection
+** The injection of an `ObjectProvider`
+** Using `ApplicationContext.getBean()` method
+** Through a xref:parameterized-service-prototype-factory[custom factory class]
 
 == Related documentation
 

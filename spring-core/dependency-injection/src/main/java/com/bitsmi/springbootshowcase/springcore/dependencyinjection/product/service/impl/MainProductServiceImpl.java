@@ -1,6 +1,6 @@
-package com.bitsmi.springbootshowcase.springcore.dependencyinjection.service.impl;
+package com.bitsmi.springbootshowcase.springcore.dependencyinjection.product.service.impl;
 
-import com.bitsmi.springbootshowcase.springcore.dependencyinjection.service.ProductService;
+import com.bitsmi.springbootshowcase.springcore.dependencyinjection.product.service.ProductService;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
