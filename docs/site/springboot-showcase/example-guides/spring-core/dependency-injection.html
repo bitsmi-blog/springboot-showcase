@@ -221,16 +221,22 @@
 <div class="ulist">
 <ul>
 <li>
-<p>Multiple beans of the same type</p>
+<p><a href="#multiple-optional-beans">Multiple beans of the same type</a></p>
 </li>
 <li>
-<p>Optional beans</p>
+<p><a href="#multiple-optional-beans">Optional beans</a></p>
 </li>
 <li>
-<p>Profile dependant beans</p>
+<p><a href="#prototype-scoped-beans">Prototype scoped beans injection</a></p>
 </li>
 <li>
-<p>Use Spring profiles in tests</p>
+<p><a href="#prototype-scoped-beans">Parameterized prototype bean factories</a></p>
+</li>
+<li>
+<p><a href="#multiple-optional-beans">Profile dependant beans</a></p>
+</li>
+<li>
+<p><a href="#multiple-optional-beans">Use Spring profiles in tests</a></p>
 </li>
 <li>
 <p>Test soft assertions using <strong>AssertJ</strong> library</p>
@@ -256,45 +262,47 @@
 <p>E.G:</p>
 </div>
 <div class="paragraph">
-<p><code>service.ProductService</code> corresponds to <code>com.bitsmi.springbootshowcase.springcore.dependencyinjection.service.ProductService</code></p>
+<p><code>product.service.ProductService</code> corresponds to <code>com.bitsmi.springbootshowcase.springcore.dependencyinjection.product.service.ProductService</code></p>
 </div>
 </td>
 </tr>
 </table>
 </div>
+<div class="sect2">
+<h3 id="multiple-optional-beans"><a class="anchor" href="#multiple-optional-beans"></a>Multiple &amp; Optional beans</h3>
 <div class="ulist">
 <ul>
 <li>
-<p><code>service.ProductService</code></p>
+<p><code>product.service.ProductService</code></p>
 <div class="paragraph">
 <p>Interface shared by the multiple implementation beans</p>
 </div>
 </li>
 <li>
-<p><code>service.impl.MainProductServiceImpl</code></p>
+<p><code>product.service.impl.MainProductServiceImpl</code></p>
 <div class="paragraph">
 <p>Primary bean implementation that will be autowired in single injections points when no <code>@Qualifier</code>
 is specified</p>
 </div>
 </li>
 <li>
-<p><code>service.impl.AdditionalProductServiceImpl</code> &amp; <code>service.impl.AlternativeProductServiceImpl</code></p>
+<p><code>product.service.impl.AdditionalProductServiceImpl</code> &amp; <code>product.service.impl.AlternativeProductServiceImpl</code></p>
 <div class="paragraph">
 <p>Qualified bean implementations. They can be selected individually for injection using their <code>@Qualifier</code></p>
 </div>
 </li>
 <li>
-<p><code>service.impl.OptionalProfileProductServiceImpl</code></p>
+<p><code>product.service.impl.OptionalProfileProductServiceImpl</code></p>
 <div class="paragraph">
 <p>Bean attached to a profile. It will be only available when the specified profile is active</p>
 </div>
 </li>
 </ul>
 </div>
-<div id="ProductServicesIntTests" class="ulist">
+<div id="product-services-int-tests" class="ulist">
 <ul>
 <li>
-<p><code>test.service.impl.ProductServicesIntTests</code> (Integration test)</p>
+<p><code>test.product.service.ProductServicesIntTests</code> (Integration test)</p>
 <div class="paragraph">
 <p>Shows how to autowire beans using:</p>
 </div>
@@ -322,12 +330,82 @@ is specified</p>
 </div>
 </li>
 <li>
-<p><code>test.service.impl.ProfileServicesOptionalProfileIntTests</code> (Integration test)</p>
+<p><code>test.product.service.impl.ProfileServicesOptionalProfileIntTests</code> (Integration test)</p>
 <div class="paragraph">
-<p>Similar to <a href="#ProductServicesIntTests">ProductServicesIntTests</a> but including the definition of a <strong>Spring profile</strong> that enables an additional bean (<code>service.impl.OptionalProfileProductServiceImpl</code>)</p>
+<p>Similar to <a href="#product-services-int-tests">ProductServicesIntTests</a> but including the definition of a <strong>Spring profile</strong> that enables an additional bean (<code>service.impl.OptionalProfileProductServiceImpl</code>)</p>
 </div>
 </li>
 </ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="prototype-scoped-beans"><a class="anchor" href="#prototype-scoped-beans"></a>Prototype scoped beans</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><code>scoped.service.PrototypeService</code></p>
+<div class="paragraph">
+<p>Simple interface to designate a type to retrieve <code>SimplePrototypeServiceImpl</code> instances from <strong>Spring Context</strong></p>
+</div>
+</li>
+<li>
+<p><code>scoped.service.ParameterizedService</code></p>
+<div class="paragraph">
+<p>Simple interface to designate a type to retrieve <code>ParameterizedServiceImpl</code> instances from <strong>Spring Context</strong></p>
+</div>
+</li>
+<li>
+<p><code>scoped.service.impl.SimplePrototypeServiceImpl</code></p>
+<div class="paragraph">
+<p>Simple implementation for a <strong>prototype scoped service</strong>. The main point in this is class is the usage
+of <code>@Scope(BeanDefinition.SCOPE_PROTOTYPE)</code> along with <code>@Service</code> to include the bean in this scope</p>
+</div>
+</li>
+<li>
+<p><code>scoped.service.impl.ParameterizedServiceImpl</code></p>
+<div class="paragraph">
+<p>Parameterized service implementation that receives parameters at construction time.
+It will be used to demonstrate how to produce parameterized prototype beans at runtime.</p>
+</div>
+<div class="paragraph">
+<p>It has no <code>@Service</code> annotation as its instance as a bean is done through a <code>ObjectProvider</code> / <a href="#parameterized-service-prototype-factory">Factory</a>.</p>
+</div>
+</li>
+</ul>
+</div>
+<div id="parameterized-service-prototype-factory" class="ulist">
+<ul>
+<li>
+<p><code>scoped.service.ParameterizedServicePrototypeFactory</code></p>
+<div class="paragraph">
+<p>Example of usage of <code>@Configuration</code> annotation to create a <strong>Factory</strong> that allow us to retrieve
+parameterized instances of a <strong>prototype bean</strong> defined in a <strong>bean factory method</strong> annotated with <code>@Bean</code> and <code>@Scope(BeanDefinition.SCOPE_PROTOTYPE)</code></p>
+</div>
+</li>
+<li>
+<p><code>test.scoped.service.PrototypeServicesIntTests</code> (Integration test)</p>
+<div class="paragraph">
+<p>Shows how to retrieve prototype beans using:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Direct injection</p>
+</li>
+<li>
+<p>The injection of an <code>ObjectProvider</code></p>
+</li>
+<li>
+<p>Using <code>ApplicationContext.getBean()</code> method</p>
+</li>
+<li>
+<p>Through a <a href="#parameterized-service-prototype-factory">custom factory class</a></p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
 </div>
 </div>
 </div>

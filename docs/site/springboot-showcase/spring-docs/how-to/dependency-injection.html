@@ -242,6 +242,9 @@ all beans for the specified type in the same injection point</p>
 <li>
 <p>Having conditional bean candidates that are only available when a condition is met</p>
 </li>
+<li>
+<p>Create and inject prototype scoped beans</p>
+</li>
 </ul>
 </div>
 </div>
@@ -859,6 +862,161 @@ to achieve this (or one <code>@Conditional</code> plus other <code>@ConditionalO
 </tr>
 </table>
 </div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="prototype-scoped-beans"><a class="anchor" href="#prototype-scoped-beans"></a>Prototype scoped beans</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong>Spring context</strong> allows us to get unique instances of the same bean every time we ask for it
+when they are scoped as <strong>prototype beans</strong>.</p>
+</div>
+<div class="paragraph">
+<p>This scope is specified using <code>@Scope(BeanDefinition.SCOPE_PROTOTYPE)</code> in the bean definition along with
+<code>@Service</code>, <code>@Component</code>, <code>@Bean</code>, <code>@Repository</code> annotations in bean definition:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Service
+@Scope(BeanDefinition.SCOPE_PROTOTYPE)
+public class PrototypeServiceImpl implements PrototypeService {
+    // . . .
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Configuration
+public class ServiceConfig
+{
+    @Bean
+    @Scope(BeanDefinition.SCOPE_PROTOTYPE)
+    public PrototypeService simplePrototypeService()
+    {
+        return new PrototypeServiceImpl();
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We can obtain an instance of them in multiple ways:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Using <code>@Autowired</code> annotation. This will inject a unique instance that will not be shared in other injection points.</p>
+<div class="paragraph">
+<p>This example code injects instances of the same type for a prototype bean. As prototype beans are not shared
+across multiple injections points, the injected services are different instances.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Service
+class ExampleService {
+    @Autowired
+    private PrototypeService serviceInstance1;
+    @Autowired
+    private PrototypeService serviceInstance2;
+}</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Using <code>ObjectProvider</code>. We will obtain a new instance every time we call <code>getObject</code> method. E.G:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import org.springframework.beans.factory.ObjectProvider;
+
+@Service
+class ExampleService {
+    @Autowired
+    private ObjectProvider&lt;PrototypeService&gt; prototypeServices;
+
+    public void doSomething() {
+        final PrototypeService instance = prototypeServices.getObject();
+        // . . .
+    }
+}</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Directly from <strong>Spring</strong>'s <code>ApplicationContext</code>, every time we call <code>getBean()</code> method. E.G:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import org.springframework.context.ApplicationContext;
+
+@Service
+class ExampleService {
+    @Autowired
+    private ObjectProvider&lt;PrototypeService&gt; prototypeServices;
+
+    public void doSomething() {
+        final PrototypeService instance = applicationContext.getBean(PrototypeService.class);
+        // . . .
+    }
+}</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Using a custom <strong>factory</strong>. This also allows to parameterize bean creation:</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Scope;
+
+@Configuration
+public class ParameterizedServicePrototypeFactory
+{
+    @Bean
+    @Scope(BeanDefinition.SCOPE_PROTOTYPE)
+    public ParameterizedService get(String parameter)
+    {
+        return new ParameterizedServiceImpl(parameter);
+    }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Scope;
+
+@Service
+class ExampleService {
+    @Autowired
+    private ParameterizedServicePrototypeFactory serviceFactory;
+
+    public void doSomething() {
+        final ParameterizedService actualInstance1 = parameterizedServicePrototypeFactory.get("A_PARAMETER");
+        // . . .
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In this case we will not mark bean implementation with any stereotype like <code>@Service</code>, <code>@Component</code>, etc.
+as the factory is in charge of create the bean:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class ParameterizedServiceImpl implements ParameterizedService {
+    private final String name;
+
+    public ParameterizedServiceImpl(String name) {
+        this.name = name;
+    }
+
+    // . . .
+}</code></pre>
+</div>
+</div>
+</li>
+</ul>
 </div>
 </div>
 </div>
