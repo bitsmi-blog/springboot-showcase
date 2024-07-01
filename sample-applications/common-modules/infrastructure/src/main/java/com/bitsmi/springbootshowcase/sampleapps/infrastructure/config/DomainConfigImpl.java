@@ -1,7 +1,7 @@
 package com.bitsmi.springbootshowcase.sampleapps.infrastructure.config;
 
 import com.bitsmi.springbootshowcase.sampleapps.domain.common.UserDomainFactory;
-import com.bitsmi.springbootshowcase.sampleapps.domain.common.UserDomainQueryService;
+import com.bitsmi.springbootshowcase.sampleapps.domain.common.UserQueriesDomainService;
 import com.bitsmi.springbootshowcase.sampleapps.domain.common.UserGroupDomainRepository;
 import com.bitsmi.springbootshowcase.sampleapps.domain.common.UserDomainRepository;
 import com.bitsmi.springbootshowcase.sampleapps.domain.common.config.DomainConfig;
@@ -29,9 +29,9 @@ public class DomainConfigImpl implements DomainConfig
 
     @Bean
     @Override
-    public UserDomainQueryService userQueryDomainService(UserDomainRepository userRepositoryService)
+    public UserQueriesDomainService userQueriesDomainService(UserDomainRepository userRepositoryService)
     {
-        return userDomainQueryServiceImpl(userRepositoryService);
+        return userQueriesDomainServiceImpl(userRepositoryService);
     }
 
     @Bean

@@ -69,10 +69,8 @@ Every endpoint module such as `web`, `messaging`, etc. should depend on this mod
 * Publish related internal / external events
 
 **Key components**
-* `ApplicationCommand` and `ApplicationQuery` components that implement a specific use case.
-`ApplicationCommands` will implement actions that modify application state / data
-and `ApplicationQuery` will be used for data retrieval
-E.G. `UserCreationApplicationCommand` will implement the use case `create an user`
+* `ApplicationService` components that implement a specific use case.
+E.G. `UserCreationApplicationService` will implement the use case `create an user`
 
 === Infrastructure
 **Purpose**
@@ -102,12 +100,12 @@ Each of this configurations should be made in a separate configuration so depend
 **Responsibilities**
 
 * Implement model classes
-* Implement domain business logic in `DomainService`s (Queries & Commands)
+* Implement domain business logic
 * Implement validators & model object factories
 * Define interfaces that will be implemented in `Infrastructure` module for infrastructure dependant components like persistence or event publishing
 
 **Key components**
-* `DomainCommandService` and `DomainQueryService` implements business logic for actions and data retrieval
+* `DomainService` implements business logic for and specific domain. E.G. `UserDomainService`
 * `DomainFactory` classes that implement the creation of domain model objects. E.G. `UserDomainFactory`
 * `DomainRepository` interfaces that should be implemented in `Infrastrcture` module.
 These interfaces are part of the public interface of the module and can be used in `Application module`

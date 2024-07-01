@@ -298,10 +298,8 @@ Every endpoint module such as <code>web</code>, <code>messaging</code>, etc. sho
 </div>
 <div class="paragraph">
 <p><strong>Key components</strong>
-* <code>ApplicationCommand</code> and <code>ApplicationQuery</code> components that implement a specific use case.
-<code>ApplicationCommands</code> will implement actions that modify application state / data
-and <code>ApplicationQuery</code> will be used for data retrieval
-E.G. <code>UserCreationApplicationCommand</code> will implement the use case <code>create an user</code></p>
+* <code>ApplicationService</code> components that implement a specific use case.
+E.G. <code>UserCreationApplicationService</code> will implement the use case <code>create an user</code></p>
 </div>
 </div>
 <div class="sect2">
@@ -358,7 +356,7 @@ Each of this configurations should be made in a separate configuration so depend
 <p>Implement model classes</p>
 </li>
 <li>
-<p>Implement domain business logic in `DomainService`s (Queries &amp; Commands)</p>
+<p>Implement domain business logic</p>
 </li>
 <li>
 <p>Implement validators &amp; model object factories</p>
@@ -370,7 +368,7 @@ Each of this configurations should be made in a separate configuration so depend
 </div>
 <div class="paragraph">
 <p><strong>Key components</strong>
-* <code>DomainCommandService</code> and <code>DomainQueryService</code> implements business logic for actions and data retrieval
+* <code>DomainService</code> implements business logic for and specific domain. E.G. <code>UserDomainService</code>
 * <code>DomainFactory</code> classes that implement the creation of domain model objects. E.G. <code>UserDomainFactory</code>
 * <code>DomainRepository</code> interfaces that should be implemented in <code>Infrastrcture</code> module.
 These interfaces are part of the public interface of the module and can be used in <code>Application module</code></p>

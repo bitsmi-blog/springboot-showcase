@@ -1,6 +1,6 @@
 package com.bitsmi.springbootshowcase.springcore.cache.application.inventory.impl;
 
-import com.bitsmi.springbootshowcase.springcore.cache.application.inventory.ProductApplicationQuery;
+import com.bitsmi.springbootshowcase.springcore.cache.application.inventory.ProductApplicationService;
 import com.bitsmi.springbootshowcase.springcore.cache.domain.inventory.model.Product;
 import com.bitsmi.springbootshowcase.springcore.cache.domain.inventory.ProductDomainRepository;
 import jakarta.validation.constraints.NotNull;
@@ -11,11 +11,11 @@ import java.util.Optional;
 
 @Component
 @Validated
-public class ProductApplicationQueryImpl implements ProductApplicationQuery
+public class ProductApplicationServiceImpl implements ProductApplicationService
 {
     private final ProductDomainRepository productRepositoryService;
 
-    public ProductApplicationQueryImpl(ProductDomainRepository productRepositoryService)
+    public ProductApplicationServiceImpl(ProductDomainRepository productRepositoryService)
     {
         this.productRepositoryService = productRepositoryService;
     }

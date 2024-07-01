@@ -9,7 +9,7 @@ public interface CommonApplicationTestFixture
         return DefaultCommonApplicationTestFixture.INSTANCE;
     }
 
-    default void configureUserDomainQueryServiceMocker(UserSummaryApplicationQueryMocker mocker)
+    default void configureUserSummaryApplicationServiceMocker(UserSummaryApplicationServiceMocker mocker)
     {
         mocker.whenFindUserSummaryByUsernameGivenAnyUsernameThenReturnEmpty()
                 .whenFindUserSummaryByUsernameThenReturnUserSummary(UserSummaryObjectMother.USERNAME_USER1, UserSummaryObjectMother.user1());

@@ -1,6 +1,6 @@
 package com.bitsmi.springbootshowcase.sampleapps.application.common.impl;
 
-import com.bitsmi.springbootshowcase.sampleapps.application.common.UserCreationApplicationCommand;
+import com.bitsmi.springbootshowcase.sampleapps.application.common.UserCreationApplicationService;
 import com.bitsmi.springbootshowcase.sampleapps.domain.common.UserDomainFactory;
 import com.bitsmi.springbootshowcase.sampleapps.domain.common.exception.ElementAlreadyExistsException;
 import com.bitsmi.springbootshowcase.sampleapps.domain.common.model.User;
@@ -13,12 +13,12 @@ import org.springframework.validation.annotation.Validated;
 
 @Component
 @Validated
-public class UserCreationApplicationCommandImpl implements UserCreationApplicationCommand
+public class UserCreationApplicationServiceImpl implements UserCreationApplicationService
 {
     private final UserDomainFactory userDomainFactory;
     private final UserDomainRepository userRepositoryService;
 
-    public UserCreationApplicationCommandImpl(
+    public UserCreationApplicationServiceImpl(
             UserDomainFactory userDomainFactory,
             UserDomainRepository userRepositoryService
     ) {

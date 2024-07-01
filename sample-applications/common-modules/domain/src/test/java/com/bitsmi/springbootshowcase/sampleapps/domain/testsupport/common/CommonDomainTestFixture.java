@@ -11,7 +11,7 @@ public interface CommonDomainTestFixture
         return DefaultCommonDomainTestFixture.INSTANCE;
     }
 
-    default void configureUserDomainQueryServiceMocker(UserDomainQueryServiceMocker mocker)
+    default void configureUserQueriesDomainServiceMocker(UserQueriesDomainServiceMocker mocker)
     {
         mocker.whenFindUserByUsernameGivenAnyUsernameThenReturnEmpty()
                 .whenFindUserByUsernameThenReturnUser(UserObjectMother.USERNAME_USER1, UserObjectMother.user1())

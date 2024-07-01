@@ -1,6 +1,6 @@
 package com.bitsmi.springbootshowcase.sampleapps.webmvc.web.user.controller;
 
-import com.bitsmi.springbootshowcase.sampleapps.application.common.UserSummaryApplicationQuery;
+import com.bitsmi.springbootshowcase.sampleapps.application.common.UserSummaryApplicationService;
 import com.bitsmi.springbootshowcase.sampleapps.domain.common.UserConstants;
 import com.bitsmi.springbootshowcase.sampleapps.domain.common.model.UserSummary;
 import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.common.service.IAuthenticationPrincipalService;
@@ -24,14 +24,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserApiController
 {
     private final IAuthenticationPrincipalService authenticationPrincipalService;
-    private final UserSummaryApplicationQuery userSummaryApplicationQuery;
+    private final UserSummaryApplicationService userSummaryApplicationService;
 
     public UserApiController(
             IAuthenticationPrincipalService authenticationPrincipalService,
-            UserSummaryApplicationQuery userSummaryApplicationQuery
+            UserSummaryApplicationService userSummaryApplicationService
     ) {
         this.authenticationPrincipalService = authenticationPrincipalService;
-        this.userSummaryApplicationQuery = userSummaryApplicationQuery;
+        this.userSummaryApplicationService = userSummaryApplicationService;
     }
 
     @GetMapping("/details")
@@ -39,7 +39,7 @@ public class UserApiController
     public UserDetailsResponse getDetails()
     {
         final UserDetails userDetails = authenticationPrincipalService.getAuthenticationPrincipal();
-        final UserSummary userSummary = userSummaryApplicationQuery.findUserSummaryByUsername(userDetails.getUsername())
+        final UserSummary userSummary = userSummaryApplicationService.findUserSummaryByUsername(userDetails.getUsername())
                 .orElseThrow(() -> new ErrorResponseException(HttpStatus.NOT_FOUND));
 
         return UserDetailsResponse.builder()

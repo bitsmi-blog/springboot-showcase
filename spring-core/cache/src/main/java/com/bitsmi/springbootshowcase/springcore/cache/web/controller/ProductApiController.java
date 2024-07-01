@@ -1,6 +1,6 @@
 package com.bitsmi.springbootshowcase.springcore.cache.web.controller;
 
-import com.bitsmi.springbootshowcase.springcore.cache.application.inventory.ProductApplicationQuery;
+import com.bitsmi.springbootshowcase.springcore.cache.application.inventory.ProductApplicationService;
 import com.bitsmi.springbootshowcase.springcore.cache.domain.inventory.model.Product;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -15,17 +15,17 @@ import org.springframework.web.bind.annotation.RestController;
 @ResponseBody
 public class ProductApiController
 {
-    private final ProductApplicationQuery productApplicationQuery;
+    private final ProductApplicationService productApplicationService;
 
-    public ProductApiController(ProductApplicationQuery productApplicationQuery)
+    public ProductApiController(ProductApplicationService productApplicationService)
     {
-        this.productApplicationQuery = productApplicationQuery;
+        this.productApplicationService = productApplicationService;
     }
 
     @GetMapping({ "", "/" })
     public ResponseEntity<Product> getProductByExternalId(@RequestParam String externalId)
     {
-        return productApplicationQuery.findProductByExternalId(externalId)
+        return productApplicationService.findProductByExternalId(externalId)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }

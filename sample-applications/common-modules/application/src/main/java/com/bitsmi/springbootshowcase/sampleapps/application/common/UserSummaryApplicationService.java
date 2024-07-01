@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotNull;
 
 import java.util.Optional;
 
-public interface UserSummaryApplicationQuery
+public interface UserSummaryApplicationService
 {
     Optional<UserSummary> findUserSummaryByUsername(@NotNull String username);
 }

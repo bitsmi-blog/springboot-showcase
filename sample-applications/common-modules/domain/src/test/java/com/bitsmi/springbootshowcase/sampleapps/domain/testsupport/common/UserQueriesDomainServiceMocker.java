@@ -1,6 +1,6 @@
 package com.bitsmi.springbootshowcase.sampleapps.domain.testsupport.common;
 
-import com.bitsmi.springbootshowcase.sampleapps.domain.common.UserDomainQueryService;
+import com.bitsmi.springbootshowcase.sampleapps.domain.common.UserQueriesDomainService;
 import com.bitsmi.springbootshowcase.sampleapps.domain.common.model.User;
 import com.bitsmi.springbootshowcase.sampleapps.domain.common.model.UserSummary;
 import org.apache.commons.lang3.ObjectUtils;
@@ -14,12 +14,12 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public final class UserDomainQueryServiceMocker
+public final class UserQueriesDomainServiceMocker
 {
-    private final UserDomainQueryService mockedService;
+    private final UserQueriesDomainService mockedService;
     private final CommonDomainTestFixture testFixture;
 
-    private UserDomainQueryServiceMocker(UserDomainQueryService serviceInstance, CommonDomainTestFixture testFixture)
+    private UserQueriesDomainServiceMocker(UserQueriesDomainService serviceInstance, CommonDomainTestFixture testFixture)
     {
         if(!Mockito.mockingDetails(serviceInstance).isMock()) {
             throw new IllegalArgumentException("Service instance must be a mock");
@@ -29,26 +29,26 @@ public final class UserDomainQueryServiceMocker
         this.testFixture = testFixture;
     }
 
-    public static UserDomainQueryServiceMocker mocker() {
+    public static UserQueriesDomainServiceMocker mocker() {
         return mocker(null);
     }
 
-    public static UserDomainQueryServiceMocker mocker(CommonDomainTestFixture testFixture)
+    public static UserQueriesDomainServiceMocker mocker(CommonDomainTestFixture testFixture)
     {
-        return new UserDomainQueryServiceMocker(
-                mock(UserDomainQueryService.class),
+        return new UserQueriesDomainServiceMocker(
+                mock(UserQueriesDomainService.class),
                 ObjectUtils.defaultIfNull(testFixture, CommonDomainTestFixture.getDefaultInstance())
         );
     }
 
-    public static UserDomainQueryServiceMocker fromMockedInstance(UserDomainQueryService serviceInstance)
+    public static UserQueriesDomainServiceMocker fromMockedInstance(UserQueriesDomainService serviceInstance)
     {
         return fromMockedInstance(serviceInstance, null);
     }
 
-    public static UserDomainQueryServiceMocker fromMockedInstance(UserDomainQueryService serviceInstance, CommonDomainTestFixture testScenario)
+    public static UserQueriesDomainServiceMocker fromMockedInstance(UserQueriesDomainService serviceInstance, CommonDomainTestFixture testScenario)
     {
-        return new UserDomainQueryServiceMocker(
+        return new UserQueriesDomainServiceMocker(
                 serviceInstance,
                 ObjectUtils.defaultIfNull(testScenario, CommonDomainTestFixture.getDefaultInstance())
         );
@@ -57,30 +57,30 @@ public final class UserDomainQueryServiceMocker
     @BeforeTestExecution
     public void reset()
     {
-        testFixture.configureUserDomainQueryServiceMocker(this);
+        testFixture.configureUserQueriesDomainServiceMocker(this);
     }
 
-    public UserDomainQueryServiceMocker configureMock(Consumer<UserDomainQueryService> mockConsumer)
+    public UserQueriesDomainServiceMocker configureMock(Consumer<UserQueriesDomainService> mockConsumer)
     {
         mockConsumer.accept(mockedService);
         return this;
     }
 
-    public UserDomainQueryServiceMocker whenFindUserByUsernameGivenAnyUsernameThenReturnEmpty()
+    public UserQueriesDomainServiceMocker whenFindUserByUsernameGivenAnyUsernameThenReturnEmpty()
     {
         when(mockedService.findUserByUsername(any()))
                 .thenReturn(Optional.empty());
         return this;
     }
 
-    public UserDomainQueryServiceMocker whenFindUserByUsernameThenReturnUser(String userName, User result)
+    public UserQueriesDomainServiceMocker whenFindUserByUsernameThenReturnUser(String userName, User result)
     {
         when(mockedService.findUserByUsername(userName))
                 .thenReturn(Optional.ofNullable(result));
         return this;
     }
 
-    public UserDomainQueryServiceMocker whenFindUserSummaryByUsernameThenReturnUser(String userName, UserSummary result)
+    public UserQueriesDomainServiceMocker whenFindUserSummaryByUsernameThenReturnUser(String userName, UserSummary result)
     {
         when(mockedService.findUserSummaryByUsername(userName))
                 .thenReturn(Optional.ofNullable(result));

@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotNull;
 
 import java.util.Optional;
 
-public interface ProductApplicationQuery
+public interface ProductApplicationService
 {
     Optional<Product> findProductByExternalId(@NotNull String externalId);
 }

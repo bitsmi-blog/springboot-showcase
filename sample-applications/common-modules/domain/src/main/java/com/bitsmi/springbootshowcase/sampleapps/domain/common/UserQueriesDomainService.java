@@ -5,7 +5,7 @@ import com.bitsmi.springbootshowcase.sampleapps.domain.common.model.UserSummary;
 
 import java.util.Optional;
 
-public interface UserDomainQueryService
+public interface UserQueriesDomainService
 {
     Optional<User> findUserByUsername(String username);
 

@@ -1,6 +1,6 @@
 package com.bitsmi.springbootshowcase.sampleapps.webmvc.web.test.user;
 
-import com.bitsmi.springbootshowcase.sampleapps.application.common.UserSummaryApplicationQuery;
+import com.bitsmi.springbootshowcase.sampleapps.application.common.UserSummaryApplicationService;
 import com.bitsmi.springbootshowcase.sampleapps.domain.common.model.UserSummary;
 import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.common.service.IAuthenticationPrincipalService;
 import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.user.controller.UserApiController;
@@ -25,7 +25,7 @@ public class UserApiControllerTests
     @Mock
     private IAuthenticationPrincipalService authenticationPrincipalService;
     @Mock
-    private UserSummaryApplicationQuery userSummaryApplicationQuery;
+    private UserSummaryApplicationService userSummaryApplicationService;
 
     @InjectMocks
     private UserApiController userApiController;
@@ -45,7 +45,7 @@ public class UserApiControllerTests
         when(userDetails.getUsername()).thenReturn(expectedUsername);
         when(authenticationPrincipalService.getAuthenticationPrincipal())
                 .thenReturn(userDetails);
-        when(userSummaryApplicationQuery.findUserSummaryByUsername(expectedUsername)).thenReturn(Optional.of(userSummary));
+        when(userSummaryApplicationService.findUserSummaryByUsername(expectedUsername)).thenReturn(Optional.of(userSummary));
 
         UserDetailsResponse response = userApiController.getDetails();
 
