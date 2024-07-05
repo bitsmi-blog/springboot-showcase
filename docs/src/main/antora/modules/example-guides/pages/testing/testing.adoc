@@ -3,3 +3,4 @@
 == Features
 
 * Conditional Spring tests using `org.springframework.test.context.junit.jupiter.EnabledIf`
+* Parameterized tests using **JUnit**'s `@ValueSource`, `@EnumSource`, `@EmptySource`, `@NullSource`, `@EmptySource`, `@CsvSource`, `@CsvFileSource`, `@MethodSource`, `@ArgumentsSource` and **custom annotated source**
