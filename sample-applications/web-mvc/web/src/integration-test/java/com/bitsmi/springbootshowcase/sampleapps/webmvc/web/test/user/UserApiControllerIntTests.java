@@ -51,7 +51,7 @@ class UserApiControllerIntTests
     }
 
     @Test
-    @DisplayName("Get user details should return user details when user is logged")
+    @DisplayName("Get user details should return user details given a logged user")
     void getUserDetailsTest1() throws Exception
     {
         final UserDetailsResponse expectedResponse = UserDetailsResponse.builder()
@@ -66,7 +66,7 @@ class UserApiControllerIntTests
     }
 
     @Test
-    @DisplayName("Get user details should return forbidden status when user is not logged")
+    @DisplayName("Get user details should return forbidden status given a non logged user")
     @WithAnonymousUser
     void getUserDetailsTest2() throws Exception
     {
@@ -76,7 +76,7 @@ class UserApiControllerIntTests
     }
 
     @Test
-    @DisplayName("getAdminDetails should return admin message when user has the required role")
+    @DisplayName("getAdminDetails should return admin message given a user user with admin role")
     @WithUserDetails("admin")
     void getAdminDetailsTest1() throws Exception
     {
@@ -92,7 +92,7 @@ class UserApiControllerIntTests
     }
 
     @Test
-    @DisplayName("getAdminDetails should return access denied error when user doesn't have the required role")
+    @DisplayName("getAdminDetails should return access denied error given a non admin user")
     @WithUserDetails("john.doe")
     void getAdminDetailsTest2() throws Exception
     {

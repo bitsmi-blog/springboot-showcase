@@ -70,57 +70,57 @@ class ProductDomainRepositoryIntTests
     }
 
     @Test
-    @DisplayName("findProductByExternalId should cache results given same externalId")
+    @DisplayName("findProductByExternalId should cache results when executed multiple times for same provided externalId")
     void findProductByExternalIdCacheTest1()
     {
-        final String givenProduct1ExternalId = ProductEntityObjectMother.EXTERNAL_ID_PRODUCT1;
-        final String givenProduct2ExternalId = ProductEntityObjectMother.EXTERNAL_ID_PRODUCT2;
+        final String providedProduct1ExternalId = ProductEntityObjectMother.EXTERNAL_ID_PRODUCT1;
+        final String providedProduct2ExternalId = ProductEntityObjectMother.EXTERNAL_ID_PRODUCT2;
         final ProductEntity expectedProductEntity1 = ProductEntityObjectMother.product1();
         final ProductEntity expectedProductEntity2 = ProductEntityObjectMother.product2();
 
-        when(productRepository.findByExternalId(givenProduct1ExternalId))
+        when(productRepository.findByExternalId(providedProduct1ExternalId))
                 .thenReturn(Optional.of(expectedProductEntity1));
-        when(productRepository.findByExternalId(givenProduct2ExternalId))
+        when(productRepository.findByExternalId(providedProduct2ExternalId))
                 .thenReturn(Optional.of(expectedProductEntity2));
 
-        Optional<Product> optResponseProduct1_1st = sut.findProductByExternalId(givenProduct1ExternalId);
-        Optional<Product> optResponseProduct1_2nd = sut.findProductByExternalId(givenProduct1ExternalId);
-        Optional<Product> optResponseProduct2 = sut.findProductByExternalId(givenProduct2ExternalId);
+        Optional<Product> optResponseProduct1_1st = sut.findProductByExternalId(providedProduct1ExternalId);
+        Optional<Product> optResponseProduct1_2nd = sut.findProductByExternalId(providedProduct1ExternalId);
+        Optional<Product> optResponseProduct2 = sut.findProductByExternalId(providedProduct2ExternalId);
 
         assertThat(optResponseProduct1_1st).isPresent();
         assertThat(optResponseProduct1_2nd).isPresent();
         assertThat(optResponseProduct2).isPresent();
 
         // Only 1 call to the repository. The following data is retrieved from cache
-        verify(productRepository).findByExternalId(givenProduct1ExternalId);
+        verify(productRepository).findByExternalId(providedProduct1ExternalId);
         // Non cached values should call repository
-        verify(productRepository).findByExternalId(givenProduct2ExternalId);
+        verify(productRepository).findByExternalId(providedProduct2ExternalId);
     }
 
     @Test
-    @DisplayName("updateProduct should evict cache given externalId when it's cached")
+    @DisplayName("updateProduct should evict cache given cached product when its externalId is provided")
     void findProductByExternalIdCacheTest2()
     {
-        final Product givenProductToUpdate = Product.builder()
+        final Product providedProduct = Product.builder()
                 .id(ProductEntityObjectMother.ID_PRODUCT1)
                 .externalId(ProductEntityObjectMother.EXTERNAL_ID_PRODUCT1)
                 .name("Updated product")
                 .build();
         final ProductEntity expectedProductEntity1 = ProductEntityObjectMother.product1();
 
-        when(productRepository.findByExternalId(givenProductToUpdate.externalId()))
+        when(productRepository.findByExternalId(providedProduct.externalId()))
                 .thenReturn(Optional.of(expectedProductEntity1));
-        when(productRepository.findById(givenProductToUpdate.id()))
+        when(productRepository.findById(providedProduct.id()))
                 .thenReturn(Optional.of(expectedProductEntity1));
 
-        Optional<Product> optResponseProduct1_1st = sut.findProductByExternalId(givenProductToUpdate.externalId());
-        sut.updateProduct(givenProductToUpdate.id(), givenProductToUpdate);
-        Optional<Product> optResponseProduct1_2nd = sut.findProductByExternalId(givenProductToUpdate.externalId());
+        Optional<Product> optResponseProduct1_1st = sut.findProductByExternalId(providedProduct.externalId());
+        sut.updateProduct(providedProduct.id(), providedProduct);
+        Optional<Product> optResponseProduct1_2nd = sut.findProductByExternalId(providedProduct.externalId());
 
         assertThat(optResponseProduct1_1st).isPresent();
         assertThat(optResponseProduct1_2nd).isPresent();
 
-        verify(productRepository, times(2)).findByExternalId(givenProductToUpdate.externalId());
+        verify(productRepository, times(2)).findByExternalId(providedProduct.externalId());
     }
 
     /*---------------------------*

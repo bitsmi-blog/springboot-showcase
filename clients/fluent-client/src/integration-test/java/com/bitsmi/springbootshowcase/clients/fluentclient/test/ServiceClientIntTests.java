@@ -33,7 +33,7 @@ class ServiceClientIntTests
     }
 
     @Test
-    @DisplayName("client should throw an HttpServerErrorException given a 5XX error")
+    @DisplayName("client should throw an HttpServerErrorException when 5XX error")
     void httpServerErrorTest1()
     {
         stubFor(get("/api/info/service-version")
@@ -52,7 +52,7 @@ class ServiceClientIntTests
     }
 
     @Test
-    @DisplayName("client should throw an HttpClientErrorException given a 4XX error")
+    @DisplayName("client should throw an HttpClientErrorException when a 4XX error")
     void httpClientErrorTest1()
     {
         stubFor(get("/api/info/service-version")

@@ -40,12 +40,12 @@ class ProductRepositoryIntTests
     }
 
     @Test
-    @DisplayName("findByField should return corresponding products given field value")
+    @DisplayName("findByField should return corresponding products given existing products when their field value is provided")
     void findByFieldTest1()
     {
-        List<ProductEntity> products = productRepository.findByField("externalId", "product-1.1");
+        List<ProductEntity> actualProducts = productRepository.findByField("externalId", "product-1.1");
 
-        assertThat(products).hasSize(1)
+        assertThat(actualProducts).hasSize(1)
                 .first()
                 .satisfies(product -> {
                     assertThat(product.getId()).isEqualTo(1001L);
@@ -55,12 +55,12 @@ class ProductRepositoryIntTests
     }
 
     @Test
-    @DisplayName("findByField should return corresponding product given field value")
+    @DisplayName("findByField should return unique product given an existing product when its field value is provided")
     void findUniqueByFieldTest1()
     {
-        Optional<ProductEntity> products = productRepository.findUniqueByField("externalId", "product-1.1");
+        Optional<ProductEntity> actualProduct = productRepository.findUniqueByField("externalId", "product-1.1");
 
-        assertThat(products).isPresent()
+        assertThat(actualProduct).isPresent()
                 .get()
                 .satisfies(product -> {
                     assertThat(product.getId()).isEqualTo(1001L);
@@ -70,7 +70,7 @@ class ProductRepositoryIntTests
     }
 
     @Test
-    @DisplayName("findStockProjectionByExternalId should return product stock given an existing product externalId")
+    @DisplayName("findStockProjectionByExternalId should return product stock given an existing product when its externalId is provided")
     void findStockProjectionByExternalIdTest1()
     {
         Optional<ProductStockProjection> actualProduct = productRepository.findStockProjectionByExternalId("product-1.1");
@@ -85,7 +85,7 @@ class ProductRepositoryIntTests
     }
 
     @Test
-    @DisplayName("findSummaryProjectionByExternalId should return product summary given an existing product externalId")
+    @DisplayName("findSummaryProjectionByExternalId should return product summary given an existing product when its externalId is provided")
     void findSummaryProjectionByExternalIdTest1()
     {
         Optional<ProductSummaryProjection> actualProduct = productRepository.findSummaryProjectionByExternalId("product-1.1");

@@ -61,7 +61,7 @@ class JwtAuthIntTests
     }
 
     @Test
-    @DisplayName("Auth should return JWT token given successful login")
+    @DisplayName("Auth should return JWT token when login is successful")
     void authTest1() throws Exception
     {
         final String expectedUsername = "john.doe";
@@ -82,7 +82,7 @@ class JwtAuthIntTests
     }
 
     @Test
-    @DisplayName("Auth should return Unauthorized error code given wrong credentials")
+    @DisplayName("Auth should return Unauthorized error code when wrong credentials")
     void authTest2() throws Exception
     {
         this.mockMvc.perform(post("/auth")
@@ -91,7 +91,7 @@ class JwtAuthIntTests
     }
 
     @Test
-    @DisplayName("Filter should authorize a request given a valid JWT token")
+    @DisplayName("Filter should authorize a request when a valid JWT token is provided")
     void jwtTokenTest1() throws Exception
     {
         final String expectedUsername = "john.doe";
@@ -112,7 +112,7 @@ class JwtAuthIntTests
     }
 
     @Test
-    @DisplayName("Filter should deny a request given an invalid JWT token")
+    @DisplayName("Filter should deny a request when an invalid JWT token is provided")
     void jwtTokenTest2() throws Exception
     {
         final String expectedUsername = "john.doe";

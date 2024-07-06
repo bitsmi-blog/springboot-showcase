@@ -12,7 +12,6 @@ import org.springframework.validation.annotation.Validated;
 
 import java.util.Optional;
 
-@Service
 @Validated
 public class UserGroupDomainRepositoryImpl implements UserGroupDomainRepository
 {

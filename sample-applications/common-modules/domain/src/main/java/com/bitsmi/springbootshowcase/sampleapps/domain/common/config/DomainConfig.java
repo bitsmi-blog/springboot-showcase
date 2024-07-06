@@ -12,9 +12,9 @@ public interface DomainConfig
 {
     UserQueriesDomainService userQueriesDomainService(UserDomainRepository userRepositoryService);
 
-    default UserQueriesDomainService userQueriesDomainServiceImpl(UserDomainRepository userRepositoryService)
+    default UserQueriesDomainService userQueriesDomainServiceImpl(UserDomainRepository userDomainRepository)
     {
-        return new UserQueriesDomainServiceImpl(userRepositoryService);
+        return new UserQueriesDomainServiceImpl(userDomainRepository);
     }
 
     UserDomainFactory userDomainFactory(
@@ -24,13 +24,13 @@ public interface DomainConfig
     );
 
     default UserDomainFactory userDomainFactoryImpl(
-            UserDomainRepository userRepositoryService,
-            UserGroupDomainRepository userGroupRepositoryService,
+            UserDomainRepository userDomainRepository,
+            UserGroupDomainRepository UserGroupDomainRepository,
             PasswordEncoder passwordEncoder
     ) {
-        return new UserDomainFactoryImpl(userRepositoryService, userGroupRepositoryService, passwordEncoder);
+        return new UserDomainFactoryImpl(userDomainRepository, UserGroupDomainRepository, passwordEncoder);
     }
 
-    UserDomainRepository userRepositoryService();
-    UserGroupDomainRepository userGroupRepositoryService();
+    UserDomainRepository userDomainRepository();
+    UserGroupDomainRepository userGroupDomainRepository();
 }

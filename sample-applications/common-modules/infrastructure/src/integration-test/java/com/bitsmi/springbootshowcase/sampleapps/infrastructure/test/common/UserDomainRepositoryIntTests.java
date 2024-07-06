@@ -33,7 +33,7 @@ import static org.assertj.core.api.Assertions.assertThat;
         "spring.liquibase.change-log=classpath:db/changelogs/infrastructure/test/common/user_domain_repository_tests.xml"
     }
 )
-public class UserDomainRepositoryIntTests
+class UserDomainRepositoryIntTests
 {
     @Autowired
     private UserDomainRepository userRepositoryService;
@@ -50,7 +50,13 @@ public class UserDomainRepositoryIntTests
     }
 
     @Test
-    @DisplayName("findUserSummaryByUsername should return user data when it exists for the given username")
+    @DisplayName("""
+            findUserSummaryByUsername
+            should return user data
+            given an existent user
+            when its username is provided
+            """
+    )
     public void findUserByUsernameTest1()
     {
         LocalDateTime controlDate = LocalDateTime.of(LocalDate.of(2023, 1, 1), LocalTime.MIN);
@@ -78,7 +84,13 @@ public class UserDomainRepositoryIntTests
     }
 
     @Test
-    @DisplayName("findUserSummaryByUsername should return user summary data when it exists for the given username")
+    @DisplayName("""
+            findUserSummaryByUsername
+            should return user summary data
+            given an existent user
+            when its username is provided
+            """
+    )
     public void findUserSummaryByUsernameTest1()
     {
         Optional<UserSummary> optUserSummary = userRepositoryService.findUserSummaryByUsername("john.doe");
@@ -90,7 +102,12 @@ public class UserDomainRepositoryIntTests
     }
 
     @Test
-    @DisplayName("createUser should create a new user given username, password and groups")
+    @DisplayName("""
+            createUser
+            should create a new user
+            given no previous matching user exists
+            """
+    )
     public void createUserTest1()
     {
         final LocalDateTime controlDate = LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES);

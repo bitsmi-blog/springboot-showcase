@@ -47,7 +47,7 @@ public class DomainConfigImpl implements DomainConfig
 
     @Bean
     @Override
-    public UserDomainRepository userRepositoryService()
+    public UserDomainRepository userDomainRepository()
     {
         return new UserDomainRepositoryImpl(
                 commonRepositoryDependencies.getUserRepository(),
@@ -59,7 +59,7 @@ public class DomainConfigImpl implements DomainConfig
 
     @Bean
     @Override
-    public UserGroupDomainRepository userGroupRepositoryService()
+    public UserGroupDomainRepository userGroupDomainRepository()
     {
         return new UserGroupDomainRepositoryImpl(
                 commonRepositoryDependencies.getUserGroupRepository(),

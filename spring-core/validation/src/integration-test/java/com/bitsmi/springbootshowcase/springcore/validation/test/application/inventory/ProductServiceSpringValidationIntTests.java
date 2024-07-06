@@ -37,10 +37,10 @@ class ProductServiceSpringValidationIntTests
     private ProductService sut;
 
     @Test
-    @DisplayName("Service should execute given a valid product")
+    @DisplayName("Service should be executed when a valid product is provided")
     void validateProductTest1()
     {
-        final ProductDto givenProduct = ProductDto.builder()
+        final ProductDto providedProduct = ProductDto.builder()
                 .externalId("product-1")
                 .name("Product 1")
                 .categories(List.of(
@@ -51,16 +51,16 @@ class ProductServiceSpringValidationIntTests
                 .availableSince(LocalDateTime.of(LocalDate.of(2024, 1, 1), LocalTime.MIN))
                 .build();
 
-        boolean actualResult = sut.createProduct(givenProduct);
+        boolean actualResult = sut.createProduct(providedProduct);
 
         assertThat(actualResult).isTrue();
     }
 
     @Test
-    @DisplayName("Service should throw a validation error given an invalid product")
+    @DisplayName("Service should throw a validation error when an invalid product is provided")
     void validateProductTest2()
     {
-        final ProductDto givenProduct = ProductDto.builder()
+        final ProductDto providedProduct = ProductDto.builder()
                 // Validation fail: Missing externalId
                 .name("Product 1")
                 .categories(List.of(
@@ -75,7 +75,7 @@ class ProductServiceSpringValidationIntTests
                 .availableSince(LocalDateTime.now().plusDays(10))
                 .build();
 
-        assertThatThrownBy(() -> sut.createProduct(givenProduct))
+        assertThatThrownBy(() -> sut.createProduct(providedProduct))
                 .isExactlyInstanceOf(ConstraintViolationException.class)
                 .asInstanceOf(InstanceOfAssertFactories.throwable(ConstraintViolationException.class))
                 .extracting(ConstraintViolationException::getConstraintViolations)

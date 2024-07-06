@@ -52,7 +52,7 @@ class UserApiControllerIntTests
     }
 
     @Test
-    @DisplayName("Get user details should return user details")
+    @DisplayName("Get user details should return user details given a logged user")
     void getUserDetailsTest1() throws Exception
     {
         final UserDetailsResponse expectedResponse = UserDetailsResponse.builder()
@@ -66,7 +66,7 @@ class UserApiControllerIntTests
     }
 
     @Test
-    @DisplayName("getAdminDetails should return admin message when user has the required role")
+    @DisplayName("Get user details should return forbidden status given a non logged user")
     void getAdminDetailsTest1() throws Exception
     {
         final String username = "admin";

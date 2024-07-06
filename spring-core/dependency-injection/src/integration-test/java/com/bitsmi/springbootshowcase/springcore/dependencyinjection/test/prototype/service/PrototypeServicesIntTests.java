@@ -71,27 +71,27 @@ class PrototypeServicesIntTests
     }
 
     @Test
-    @DisplayName("parameterizedServicePrototypeFactory should provide a new instance given a name when call get method")
+    @DisplayName("parameterizedServicePrototypeFactory should provide a new instance when call get method")
     void parameterizedServicePrototypeFactoryTest1()
     {
-        final String givenName1 = "NAME_1";
-        final String givenName2 = "NAME_2";
+        final String providedName1 = "NAME_1";
+        final String providedName2 = "NAME_2";
 
         final ParameterizedService actualInstance1 = parameterizedServicePrototypeFactory.get("NAME_1");
         final ParameterizedService actualInstance2 = parameterizedServicePrototypeFactory.get("NAME_2");
 
-        assertThat(actualInstance1.getName()).isEqualTo(givenName1);
-        assertThat(actualInstance2.getName()).isEqualTo(givenName2);
+        assertThat(actualInstance1.getName()).isEqualTo(providedName1);
+        assertThat(actualInstance2.getName()).isEqualTo(providedName2);
     }
 
     @Test
-    @DisplayName("parameterizedServicePrototypeFactory should provide always new instances given a name when call multiple times with same value")
+    @DisplayName("parameterizedServicePrototypeFactory should provide always new instances when call multiple times with same value")
     void parameterizedServicePrototypeFactoryTest2()
     {
-        final String givenName = "A_NAME";
+        final String providedName = "A_NAME";
 
-        final ParameterizedService actualInstance1 = parameterizedServicePrototypeFactory.get(givenName);
-        final ParameterizedService actualInstance2 = parameterizedServicePrototypeFactory.get(givenName);
+        final ParameterizedService actualInstance1 = parameterizedServicePrototypeFactory.get(providedName);
+        final ParameterizedService actualInstance2 = parameterizedServicePrototypeFactory.get(providedName);
 
         assertThat(actualInstance1).isNotNull();
         assertThat(actualInstance2)
@@ -100,27 +100,27 @@ class PrototypeServicesIntTests
     }
 
     @Test
-    @DisplayName("parameterizedServiceObjectProvider should provide a new instance given a name when call getObject method")
+    @DisplayName("parameterizedServiceObjectProvider should return new instances when call getObject method with different values")
     void parameterizedServiceObjectProviderTest1()
     {
-        final String givenName1 = "NAME_1";
-        final String givenName2 = "NAME_2";
+        final String providedName1 = "NAME_1";
+        final String providedName2 = "NAME_2";
 
         final ParameterizedService actualInstance1 = parameterizedServiceObjectProvider.getObject("NAME_1");
         final ParameterizedService actualInstance2 = parameterizedServiceObjectProvider.getObject("NAME_2");
 
-        assertThat(actualInstance1.getName()).isEqualTo(givenName1);
-        assertThat(actualInstance2.getName()).isEqualTo(givenName2);
+        assertThat(actualInstance1.getName()).isEqualTo(providedName1);
+        assertThat(actualInstance2.getName()).isEqualTo(providedName2);
     }
 
     @Test
-    @DisplayName("parameterizedServiceObjectProvider should provide always new instances given a name when call multiple times with same value")
+    @DisplayName("parameterizedServiceObjectProvider should return always new instances when call getObject method multiple times with same value")
     void parameterizedServiceObjectProviderTest2()
     {
-        final String givenName = "A_NAME";
+        final String providedName = "A_NAME";
 
-        final ParameterizedService actualInstance1 = parameterizedServiceObjectProvider.getObject(givenName);
-        final ParameterizedService actualInstance2 = parameterizedServiceObjectProvider.getObject(givenName);
+        final ParameterizedService actualInstance1 = parameterizedServiceObjectProvider.getObject(providedName);
+        final ParameterizedService actualInstance2 = parameterizedServiceObjectProvider.getObject(providedName);
 
         assertThat(actualInstance1).isNotNull();
         assertThat(actualInstance2)
