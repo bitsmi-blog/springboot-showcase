@@ -21,6 +21,10 @@
 
 * xref:spring-data-jpa/repository-extension.adoc[Repository extension]
 
+== Spring MVC
+
+* xref:spring-mvc/api-versioning.adoc[API versioning]
+
 == Testing
 
 * xref:testing/testing.adoc[Testing]
