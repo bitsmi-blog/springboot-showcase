@@ -1,6 +1,6 @@
 package com.bitsmi.springbootshowcase.clients.openfeign.server;
 
-import com.bitsmi.springbootshowcase.clients.openfeign.server.util.IgnoreOnComponentScan;
+import com.bitsmi.springbootshowcase.utils.IgnoreOnComponentScan;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.FilterType;

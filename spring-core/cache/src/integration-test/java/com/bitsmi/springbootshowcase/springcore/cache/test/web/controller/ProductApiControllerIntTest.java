@@ -1,13 +1,12 @@
 package com.bitsmi.springbootshowcase.springcore.cache.test.web.controller;
 
 import com.bitsmi.springbootshowcase.springcore.cache.application.config.ApplicationModuleConfig;
-import com.bitsmi.springbootshowcase.springcore.cache.domain.common.util.IgnoreOnComponentScan;
 import com.bitsmi.springbootshowcase.springcore.cache.infrastructure.config.InfrastructureModuleConfig;
 import com.bitsmi.springbootshowcase.springcore.cache.infrastructure.inventory.entity.ProductEntity;
 import com.bitsmi.springbootshowcase.springcore.cache.infrastructure.inventory.repository.ProductRepository;
 import com.bitsmi.springbootshowcase.springcore.cache.testsupport.infrastructure.inventory.entity.ProductEntityObjectMother;
 import com.bitsmi.springbootshowcase.springcore.cache.web.config.WebModuleConfig;
-import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
+import com.bitsmi.springbootshowcase.utils.IgnoreOnComponentScan;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;

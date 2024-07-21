@@ -3,7 +3,7 @@ package com.bitsmi.springbootshowcase.springcore.dependencyinjection.test.produc
 import com.bitsmi.springbootshowcase.springcore.dependencyinjection.Constants;
 import com.bitsmi.springbootshowcase.springcore.dependencyinjection.product.config.ProductServiceConfig;
 import com.bitsmi.springbootshowcase.springcore.dependencyinjection.product.service.ProductService;
-import com.bitsmi.springbootshowcase.springcore.dependencyinjection.util.IgnoreOnComponentScan;
+import com.bitsmi.springbootshowcase.utils.IgnoreOnComponentScan;
 import org.assertj.core.api.SoftAssertions;
 import org.assertj.core.api.junit.jupiter.InjectSoftAssertions;
 import org.assertj.core.api.junit.jupiter.SoftAssertionsExtension;

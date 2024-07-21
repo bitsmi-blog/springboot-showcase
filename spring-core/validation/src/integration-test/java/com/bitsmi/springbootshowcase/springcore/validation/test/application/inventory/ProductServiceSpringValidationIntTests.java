@@ -4,7 +4,7 @@ import com.bitsmi.springbootshowcase.springcore.validation.application.config.Ap
 import com.bitsmi.springbootshowcase.springcore.validation.application.inventory.ProductService;
 import com.bitsmi.springbootshowcase.springcore.validation.application.inventory.dto.CategoryDto;
 import com.bitsmi.springbootshowcase.springcore.validation.application.inventory.dto.ProductDto;
-import com.bitsmi.springbootshowcase.springcore.validation.util.IgnoreOnComponentScan;
+import com.bitsmi.springbootshowcase.utils.IgnoreOnComponentScan;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import org.assertj.core.api.InstanceOfAssertFactories;

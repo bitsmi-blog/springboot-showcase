@@ -15,6 +15,11 @@
 	<dependencies>
         <!-- PROJECT -->
         <dependency>
+            <groupId>com.bitsmi.springboot-showcase</groupId>
+            <artifactId>springboot-showcase-utils</artifactId>
+            <version>3.0.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
 			<groupId>com.bitsmi.springboot-showcase</groupId>
 			<artifactId>springboot-showcase-sampleapps-domain</artifactId>
 			<version>3.0.0-SNAPSHOT</version>

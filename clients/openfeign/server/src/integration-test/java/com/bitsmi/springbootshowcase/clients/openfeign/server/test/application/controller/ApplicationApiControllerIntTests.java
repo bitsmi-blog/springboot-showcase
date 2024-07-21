@@ -1,7 +1,7 @@
 package com.bitsmi.springbootshowcase.clients.openfeign.server.test.application.controller;
 
 import com.bitsmi.springbootshowcase.clients.openfeign.server.ServerModuleConfig;
-import com.bitsmi.springbootshowcase.clients.openfeign.server.util.IgnoreOnComponentScan;
+import com.bitsmi.springbootshowcase.utils.IgnoreOnComponentScan;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;

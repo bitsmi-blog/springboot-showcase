@@ -1,7 +1,7 @@
 package com.bitsmi.springbootshowcase.springcore.validation.application.config;
 
 import com.bitsmi.springbootshowcase.springcore.validation.application.ApplicationPackage;
-import com.bitsmi.springbootshowcase.springcore.validation.util.IgnoreOnComponentScan;
+import com.bitsmi.springbootshowcase.utils.IgnoreOnComponentScan;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.FilterType;

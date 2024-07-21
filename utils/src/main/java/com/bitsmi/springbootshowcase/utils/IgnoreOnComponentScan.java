@@ -1,4 +1,4 @@
-package com.bitsmi.springbootshowcase.sampleapps.domain.common.util;
+package com.bitsmi.springbootshowcase.utils;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

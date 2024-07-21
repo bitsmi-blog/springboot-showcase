@@ -6,7 +6,7 @@ import com.bitsmi.springbootshowcase.springdatajpa.repositoryextension.infrastru
 import com.bitsmi.springbootshowcase.springdatajpa.repositoryextension.infrastructure.inventory.projection.ProductSummaryProjection;
 import com.bitsmi.springbootshowcase.springdatajpa.repositoryextension.infrastructure.inventory.repository.ProductRepository;
 import com.bitsmi.springbootshowcase.springdatajpa.repositoryextension.testsupport.internal.RepositoryIntegrationTest;
-import com.bitsmi.springbootshowcase.springdatajpa.repositoryextension.util.IgnoreOnComponentScan;
+import com.bitsmi.springbootshowcase.utils.IgnoreOnComponentScan;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

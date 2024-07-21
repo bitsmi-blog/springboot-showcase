@@ -1,9 +1,9 @@
 package com.bitsmi.springbootshowcase.sampleapps.kafka.messaging.config;
 
-import com.bitsmi.springbootshowcase.sampleapps.domain.common.util.IgnoreOnComponentScan;
 import com.bitsmi.springbootshowcase.sampleapps.kafka.messaging.MessagingPackage;
 import com.bitsmi.springbootshowcase.sampleapps.kafka.messaging.sample.message.SampleOneMessage;
 import com.bitsmi.springbootshowcase.sampleapps.kafka.messaging.sample.message.SampleTwoMessage;
+import com.bitsmi.springbootshowcase.utils.IgnoreOnComponentScan;
 import org.apache.kafka.clients.admin.AdminClientConfig;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.consumer.ConsumerConfig;

@@ -6,7 +6,7 @@ import com.bitsmi.springbootshowcase.springcore.aop.aspect.ProductServiceAspect;
 import com.bitsmi.springbootshowcase.springcore.aop.config.AopModuleConfig;
 import com.bitsmi.springbootshowcase.springcore.aop.service.ProductService;
 import com.bitsmi.springbootshowcase.springcore.aop.testsupport.TestLoggerAppender;
-import com.bitsmi.springbootshowcase.springcore.aop.util.IgnoreOnComponentScan;
+import com.bitsmi.springbootshowcase.utils.IgnoreOnComponentScan;
 import org.assertj.core.api.SoftAssertions;
 import org.assertj.core.api.junit.jupiter.InjectSoftAssertions;
 import org.assertj.core.api.junit.jupiter.SoftAssertionsExtension;

@@ -1,12 +1,12 @@
 package com.bitsmi.springbootshowcase.sampleapps.webmvc.web.test.user;
 
-import com.bitsmi.springbootshowcase.sampleapps.domain.common.util.IgnoreOnComponentScan;
 import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.config.WebModuleConfig;
 import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.test.config.ApplicationModuleMockConfig;
 import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.test.config.DomainModuleMockConfig;
 import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.test.config.UserDetailsTestConfig;
 import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.testsupport.internal.ControllerIntegrationTest;
 import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.user.controller.response.UserDetailsResponse;
+import com.bitsmi.springbootshowcase.utils.IgnoreOnComponentScan;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

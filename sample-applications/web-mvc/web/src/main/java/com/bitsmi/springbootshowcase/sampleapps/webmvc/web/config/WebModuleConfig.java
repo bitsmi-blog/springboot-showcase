@@ -1,7 +1,7 @@
 package com.bitsmi.springbootshowcase.sampleapps.webmvc.web.config;
 
-import com.bitsmi.springbootshowcase.sampleapps.domain.common.util.IgnoreOnComponentScan;
 import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.WebPackage;
+import com.bitsmi.springbootshowcase.utils.IgnoreOnComponentScan;
 import org.apache.catalina.connector.Connector;
 import org.springframework.boot.autoconfigure.web.servlet.TomcatServletWebServerFactoryCustomizer;
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;

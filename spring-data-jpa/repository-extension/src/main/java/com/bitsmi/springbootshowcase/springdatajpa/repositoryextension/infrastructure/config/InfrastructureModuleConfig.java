@@ -1,7 +1,7 @@
 package com.bitsmi.springbootshowcase.springdatajpa.repositoryextension.infrastructure.config;
 
 import com.bitsmi.springbootshowcase.springdatajpa.repositoryextension.infrastructure.InfrastructurePackage;
-import com.bitsmi.springbootshowcase.springdatajpa.repositoryextension.util.IgnoreOnComponentScan;
+import com.bitsmi.springbootshowcase.utils.IgnoreOnComponentScan;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.FilterType;

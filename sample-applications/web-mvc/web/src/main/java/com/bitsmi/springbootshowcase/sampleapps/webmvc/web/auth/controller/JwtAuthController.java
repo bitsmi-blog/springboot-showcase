@@ -13,7 +13,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.Instant;
@@ -21,7 +20,6 @@ import java.time.temporal.ChronoUnit;
 
 @RestController
 @RequestMapping(value = "/auth")
-@ResponseBody
 @Observed(name = "auth.jwt")
 public class JwtAuthController
 {

@@ -2,7 +2,7 @@ package com.bitsmi.springbootshowcase.clients.openfeign.server.test.user.control
 
 import com.bitsmi.springbootshowcase.clients.openfeign.api.user.response.UserDetailsResponse;
 import com.bitsmi.springbootshowcase.clients.openfeign.server.ServerModuleConfig;
-import com.bitsmi.springbootshowcase.clients.openfeign.server.util.IgnoreOnComponentScan;
+import com.bitsmi.springbootshowcase.utils.IgnoreOnComponentScan;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

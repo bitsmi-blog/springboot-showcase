@@ -1,7 +1,7 @@
 package com.bitsmi.springbootshowcase.sampleapps.application.config;
 
 import com.bitsmi.springbootshowcase.sampleapps.application.ApplicationPackage;
-import com.bitsmi.springbootshowcase.sampleapps.domain.common.util.IgnoreOnComponentScan;
+import com.bitsmi.springbootshowcase.utils.IgnoreOnComponentScan;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.FilterType;

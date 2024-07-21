@@ -3,36 +3,18 @@
 		xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	
-	<artifactId>springboot-showcase-clients-openfeign-server</artifactId>
-	<description>SpringBoot Showcase OpenFeign Server example module</description>
+	<artifactId>springboot-showcase-utils</artifactId>
+	<description>SpringBoot Showcase utils module</description>
 	
 	<parent>
 		<groupId>com.bitsmi.springboot-showcase</groupId>
-		<artifactId>springboot-showcase-clients-openfeign-parent</artifactId>
-		<version>3.0.0-SNAPSHOT</version>
+		<artifactId>springboot-showcase-parent</artifactId>
+		<version>3.0.0-SNAPSHOT</version>        
 	</parent>
 	
 	<dependencies>
-        <!-- PROJECT -->
-        <dependency>
-            <groupId>com.bitsmi.springboot-showcase</groupId>
-            <artifactId>springboot-showcase-utils</artifactId>
-            <version>3.0.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.bitsmi.springboot-showcase</groupId>
-            <artifactId>springboot-showcase-clients-openfeign-api</artifactId>
-            <version>3.0.0-SNAPSHOT</version>
-        </dependency>
-
-        <!-- SPRING -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-
         <!-- UTILS -->
-        <dependency>
+		<dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
@@ -47,17 +29,11 @@
             <artifactId>assertj-core</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <!-- Use standalone artifact to not having conflicts between Wiremock's & Spring's Jetty -->
-        <dependency>
-            <groupId>org.wiremock</groupId>
-            <artifactId>wiremock-standalone</artifactId>
-            <scope>test</scope>
-        </dependency>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-params</artifactId>
+			<scope>test</scope>
+		</dependency>        
 	</dependencies>
 
 	<build>
