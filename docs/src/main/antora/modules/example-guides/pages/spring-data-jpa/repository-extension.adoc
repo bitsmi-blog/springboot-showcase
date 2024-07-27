@@ -5,3 +5,5 @@
 * Repository custom base class
 * Repository interface composition
 * Projections
+* Integration test using H2 database
+* Integration test using Testcontainers and Postgres database
