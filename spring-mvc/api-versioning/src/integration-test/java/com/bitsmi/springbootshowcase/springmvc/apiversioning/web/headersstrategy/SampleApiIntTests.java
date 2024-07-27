@@ -23,6 +23,7 @@ import org.springframework.web.context.WebApplicationContext;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith({SpringExtension.class})
@@ -72,13 +73,13 @@ class SampleApiIntTests
     }
 
     @Test
-    @DisplayName("get sample should return V2 result when API version header is not provided")
+    @DisplayName("get sample should return bad request error when API version header is not provided")
     void getSampleTest3() throws Exception
     {
         this.mockMvc.perform(get("/api/headers-strategy/sample"))
-                .andExpect(status().isOk())
+                .andExpect(status().isBadRequest())
                 .andDo(print())
-                .andExpect(content().string("SampleV2"));
+                .andExpect(jsonPath("detail").value("Missing API version selector header (X-Showcase-Api-Version)"));
     }
 
     /*---------------------------*
