@@ -13,6 +13,7 @@ ext:
     run:
       # Workaround to scan deleting folder at the beginning.
       # https://gitlab.com/antora/antora-collector-extension/-/issues/10
-      command: 'mvn -f docs/pom.xml org.apache.maven.plugins:maven-antrun-plugin:run@move-additional-docs'
+      command: 'mvn -f docs/additional-tasks.pom.xml org.apache.maven.plugins:maven-antrun-plugin:run@move-additional-docs'
+
     scan:
       dir: docs/target/additional-sources

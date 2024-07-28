@@ -16,7 +16,7 @@
 
     <dependencies>
         <!-- Include source dependencies, so they can be unpacked at target and accessed by antora as additional resources
-             Also, uncomment move-additional-docs configuration.
+             Also, uncomment move-additional-docs configuration (additional-tasks.pom.xml).
              E.G.
              <dependency>
                 <groupId>com.bitsmi.springboot-showcase</groupId>
@@ -64,31 +64,6 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
-            </plugin>
-            <!-- Delete docs folder prior to copy the re-generated files -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-antrun-plugin</artifactId>
-                <!-- Additional execution as a workaround antora's collector scan task deleting folder at the beginning.
-                     https://gitlab.com/antora/antora-collector-extension/-/issues/10
-                -->
-                <executions>
-                    <execution>
-                        <id>move-additional-docs</id>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                        <configuration>
-                            <!-- TODO Uncomment when the source dependencies included -->
-                            <!--<target>
-                                <move todir="${project.build.directory}/additional-sources">
-                                    <fileset dir="${project.build.directory}/unpackaged-sources"/>
-                                    <failonerror>false</failonerror>
-                                </move>
-                            </target>-->
-                        </configuration>
-                    </execution>
-                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
