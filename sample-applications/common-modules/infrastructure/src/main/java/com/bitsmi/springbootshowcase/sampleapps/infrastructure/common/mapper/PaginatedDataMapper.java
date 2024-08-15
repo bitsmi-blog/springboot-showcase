@@ -19,7 +19,7 @@ public class PaginatedDataMapper
     public <T, R> PaginatedData<R> fromPage(Page<T> page, Function<T, R> elementMapper)
     {
         return PaginatedData.<R>builder()
-                .content(page.getContent()
+                .data(page.getContent()
                         .stream()
                         .map(elementMapper)
                         .toList()

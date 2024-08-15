@@ -6,7 +6,7 @@ import java.util.List;
 
 @Builder(toBuilder = true, builderClassName = "Builder")
 public record PaginatedData<T>(
-        List<T> content,
+        List<T> data,
         Pagination pagination,
         int pageCount,
         int totalPages,

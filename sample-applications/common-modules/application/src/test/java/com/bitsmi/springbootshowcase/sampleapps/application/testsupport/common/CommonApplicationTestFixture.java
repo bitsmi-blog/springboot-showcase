@@ -1,6 +1,12 @@
 package com.bitsmi.springbootshowcase.sampleapps.application.testsupport.common;
 
-import com.bitsmi.springbootshowcase.sampleapps.domain.testsupport.common.model.UserSummaryObjectMother;
+import com.bitsmi.springbootshowcase.sampleapps.domain.common.dto.PaginatedData;
+import com.bitsmi.springbootshowcase.sampleapps.domain.common.dto.Pagination;
+import com.bitsmi.springbootshowcase.sampleapps.domain.common.dto.Sort;
+import com.bitsmi.springbootshowcase.sampleapps.domain.common.model.User;
+import com.bitsmi.springbootshowcase.sampleapps.domain.testsupport.common.model.UserObjectMother;
+
+import java.util.List;
 
 public interface CommonApplicationTestFixture
 {
@@ -9,10 +15,38 @@ public interface CommonApplicationTestFixture
         return DefaultCommonApplicationTestFixture.INSTANCE;
     }
 
-    default void configureUserSummaryApplicationServiceMocker(UserSummaryApplicationServiceMocker mocker)
+    default void configureUserRetrievalApplicationServiceMocker(UserRetrievalApplicationServiceMocker mocker)
     {
-        mocker.whenFindUserSummaryByUsernameGivenAnyUsernameThenReturnEmpty()
-                .whenFindUserSummaryByUsernameThenReturnUserSummary(UserSummaryObjectMother.USERNAME_USER1, UserSummaryObjectMother.user1());
+        whenFindAllUsersByPaginationThenReturnPaginatedData(mocker);
+        mocker.whenFindUserByIdThenReturnInstance(UserObjectMother.AN_ADMIN_USER.id(), UserObjectMother.anAdminUser());
+        mocker.whenFindUserByIdThenReturnInstance(UserObjectMother.A_NORMAL_USER.id(), UserObjectMother.aNormalUser());
+    }
+
+    private void whenFindAllUsersByPaginationThenReturnPaginatedData(UserRetrievalApplicationServiceMocker mocker)
+    {
+        Pagination pagination = Pagination.of(0, 10, Sort.UNSORTED);
+        mocker.whenFindAllUsersByPaginationThenReturnPaginatedData(
+                pagination,
+                PaginatedData.<User>builder()
+                        .data(
+                                List.of(
+                                        UserObjectMother.anAdminUser(),
+                                        UserObjectMother.aNormalUser()
+                                )
+                        )
+                        .pagination(pagination)
+                        .pageCount(2)
+                        .totalPages(1)
+                        .totalCount(2)
+                        .totalPages(1)
+                        .build()
+        );
+    }
+
+    default void configureUserRegistryApplicationServiceMocker(UserRegistryApplicationServiceMocker mocker)
+    {
+        mocker.whenCreateUserThenReturnUser(UserObjectMother.aNonExistingUser());
+        mocker.whenUpdateUserThenReturnUser(UserObjectMother.A_NORMAL_USER.id(), UserObjectMother.aNormalUser());
     }
 
     final class DefaultCommonApplicationTestFixture implements CommonApplicationTestFixture

@@ -1,8 +1,8 @@
 package com.bitsmi.springbootshowcase.sampleapps.webmvc.web.test.config;
 
-import com.bitsmi.springbootshowcase.sampleapps.domain.common.UserQueriesDomainService;
+import com.bitsmi.springbootshowcase.sampleapps.domain.common.UserDomainRepository;
 import com.bitsmi.springbootshowcase.sampleapps.domain.testsupport.common.CommonDomainTestFixture;
-import com.bitsmi.springbootshowcase.sampleapps.domain.testsupport.common.UserQueriesDomainServiceMocker;
+import com.bitsmi.springbootshowcase.sampleapps.domain.testsupport.common.UserDomainRepositoryMocker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
@@ -11,7 +11,7 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
-@MockBean(UserQueriesDomainService.class)
+@MockBean(UserDomainRepository.class)
 public class DomainModuleMockConfig
 {
     @Bean
@@ -21,10 +21,10 @@ public class DomainModuleMockConfig
     }
 
     @Bean
-    public UserQueriesDomainServiceMocker userQueriesDomainServiceMocker(
-            UserQueriesDomainService userQueriesDomainService,
+    public UserDomainRepositoryMocker userQueriesDomainServiceMocker(
+            UserDomainRepository userDomainRepository,
             @Autowired(required = false) CommonDomainTestFixture domainCommonTestFixture
     ) {
-        return UserQueriesDomainServiceMocker.fromMockedInstance(userQueriesDomainService, domainCommonTestFixture);
+        return UserDomainRepositoryMocker.fromMockedInstance(userDomainRepository, domainCommonTestFixture);
     }
 }

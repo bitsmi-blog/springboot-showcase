@@ -87,7 +87,6 @@ public class UserEntity implements Serializable
                 .append("id", id)
                 .append("version", version)
                 .append("username", username)
-                .append("password", password)
                 .append("completeName", completeName)
                 .append("active", active)
                 .append("groups", groups)
@@ -107,6 +106,6 @@ public class UserEntity implements Serializable
     {
         return this == o
                 || o instanceof UserEntity other
-                    && Objects.equals(username, other.username);
+                && Objects.equals(username, other.username);
     }
 }

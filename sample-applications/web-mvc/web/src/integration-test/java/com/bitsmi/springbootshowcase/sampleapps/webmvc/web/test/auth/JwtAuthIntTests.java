@@ -7,7 +7,8 @@ import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.test.config.Applicati
 import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.test.config.DomainModuleMockConfig;
 import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.test.config.UserDetailsTestConfig;
 import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.testsupport.internal.ControllerIntegrationTest;
-import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.user.controller.response.UserDetailsResponse;
+import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.testsupport.user.controller.response.UserObjectMother;
+import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.user.controller.response.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.junit.jupiter.api.BeforeEach;
@@ -67,7 +68,8 @@ class JwtAuthIntTests
         final String expectedUsername = "john.doe";
         final String expectedPassword = "password.john.doe";
         final String actualToken = this.mockMvc.perform(post("/auth")
-                        .header("Authorization", "Basic " + new String(Base64.encodeBase64((expectedUsername + ":" + expectedPassword).getBytes(StandardCharsets.UTF_8), false))))
+                        .header("Authorization", "Basic " + new String(Base64.encodeBase64((expectedUsername + ":" + expectedPassword).getBytes(StandardCharsets.UTF_8), false)))
+                )
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andReturn()
@@ -86,7 +88,8 @@ class JwtAuthIntTests
     void authTest2() throws Exception
     {
         this.mockMvc.perform(post("/auth")
-                        .header("Authorization", "Basic " + new String(Base64.encodeBase64("john.doe:not_valid".getBytes(StandardCharsets.UTF_8), false))))
+                        .header("Authorization", "Basic " + new String(Base64.encodeBase64("john.doe:not_valid".getBytes(StandardCharsets.UTF_8), false)))
+                )
                 .andExpect(status().isUnauthorized());
     }
 
@@ -100,13 +103,15 @@ class JwtAuthIntTests
                 .withExpiresAt(Instant.now().plus(900_000, ChronoUnit.MILLIS))
                 .sign(Algorithm.HMAC512(jwtSecret));
 
-        final UserDetailsResponse expectedResponse = UserDetailsResponse.builder()
-                .username(expectedUsername)
-                .completeName("John Doe")
-                .build();
+        final User expectedResponse = UserObjectMother.fromModel(
+                com.bitsmi.springbootshowcase.sampleapps.domain.testsupport.common.model.UserObjectMother.anAdminUser()
+        );
 
-        this.mockMvc.perform(get("/api/user/details")
-                        .header("Authorization", "Bearer " + token))
+        this.mockMvc.perform(get("/api/user/%d".formatted(
+                               com.bitsmi.springbootshowcase.sampleapps.domain.testsupport.common.model.UserObjectMother.anAdminUser().id()
+                        ))
+                                .header("Authorization", "Bearer " + token)
+                )
                 .andExpect(status().isOk())
                 .andExpect(content().json(jsonMapper.writeValueAsString(expectedResponse)));
     }
@@ -121,8 +126,9 @@ class JwtAuthIntTests
                 .withExpiresAt(Instant.now().plus(900_000, ChronoUnit.MILLIS))
                 .sign(Algorithm.HMAC512("NOT_VALID_SECRET"));
 
-        this.mockMvc.perform(get("/api/user/details")
-                        .header("Authorization", "Bearer " + token))
+        this.mockMvc.perform(get("/api/user/1")
+                        .header("Authorization", "Bearer " + token)
+                )
                 .andExpect(status().isForbidden());
     }
 

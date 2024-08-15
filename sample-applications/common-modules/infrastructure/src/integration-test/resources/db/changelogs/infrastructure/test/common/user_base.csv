@@ -1,3 +1,3 @@
 ID;VERSION;USERNAME;PASSWORD;COMPLETE_NAME;ACTIVE;CREATION_DATE;LAST_UPDATED
-1001;1;'john.doe';'{bcrypt}$2a$10$I2NL2EwOcbl9PIhgPiF/XeVXQ.yfErH11UQemNW21LBk.iaIpa44.';'John Doe';true;'2023-01-01 00:00:00.000';'2023-01-01 00:00:00.000'
-1002;1;'admin';'{bcrypt}$2a$10$I2NL2EwOcbl9PIhgPiF/XeVXQ.yfErH11UQemNW21LBk.iaIpa44.';'Admin';true;'2023-01-01 00:00:00.000';'2023-01-01 00:00:00.000'
+1001;1;'john.admin';'{bcrypt}$2a$10$Tkgbh44XuwiFNGC/mel.h.ZTONgR2.H1N0L..Xk/JVh0.68kYga/a';'John Admin';true;'2024-01-01 00:00:00.000';'2024-01-01 00:00:00.000'
+1002;1;'jane.normal';'{bcrypt}$2a$10$NMDeWMHEFi8zpSZsMMtdYu7WlTTaZIfe5FMcp/JVBVfMig/UJjtV6';'Jane Normal';true;'2024-01-01 00:00:00.000';'2024-01-01 00:00:00.000'

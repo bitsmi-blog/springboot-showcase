@@ -1,28 +1,47 @@
 package com.bitsmi.springbootshowcase.sampleapps.webmvc.web.test.user;
 
+import com.bitsmi.springbootshowcase.sampleapps.application.testsupport.common.UserRegistryApplicationServiceMocker;
+import com.bitsmi.springbootshowcase.sampleapps.application.testsupport.common.UserRetrievalApplicationServiceMocker;
+import com.bitsmi.springbootshowcase.sampleapps.domain.common.dto.PaginatedData;
+import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.common.controller.response.PaginatedResponse;
+import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.common.controller.response.Pagination;
+import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.common.controller.response.Sort;
 import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.config.WebModuleConfig;
 import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.test.config.ApplicationModuleMockConfig;
 import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.test.config.DomainModuleMockConfig;
 import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.test.config.UserDetailsTestConfig;
 import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.testsupport.internal.ControllerIntegrationTest;
-import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.user.controller.response.UserDetailsResponse;
+import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.testsupport.user.controller.request.CreateUserRequestObjectMother;
+import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.testsupport.user.controller.request.UpdateUserRequestObjectMother;
+import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.testsupport.user.controller.response.UserObjectMother;
+import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.user.controller.request.ChangeUserPasswordRequest;
+import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.user.controller.request.CreateUserRequest;
+import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.user.controller.request.UpdateUserRequest;
+import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.user.controller.response.User;
 import com.bitsmi.springbootshowcase.utils.IgnoreOnComponentScan;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Import;
-import org.springframework.security.test.context.support.WithAnonymousUser;
+import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.security.web.FilterChainProxy;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.util.List;
+
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.testSecurityContext;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -39,6 +58,12 @@ class UserApiControllerIntTests
     @Autowired
     private ObjectMapper jsonMapper;
 
+    @Autowired
+    private UserRetrievalApplicationServiceMocker userRetrievalApplicationServiceMocker;
+
+    @Autowired
+    private UserRegistryApplicationServiceMocker userRegistryApplicationServiceMocker;
+
     private MockMvc mockMvc;
 
     @BeforeEach
@@ -50,59 +75,315 @@ class UserApiControllerIntTests
                 .build();
     }
 
-    @Test
-    @DisplayName("Get user details should return user details given a logged user")
-    void getUserDetailsTest1() throws Exception
+    @Nested
+    @DisplayName("Get users")
+    class GetUsersTests
     {
-        final UserDetailsResponse expectedResponse = UserDetailsResponse.builder()
-                .username("john.doe")
-                .completeName("John Doe")
-                .build();
+        @Test
+        @DisplayName("""
+            given existing users
+             should return paginated data
+             when no pagination provided
+            """
+        )
+        void test1() throws Exception
+        {
+            var expectedResponse = PaginatedResponse.<User>builder()
+                    .data(
+                            List.of(
+                                    UserObjectMother.fromModel(com.bitsmi.springbootshowcase.sampleapps.domain.testsupport.common.model.UserObjectMother.anAdminUser()),
+                                    UserObjectMother.fromModel(com.bitsmi.springbootshowcase.sampleapps.domain.testsupport.common.model.UserObjectMother.aNormalUser())
+                            )
+                    )
+                    .pagination(Pagination.of(0, 25, Sort.UNSORTED))
+                    .pageCount(2)
+                    .totalPages(1)
+                    .totalCount(2)
+                    .totalPages(1)
+                    .build();
+            final String expectedResponseAsString = jsonMapper.writeValueAsString(expectedResponse);
 
-        this.mockMvc.perform(get("/api/user/details")
-                    .with(testSecurityContext()))
-                .andExpect(status().isOk())
-                .andExpect(content().json(jsonMapper.writeValueAsString(expectedResponse)));
+            com.bitsmi.springbootshowcase.sampleapps.domain.common.dto.Pagination pagination = com.bitsmi.springbootshowcase.sampleapps.domain.common.dto.Pagination.of(0, 25, com.bitsmi.springbootshowcase.sampleapps.domain.common.dto.Sort.UNSORTED);
+            userRetrievalApplicationServiceMocker.whenFindAllUsersByPaginationThenReturnPaginatedData(
+                    pagination,
+                    PaginatedData.<com.bitsmi.springbootshowcase.sampleapps.domain.common.model.User>builder()
+                            .data(
+                                    List.of(
+                                            com.bitsmi.springbootshowcase.sampleapps.domain.testsupport.common.model.UserObjectMother.anAdminUser(),
+                                            com.bitsmi.springbootshowcase.sampleapps.domain.testsupport.common.model.UserObjectMother.aNormalUser()
+                                    )
+                            )
+                            .pagination(pagination)
+                            .pageCount(2)
+                            .totalPages(1)
+                            .totalCount(2)
+                            .totalPages(1)
+                            .build()
+            );
+
+            mockMvc.perform(get("/api/user")
+                            .with(testSecurityContext())
+                    )
+                    .andDo(print())
+                    .andExpect(status().isOk())
+                    .andExpect(content().json(expectedResponseAsString));
+        }
+
+        @Test
+        @DisplayName("""
+            given existing users
+             should return paginated data
+             when provided page and size
+            """
+        )
+        void test2() throws Exception
+        {
+            var expectedResponse = PaginatedResponse.<User>builder()
+                    .data(
+                            List.of(
+                                    UserObjectMother.fromModel(com.bitsmi.springbootshowcase.sampleapps.domain.testsupport.common.model.UserObjectMother.anAdminUser()),
+                                    UserObjectMother.fromModel(com.bitsmi.springbootshowcase.sampleapps.domain.testsupport.common.model.UserObjectMother.aNormalUser())
+                            )
+                    )
+                    .pagination(Pagination.of(0, 10, Sort.UNSORTED))
+                    .pageCount(2)
+                    .totalPages(1)
+                    .totalCount(2)
+                    .totalPages(1)
+                    .build();
+            final String expectedResponseAsString = jsonMapper.writeValueAsString(expectedResponse);
+
+            mockMvc.perform(get("/api/user")
+                            .queryParam("page", "0")
+                            .queryParam("pageSize", "10")
+                            .with(testSecurityContext())
+                    )
+                    .andDo(print())
+                    .andExpect(status().isOk())
+                    .andExpect(content().json(expectedResponseAsString));
+        }
     }
 
-    @Test
-    @DisplayName("Get user details should return forbidden status given a non logged user")
-    @WithAnonymousUser
-    void getUserDetailsTest2() throws Exception
+    @Nested
+    @DisplayName("Get user")
+    class GetUserTests
     {
-        this.mockMvc.perform(get("/api/user/details")
-                    .with(testSecurityContext()))
-                .andExpect(status().isForbidden());
+        @Test
+        @DisplayName("""
+            given an existing user
+             should return data
+             when its ID is provided
+            """
+        )
+        void test1() throws Exception
+        {
+            final User expectedResponse = UserObjectMother.fromModel(com.bitsmi.springbootshowcase.sampleapps.domain.testsupport.common.model.UserObjectMother.aNormalUser());
+            final String expectedResponseAsString = jsonMapper.writeValueAsString(expectedResponse);
+
+            mockMvc.perform(get("/api/user/{id}", expectedResponse.id())
+                            .with(testSecurityContext())
+                    )
+                    .andDo(print())
+                    .andExpect(status().isOk())
+                    .andExpect(content().json(expectedResponseAsString));
+        }
+
+        @Test
+        @DisplayName("""
+            should return not found
+             when an unknown ID is provided
+            """
+        )
+        void test2() throws Exception
+        {
+            mockMvc.perform(get("/api/user/{id}", 9999L)
+                            .with(testSecurityContext())
+                    )
+                    .andDo(print())
+                    .andExpect(status().isNotFound());
+        }
     }
 
-    @Test
-    @DisplayName("getAdminDetails should return admin message given a user user with admin role")
-    @WithUserDetails("admin")
-    void getAdminDetailsTest1() throws Exception
+    @Nested
+    @DisplayName("Create user")
+    class CreateUserPasswordTests
     {
-        final String username = "admin";
-        final UserDetailsResponse expectedResponse = UserDetailsResponse.builder()
-                .username(username)
-                .build();
+        @Test
+        @DisplayName("""
+            given a non existing user
+             should return created
+            """
+        )
+        void test1() throws Exception
+        {
+            final com.bitsmi.springbootshowcase.sampleapps.domain.common.model.User user = com.bitsmi.springbootshowcase.sampleapps.domain.testsupport.common.model.UserObjectMother.aNonExistingUser();
+            final User expectedResponse = UserObjectMother.fromModel(user);
+            final String expectedResponseAsString = jsonMapper.writeValueAsString(expectedResponse);
+            final CreateUserRequest request = CreateUserRequestObjectMother.fromModelWithPassword(user,"foobar");
+            final String requestAsString = jsonMapper.writeValueAsString(request);
 
-        this.mockMvc.perform(get("/api/user/admin/details")
-                        .with(testSecurityContext()))
-                .andExpect(status().isOk())
-                .andExpect(content().json(jsonMapper.writeValueAsString(expectedResponse)));
+            mockMvc.perform(post("/api/user")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(requestAsString)
+                            .with(testSecurityContext())
+                    )
+                    .andDo(print())
+                    .andExpect(status().isCreated())
+                    .andExpect(content().json(expectedResponseAsString));
+        }
+
+        @Test
+        @DisplayName("""
+            given an existing user
+             should return conflict
+            """
+        )
+        void test2() throws Exception
+        {
+            final CreateUserRequest request = CreateUserRequestObjectMother.fromModelWithPassword(
+                    com.bitsmi.springbootshowcase.sampleapps.domain.testsupport.common.model.UserObjectMother.aNonExistingUser(),
+                    "foobar"
+            );
+            final String requestAsString = jsonMapper.writeValueAsString(request);
+
+            userRegistryApplicationServiceMocker.whenCreateUserWithUsernameThenThrowElementAlreadyExistsException(
+                    com.bitsmi.springbootshowcase.sampleapps.domain.testsupport.common.model.UserObjectMother.A_NON_EXISTING_USER.username()
+            );
+
+            mockMvc.perform(post("/api/user")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(requestAsString)
+                            .with(testSecurityContext())
+                    )
+                    .andDo(print())
+                    .andExpect(status().isConflict());
+        }
     }
 
-    @Test
-    @DisplayName("getAdminDetails should return access denied error given a non admin user")
-    @WithUserDetails("john.doe")
-    void getAdminDetailsTest2() throws Exception
+    @Nested
+    @DisplayName("Update user")
+    class UpdateUserPasswordTests
     {
-        this.mockMvc.perform(get("/api/user/admin/details")
-                        .with(testSecurityContext()))
-                .andExpect(status().isForbidden());
+        @Test
+        @DisplayName("""
+            given a existing user
+             should return ok
+            """
+        )
+        void test1() throws Exception
+        {
+            final com.bitsmi.springbootshowcase.sampleapps.domain.common.model.User user = com.bitsmi.springbootshowcase.sampleapps.domain.testsupport.common.model.UserObjectMother.aNormalUser();
+            final User expectedResponse = UserObjectMother.fromModel(user);
+            final String expectedResponseAsString = jsonMapper.writeValueAsString(expectedResponse);
+            final UpdateUserRequest request = UpdateUserRequestObjectMother.fromModel(user);
+            final String requestAsString = jsonMapper.writeValueAsString(request);
+
+            mockMvc.perform(put("/api/user/{id}", user.id())
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(requestAsString)
+                            .with(testSecurityContext())
+                    )
+                    .andDo(print())
+                    .andExpect(status().isOk())
+                    .andExpect(content().json(expectedResponseAsString));
+        }
+
+        @Test
+        @DisplayName("""
+            given a non existing user
+             should return not found
+            """
+        )
+        void test2() throws Exception
+        {
+            final com.bitsmi.springbootshowcase.sampleapps.domain.common.model.User user = com.bitsmi.springbootshowcase.sampleapps.domain.testsupport.common.model.UserObjectMother.aNonExistingUser();
+            final UpdateUserRequest request = UpdateUserRequestObjectMother.fromModel(user);
+            final String requestAsString = jsonMapper.writeValueAsString(request);
+
+            userRegistryApplicationServiceMocker.whenUpdateUserWithIdThenThrowElementNotFoundExistsException(user.id());
+
+            mockMvc.perform(put("/api/user/{id}", user.id())
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(requestAsString)
+                            .with(testSecurityContext())
+                    )
+                    .andDo(print())
+                    .andExpect(status().isNotFound());
+        }
+    }
+
+    @Nested
+    @DisplayName("Change user password")
+    class ChangeUserPasswordTests
+    {
+        @Test
+        @DisplayName("""
+            given an existing user
+             should return no content
+            """
+        )
+        void test1() throws Exception
+        {
+            final ChangeUserPasswordRequest request = ChangeUserPasswordRequest.builder()
+                    .password("foobar".toCharArray())
+                    .build();
+            final String requestAsString = jsonMapper.writeValueAsString(request);
+
+            mockMvc.perform(post("/api/user/{id}/password", com.bitsmi.springbootshowcase.sampleapps.domain.testsupport.common.model.UserObjectMother.A_NORMAL_USER.id())
+                            .content(requestAsString)
+                            .with(testSecurityContext())
+                    )
+                    .andDo(print())
+                    .andExpect(status().isNoContent());
+        }
+
+        @Test
+        @DisplayName("""
+            given a non existing user
+             should return not found
+            """
+        )
+        void test2() throws Exception
+        {
+            final Long providedUserId = com.bitsmi.springbootshowcase.sampleapps.domain.testsupport.common.model.UserObjectMother.A_NON_EXISTING_USER.id();
+            final ChangeUserPasswordRequest request = ChangeUserPasswordRequest.builder()
+                    .password("foobar".toCharArray())
+                    .build();
+            final String requestAsString = jsonMapper.writeValueAsString(request);
+
+            userRegistryApplicationServiceMocker.whenChangeUserPasswordThenThrowElementNotFoundException(providedUserId);
+
+            mockMvc.perform(post("/api/user/{id}/password", providedUserId)
+                            .content(requestAsString)
+                            .with(testSecurityContext())
+                    )
+                    .andDo(print())
+                    .andExpect(status().isNotFound());
+        }
+    }
+
+    @Nested
+    @DisplayName("Delete user")
+    class DeleteUserTests
+    {
+        @Test
+        @DisplayName("""
+            should return no content
+            """
+        )
+        void test1() throws Exception
+        {
+            final Long providedUserId = com.bitsmi.springbootshowcase.sampleapps.domain.testsupport.common.model.UserObjectMother.A_NORMAL_USER.id();
+            mockMvc.perform(delete("/api/user/{id}", providedUserId)
+                            .with(testSecurityContext())
+                    )
+                    .andDo(print())
+                    .andExpect(status().isNoContent());
+        }
     }
 
     /*---------------------------*
-     * TEST CONFIG AND HELPERS
+     * CONFIG AND HELPERS
      *---------------------------*/
     @TestConfiguration
     @Import({

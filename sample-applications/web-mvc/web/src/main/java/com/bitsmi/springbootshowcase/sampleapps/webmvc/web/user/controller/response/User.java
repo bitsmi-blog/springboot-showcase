@@ -1,4 +1,4 @@
-package com.bitsmi.springbootshowcase.sampleapps.domain.common.model;
+package com.bitsmi.springbootshowcase.sampleapps.webmvc.web.user.controller.response;
 
 import lombok.Builder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -11,10 +11,9 @@ import java.util.Set;
 public record User(
         Long id,
         String username,
-        String password,
         String completeName,
         Boolean active,
-        Set<UserGroup> groups,
+        Set<String> groups,
         LocalDateTime creationDate,
         LocalDateTime lastUpdated
 )

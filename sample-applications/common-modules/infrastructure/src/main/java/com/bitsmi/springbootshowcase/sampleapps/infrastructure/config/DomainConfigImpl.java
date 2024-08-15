@@ -1,14 +1,13 @@
 package com.bitsmi.springbootshowcase.sampleapps.infrastructure.config;
 
 import com.bitsmi.springbootshowcase.sampleapps.domain.common.UserDomainFactory;
-import com.bitsmi.springbootshowcase.sampleapps.domain.common.UserQueriesDomainService;
-import com.bitsmi.springbootshowcase.sampleapps.domain.common.UserGroupDomainRepository;
 import com.bitsmi.springbootshowcase.sampleapps.domain.common.UserDomainRepository;
+import com.bitsmi.springbootshowcase.sampleapps.domain.common.UserGroupDomainRepository;
 import com.bitsmi.springbootshowcase.sampleapps.domain.common.config.DomainConfig;
 import com.bitsmi.springbootshowcase.sampleapps.infrastructure.common.config.CommonMapperDependencies;
 import com.bitsmi.springbootshowcase.sampleapps.infrastructure.common.config.CommonRepositoryDependencies;
-import com.bitsmi.springbootshowcase.sampleapps.infrastructure.common.impl.UserGroupDomainRepositoryImpl;
 import com.bitsmi.springbootshowcase.sampleapps.infrastructure.common.impl.UserDomainRepositoryImpl;
+import com.bitsmi.springbootshowcase.sampleapps.infrastructure.common.impl.UserGroupDomainRepositoryImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -29,20 +28,12 @@ public class DomainConfigImpl implements DomainConfig
 
     @Bean
     @Override
-    public UserQueriesDomainService userQueriesDomainService(UserDomainRepository userRepositoryService)
-    {
-        return userQueriesDomainServiceImpl(userRepositoryService);
-    }
-
-    @Bean
-    @Override
     public UserDomainFactory userDomainFactory(
-            UserDomainRepository userRepositoryService,
-            UserGroupDomainRepository userGroupRepositoryService,
+            UserGroupDomainRepository userGroupDomainRepository,
             PasswordEncoder passwordEncoder
     )
     {
-        return userDomainFactoryImpl(userRepositoryService, userGroupRepositoryService, passwordEncoder);
+        return userDomainFactoryImpl(userGroupDomainRepository, passwordEncoder);
     }
 
     @Bean
@@ -53,7 +44,8 @@ public class DomainConfigImpl implements DomainConfig
                 commonRepositoryDependencies.getUserRepository(),
                 commonRepositoryDependencies.getUserGroupRepository(),
                 commonMapperDependencies.getUserModelMapper(),
-                commonMapperDependencies.getUserSummaryModelMapper()
+                commonMapperDependencies.getPageRequestMapper(),
+                commonMapperDependencies.getPaginatedDataMapper()
         );
     }
 

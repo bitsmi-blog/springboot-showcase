@@ -1,24 +1,36 @@
 package com.bitsmi.springbootshowcase.sampleapps.webmvc.web.test.config;
 
-import com.bitsmi.springbootshowcase.sampleapps.application.common.UserCreationApplicationService;
-import com.bitsmi.springbootshowcase.sampleapps.application.common.UserSummaryApplicationService;
+import com.bitsmi.springbootshowcase.sampleapps.application.common.UserRegistryApplicationService;
+import com.bitsmi.springbootshowcase.sampleapps.application.common.UserRetrievalApplicationService;
 import com.bitsmi.springbootshowcase.sampleapps.application.testsupport.common.CommonApplicationTestFixture;
-import com.bitsmi.springbootshowcase.sampleapps.application.testsupport.common.UserSummaryApplicationServiceMocker;
+import com.bitsmi.springbootshowcase.sampleapps.application.testsupport.common.UserRegistryApplicationServiceMocker;
+import com.bitsmi.springbootshowcase.sampleapps.application.testsupport.common.UserRetrievalApplicationServiceMocker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@MockBean(UserSummaryApplicationService.class)
-@MockBean(UserCreationApplicationService.class)
+@MockBean(UserRetrievalApplicationService.class)
+@MockBean(UserRegistryApplicationService.class)
 public class ApplicationModuleMockConfig
 {
+    /*-----------------------------*
+     * COMMON
+     *-----------------------------*/
     @Bean
-    public UserSummaryApplicationServiceMocker userSummaryApplicationServiceMocker(
-            UserSummaryApplicationService userSummaryApplicationService,
+    public UserRetrievalApplicationServiceMocker userRetrievalApplicationServiceMocker(
+            UserRetrievalApplicationService userRetrievalApplicationService,
             @Autowired(required = false) CommonApplicationTestFixture commonApplicationTestFixture
     ) {
-        return UserSummaryApplicationServiceMocker.fromMockedInstance(userSummaryApplicationService, commonApplicationTestFixture);
+        return UserRetrievalApplicationServiceMocker.fromMockedInstance(userRetrievalApplicationService, commonApplicationTestFixture);
+    }
+
+    @Bean
+    public UserRegistryApplicationServiceMocker userRegistryApplicationServiceMocker(
+            UserRegistryApplicationService userRegistryApplicationService,
+            @Autowired(required = false) CommonApplicationTestFixture commonApplicationTestFixture
+    ) {
+        return UserRegistryApplicationServiceMocker.fromMockedInstance(userRegistryApplicationService, commonApplicationTestFixture);
     }
 }

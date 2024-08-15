@@ -1,29 +1,30 @@
 package com.bitsmi.springbootshowcase.sampleapps.application.test.config;
 
-import com.bitsmi.springbootshowcase.sampleapps.domain.common.UserDomainFactory;
-import com.bitsmi.springbootshowcase.sampleapps.domain.common.UserQueriesDomainService;
 import com.bitsmi.springbootshowcase.sampleapps.domain.common.UserDomainRepository;
-import com.bitsmi.springbootshowcase.sampleapps.domain.testsupport.common.UserQueriesDomainServiceMocker;
+import com.bitsmi.springbootshowcase.sampleapps.domain.testsupport.common.CommonDomainTestFixture;
 import com.bitsmi.springbootshowcase.sampleapps.domain.testsupport.common.UserDomainRepositoryMocker;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
-@MockBean(UserQueriesDomainService.class)
-@MockBean(UserDomainFactory.class)
 @MockBean(UserDomainRepository.class)
 public class DomainModuleMockConfig
 {
     @Bean
-    public UserQueriesDomainServiceMocker userQueriesDomainServiceMocker(UserQueriesDomainService userQueriesDomainService)
+    PasswordEncoder passwordEncoder()
     {
-        return UserQueriesDomainServiceMocker.fromMockedInstance(userQueriesDomainService);
+        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
     @Bean
-    public UserDomainRepositoryMocker userRepositoryServiceMocker(UserDomainRepository userRepositoryService)
-    {
-        return UserDomainRepositoryMocker.fromMockedInstance(userRepositoryService);
+    public UserDomainRepositoryMocker userQueriesDomainServiceMocker(
+            UserDomainRepository userDomainRepository,
+            @Autowired(required = false) CommonDomainTestFixture domainCommonTestFixture
+    ) {
+        return UserDomainRepositoryMocker.fromMockedInstance(userDomainRepository, domainCommonTestFixture);
     }
 }

@@ -2,7 +2,6 @@ package com.bitsmi.springbootshowcase.sampleapps.domain.testsupport.common;
 
 import com.bitsmi.springbootshowcase.sampleapps.domain.common.UserDomainRepository;
 import com.bitsmi.springbootshowcase.sampleapps.domain.common.model.User;
-import com.bitsmi.springbootshowcase.sampleapps.domain.common.model.UserSummary;
 import org.apache.commons.lang3.ObjectUtils;
 import org.mockito.Mockito;
 import org.springframework.test.context.event.annotation.BeforeTestExecution;
@@ -83,13 +82,6 @@ public class UserDomainRepositoryMocker
     public UserDomainRepositoryMocker whenFindUserByUsernameThenReturnUser(String userName, User result)
     {
         when(mockedRepository.findUserByUsername(userName))
-                .thenReturn(Optional.ofNullable(result));
-        return this;
-    }
-
-    public UserDomainRepositoryMocker whenFindUserSummaryByUsernameThenReturnUser(String userName, UserSummary result)
-    {
-        when(mockedRepository.findUserSummaryByUsername(userName))
                 .thenReturn(Optional.ofNullable(result));
         return this;
     }
