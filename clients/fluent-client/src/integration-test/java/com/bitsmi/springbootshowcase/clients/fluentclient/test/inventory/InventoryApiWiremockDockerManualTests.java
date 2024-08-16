@@ -76,7 +76,8 @@ public class InventoryApiWiremockDockerManualTests
                 """;
         PaginatedResponse<Category> expectedResponse = objectMapper.readValue(expectedResponseString, new TypeReference<PaginatedResponse<Category>>() { });
 
-        PaginatedResponse<Category> actualResponse = client.categories()
+        PaginatedResponse<Category> actualResponse = client.inventoryApi()
+                .categories()
                 .list()
                 .paginate(0, 10)
                 .get();
@@ -115,7 +116,8 @@ public class InventoryApiWiremockDockerManualTests
                 """;
         PaginatedResponse<Category> expectedResponse = objectMapper.readValue(expectedResponseString, new TypeReference<PaginatedResponse<Category>>() { });
 
-        PaginatedResponse<Category> actualResponse = client.categories(CategorySetSelector.id(1001L))
+        PaginatedResponse<Category> actualResponse = client.inventoryApi()
+                .categories(CategorySetSelector.id(1001L))
                 .list()
                 .paginate(0, 10)
                 .get();
@@ -147,7 +149,8 @@ public class InventoryApiWiremockDockerManualTests
                 """;
         Category expectedResponse = objectMapper.readValue(expectedResponseString, Category.class);
 
-        Category actualResponse = client.category(givenCategoryData)
+        Category actualResponse = client.inventoryApi()
+                .category(givenCategoryData)
                 .create();
 
         assertThat(actualResponse)
@@ -177,7 +180,8 @@ public class InventoryApiWiremockDockerManualTests
                 """;
         Category expectedResponse = objectMapper.readValue(expectedResponseString, Category.class);
 
-        Category actualResponse = client.category(1001L)
+        Category actualResponse = client.inventoryApi()
+                .category(1001L)
                 .update(givenCategoryData);
 
         assertThat(actualResponse)

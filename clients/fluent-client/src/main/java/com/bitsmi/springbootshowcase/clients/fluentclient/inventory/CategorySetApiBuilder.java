@@ -23,8 +23,8 @@ public class CategorySetApiBuilder
         this.selector = selector;
     }
 
-    public CategoryListOperation list()
+    public ListCategoryOperation list()
     {
-        return new CategoryListOperation(restClient, validator, selector);
+        return new ListCategoryOperation(restClient, validator, selector);
     }
 }

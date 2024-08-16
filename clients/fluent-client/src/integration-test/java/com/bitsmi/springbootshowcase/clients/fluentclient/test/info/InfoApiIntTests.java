@@ -36,7 +36,7 @@ class InfoApiIntTests
         stubFor(get("/api/info/service-version")
                 .willReturn(ok(expectedServiceVersion)));
 
-        String actualServiceVersion = client.info().serviceVersion().get();
+        String actualServiceVersion = client.infoApi().serviceVersion().get();
 
         assertThat(actualServiceVersion).isEqualTo(expectedServiceVersion);
     }

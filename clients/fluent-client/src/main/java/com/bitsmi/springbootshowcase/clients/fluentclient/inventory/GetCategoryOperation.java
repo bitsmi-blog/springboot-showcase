@@ -8,7 +8,7 @@ import java.net.URI;
 import java.util.Objects;
 import java.util.Optional;
 
-public class CategoryGetOperation
+public class GetCategoryOperation
 {
     public static final String ENDPOINT_PATH = "/api/category/{id}";
 
@@ -16,7 +16,7 @@ public class CategoryGetOperation
 
     private final Long id;
 
-    CategoryGetOperation(RestClient restClient, Long id)
+    GetCategoryOperation(RestClient restClient, Long id)
     {
         this.restClient = restClient;
         this.id = id;

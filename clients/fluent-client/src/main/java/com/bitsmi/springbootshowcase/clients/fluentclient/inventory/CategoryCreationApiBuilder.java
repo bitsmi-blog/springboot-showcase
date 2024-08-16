@@ -21,7 +21,7 @@ public class CategoryCreationApiBuilder
 
     public Category create()
     {
-        return new CategoryCreateOperation(restClient, validator, data)
+        return new CreateCategoryOperation(restClient, validator, data)
                 .create();
     }
 }

@@ -9,23 +9,20 @@ import org.springframework.web.client.RestClient;
 import org.springframework.web.util.UriBuilder;
 
 import java.net.URI;
-import java.util.Objects;
 import java.util.Set;
 
-public class CategoryUpdateOperation
+public class CreateCategoryOperation
 {
-    public static final String ENDPOINT_PATH = "/api/category/{id}";
+    public static final String ENDPOINT_PATH = "/api/category";
 
     private final RestClient restClient;
     private final Validator validator;
-    private final Long id;
     private final CategoryData data;
 
-    CategoryUpdateOperation(RestClient restClient, Validator validator, Long id, CategoryData data)
+    CreateCategoryOperation(RestClient restClient, Validator validator, CategoryData data)
     {
         this.restClient = restClient;
         this.validator = validator;
-        this.id = id;
         this.data = data;
     }
 
@@ -33,11 +30,11 @@ public class CategoryUpdateOperation
      * @throws jakarta.validation.ValidationException
      * @return {@link Category}
      */
-    public Category update()
+    public Category create()
     {
         validateRequest();
 
-        return restClient.put()
+        return restClient.post()
                 .uri(this::buildURI)
                 .body(data)
                 .retrieve()
@@ -46,8 +43,6 @@ public class CategoryUpdateOperation
 
     private void validateRequest()
     {
-        Objects.requireNonNull(id);
-
         if(validator==null) {
             return;
         }
@@ -60,6 +55,6 @@ public class CategoryUpdateOperation
 
     private URI buildURI(UriBuilder uriBuilder) {
         uriBuilder.path(ENDPOINT_PATH);
-        return uriBuilder.build(id);
+        return uriBuilder.build();
     }
 }

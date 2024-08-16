@@ -2,12 +2,8 @@ package com.bitsmi.springbootshowcase.clients.fluentclient;
 
 import com.bitsmi.springbootshowcase.clients.fluentclient.common.exception.ClientErrorServiceException;
 import com.bitsmi.springbootshowcase.clients.fluentclient.common.exception.ServerErrorServiceException;
-import com.bitsmi.springbootshowcase.clients.fluentclient.inventory.CategoryCreationApiBuilder;
-import com.bitsmi.springbootshowcase.clients.fluentclient.inventory.CategoryElementApiBuilder;
-import com.bitsmi.springbootshowcase.clients.fluentclient.inventory.CategorySetApiBuilder;
-import com.bitsmi.springbootshowcase.clients.fluentclient.inventory.request.CategoryData;
-import com.bitsmi.springbootshowcase.clients.fluentclient.inventory.request.CategorySetSelector;
 import com.bitsmi.springbootshowcase.clients.fluentclient.info.InfoApiBuilder;
+import com.bitsmi.springbootshowcase.clients.fluentclient.inventory.InventoryApiBuilder;
 import jakarta.validation.NoProviderFoundException;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
@@ -35,29 +31,14 @@ public class ServiceClient
         return new Builder();
     }
 
-    public InfoApiBuilder info()
+    public InfoApiBuilder infoApi()
     {
         return new InfoApiBuilder(restClient);
     }
 
-    public CategorySetApiBuilder categories()
+    public InventoryApiBuilder inventoryApi()
     {
-        return new CategorySetApiBuilder(restClient, validator);
-    }
-
-    public CategorySetApiBuilder categories(CategorySetSelector selector)
-    {
-        return new CategorySetApiBuilder(restClient, validator, selector);
-    }
-
-    public CategoryElementApiBuilder category(Long id)
-    {
-        return new CategoryElementApiBuilder(restClient, validator, id);
-    }
-
-    public CategoryCreationApiBuilder category(CategoryData data)
-    {
-        return new CategoryCreationApiBuilder(restClient, validator, data);
+        return new InventoryApiBuilder(restClient, validator);
     }
 
     public static class Builder

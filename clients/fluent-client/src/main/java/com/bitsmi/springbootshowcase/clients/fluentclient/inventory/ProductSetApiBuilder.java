@@ -17,6 +17,6 @@ public class ProductSetApiBuilder
 
     public PaginatedResponse<Product> list()
     {
-        return new ProductListOperation(restClient, categoryId).get();
+        return new ListProductOperation(restClient, categoryId).get();
     }
 }

@@ -82,7 +82,8 @@ class InventoryApiIntTest
                 )
         );
 
-        PaginatedResponse<Category> actualResponse = client.categories()
+        PaginatedResponse<Category> actualResponse = client.inventoryApi()
+                .categories()
                 .list()
                 .paginate(0, 10)
                 .get();
@@ -120,7 +121,8 @@ class InventoryApiIntTest
                 )
         );
 
-        PaginatedResponse<Category> actualResponse = client.categories(CategorySetSelector.id(CategoryObjectMother.ID_CATEGORY1))
+        PaginatedResponse<Category> actualResponse = client.inventoryApi()
+                .categories(CategorySetSelector.id(CategoryObjectMother.ID_CATEGORY1))
                 .list()
                 .paginate(0, 10)
                 .get();
@@ -152,7 +154,8 @@ class InventoryApiIntTest
 
         System.out.println(givenRequestJson);
 
-        Category actualResponse = client.category(givenRequest)
+        Category actualResponse = client.inventoryApi()
+                .category(givenRequest)
                 .create();
 
         assertThat(actualResponse)
@@ -180,7 +183,8 @@ class InventoryApiIntTest
                 )
         );
 
-        Category actualResponse = client.category(1001L)
+        Category actualResponse = client.inventoryApi()
+                .category(1001L)
                 .update(givenRequest);
 
         assertThat(actualResponse)

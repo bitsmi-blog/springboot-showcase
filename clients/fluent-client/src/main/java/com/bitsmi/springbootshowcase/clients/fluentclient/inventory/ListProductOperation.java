@@ -8,14 +8,14 @@ import org.springframework.web.util.UriBuilder;
 
 import java.net.URI;
 
-public class ProductListOperation
+public class ListProductOperation
 {
     public static final String ENDPOINT_PATH = "/api/category/{categoryId}/product";
 
     private final RestClient restClient;
     private final Long categoryId;
 
-    ProductListOperation(RestClient restClient, Long categoryId)
+    ListProductOperation(RestClient restClient, Long categoryId)
     {
         this.restClient = restClient;
         this.categoryId = categoryId;

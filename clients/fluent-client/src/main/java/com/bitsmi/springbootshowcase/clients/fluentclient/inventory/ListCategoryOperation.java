@@ -15,7 +15,7 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.Set;
 
-public class CategoryListOperation
+public class ListCategoryOperation
 {
     public static final String ENDPOINT_PATH = "/api/category";
 
@@ -26,14 +26,14 @@ public class CategoryListOperation
     private Integer pageNumber;
     private Integer pageSize;
 
-    CategoryListOperation(RestClient restClient, Validator validator, CategorySetSelector selector)
+    ListCategoryOperation(RestClient restClient, Validator validator, CategorySetSelector selector)
     {
         this.restClient = restClient;
         this.validator = validator;
         this.selector = selector;
     }
 
-    public CategoryListOperation paginate(int pageNumber, int pageSize)
+    public ListCategoryOperation paginate(int pageNumber, int pageSize)
     {
         this.pageNumber = pageNumber;
         this.pageSize = pageSize;
@@ -43,7 +43,7 @@ public class CategoryListOperation
     /**
      * TODO public CategoryListOperation sort()
      */
-    public CategoryListOperation sort()
+    public ListCategoryOperation sort()
     {
         return this;
     }

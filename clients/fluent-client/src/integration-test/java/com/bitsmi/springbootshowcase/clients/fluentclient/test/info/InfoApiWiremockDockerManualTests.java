@@ -29,7 +29,7 @@ public class InfoApiWiremockDockerManualTests
     {
         final String expectedServiceVersion = "SAMPLE-SERVICE-1.0.0";
 
-        String actualServiceVersion = client.info().serviceVersion().get();
+        String actualServiceVersion = client.infoApi().serviceVersion().get();
 
         assertThat(actualServiceVersion).isEqualTo(expectedServiceVersion);
     }

@@ -23,12 +23,12 @@ public class CategoryElementApiBuilder
 
     public Optional<Category> get()
     {
-        return new CategoryGetOperation(restClient, id).get();
+        return new GetCategoryOperation(restClient, id).get();
     }
 
     public Category update(CategoryData data)
     {
-        return new CategoryUpdateOperation(restClient, validator, id, data)
+        return new UpdateCategoryOperation(restClient, validator, id, data)
                 .update();
     }
 

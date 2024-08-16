@@ -44,7 +44,7 @@ class ServiceClientIntTests
         );
 
         assertThatThrownBy(() -> {
-                    client.info().serviceVersion().get();
+                    client.infoApi().serviceVersion().get();
                 })
                 .asInstanceOf(InstanceOfAssertFactories.type(ServerErrorServiceException.class))
                 .extracting(ServerErrorServiceException::getErrorCode, ServerErrorServiceException::getMessage)
@@ -63,7 +63,7 @@ class ServiceClientIntTests
         );
 
         assertThatThrownBy(() -> {
-                    client.info().serviceVersion().get();
+                    client.infoApi().serviceVersion().get();
                 })
                 .asInstanceOf(InstanceOfAssertFactories.type(ClientErrorServiceException.class))
                 .extracting(ClientErrorServiceException::getErrorCode, ClientErrorServiceException::getMessage)
