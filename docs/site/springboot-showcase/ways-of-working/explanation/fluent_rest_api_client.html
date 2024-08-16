@@ -365,7 +365,8 @@ the data to send to the server as input.</p>
 </ul>
 </div>
 <div class="paragraph">
-<p>An <code>API Builder</code> may also contain calls to other builders if it&#8217;s needed to access to a nested domain or operation API.</p>
+<p>An <code>ApiBuilder</code> can also be used to group other `ApiBuilder`s, at top level or nested domain level.
+In that case it will contain calls to other builders if it&#8217;s needed to access to a grouped / nested domain builder or operation API.</p>
 </div>
 </div>
 <div class="sect2">
@@ -406,24 +407,12 @@ or <code>sort(&#8230;&#8203;)</code> that configure the pagination parameters of
 
     /* API Builders accessors
      */
-    public InfoApiBuilder info() {
+    public InfoApiBuilder infoApi() {
         return new InfoApiBuilder(restClient);
     }
 
-    public CategorySetApiBuilder categories() {
-        return new CategorySetApiBuilder(restClient);
-    }
-
-    public CategorySetApiBuilder categories(CategorySetSelector selector) {
-        return new CategorySetApiBuilder(restClient, selector);
-    }
-
-    public CategoryElementApiBuilder category(Long id) {
-        return new CategoryElementApiBuilder(restClient, id);
-    }
-
-    public CategoryCreationApiBuilder category(CategoryData data) {
-        return new CategoryCreationApiBuilder(restClient, data);
+    public CategoryApiBuilder categoryApi() {
+        return new CategoryApiBuilder(restClient);
     }
 
     /* Builder allowing to configure the underlying client
@@ -493,7 +482,7 @@ or <code>sort(&#8230;&#8203;)</code> that configure the pagination parameters of
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">String actualServiceVersion = client.info()
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">String actualServiceVersion = client.infoApi()
 	.serviceVersion()
 	.get();</code></pre>
 </div>
@@ -502,7 +491,39 @@ or <code>sort(&#8230;&#8203;)</code> that configure the pagination parameters of
 <div class="sect2">
 <h3 id="category-api"><a class="anchor" href="#category-api"></a>Category API</h3>
 <div class="paragraph">
-<p><code>CategorySetApiBuilder</code> is a more complex example of a <code>API Builder</code> supporting parameters, allowing filtering the result set, and a configurable operation with additional intermediate methods:</p>
+<p><code>CategoryApiBuilder</code> example shows how to group nested <code>ApiBuilders</code> by domain.
+It serves as an accessor to the specific <code>ApiBuilders</code> implementing <code>Category</code> domain:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class CategoryApiBuilder {
+
+    private final RestClient restClient;
+
+    public CategoryApiBuilder(RestClient restClient) {
+        this(restClient);
+    }
+
+    public CategorySetApiBuilder categories() {
+        return new CategorySetApiBuilder(restClient);
+    }
+
+    public CategorySetApiBuilder categories(CategorySetSelector selector) {
+        return new CategorySetApiBuilder(restClient, selector);
+    }
+
+    public CategoryElementApiBuilder category(Long id) {
+        return new CategoryElementApiBuilder(restClient, id);
+    }
+
+    public CategoryCreationApiBuilder category(CategoryData data) {
+        return new CategoryCreationApiBuilder(restClient, data);
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>CategorySetApiBuilder</code> implements a complex example of a <code>API Builder</code> supporting parameters, allowing filtering the result set, and a configurable operation with additional intermediate methods:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -825,23 +846,27 @@ or <code>sort(&#8230;&#8203;)</code> that configure the pagination parameters of
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// Category list
-PaginatedResponse&lt;Category&gt; response = client.categories()
+PaginatedResponse&lt;Category&gt; response = client.categoryApi()
+        .categories()
 		.list()
 		.paginate(0, 10)
 		.get();
 
 // Product list
-PaginatedResponse&lt;Product&gt; response = client.category(1001L)
+PaginatedResponse&lt;Product&gt; response = client.categoryApi()
+        .category(1001L)
 		.products()
 		.list();
 
 CategoryData categoryData = buildCategoryData();
 // Category creation
-Category response = client.category(categoryData)
+Category response = client.categoryApi()
+        .category(categoryData)
 		.create();
 
 // Category update
-Category response = client.category(1001L)
+Category response = client.categoryApi()
+        .category(1001L)
 		.update(categoryData);</code></pre>
 </div>
 </div>

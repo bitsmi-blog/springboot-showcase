@@ -82,13 +82,14 @@ public SomeElement update(SomeElementInputData newData) {
 
 We can define several kinds of `Api Builder` classes depending on its target type:
 
-* `SetApiBuilder`: Meant to be used for operations over datasets (retrieval, batch update...). 
+* `SetApiBuilder`: Meant to be used for operations over datasets (retrieval, batch update...).
 The builder may or may not receive as input a filter / selector to limit the dataset affected.
 * `CreationApiBuilder`: Meant to be used for element creation operations targeting a specific (sub)domain. The builder will receive
 the data to send to the server as input.
 * `ElementApiBuilder`: Meant to be used for individual element data retrieval or manipulation involving a unique identifier received as input
 
-An `API Builder` may also contain calls to other builders if it's needed to access to a nested domain or operation API. 
+An `ApiBuilder` can also be used to group other `ApiBuilder`s, at top level or nested domain level.
+In that case it will contain calls to other builders if it's needed to access to a grouped / nested domain builder or operation API.
 
 === Operations
 
@@ -121,24 +122,12 @@ public class ServiceClient {
 
     /* API Builders accessors
      */
-    public InfoApiBuilder info() {
+    public InfoApiBuilder infoApi() {
         return new InfoApiBuilder(restClient);
     }
 
-    public CategorySetApiBuilder categories() {
-        return new CategorySetApiBuilder(restClient);
-    }
-
-    public CategorySetApiBuilder categories(CategorySetSelector selector) {
-        return new CategorySetApiBuilder(restClient, selector);
-    }
-
-    public CategoryElementApiBuilder category(Long id) {
-        return new CategoryElementApiBuilder(restClient, id);
-    }
-
-    public CategoryCreationApiBuilder category(CategoryData data) {
-        return new CategoryCreationApiBuilder(restClient, data);
+    public CategoryApiBuilder categoryApi() {
+        return new CategoryApiBuilder(restClient);
     }
 
     /* Builder allowing to configure the underlying client
@@ -203,14 +192,45 @@ Usage example:
 
 [source,java]
 ----
-String actualServiceVersion = client.info()
+String actualServiceVersion = client.infoApi()
 	.serviceVersion()
 	.get();
 ----
 
 === Category API
 
-`CategorySetApiBuilder` is a more complex example of a `API Builder` supporting parameters, allowing filtering the result set, and a configurable operation with additional intermediate methods:
+`CategoryApiBuilder` example shows how to group nested `ApiBuilders` by domain.
+It serves as an accessor to the specific `ApiBuilders` implementing `Category` domain:
+
+[source,java]
+----
+public class CategoryApiBuilder {
+
+    private final RestClient restClient;
+
+    public CategoryApiBuilder(RestClient restClient) {
+        this(restClient);
+    }
+
+    public CategorySetApiBuilder categories() {
+        return new CategorySetApiBuilder(restClient);
+    }
+
+    public CategorySetApiBuilder categories(CategorySetSelector selector) {
+        return new CategorySetApiBuilder(restClient, selector);
+    }
+
+    public CategoryElementApiBuilder category(Long id) {
+        return new CategoryElementApiBuilder(restClient, id);
+    }
+
+    public CategoryCreationApiBuilder category(CategoryData data) {
+        return new CategoryCreationApiBuilder(restClient, data);
+    }
+}
+----
+
+`CategorySetApiBuilder` implements a complex example of a `API Builder` supporting parameters, allowing filtering the result set, and a configurable operation with additional intermediate methods:
 
 [source,java]
 ----
@@ -531,22 +551,26 @@ Some usage examples:
 ----
 
 // Category list
-PaginatedResponse<Category> response = client.categories()
+PaginatedResponse<Category> response = client.categoryApi()
+        .categories()
 		.list()
 		.paginate(0, 10)
 		.get();
 
 // Product list
-PaginatedResponse<Product> response = client.category(1001L)
+PaginatedResponse<Product> response = client.categoryApi()
+        .category(1001L)
 		.products()
 		.list();
 
 CategoryData categoryData = buildCategoryData();
 // Category creation
-Category response = client.category(categoryData)
+Category response = client.categoryApi()
+        .category(categoryData)
 		.create();
 
 // Category update
-Category response = client.category(1001L)
+Category response = client.categoryApi()
+        .category(1001L)
 		.update(categoryData);
 ----
