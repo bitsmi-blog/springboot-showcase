@@ -6,7 +6,7 @@ import jakarta.validation.ConstraintValidatorContext;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
 
-public class ExternalIdValidator implements ConstraintValidator<ValidExternalId, String>
+public class ExternalIdStringValidator implements ConstraintValidator<ValidExternalId, String>
 {
     private final Predicate<String> MATCH_PREDICATE = Pattern.compile("^[\\w\\-.]+$").asMatchPredicate();
 

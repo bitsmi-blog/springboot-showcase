@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
 
 @Target({ ElementType.FIELD, ElementType.PARAMETER })
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = ExternalIdValidator.class)
+@Constraint(validatedBy =  { ExternalIdStringValidator.class, ExternalIdNamespacedIdValidator.class })
 public @interface ValidExternalId
 {
     String message() default "Invalid External Id";

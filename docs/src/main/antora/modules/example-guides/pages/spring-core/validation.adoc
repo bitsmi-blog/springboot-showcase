@@ -6,3 +6,4 @@
 * Custom validation annotations
 * Validation groups
 * Manual validator
+* Custom validator supporting multiple types
