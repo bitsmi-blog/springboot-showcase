@@ -4,3 +4,5 @@
 
 * Spring `@Validated` bean parameters
 * Custom validation annotations
+* Validation groups
+* Manual validator
