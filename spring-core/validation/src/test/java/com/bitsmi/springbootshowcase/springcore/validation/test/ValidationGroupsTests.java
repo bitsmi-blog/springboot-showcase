@@ -1,5 +1,6 @@
 package com.bitsmi.springbootshowcase.springcore.validation.test;
 
+import com.bitsmi.springbootshowcase.springcore.validation.application.inventory.dto.ProductDto;
 import com.bitsmi.springbootshowcase.springcore.validation.application.inventory.dto.StoreDto;
 import com.bitsmi.springbootshowcase.springcore.validation.application.util.AdditionalFieldsValidationGroup;
 import com.bitsmi.springbootshowcase.springcore.validation.application.util.MandatoryValidationGroup;
@@ -113,6 +114,21 @@ class ValidationGroupsTests {
                 .build();
 
         Set<ConstraintViolation<StoreDto>> constraintViolations = validator.validate(providedStore);
+
+        assertThat(constraintViolations)
+                .isEmpty();
+    }
+
+    @Test
+    @DisplayName("Validation should success when mandatory and optional fields are missing given Custom validation group")
+    void defaultValidationGroupTest2()
+    {
+        final ProductDto providedProduct = ProductDto.builder()
+                .externalId("product-1")
+                // Missing mandatory fields
+                .build();
+
+        Set<ConstraintViolation<ProductDto>> constraintViolations = validator.validate(providedProduct, MandatoryValidationGroup.class);
 
         assertThat(constraintViolations)
                 .isEmpty();
