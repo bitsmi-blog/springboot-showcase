@@ -1,34 +1,39 @@
 package com.bitsmi.springbootshowcase.sampleapps.webmvc.web.user.controller.request;
 
-import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import java.util.Objects;
+import java.util.Set;
 import lombok.Builder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 @Builder(toBuilder = true, builderClassName = "Builder")
-public record CreateUserRequest(
-        @NotNull @Valid NewUserData data
+public record ModifyUserData(
+    @NotNull String username,
+    @NotNull String completeName,
+    Set<@NotEmpty String> groups
 ) {
     @Override
     public String toString()
     {
         return new ToStringBuilder(this)
-                .append("data", data)
-                .build();
+            .append("username", username)
+            .append("completeName", completeName)
+            .append("groups", groups)
+            .build();
     }
 
     @Override
     public int hashCode()
     {
-        return Objects.hash(data);
+        return Objects.hash(username);
     }
 
     @Override
     public boolean equals(Object o)
     {
         return this == o
-                || o instanceof CreateUserRequest other
-                && Objects.equals(data, other.data);
+            || o instanceof ModifyUserData other
+            && Objects.equals(username, other.username);
     }
 }

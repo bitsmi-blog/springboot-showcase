@@ -100,10 +100,10 @@ public class UserApiController
     {
         try {
             com.bitsmi.springbootshowcase.sampleapps.domain.common.model.User createdUser = userRegistryApplicationService.createUser(
-                    request.username(),
-                    request.password(),
-                    request.completeName(),
-                    request.groups()
+                    request.data().username(),
+                    request.data().password(),
+                    request.data().completeName(),
+                    request.data().groups()
             );
 
             return userApiMapper.mapResponseFromModel(createdUser);
@@ -130,9 +130,9 @@ public class UserApiController
         try {
             com.bitsmi.springbootshowcase.sampleapps.domain.common.model.User updatedUser = userRegistryApplicationService.updateUser(
                     id,
-                    request.username(),
-                    request.completeName(),
-                    request.groups()
+                    request.data().username(),
+                    request.data().completeName(),
+                    request.data().groups()
             );
 
             return userApiMapper.mapResponseFromModel(updatedUser);

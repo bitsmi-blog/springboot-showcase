@@ -111,8 +111,6 @@ The content of this response is located in `api/inventory/get_list_body.json` fi
 }
 ----
 
-==== Response configuration
-
 === Wiremock Admin API
 
 Once the service is started, we can manage expectations using Wiremock's Admin API as follows:

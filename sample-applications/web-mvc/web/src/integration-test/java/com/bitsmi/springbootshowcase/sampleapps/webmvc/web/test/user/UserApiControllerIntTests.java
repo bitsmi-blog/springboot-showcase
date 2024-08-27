@@ -1,5 +1,14 @@
 package com.bitsmi.springbootshowcase.sampleapps.webmvc.web.test.user;
 
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.testSecurityContext;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import com.bitsmi.springbootshowcase.sampleapps.application.testsupport.common.UserRegistryApplicationServiceMocker;
 import com.bitsmi.springbootshowcase.sampleapps.application.testsupport.common.UserRetrievalApplicationServiceMocker;
 import com.bitsmi.springbootshowcase.sampleapps.domain.common.dto.PaginatedData;
@@ -20,6 +29,7 @@ import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.user.controller.reque
 import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.user.controller.response.User;
 import com.bitsmi.springbootshowcase.utils.IgnoreOnComponentScan;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -33,17 +43,6 @@ import org.springframework.security.web.FilterChainProxy;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-
-import java.util.List;
-
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.testSecurityContext;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ControllerIntegrationTest
 @WithUserDetails("john.doe")
@@ -206,7 +205,7 @@ class UserApiControllerIntTests
 
     @Nested
     @DisplayName("Create user")
-    class CreateUserPasswordTests
+    class CreateUserTests
     {
         @Test
         @DisplayName("""
@@ -262,7 +261,7 @@ class UserApiControllerIntTests
 
     @Nested
     @DisplayName("Update user")
-    class UpdateUserPasswordTests
+    class UpdateUserTests
     {
         @Test
         @DisplayName("""

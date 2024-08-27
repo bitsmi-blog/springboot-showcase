@@ -1,5 +1,6 @@
 package com.bitsmi.springbootshowcase.sampleapps.webmvc.web.user.controller.request;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
@@ -10,24 +11,20 @@ import java.util.Set;
 
 @Builder(toBuilder = true, builderClassName = "Builder")
 public record UpdateUserRequest(
-        @NotNull String username,
-        @NotNull String completeName,
-        Set<@NotEmpty String> groups
+        @NotNull @Valid ModifyUserData data
 ) {
     @Override
     public String toString()
     {
         return new ToStringBuilder(this)
-                .append("username", username)
-                .append("completeName", completeName)
-                .append("groups", groups)
+                .append("data", data)
                 .build();
     }
 
     @Override
     public int hashCode()
     {
-        return Objects.hash(username);
+        return Objects.hash(data);
     }
 
     @Override
@@ -35,6 +32,6 @@ public record UpdateUserRequest(
     {
         return this == o
                 || o instanceof UpdateUserRequest other
-                && Objects.equals(username, other.username);
+                && Objects.equals(data, other.data);
     }
 }
