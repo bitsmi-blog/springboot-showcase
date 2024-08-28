@@ -2,15 +2,16 @@ package com.bitsmi.springbootshowcase.sampleapps.webmvc.web.testsupport.user.con
 
 import com.bitsmi.springbootshowcase.sampleapps.domain.common.model.User;
 import com.bitsmi.springbootshowcase.sampleapps.domain.common.model.UserGroup;
-import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.user.controller.request.ModifyUserData;
+import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.user.controller.request.ModifiedUserData;
+
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public final class ModifyUserDataObjectMother
+public final class ModifiedUserDataObjectMother
 {
-    private ModifyUserDataObjectMother() { }
+    private ModifiedUserDataObjectMother() { }
 
-    public static ModifyUserData fromModel(User user)
+    public static ModifiedUserData fromModel(User user)
     {
         return builder()
             .fromModel(user)
@@ -24,7 +25,7 @@ public final class ModifyUserDataObjectMother
 
     public static final class Builder
     {
-        private final ModifyUserData.Builder delegate = ModifyUserData.builder();
+        private final ModifiedUserData.Builder delegate = ModifiedUserData.builder();
 
         public Builder fromModel(User user)
         {
@@ -57,7 +58,7 @@ public final class ModifyUserDataObjectMother
             return this;
         }
 
-        public ModifyUserData build()
+        public ModifiedUserData build()
         {
             return delegate.build();
         }

@@ -8,7 +8,7 @@ import lombok.Builder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 @Builder(toBuilder = true, builderClassName = "Builder")
-public record ModifyUserData(
+public record ModifiedUserData(
     @NotNull String username,
     @NotNull String completeName,
     Set<@NotEmpty String> groups
@@ -33,7 +33,7 @@ public record ModifyUserData(
     public boolean equals(Object o)
     {
         return this == o
-            || o instanceof ModifyUserData other
+            || o instanceof ModifiedUserData other
             && Objects.equals(username, other.username);
     }
 }
