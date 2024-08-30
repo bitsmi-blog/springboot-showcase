@@ -31,7 +31,7 @@ public class InventoryApiBuilder
         return new CategoryElementApiBuilder(restClient, validator, id);
     }
 
-    public CategoryCreationApiBuilder category(CategoryData data)
+    public CategoryCreationApiBuilder newCategory(CategoryData data)
     {
         return new CategoryCreationApiBuilder(restClient, validator, data);
     }

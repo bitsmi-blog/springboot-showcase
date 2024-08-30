@@ -7,29 +7,25 @@ import org.springframework.web.client.RestClient;
 
 import java.util.Optional;
 
-public class CategoryElementApiBuilder
-{
+public class CategoryElementApiBuilder {
     private final RestClient restClient;
     private final Validator validator;
 
     private final Long id;
 
-    public CategoryElementApiBuilder(RestClient restClient, Validator validator, Long id)
-    {
+    public CategoryElementApiBuilder(RestClient restClient, Validator validator, Long id) {
         this.restClient = restClient;
         this.validator = validator;
         this.id = id;
     }
 
-    public Optional<Category> get()
-    {
+    public Optional<Category> get() {
         return new GetCategoryOperation(restClient, id).get();
     }
 
-    public Category update(CategoryData data)
-    {
+    public Category update(CategoryData data) {
         return new UpdateCategoryOperation(restClient, validator, id, data)
-                .update();
+                .execute();
     }
 
     /* Provide access to "product" subdomain API Builder. Parameters

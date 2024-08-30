@@ -1,6 +1,7 @@
 package com.bitsmi.springbootshowcase.clients.fluentclient.inventory;
 
 import com.bitsmi.springbootshowcase.clients.fluentclient.inventory.request.CategoryData;
+import com.bitsmi.springbootshowcase.clients.fluentclient.inventory.request.UpdateCategoryRequest;
 import com.bitsmi.springbootshowcase.clients.fluentclient.inventory.response.Category;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
@@ -12,8 +13,8 @@ import java.net.URI;
 import java.util.Objects;
 import java.util.Set;
 
-public class UpdateCategoryOperation
-{
+public class UpdateCategoryOperation {
+
     public static final String ENDPOINT_PATH = "/api/category/{id}";
 
     private final RestClient restClient;
@@ -21,8 +22,7 @@ public class UpdateCategoryOperation
     private final Long id;
     private final CategoryData data;
 
-    UpdateCategoryOperation(RestClient restClient, Validator validator, Long id, CategoryData data)
-    {
+    UpdateCategoryOperation(RestClient restClient, Validator validator, Long id, CategoryData data) {
         this.restClient = restClient;
         this.validator = validator;
         this.id = id;
@@ -33,26 +33,28 @@ public class UpdateCategoryOperation
      * @throws jakarta.validation.ValidationException
      * @return {@link Category}
      */
-    public Category update()
-    {
-        validateRequest();
+    public Category execute() {
+        UpdateCategoryRequest request = UpdateCategoryRequest.builder()
+                .data(data)
+                .build();
+
+        validateRequest(request);
 
         return restClient.put()
                 .uri(this::buildURI)
-                .body(data)
+                .body(request)
                 .retrieve()
                 .body(Category.class);
     }
 
-    private void validateRequest()
-    {
+    private void validateRequest(UpdateCategoryRequest request) {
         Objects.requireNonNull(id);
 
         if(validator==null) {
             return;
         }
 
-        Set<ConstraintViolation<CategoryData>> violations = validator.validate(data);
+        Set<ConstraintViolation<UpdateCategoryRequest>> violations = validator.validate(request);
         if(!violations.isEmpty()) {
             throw new ConstraintViolationException(violations);
         }

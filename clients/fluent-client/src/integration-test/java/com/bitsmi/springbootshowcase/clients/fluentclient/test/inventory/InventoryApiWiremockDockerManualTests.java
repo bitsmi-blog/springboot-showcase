@@ -150,7 +150,7 @@ public class InventoryApiWiremockDockerManualTests
         Category expectedResponse = objectMapper.readValue(expectedResponseString, Category.class);
 
         Category actualResponse = client.inventoryApi()
-                .category(givenCategoryData)
+                .newCategory(givenCategoryData)
                 .create();
 
         assertThat(actualResponse)

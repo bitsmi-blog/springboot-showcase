@@ -75,7 +75,7 @@ returning the resulting data directly (if any). E.G.
 . . .
 public SomeElement update(SomeElementInputData newData) {
 	// Create update operation using required arguments and execute it directly
-	return new UpdateOperation(. . .).update(newData);
+	return new UpdateOperation(..., newData).update();
 }
 . . .
 ----
@@ -94,7 +94,8 @@ In that case it will contain calls to other builders if it's needed to access to
 === Operations
 
 `Operations` are the final operators of the API in charge of execute the final call to the remote service using de underlying configured client. 
-They define a method in charge of executing the operation along others intermediate methods meant to add or modify the data
+They define a method in charge of executing the operation (E.G. `get()` for data retrieving, `execute()` for modifying data,
+`submit()` for async data submission...) along others intermediate methods meant to add or modify the data
 or behaviour of this execution. For example, a dataset retrieval operation may define intermediate methods like `paginate(...)` 
 or `sort(...)` that configure the pagination parameters of the request.
 
@@ -234,8 +235,7 @@ public class CategoryApiBuilder {
 
 [source,java]
 ----
-public class CategorySetApiBuilder
-{
+public class CategorySetApiBuilder {
     private final RestClient restClient;
     // Selector parameter received from Client that will be passed to downstream operations
     private final CategorySetSelector selector;
@@ -259,8 +259,7 @@ public class CategorySetApiBuilder
 
 [source,java]
 ----
-public class CategoryListOperation
-{
+public class CategoryListOperation {
     public static final String ENDPOINT_PATH = "/api/category";
 
     private final RestClient restClient;
@@ -268,8 +267,7 @@ public class CategoryListOperation
     private Integer pageNumber;
     private Integer pageSize;
 
-    CategoryListOperation(RestClient restClient, CategorySetSelector selector)
-    {
+    CategoryListOperation(RestClient restClient, CategorySetSelector selector) {
         this.restClient = restClient;
         this.selector = selector;
     }
@@ -333,12 +331,12 @@ public class CategoryElementApiBuilder {
 
     public Category update(CategoryData data) {
         return new CategoryUpdateOperation(restClient, id, data)
-                .update();
+                .execute();
     }
 
     public void delete() {
         return new CategoryDeleteOperation(restClient, id)
-                .delete();
+                .execute();
     }
 
     /* Provide access to "product" subdomain API Builder. Parameters
@@ -366,8 +364,7 @@ public class CategoryGetOperation {
         this.id = id;
     }
 
-    public Optional<Category> get()
-    {
+    public Optional<Category> get() {
     	return Optional.ofNullable(
             restClient.get()
                 .uri(this::buildURI)
@@ -398,8 +395,7 @@ public class CategoryUpdateOperation {
         this.data = data;
     }
 
-    public Category update()
-    {
+    public Category execute() {
         return restClient.put()
                 .uri(this::buildURI)
                 .body(data)
@@ -416,21 +412,18 @@ public class CategoryUpdateOperation {
 
 [source,java]
 ----
-public class CategoryDeleteOperation
-{
+public class CategoryDeleteOperation {
     public static final String ENDPOINT_PATH = "/api/category/{id}";
 
     private final RestClient restClient;
     private final Long id;
 
-    CategoryDeleteOperation(RestClient restClient, Long id)
-    {
+    CategoryDeleteOperation(RestClient restClient, Long id) {
         this.restClient = restClient;
         this.id = id;
     }
 
-    public void delete()
-    {
+    public void execute() {
         return restClient.delete()
                 .uri(this::buildURI)
                 .retrieve()
@@ -501,14 +494,12 @@ public class CategoryCreationApiBuilder {
     private final RestClient restClient;
     private final CategoryData data;
 
-    public CategoryCreationApiBuilder(RestClient restClient, CategoryData data)
-    {
+    public CategoryCreationApiBuilder(RestClient restClient, CategoryData data) {
         this.restClient = restClient;
         this.data = data;
     }
 
-    public Category create()
-    {
+    public Category create() {
         return new CategoryCreateOperation(restClient, data)
                 .create();
     }
@@ -529,8 +520,7 @@ public class CategoryCreateOperation {
         this.data = data;
     }
 
-    public Category create()
-    {
+    public Category execute() {
         return restClient.post()
                 .uri(this::buildURI)
                 .body(data)

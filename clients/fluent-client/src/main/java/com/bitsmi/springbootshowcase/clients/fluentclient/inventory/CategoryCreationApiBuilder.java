@@ -5,23 +5,21 @@ import com.bitsmi.springbootshowcase.clients.fluentclient.inventory.response.Cat
 import jakarta.validation.Validator;
 import org.springframework.web.client.RestClient;
 
-public class CategoryCreationApiBuilder
-{
+public class CategoryCreationApiBuilder {
+
     private final RestClient restClient;
     private final Validator validator;
 
     private final CategoryData data;
 
-    public CategoryCreationApiBuilder(RestClient restClient, Validator validator, CategoryData data)
-    {
+    public CategoryCreationApiBuilder(RestClient restClient, Validator validator, CategoryData data) {
         this.restClient = restClient;
         this.validator = validator;
         this.data = data;
     }
 
-    public Category create()
-    {
+    public Category create() {
         return new CreateCategoryOperation(restClient, validator, data)
-                .create();
+                .execute();
     }
 }

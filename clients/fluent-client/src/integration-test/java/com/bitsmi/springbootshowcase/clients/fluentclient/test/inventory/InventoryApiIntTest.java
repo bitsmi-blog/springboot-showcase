@@ -4,10 +4,12 @@ import com.bitsmi.springbootshowcase.clients.fluentclient.ServiceClient;
 import com.bitsmi.springbootshowcase.clients.fluentclient.common.response.PaginatedResponse;
 import com.bitsmi.springbootshowcase.clients.fluentclient.common.response.Pagination;
 import com.bitsmi.springbootshowcase.clients.fluentclient.common.response.Sort;
-import com.bitsmi.springbootshowcase.clients.fluentclient.inventory.request.CategoryData;
 import com.bitsmi.springbootshowcase.clients.fluentclient.inventory.request.CategorySetSelector;
+import com.bitsmi.springbootshowcase.clients.fluentclient.inventory.request.NewCategoryRequest;
+import com.bitsmi.springbootshowcase.clients.fluentclient.inventory.request.UpdateCategoryRequest;
 import com.bitsmi.springbootshowcase.clients.fluentclient.inventory.response.Category;
-import com.bitsmi.springbootshowcase.clients.fluentclient.testsupport.inventory.request.CategoryDataObjectMother;
+import com.bitsmi.springbootshowcase.clients.fluentclient.testsupport.inventory.request.NewCategoryRequestObjectMother;
+import com.bitsmi.springbootshowcase.clients.fluentclient.testsupport.inventory.request.UpdateCategoryRequestObjectMother;
 import com.bitsmi.springbootshowcase.clients.fluentclient.testsupport.inventory.response.CategoryObjectMother;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -139,12 +141,12 @@ class InventoryApiIntTest
     @DisplayName("Category create operation should return created Category json")
     void createCategoryTest1() throws JsonProcessingException
     {
-        final CategoryData givenRequest = CategoryDataObjectMother.category1();
-        final String givenRequestJson = objectMapper.writeValueAsString(givenRequest);
+        final NewCategoryRequest providedRequest = NewCategoryRequestObjectMother.aCategory1CreateRequest();
+        final String providedRequestJson = objectMapper.writeValueAsString(providedRequest);
         final Category expectedResponse = CategoryObjectMother.category1();
 
         stubFor(post(urlPathEqualTo("/api/category"))
-                .withRequestBody(equalToJson(givenRequestJson))
+                .withRequestBody(equalToJson(providedRequestJson))
                 .willReturn(aResponse()
                         .withStatus(201)
                         .withHeader("Content-Type", "application/json")
@@ -152,10 +154,10 @@ class InventoryApiIntTest
                 )
         );
 
-        System.out.println(givenRequestJson);
+        System.out.println(providedRequestJson);
 
         Category actualResponse = client.inventoryApi()
-                .category(givenRequest)
+                .newCategory(providedRequest.data())
                 .create();
 
         assertThat(actualResponse)
@@ -170,12 +172,12 @@ class InventoryApiIntTest
     @DisplayName("Category update operation should return updated Category json")
     void updateCategoryTest1() throws JsonProcessingException
     {
-        final CategoryData givenRequest = CategoryDataObjectMother.category1();
-        final String givenRequestJson = objectMapper.writeValueAsString(givenRequest);
+        final UpdateCategoryRequest providedRequest = UpdateCategoryRequestObjectMother.aCategory1UpdateRequest();
+        final String providedRequestJson = objectMapper.writeValueAsString(providedRequest);
         final Category expectedResponse = CategoryObjectMother.category1();
 
         stubFor(put(urlPathEqualTo("/api/category/1001"))
-                .withRequestBody(equalToJson(givenRequestJson))
+                .withRequestBody(equalToJson(providedRequestJson))
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withHeader("Content-Type", "application/json")
@@ -185,7 +187,7 @@ class InventoryApiIntTest
 
         Category actualResponse = client.inventoryApi()
                 .category(1001L)
-                .update(givenRequest);
+                .update(providedRequest.data());
 
         assertThat(actualResponse)
                 .usingRecursiveComparison()

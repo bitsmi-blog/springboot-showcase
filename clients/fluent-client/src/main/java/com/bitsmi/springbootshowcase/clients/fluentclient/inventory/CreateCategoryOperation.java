@@ -1,6 +1,7 @@
 package com.bitsmi.springbootshowcase.clients.fluentclient.inventory;
 
 import com.bitsmi.springbootshowcase.clients.fluentclient.inventory.request.CategoryData;
+import com.bitsmi.springbootshowcase.clients.fluentclient.inventory.request.NewCategoryRequest;
 import com.bitsmi.springbootshowcase.clients.fluentclient.inventory.response.Category;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
@@ -30,24 +31,28 @@ public class CreateCategoryOperation
      * @throws jakarta.validation.ValidationException
      * @return {@link Category}
      */
-    public Category create()
+    public Category execute()
     {
-        validateRequest();
+        NewCategoryRequest request = NewCategoryRequest.builder()
+                .data(data)
+                .build();
+
+        validateRequest(request);
 
         return restClient.post()
                 .uri(this::buildURI)
-                .body(data)
+                .body(request)
                 .retrieve()
                 .body(Category.class);
     }
 
-    private void validateRequest()
+    private void validateRequest(NewCategoryRequest request)
     {
         if(validator==null) {
             return;
         }
 
-        Set<ConstraintViolation<CategoryData>> violations = validator.validate(data);
+        Set<ConstraintViolation<NewCategoryRequest>> violations = validator.validate(request);
         if(!violations.isEmpty()) {
             throw new ConstraintViolationException(violations);
         }
