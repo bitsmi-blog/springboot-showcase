@@ -14,21 +14,18 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class UserDomainFactoryImpl implements UserDomainFactory
-{
+public class UserDomainFactoryImpl implements UserDomainFactory {
+
     private final UserGroupDomainRepository userGroupDomainRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public UserDomainFactoryImpl(UserGroupDomainRepository userGroupDomainRepository,
-                                 PasswordEncoder passwordEncoder)
-    {
+    public UserDomainFactoryImpl(UserGroupDomainRepository userGroupDomainRepository, PasswordEncoder passwordEncoder) {
         this.userGroupDomainRepository = userGroupDomainRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
     @Override
-    public User createUser(String username, char[] password, String completeName, Set<String> groupNames)
-    {
+    public User createUser(String username, char[] password, String completeName, Set<String> groupNames) {
         Set<UserGroup> groups = new HashSet<>();
         List<String> missingGroups = new ArrayList<>();
         groupNames.forEach(groupName -> {
@@ -39,15 +36,15 @@ public class UserDomainFactoryImpl implements UserDomainFactory
                     );
         });
 
-        if(!missingGroups.isEmpty()) {
+        if (!missingGroups.isEmpty()) {
             throw new ElementNotFoundException(
                     UserGroup.class.getName(),
-                    "The following user groups doesn't exists: %s".formatted(String.join(", ", missingGroups))
+                    String.join(", ", missingGroups)
             );
         }
 
         // Ensure USER group
-        if(!groupNames.contains(UserConstants.USER_GROUP_USER)) {
+        if (!groupNames.contains(UserConstants.USER_GROUP_USER)) {
             groups.add(userGroupDomainRepository.findUserGroupByName(UserConstants.USER_GROUP_USER).get());
         }
 
@@ -61,8 +58,7 @@ public class UserDomainFactoryImpl implements UserDomainFactory
     }
 
     @Override
-    public User createAdminUser(String username, char[] password)
-    {
+    public User createAdminUser(String username, char[] password) {
         Set<UserGroup> groups = Set.of(
                 userGroupDomainRepository.findUserGroupByName(UserConstants.USER_GROUP_USER).get(),
                 userGroupDomainRepository.findUserGroupByName(UserConstants.USER_GROUP_ADMIN).get()
@@ -78,8 +74,7 @@ public class UserDomainFactoryImpl implements UserDomainFactory
     }
 
     @Override
-    public User updatedUser(User userToUpdate, String username, String completeName, Set<String> groupNames)
-    {
+    public User updatedUser(User userToUpdate, String username, String completeName, Set<String> groupNames) {
         Set<UserGroup> groups = new HashSet<>();
         List<String> missingGroups = new ArrayList<>();
         groupNames.forEach(groupName -> {
@@ -93,12 +88,12 @@ public class UserDomainFactoryImpl implements UserDomainFactory
         if(!missingGroups.isEmpty()) {
             throw new ElementNotFoundException(
                     UserGroup.class.getName(),
-                    "The following user groups doesn't exists: %s".formatted(String.join(", ", missingGroups))
+                    String.join(", ", missingGroups)
             );
         }
 
         // Ensure USER group
-        if(!groupNames.contains(UserConstants.USER_GROUP_USER)) {
+        if (!groupNames.contains(UserConstants.USER_GROUP_USER)) {
             groups.add(userGroupDomainRepository.findUserGroupByName(UserConstants.USER_GROUP_USER).get());
         }
 
@@ -110,8 +105,7 @@ public class UserDomainFactoryImpl implements UserDomainFactory
     }
 
     @Override
-    public String encodePassword(char[] password)
-    {
+    public String encodePassword(char[] password) {
         return passwordEncoder.encode(CharBuffer.wrap(password));
     }
 }
