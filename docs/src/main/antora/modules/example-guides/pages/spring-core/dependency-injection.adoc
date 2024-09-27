@@ -8,6 +8,7 @@
 * xref:prototype-scoped-beans[Parameterized prototype bean factories]
 * xref:multiple-optional-beans[Profile dependant beans]
 * xref:multiple-optional-beans[Use Spring profiles in tests]
+* xref:factory-bean[Factory bean]
 * Test soft assertions using **AssertJ** library
 
 == Relevant code in this example
@@ -94,6 +95,26 @@ Shows how to retrieve prototype beans using:
 ** The injection of an `ObjectProvider`
 ** Using `ApplicationContext.getBean()` method
 ** Through a xref:parameterized-service-prototype-factory[custom factory class]
+
+[id=factory-bean]
+=== FactoryBean
+
+* `factorybean.config.FactoryBeanConfig`
++
+Configuration of the `FactoryBean`
+
+* `factorybean.service.impl.ComplexServiceFactoryBean`
++
+`FactoryBean` implementation that creates sample service instances
+
+* `factorybean.service.ComplexService` and `factorybean.service.impl.ComplexServiceImpl`
++
+Sample service definition and implementation. It has dependencies and configuration value methods
+that can be specified by the factory at creation time
+
+* `test.factorybean.service.ComplexServiceFactoryBeanTests`
++
+Shows how to retrieve service instances using `@Autowired` fields and `ApplicationContext::getBean` method
 
 == Related documentation
 

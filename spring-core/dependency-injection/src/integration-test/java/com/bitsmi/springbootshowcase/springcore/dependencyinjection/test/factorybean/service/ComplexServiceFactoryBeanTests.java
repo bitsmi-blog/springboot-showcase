@@ -45,8 +45,9 @@ class ComplexServiceFactoryBeanTests {
     @Test
     @DisplayName("getBean should allow retrieve bean and factory bean instances")
     void complexServiceFactoryBeanTest2() throws Exception {
-        // It is needed to add a '&' to the bean name to retrieve factory instance
+        // It is needed to add a '&' to the bean name to retrieve factory instance and then the bean instance through the getObjectMethod
         ComplexService localService1 = ((ComplexServiceFactoryBean) context.getBean("&complexService")).getObject();
+        // And use the bean name directly to retrieve the bean instance
         ComplexService localService2 = (ComplexService) context.getBean("complexService");
 
         assertThat(localService1).isSameAs(localService2);
