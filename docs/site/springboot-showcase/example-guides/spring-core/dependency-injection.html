@@ -248,6 +248,9 @@
 <p><a href="#multiple-optional-beans">Use Spring profiles in tests</a></p>
 </li>
 <li>
+<p><a href="#factory-bean">Factory bean</a></p>
+</li>
+<li>
 <p>Test soft assertions using <strong>AssertJ</strong> library</p>
 </li>
 </ul>
@@ -411,6 +414,38 @@ parameterized instances of a <strong>prototype bean</strong> defined in a <stron
 <p>Through a <a href="#parameterized-service-prototype-factory">custom factory class</a></p>
 </li>
 </ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="factory-bean"><a class="anchor" href="#factory-bean"></a>FactoryBean</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><code>factorybean.config.FactoryBeanConfig</code></p>
+<div class="paragraph">
+<p>Configuration of the <code>FactoryBean</code></p>
+</div>
+</li>
+<li>
+<p><code>factorybean.service.impl.ComplexServiceFactoryBean</code></p>
+<div class="paragraph">
+<p><code>FactoryBean</code> implementation that creates sample service instances</p>
+</div>
+</li>
+<li>
+<p><code>factorybean.service.ComplexService</code> and <code>factorybean.service.impl.ComplexServiceImpl</code></p>
+<div class="paragraph">
+<p>Sample service definition and implementation. It has dependencies and configuration value methods
+that can be specified by the factory at creation time</p>
+</div>
+</li>
+<li>
+<p><code>test.factorybean.service.ComplexServiceFactoryBeanTests</code></p>
+<div class="paragraph">
+<p>Shows how to retrieve service instances using <code>@Autowired</code> fields and <code>ApplicationContext::getBean</code> method</p>
 </div>
 </li>
 </ul>
