@@ -3,8 +3,7 @@ package com.bitsmi.springbootshowcase.springcore.validation.application.inventor
 import com.bitsmi.springbootshowcase.springcore.validation.application.inventory.InventoryService;
 import com.bitsmi.springbootshowcase.springcore.validation.application.inventory.dto.ProductDto;
 import com.bitsmi.springbootshowcase.springcore.validation.application.inventory.dto.StoreDto;
-import com.bitsmi.springbootshowcase.springcore.validation.application.util.FullValidationGroup;
-import com.bitsmi.springbootshowcase.springcore.validation.application.util.MandatoryValidationGroup;
+import com.bitsmi.springbootshowcase.springcore.validation.application.util.ValidationGroups;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.stereotype.Service;
@@ -20,13 +19,13 @@ public class InventoryServiceImpl implements InventoryService
     }
 
     @Override
-    @Validated({ MandatoryValidationGroup.class })
+    @Validated({ ValidationGroups.ValidateMandatory.class })
     public boolean createStoreWithMandatoryData(@NotNull @Valid StoreDto storeDto) {
         return true;
     }
 
     @Override
-    @Validated({ FullValidationGroup.class })
+    @Validated({ ValidationGroups.FullValidation.class })
     public boolean createStoreWithFullData(@NotNull @Valid StoreDto storeDto) {
         return true;
     }

@@ -1,8 +1,7 @@
 package com.bitsmi.springbootshowcase.springcore.validation.application.inventory.dto;
 
-import com.bitsmi.springbootshowcase.springcore.validation.application.util.AdditionalFieldsValidationGroup;
-import com.bitsmi.springbootshowcase.springcore.validation.application.util.MandatoryValidationGroup;
-import com.bitsmi.springbootshowcase.springcore.validation.application.util.OptionalValidationGroup;
+import com.bitsmi.springbootshowcase.springcore.validation.application.util.ValidationGroups;
+import com.bitsmi.springbootshowcase.springcore.validation.application.util.ValidationGroups.ValidateAdditionalFields;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 
@@ -10,12 +9,14 @@ import java.util.Objects;
 
 @Builder(toBuilder = true, builderClassName = "Builder")
 public record StoreDto(
-        @NotNull(groups = { MandatoryValidationGroup.class }, message = "ExternalId must not be null")
+        @NotNull(message = "ExternalId must not be null")
         String externalId,
-        @NotNull(groups = { MandatoryValidationGroup.class }, message = "Name must not be null")
+        @NotNull(message = "Name must not be null")
         String name,
-        @NotNull(groups = { OptionalValidationGroup.class, AdditionalFieldsValidationGroup.class}, message = "Address must not be null")
-        String address
+        @NotNull(groups = { ValidationGroups.ValidateOptional.class }, message = "Address must not be null")
+        String address,
+        @NotNull(groups = { ValidationGroups.ValidateOptional.class, ValidateAdditionalFields.class }, message = "ExtraInfo must not be null")
+        String extraInfo
 ) {
     @Override
     public String toString() {

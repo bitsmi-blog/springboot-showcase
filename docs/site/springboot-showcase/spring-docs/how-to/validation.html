@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Dependency injection :: Springboot-Showcase // Docs</title>
+    <meta name="generator" content="Antora 3.1.7">
+    <link rel="stylesheet" href="../../../_/css/site.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="../../..">Springboot-Showcase // Docs</a>
+      <div class="navbar-item search hide-for-print">
+        <div id="search-field" class="field">
+          <input id="search-input" type="text" placeholder="Search the docs">
+        </div>
+      </div>
+      <button class="navbar-burger" aria-controls="topbar-nav" aria-expanded="false" aria-label="Toggle main menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="springboot-showcase" data-version="">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
+    <h3 class="title"><a href="../../index.html">Springboot Showcase</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../index.html">Index</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Example guides</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Clients</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../example-guides/clients/fluent-client.html">Fluent API client</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../example-guides/clients/openfeign.html">OpenFeign</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Sample applications</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../example-guides/sample-applications/kafka.html">Kafka</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../example-guides/sample-applications/web-mvc.html">Web MVC</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Spring Core</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../example-guides/spring-core/aop.html">AOP</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../example-guides/spring-core/cache.html">Cache</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../example-guides/spring-core/dependency-injection.html">Dependency injection</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../example-guides/spring-core/validation.html">Validation</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Spring Data JPA</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../example-guides/spring-data-jpa/repository-extension.html">Repository extension</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Spring MVC</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../example-guides/spring-mvc/api-versioning.html">API versioning</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Testing</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../example-guides/testing/testing.html">Testing</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Ways of working</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Explanation guides</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../ways-of-working/explanation/architecture.html">Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../ways-of-working/explanation/fluent_rest_api_client.html">Fluent REST API client</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">How-to guides</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../ways-of-working/how-to/mocking_an_external_service.html">Mocking an external client</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Spring guides</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">How-to guides</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="actuators.html">Actuators</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="aop.html">AOP</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="dependency-injection.html">Dependency injection</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="observability.html">Observability</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="testing.html">Testing</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">References</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../reference/spring_data.html">Spring Data</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../tutorial/index.html">Tutorials</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../../index.html">Springboot Showcase</a></li>
+    <li><a href="validation.html">Dependency injection</a></li>
+  </ul>
+</nav>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Dependency injection</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p><mark>TODO</mark></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="validation-groups"><a class="anchor" href="#validation-groups"></a>Validation groups</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>jakarta.validation.groups</code> allow us to configure the constraints to be validated depending on
+the context. For example, in some situations may have sense only to validate certain constraints
+when a domain entity is being created (not managed) and not when is updated (managed), the ID and creation / update timestamps for example.
+In that case we can define the constraints that will be executed in each case using different groups:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public record Schema(
+        @Null(groups = { NotManaged.class })
+        @NotNull(groups = { Managed.class })
+        Long id,
+        @NotNull
+        String externalId,
+        @NotNull
+        String name,
+        @Null(groups = { NotManaged.class })
+        @NotNull(groups = { Managed.class })
+        LocalDateTime creationDate,
+        @Null(groups = { NotManaged.class })
+        @NotNull(groups = { Managed.class })
+        LocalDateTime lastUpdated
+) {
+    // . . .
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In this example, the <code>ID</code> and <code>creation</code> / <code>updated</code> timestamps attributes will be forced to be <strong>null</strong> only when the object
+is not managed by the application. Any constraint not assigned explicitly to any group will be assigned to the <strong>default</strong> group.</p>
+</div>
+<div class="paragraph">
+<p>Custom <strong>validation groups</strong> can be defined as interfaces as following:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public final class CommonValidationGroups {
+
+    private CommonValidationGroups() { }
+
+    public interface NotManaged { }
+    public interface Managed { }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then, when we configure a validation for an object, using the <code>Validator</code> object directly or
+using Spring&#8217;s <code>@Validated</code> annotation, we can specify one or more validation groups to be evaluated.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import jakarta.validation.groups.Default;
+
+@Validated({ Default.class, NotManaged.class })
+public Schema createSchema(@Valid Schema schema) {
+    // . . .
+}
+
+@Validated({ Default.class, Managed.class })
+public Schema updateSchema(@Valid Schema schema) {
+    // . . .
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import jakarta.validation.groups.Default;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
+
+// . . .
+
+final Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
+final Schema schema = // . . .
+Set&lt;ConstraintViolation&lt;Schema&gt;&gt; constraintViolations = validator.validate(providedStore, Default.class, CommonValidationGroups.Managed.class);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We have to specify the <code>jakarta.validation.groups.Default</code> so the validations not assigned explicitly to
+any group are executed (E.G. the <code>@NotNull</code> constraint on <code>externalId</code> and <code>name</code> fields).</p>
+</div>
+<div class="paragraph">
+<p>We can also extend from <code>jakarta.validation.groups.Default</code> to automatically apply default groups constraints
+when we execute the validation only specifying our custom validation groups, although doing this we will lose the
+possibility to individually evaluate these custom groups, as always will also evaluate default group constraints.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import jakarta.validation.groups.Default;
+
+public final class CommonValidationGroups {
+
+    private CommonValidationGroups() { }
+
+    public interface NotManaged extends Default { }
+    public interface Managed extends Default { }
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import jakarta.validation.groups.Default;
+
+@Validated({ NotManaged.class })
+public Schema createSchema(@Valid Schema schema) {
+    // . . .
+}
+
+@Validated({ Managed.class })
+public Schema updateSchema(@Valid Schema schema) {
+    // . . .
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import jakarta.validation.groups.Default;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
+
+// . . .
+final Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
+final Schema schema = // . . .
+Set&lt;ConstraintViolation&lt;Schema&gt;&gt; constraintViolations = validator.validate(providedStore, CommonValidationGroups.Managed.class);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note that in that case, if we specify only the <code>jakarta.validation.groups.Default</code> group (or any group) in the validator,
+we will only evaluate default groups related constraint although our custom validation groups extends from the default group.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import jakarta.validation.groups.Default;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
+
+// . . .
+final Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
+final Schema schema = // . . .
+Set&lt;ConstraintViolation&lt;Schema&gt;&gt; constraintViolations = validator.validate(providedStore);
+
+/* Managed / NotManaged groups constraints will not be evaluated, although they extend the default group
+ * as none of them are specified in the `validate` statement
+ */</code></pre>
+</div>
+</div>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script id="site-script" src="../../../_/js/site.js" data-ui-root-path="../../../_"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+<script src="../../../_/js/vendor/lunr.js"></script>
+<script src="../../../_/js/vendor/lunr-languages.js"></script>
+<script src="../../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../../.." data-snippet-length="100" data-stylesheet="../../../_/css/search.css"></script>
+<script async src="../../../search-index.js"></script>
+  </body>
+</html>

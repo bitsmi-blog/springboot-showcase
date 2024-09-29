@@ -2,8 +2,58 @@
 
 == Features
 
-* Spring `@Validated` bean parameters
-* Custom validation annotations
-* Validation groups
-* Manual validator
-* Custom validator supporting multiple types
+* xref:validated-bean-groups[Spring @Validated bean parameters]
+* xref:custom-validation-annotations[Custom validation annotations]
+* xref:validation-groups[Validation groups]
+* xref:manual-validator[Manual validator]
+* xref:custom-validator-multiple-types[Custom validator supporting multiple types]
+
+== Relevant code in this example
+
+[NOTE]
+====
+In order to be less verbose, the package common part is omitted when a class name is specified (`com.bitsmi.springbootshowcase.springcore.validation`).
+
+E.G:
+
+`application.inventory.InventoryService` corresponds to `com.bitsmi.springbootshowcase.springcore.validation.application.inventory.InventoryService`
+====
+
+[id=validated-bean-groups]
+=== Spring @Validated bean parameters
+##TODO##
+
+[id=custom-validation-annotations]
+=== Custom validation annotations
+##TODO##
+
+[id=validation-groups]
+=== Validation groups
+
+* `application.utils.ValidationGroups`
++
+Class with custom validation group interfaces
+
+* `application.inventory.dto.StoreDto`
++
+Simple DTO class with constraints related to default and custom validation groups
+
+* `test.ValidationGroupsTests`
++
+Manual validation examples
+
+* `test.SpringValidationIntTests`
++
+Spring validation examples
+
+[id=manual-validator]
+=== Manual validator
+##TODO##
+
+[id=custom-validator-multiple-types]
+=== Custom validator supporting multiple types
+##TODO##
+
+== Related documentation
+
+* xref:spring-docs:how-to/validation.adoc[Validation how-to]

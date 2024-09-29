@@ -176,6 +176,7 @@ class SpringValidationIntTests
                     .externalId("store-1")
                     .name("Store 1")
                     // missing optional `address`
+                    .extraInfo("Extra info text")
                     .build();
 
             assertThatThrownBy(() -> inventoryService.createStoreWithFullData(providedStore))
