@@ -6,26 +6,26 @@ This document introduces the design for a fluent API allowing executing differen
 
 Given a remote service API, we can define the following concepts:
 
-* **Resource**: Full path to the resource. E.G. `/category/1`
-* **(Sub)domain**: URL path that groups resources. E.G. The `/category/1` resource is defined under `/category` domain.
-Also, we can define subdomains under a main domain. E.G.  we can have `/product` subdomain under `/category/{id}` domain (`/category/{id}/product`)
-* **Operation**: Action to be done on the resource or (sub)domain, usually a CRUD operation. 
+* **Resource**: Full path to the resource. E.G. `/categories/1`
+* **(Sub)collection**: URL path that groups resources. E.G. The `/categories/1` resource is defined under `/categories` collection.
+Also, we can define sub-collections under a main collection. E.G.  we can have `/products` sub-collection under `/categories/{id}` main collection (`/categories/{id}/products`)
+* **Operation**: Action to be done on the resource or (sub)collection, usually a CRUD operation.
 
 In order to illustrate the design, we introduce the following API that models a service to operate with categorized products:
 
-* We have a remote service API that defines 2 main domains: `/info` and `/category`:
-* `/info` domain defines the following operation:
-	** `get version` doing a `GET` request to the `/info/version` endpoint
-* `/category` domain defines the following operations:
-	** `list` categories doing a `GET` request to the `/category` endpoint
-	** get an specific category `detail` doing a `GET` request to the `/category/{id}` endpoint
-	** `create` a new category doing a `POST` request to the `/category` endpoint
-	** `update` an existent category doing a `PUT` request to the `/category/{id}` endpoint
-	** `delete` an existent category doing a `DELETE` request to the `/category/{id}` endpoint
-* `/category` domain defines the subdomain `/product` for each element on it
-* `/category/product` subdomain defines the following operations:
-	** `list` fields belonging to a product doing a `GET` request to the `/category/{category id}/product` endpoint
-	
+* We have a remote service API that defines 2 main collections: `/info` and `/categories`:
+* `/info` collection defines the following operation:
+** `get version` doing a `GET` request to the `/info/version` endpoint
+* `/categories` collection defines the following operations:
+** `list` categories doing a `GET` request to the `/categories` endpoint
+** get a specific category `detail` doing a `GET` request to the `/categories/{id}` endpoint
+** `create` a new category doing a `POST` request to the `/categories` endpoint
+** `update` an existent category doing a `PUT` request to the `/categories/{id}` endpoint
+** `delete` an existent category doing a `DELETE` request to the `/categories/{id}` endpoint
+* `/categories` domain defines the sub-collection `/products` for each element on it
+* `/categories/products` subdomain defines the following operations:
+** `list` fields belonging to a product doing a `GET` request to the `/categories/{category id}/products` endpoint
+
 In a schematic way:
 
 [plantuml]
@@ -34,27 +34,27 @@ In a schematic way:
 * /
 **[#lightblue] info
 ***[#lightgreen] getVersion
-**[#lightblue] category
+**[#lightblue] categories
 ***[#lightgreen]< list
 ***[#lightgreen]< detail
 ***[#lightgreen]< create
 ***[#lightgreen]< update
 ***[#lightgreen]< delete
-***[#lightblue] product
+***[#lightblue] products
 ****[#lightgreen] list
 
 legend left
-|<back:#lightblue>     </back>| Domain |
+|<back:#lightblue>     </back>| Collection |
 |<back:#lightgreen>     </back>| Operation |
 endlegend
 @endwbs
 ----
-	
+
 With the previous concepts, we can define a series of client API elements to access them:
 
 === Client
 
-Used as entrypoint to the client API providing access to implemented `API Builders` for service API domains.
+Used as entrypoint to the client API providing access to implemented `API Builders` for service API collections.
 
 Wraps the underlying client that will be used to consume the service API, providing also a builder to create and configure it. This client wrapper creates an independent layer that makes possible
 to use different underlying clients (E.G. Spring's `RestClient`, `RestTemplate`, `OkHttp3`...)
@@ -62,10 +62,10 @@ maintaining the same API.
 
 === API Builders
 
-`API Builders` provide methods to access and configure operations to be executed on the different domains or resources supported
+`API Builders` provide methods to access and configure operations to be executed on the different collections or resources supported
 by the `Client` using its top level API methods.
 
-An `API Builder` should be usually created using domain related data and then select the operation that should be executed. 
+An `API Builder` should be usually created using collection related data and then select the operation that should be executed.
 If the operation does not define additional intermediate methods, the operation selection method can execute directly the operation,
 returning the resulting data directly (if any). E.G.
 
@@ -84,19 +84,19 @@ We can define several kinds of `Api Builder` classes depending on its target typ
 
 * `SetApiBuilder`: Meant to be used for operations over datasets (retrieval, batch update...).
 The builder may or may not receive as input a filter / selector to limit the dataset affected.
-* `CreationApiBuilder`: Meant to be used for element creation operations targeting a specific (sub)domain. The builder will receive
+* `CreationApiBuilder`: Meant to be used for element creation operations targeting a specific (sub)collection. The builder will receive
 the data to send to the server as input.
 * `ElementApiBuilder`: Meant to be used for individual element data retrieval or manipulation involving a unique identifier received as input
 
-An `ApiBuilder` can also be used to group other `ApiBuilder`s, at top level or nested domain level.
-In that case it will contain calls to other builders if it's needed to access to a grouped / nested domain builder or operation API.
+An `ApiBuilder` can also be used to group other `ApiBuilder`s, at top level or nested collection level.
+In that case it will contain calls to other builders if it's needed to access to a grouped / nested collection builder or operation API.
 
 === Operations
 
-`Operations` are the final operators of the API in charge of execute the final call to the remote service using de underlying configured client. 
+`Operations` are the final operators of the API in charge of execute the final call to the remote service using de underlying configured client.
 They define a method in charge of executing the operation (E.G. `get()` for data retrieving, `execute()` for modifying data,
 `submit()` for async data submission...) along others intermediate methods meant to add or modify the data
-or behaviour of this execution. For example, a dataset retrieval operation may define intermediate methods like `paginate(...)` 
+or behaviour of this execution. For example, a dataset retrieval operation may define intermediate methods like `paginate(...)`
 or `sort(...)` that configure the pagination parameters of the request.
 
 == Example
@@ -105,7 +105,7 @@ Following the explanation above, we can model our client API as follows:
 
 === Client
 
-Entrypoint of client API. Provides methods to give access to the `API Builders` that group operations by domain.
+Entrypoint of client API. Provides methods to give access to the `API Builders` that group operations by collection.
 
 [source,java]
 ----
@@ -127,7 +127,7 @@ public class ServiceClient {
         return new InfoApiBuilder(restClient);
     }
 
-    public CategoryApiBuilder categoryApi() {
+    public CategoriesApiBuilder categoriesApi() {
         return new CategoryApiBuilder(restClient);
     }
 
@@ -150,7 +150,7 @@ ServiceClient client = ServiceClient.builder()
 
 === Info API
 
-`Info API Builder` provides access to every operation defined by the implemented domain. In this case it only have an operation, accessible through `serviceVersion()` method.
+`Info API Builder` provides access to every operation defined by the implemented collection. In this case it only have an operation, accessible through `serviceVersion()` method.
 
 [source,java]
 ----
@@ -200,8 +200,8 @@ String actualServiceVersion = client.infoApi()
 
 === Category API
 
-`CategoryApiBuilder` example shows how to group nested `ApiBuilders` by domain.
-It serves as an accessor to the specific `ApiBuilders` implementing `Category` domain:
+`CategoryApiBuilder` example shows how to group nested `ApiBuilders` by collection.
+It serves as an accessor to the specific `ApiBuilders` implementing `Category` collection:
 
 [source,java]
 ----
@@ -249,7 +249,7 @@ public class CategorySetApiBuilder {
         this.selector = selector;
     }
 
-    /* Selects the domain operation to execute
+    /* Selects the collection operation to execute
      */
     public CategoryListOperation list() {
         return new CategoryListOperation(restClient, validator, selector);
@@ -260,7 +260,7 @@ public class CategorySetApiBuilder {
 [source,java]
 ----
 public class CategoryListOperation {
-    public static final String ENDPOINT_PATH = "/api/category";
+    public static final String ENDPOINT_PATH = "/api/categories";
 
     private final RestClient restClient;
     private final CategorySetSelector selector;
@@ -309,7 +309,7 @@ public class CategoryListOperation {
 }
 ----
 
-`CategoryElementApiBuilder` is an example of how we can implement multiple operations, with the possibility to bypass the operation, and subdomain `API Builder`s
+`CategoryElementApiBuilder` is an example of how we can implement multiple operations, with the possibility to bypass the operation, and subcollection `API Builder`s
 
 [source,java]
 ----
@@ -339,7 +339,7 @@ public class CategoryElementApiBuilder {
                 .execute();
     }
 
-    /* Provide access to "product" subdomain API Builder. Parameters
+    /* Provide access to "product" subcollection API Builder. Parameters
      * received by this API Builder are propagated to the downstream API Builder
      */
     public ProductSetApiBuilder products() {
@@ -354,7 +354,7 @@ Bypassed `Operation` classes only have a method to execute the request on remote
 [source,java]
 ----
 public class CategoryGetOperation {
-    public static final String ENDPOINT_PATH = "/api/category/{id}";
+    public static final String ENDPOINT_PATH = "/api/categories/{id}";
 
     private final RestClient restClient;
     private final Long id;
@@ -383,7 +383,7 @@ public class CategoryGetOperation {
 [source,java]
 ----
 public class CategoryUpdateOperation {
-    public static final String ENDPOINT_PATH = "/api/category/{id}";
+    public static final String ENDPOINT_PATH = "/api/categories/{id}";
 
     private final RestClient restClient;
     private final Long id;
@@ -413,7 +413,7 @@ public class CategoryUpdateOperation {
 [source,java]
 ----
 public class CategoryDeleteOperation {
-    public static final String ENDPOINT_PATH = "/api/category/{id}";
+    public static final String ENDPOINT_PATH = "/api/categories/{id}";
 
     private final RestClient restClient;
     private final Long id;
@@ -437,7 +437,7 @@ public class CategoryDeleteOperation {
 }
 ----
 
-Here we have the subdomain `API Builder` that is called from the main domain `API Builder`. It receives the needed parameters from it and configure `Operation`s according to them.
+Here we have the sub-collection `API Builder` that is called from the main collection `API Builder`. It receives the needed parameters from it and configure `Operation`s according to them.
 
 [source,java]
 ----
@@ -460,7 +460,7 @@ public class ProductSetApiBuilder {
 ----
 public class ProductListOperation
 {
-    public static final String ENDPOINT_PATH = "/api/category/{categoryId}/product";
+    public static final String ENDPOINT_PATH = "/api/categories/{categoryId}/product";
 
     private final RestClient restClient;
     private final Long categoryId;
@@ -510,7 +510,7 @@ public class CategoryCreationApiBuilder {
 [source,java]
 ----
 public class CategoryCreateOperation {
-    public static final String ENDPOINT_PATH = "/api/category";
+    public static final String ENDPOINT_PATH = "/api/categories";
 
     private final RestClient restClient;
     private final CategoryData data;
