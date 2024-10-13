@@ -53,6 +53,7 @@ public class WebSecurityConfig
     {
         http.securityMatcher("/auth/**",
                         "/actuator/**",
+                        "/docs/**",
                         "/api/admin")
                 .authorizeHttpRequests(this::authorizeHttpRequestsBasic)
                 .csrf(this::csrf)

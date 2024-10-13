@@ -36,8 +36,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ControllerIntegrationTest
-class JwtAuthIntTests
-{
+class JwtAuthIntTests {
+
     @Autowired
     private WebApplicationContext context;
 
@@ -53,8 +53,7 @@ class JwtAuthIntTests
     private MockMvc mockMvc;
 
     @BeforeEach
-    void setup()
-    {
+    void setup() {
         this.mockMvc = MockMvcBuilders
                 .webAppContextSetup(this.context)
                 .apply(springSecurity(springSecurityFilterChain))
@@ -63,8 +62,7 @@ class JwtAuthIntTests
 
     @Test
     @DisplayName("Auth should return JWT token when login is successful")
-    void authTest1() throws Exception
-    {
+    void authTest1() throws Exception {
         final String expectedUsername = "john.doe";
         final String expectedPassword = "password.john.doe";
         final String actualToken = this.mockMvc.perform(post("/auth")
@@ -85,8 +83,7 @@ class JwtAuthIntTests
 
     @Test
     @DisplayName("Auth should return Unauthorized error code when wrong credentials")
-    void authTest2() throws Exception
-    {
+    void authTest2() throws Exception {
         this.mockMvc.perform(post("/auth")
                         .header("Authorization", "Basic " + new String(Base64.encodeBase64("john.doe:not_valid".getBytes(StandardCharsets.UTF_8), false)))
                 )
@@ -95,8 +92,7 @@ class JwtAuthIntTests
 
     @Test
     @DisplayName("Filter should authorize a request when a valid JWT token is provided")
-    void jwtTokenTest1() throws Exception
-    {
+    void jwtTokenTest1() throws Exception {
         final String expectedUsername = "john.doe";
         final String token = JWT.create()
                 .withSubject(expectedUsername)
@@ -107,7 +103,7 @@ class JwtAuthIntTests
                 com.bitsmi.springbootshowcase.sampleapps.domain.testsupport.common.model.UserObjectMother.anAdminUser()
         );
 
-        this.mockMvc.perform(get("/api/user/%d".formatted(
+        this.mockMvc.perform(get("/api/users/%d".formatted(
                                com.bitsmi.springbootshowcase.sampleapps.domain.testsupport.common.model.UserObjectMother.anAdminUser().id()
                         ))
                                 .header("Authorization", "Bearer " + token)
@@ -118,15 +114,14 @@ class JwtAuthIntTests
 
     @Test
     @DisplayName("Filter should deny a request when an invalid JWT token is provided")
-    void jwtTokenTest2() throws Exception
-    {
+    void jwtTokenTest2() throws Exception {
         final String expectedUsername = "john.doe";
         final String token = JWT.create()
                 .withSubject(expectedUsername)
                 .withExpiresAt(Instant.now().plus(900_000, ChronoUnit.MILLIS))
                 .sign(Algorithm.HMAC512("NOT_VALID_SECRET"));
 
-        this.mockMvc.perform(get("/api/user/1")
+        this.mockMvc.perform(get("/api/users/1")
                         .header("Authorization", "Bearer " + token)
                 )
                 .andExpect(status().isForbidden());
@@ -142,8 +137,7 @@ class JwtAuthIntTests
             DomainModuleMockConfig.class,
             UserDetailsTestConfig.class
     })
-    static class TestConfig
-    {
+    static class TestConfig {
 
     }
 }

@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public class GetCategoryOperation
 {
-    public static final String ENDPOINT_PATH = "/api/category/{id}";
+    public static final String ENDPOINT_PATH = "/api/categories/{id}";
 
     private final RestClient restClient;
 

@@ -2,7 +2,7 @@
     "priority": 10,
     "request": {
         "method": "POST",
-        "urlPath": "/api/category",
+        "urlPath": "/api/categories",
         "bodyPatterns": [
             {
                 "equalToJson": {

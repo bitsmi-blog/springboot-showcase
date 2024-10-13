@@ -1,5 +1,6 @@
 package com.bitsmi.springbootshowcase.sampleapps.webmvc.web.user.controller.request;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
@@ -8,8 +9,12 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import java.util.Objects;
 
 @Builder(toBuilder = true, builderClassName = "Builder")
+@Schema(description = "Request containing data needed to update an existing user")
 public record UpdateUserRequest(
-        @NotNull @Valid ModifiedUserData data
+        @NotNull
+        @Valid
+        @Schema(description = "New data for the existing user")
+        ModifiedUserData data
 ) {
     @Override
     public String toString()

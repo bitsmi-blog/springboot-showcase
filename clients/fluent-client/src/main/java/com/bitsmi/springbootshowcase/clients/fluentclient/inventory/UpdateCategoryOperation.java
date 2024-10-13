@@ -15,7 +15,7 @@ import java.util.Set;
 
 public class UpdateCategoryOperation {
 
-    public static final String ENDPOINT_PATH = "/api/category/{id}";
+    public static final String ENDPOINT_PATH = "/api/categories/{id}";
 
     private final RestClient restClient;
     private final Validator validator;

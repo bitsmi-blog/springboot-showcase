@@ -77,7 +77,7 @@ class ValidationGroupsTests {
                     .extraInfo("Extra info text")
                     .build();
 
-            Set<ConstraintViolation<StoreDto>> constraintViolations = validator.validate(providedStore);
+            Set<ConstraintViolation<StoreDto>> constraintViolations = validator.validate(providedStore, ValidationGroups.ValidateOptional.class);
 
             assertThat(constraintViolations)
                     .isEmpty();

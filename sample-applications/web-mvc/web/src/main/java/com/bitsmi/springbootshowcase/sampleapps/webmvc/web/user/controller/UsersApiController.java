@@ -16,7 +16,13 @@ import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.user.controller.reque
 import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.user.controller.response.User;
 import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.user.mapper.UserApiMapper;
 import io.micrometer.observation.annotation.Observed;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -33,17 +39,18 @@ import org.springframework.web.client.HttpClientErrorException;
 import java.nio.charset.StandardCharsets;
 
 @RestController
-@RequestMapping(value = "/api/user", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/api/users", produces = MediaType.APPLICATION_JSON_VALUE)
 @ResponseStatus(HttpStatus.OK)
-@Observed(name = "api.user")
-public class UserApiController
+@Tag(name = "Users API", description = "Manage Users")
+@Observed(name = "api.users")
+public class UsersApiController
 {
     private final UserRetrievalApplicationService userRetrievalApplicationService;
     private final UserRegistryApplicationService userRegistryApplicationService;
     private final UserApiMapper userApiMapper;
     private final PaginationMapper paginationMapper;
 
-    public UserApiController(
+    public UsersApiController(
             UserRetrievalApplicationService userRetrievalApplicationService,
             UserRegistryApplicationService userRegistryApplicationService,
             UserApiMapper userApiMapper,
@@ -56,8 +63,13 @@ public class UserApiController
     }
 
     @GetMapping
+    @Operation(summary = "Get a paginated list of users")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "List of found users"),
+            @ApiResponse(responseCode = "400", description = "Invalid page data", content = @Content())
+    })
     public PaginatedResponse<User> getUsers(
-            @Valid PaginatedRequest paginatedRequest
+            @ParameterObject @Valid PaginatedRequest paginatedRequest
     ) {
         final Pagination pagination = paginationMapper.fromRequest(
                 paginatedRequest.withDefaults(WebConstants.PAGINATION_DEFAULT_PAGE, WebConstants.PAGINATION_DEFAULT_PAGE_SIZE)
@@ -77,6 +89,11 @@ public class UserApiController
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Get an user by its ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "User found"),
+            @ApiResponse(responseCode = "404", description = "User not found", content = @Content())
+    })
     public User getUser(@PathVariable Long id)
     {
         return userRetrievalApplicationService.findUserById(id)
@@ -96,6 +113,12 @@ public class UserApiController
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @Operation(summary = "Create a new user")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "User created"),
+            @ApiResponse(responseCode = "400", description = "Invalid user data provided", content = @Content()),
+            @ApiResponse(responseCode = "409", description = "Conflict. An user with same username already exists", content = @Content())
+    })
     public User createUser(@RequestBody @Valid CreateUserRequest request)
     {
         try {
@@ -125,6 +148,11 @@ public class UserApiController
     }
 
     @PutMapping("/{id}")
+    @Operation(summary = "Update an existing user")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "User updated"),
+            @ApiResponse(responseCode = "404", description = "User not found", content = @Content())
+    })
     public User updateUser(@PathVariable Long id, @RequestBody UpdateUserRequest request)
     {
         try {
@@ -148,6 +176,11 @@ public class UserApiController
 
     @PostMapping("/{id}/password")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Operation(summary = "Update an existing user's password")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "User password updated", content = @Content()),
+            @ApiResponse(responseCode = "404", description = "User not found", content = @Content())
+    })
     public void changeUserPassword(@PathVariable Long id, ChangeUserPasswordRequest request)
     {
         try {
@@ -164,6 +197,11 @@ public class UserApiController
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Operation(summary = "Delete an existing user")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "User deleted", content = @Content()),
+            @ApiResponse(responseCode = "404", description = "User not found", content = @Content())
+    })
     public void deleteUser(@PathVariable Long id)
     {
         userRegistryApplicationService.deleteUser(id);

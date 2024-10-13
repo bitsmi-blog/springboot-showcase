@@ -46,8 +46,10 @@ import org.springframework.web.context.WebApplicationContext;
 
 @ControllerIntegrationTest
 @WithUserDetails("john.doe")
-class UserApiControllerIntTests
-{
+class UsersApiControllerIntTests {
+
+    private static final String USERS_ENDPOINT = "/api/users";
+
     @Autowired
     private WebApplicationContext context;
 
@@ -120,7 +122,7 @@ class UserApiControllerIntTests
                             .build()
             );
 
-            mockMvc.perform(get("/api/user")
+            mockMvc.perform(get(USERS_ENDPOINT)
                             .with(testSecurityContext())
                     )
                     .andDo(print())
@@ -152,7 +154,7 @@ class UserApiControllerIntTests
                     .build();
             final String expectedResponseAsString = jsonMapper.writeValueAsString(expectedResponse);
 
-            mockMvc.perform(get("/api/user")
+            mockMvc.perform(get(USERS_ENDPOINT)
                             .queryParam("page", "0")
                             .queryParam("pageSize", "10")
                             .with(testSecurityContext())
@@ -179,7 +181,7 @@ class UserApiControllerIntTests
             final User expectedResponse = UserObjectMother.fromModel(com.bitsmi.springbootshowcase.sampleapps.domain.testsupport.common.model.UserObjectMother.aNormalUser());
             final String expectedResponseAsString = jsonMapper.writeValueAsString(expectedResponse);
 
-            mockMvc.perform(get("/api/user/{id}", expectedResponse.id())
+            mockMvc.perform(get(USERS_ENDPOINT + "/{id}", expectedResponse.id())
                             .with(testSecurityContext())
                     )
                     .andDo(print())
@@ -195,7 +197,7 @@ class UserApiControllerIntTests
         )
         void test2() throws Exception
         {
-            mockMvc.perform(get("/api/user/{id}", 9999L)
+            mockMvc.perform(get(USERS_ENDPOINT + "/{id}", 9999L)
                             .with(testSecurityContext())
                     )
                     .andDo(print())
@@ -205,7 +207,7 @@ class UserApiControllerIntTests
 
     @Nested
     @DisplayName("Create user")
-    class CreateUserTests
+    class CreateUserPasswordTests
     {
         @Test
         @DisplayName("""
@@ -221,7 +223,7 @@ class UserApiControllerIntTests
             final CreateUserRequest request = CreateUserRequestObjectMother.fromModelWithPassword(user,"foobar");
             final String requestAsString = jsonMapper.writeValueAsString(request);
 
-            mockMvc.perform(post("/api/user")
+            mockMvc.perform(post(USERS_ENDPOINT)
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(requestAsString)
                             .with(testSecurityContext())
@@ -249,7 +251,7 @@ class UserApiControllerIntTests
                     com.bitsmi.springbootshowcase.sampleapps.domain.testsupport.common.model.UserObjectMother.A_NON_EXISTING_USER.username()
             );
 
-            mockMvc.perform(post("/api/user")
+            mockMvc.perform(post(USERS_ENDPOINT)
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(requestAsString)
                             .with(testSecurityContext())
@@ -261,7 +263,7 @@ class UserApiControllerIntTests
 
     @Nested
     @DisplayName("Update user")
-    class UpdateUserTests
+    class UpdateUserPasswordTests
     {
         @Test
         @DisplayName("""
@@ -277,7 +279,7 @@ class UserApiControllerIntTests
             final UpdateUserRequest request = UpdateUserRequestObjectMother.fromModel(user);
             final String requestAsString = jsonMapper.writeValueAsString(request);
 
-            mockMvc.perform(put("/api/user/{id}", user.id())
+            mockMvc.perform(put(USERS_ENDPOINT + "/{id}", user.id())
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(requestAsString)
                             .with(testSecurityContext())
@@ -301,7 +303,7 @@ class UserApiControllerIntTests
 
             userRegistryApplicationServiceMocker.whenUpdateUserWithIdThenThrowElementNotFoundExistsException(user.id());
 
-            mockMvc.perform(put("/api/user/{id}", user.id())
+            mockMvc.perform(put(USERS_ENDPOINT + "/{id}", user.id())
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(requestAsString)
                             .with(testSecurityContext())
@@ -328,7 +330,7 @@ class UserApiControllerIntTests
                     .build();
             final String requestAsString = jsonMapper.writeValueAsString(request);
 
-            mockMvc.perform(post("/api/user/{id}/password", com.bitsmi.springbootshowcase.sampleapps.domain.testsupport.common.model.UserObjectMother.A_NORMAL_USER.id())
+            mockMvc.perform(post(USERS_ENDPOINT + "/{id}/password", com.bitsmi.springbootshowcase.sampleapps.domain.testsupport.common.model.UserObjectMother.A_NORMAL_USER.id())
                             .content(requestAsString)
                             .with(testSecurityContext())
                     )
@@ -352,7 +354,7 @@ class UserApiControllerIntTests
 
             userRegistryApplicationServiceMocker.whenChangeUserPasswordThenThrowElementNotFoundException(providedUserId);
 
-            mockMvc.perform(post("/api/user/{id}/password", providedUserId)
+            mockMvc.perform(post(USERS_ENDPOINT + "/{id}/password", providedUserId)
                             .content(requestAsString)
                             .with(testSecurityContext())
                     )
@@ -373,7 +375,7 @@ class UserApiControllerIntTests
         void test1() throws Exception
         {
             final Long providedUserId = com.bitsmi.springbootshowcase.sampleapps.domain.testsupport.common.model.UserObjectMother.A_NORMAL_USER.id();
-            mockMvc.perform(delete("/api/user/{id}", providedUserId)
+            mockMvc.perform(delete(USERS_ENDPOINT + "/{id}", providedUserId)
                             .with(testSecurityContext())
                     )
                     .andDo(print())

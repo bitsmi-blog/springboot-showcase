@@ -20,6 +20,7 @@
 * Observability & Tracing
 * [ ##TODO## ] **Spring HATEOAS** support
 * Web MVC REST endpoints
+* OpenAPI documentation
 
 === Test
 * H2 in-memory database support for tests

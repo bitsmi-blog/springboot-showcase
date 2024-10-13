@@ -36,14 +36,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @WireMockTest
 @Tag("IntegrationTest")
-class InventoryApiIntTest
-{
+class InventoryApiIntTest {
+
+    private static final String CATEGORIES_ENDPOINT = "/api/categories";
+
     private ServiceClient client;
     private ObjectMapper objectMapper;
 
     @BeforeEach
-    void setUp(WireMockRuntimeInfo wmRuntimeInfo)
-    {
+    void setUp(WireMockRuntimeInfo wmRuntimeInfo) {
         client = ServiceClient.builder()
                 .withBaseUrl(wmRuntimeInfo.getHttpBaseUrl())
                 .withDefaultValidation()
@@ -59,8 +60,7 @@ class InventoryApiIntTest
      *---------------------------*/
     @Test
     @DisplayName("Category list operation should return a Category list json")
-    void listCategoriesTest1() throws JsonProcessingException
-    {
+    void listCategoriesTest1() throws JsonProcessingException {
         final PaginatedResponse<Category> expectedResponse = PaginatedResponse.<Category>builder()
                 .data(List.of(
                         CategoryObjectMother.category1(),
@@ -74,7 +74,7 @@ class InventoryApiIntTest
                 .totalCount(2)
                 .build();
 
-        stubFor(get(urlPathEqualTo("/api/category"))
+        stubFor(get(urlPathEqualTo(CATEGORIES_ENDPOINT))
                 .withQueryParam("page", equalTo("0"))
                 .withQueryParam("pageSize", equalTo("10"))
                 .willReturn(aResponse()
@@ -97,8 +97,7 @@ class InventoryApiIntTest
 
     @Test
     @DisplayName("Category list operation should return a Category list json given a selector")
-    void listCategoriesTest2() throws JsonProcessingException
-    {
+    void listCategoriesTest2() throws JsonProcessingException {
         final PaginatedResponse<Category> expectedResponse = PaginatedResponse.<Category>builder()
                 .data(List.of(
                         CategoryObjectMother.category1()
@@ -111,7 +110,7 @@ class InventoryApiIntTest
                 .totalCount(1)
                 .build();
 
-        stubFor(get(urlPathEqualTo("/api/category"))
+        stubFor(get(urlPathEqualTo(CATEGORIES_ENDPOINT))
                 // Wiremock decodes query param value automatically
                 .withQueryParam("selector", equalTo("id EQUALS 1001"))
                 .withQueryParam("page", equalTo("0"))
@@ -139,13 +138,12 @@ class InventoryApiIntTest
      *---------------------------*/
     @Test
     @DisplayName("Category create operation should return created Category json")
-    void createCategoryTest1() throws JsonProcessingException
-    {
+    void createCategoryTest1() throws JsonProcessingException {
         final NewCategoryRequest providedRequest = NewCategoryRequestObjectMother.aCategory1CreateRequest();
         final String providedRequestJson = objectMapper.writeValueAsString(providedRequest);
         final Category expectedResponse = CategoryObjectMother.category1();
 
-        stubFor(post(urlPathEqualTo("/api/category"))
+        stubFor(post(urlPathEqualTo(CATEGORIES_ENDPOINT))
                 .withRequestBody(equalToJson(providedRequestJson))
                 .willReturn(aResponse()
                         .withStatus(201)
@@ -170,13 +168,12 @@ class InventoryApiIntTest
      *---------------------------*/
     @Test
     @DisplayName("Category update operation should return updated Category json")
-    void updateCategoryTest1() throws JsonProcessingException
-    {
+    void updateCategoryTest1() throws JsonProcessingException {
         final UpdateCategoryRequest providedRequest = UpdateCategoryRequestObjectMother.aCategory1UpdateRequest();
         final String providedRequestJson = objectMapper.writeValueAsString(providedRequest);
         final Category expectedResponse = CategoryObjectMother.category1();
 
-        stubFor(put(urlPathEqualTo("/api/category/1001"))
+        stubFor(put(urlPathEqualTo(CATEGORIES_ENDPOINT + "/1001"))
                 .withRequestBody(equalToJson(providedRequestJson))
                 .willReturn(aResponse()
                         .withStatus(200)

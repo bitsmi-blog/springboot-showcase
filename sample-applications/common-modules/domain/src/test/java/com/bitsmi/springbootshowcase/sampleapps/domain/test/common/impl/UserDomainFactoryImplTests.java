@@ -99,7 +99,7 @@ class UserDomainFactoryImplTests {
                 )
         )
                 .isInstanceOf(ElementNotFoundException.class)
-                .hasMessage("Element (NON_VALID_GROUP) of type (com.bitsmi.inventoryclerk.server.domain.common.model.UserGroup) not found");
+                .hasMessage("Element (NON_VALID_GROUP) of type (com.bitsmi.springbootshowcase.sampleapps.domain.common.model.UserGroup) not found");
     }
 
     @Test
@@ -136,7 +136,7 @@ class UserDomainFactoryImplTests {
                 )
         )
                 .isInstanceOf(ElementNotFoundException.class)
-                .hasMessage("Element (NON_VALID_GROUP) of type (com.bitsmi.inventoryclerk.server.domain.common.model.UserGroup) not found");
+                .hasMessage("Element (NON_VALID_GROUP) of type (com.bitsmi.springbootshowcase.sampleapps.domain.common.model.UserGroup) not found");
     }
 
     @Test

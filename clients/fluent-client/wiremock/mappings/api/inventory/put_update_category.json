@@ -2,7 +2,7 @@
     "priority": 10,
     "request": {
         "method": "PUT",
-        "urlPathTemplate": "/api/category/{categoryId}",
+        "urlPathTemplate": "/api/categories/{categoryId}",
         "bodyPatterns": [
             {
                 "equalToJson": {

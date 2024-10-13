@@ -4,7 +4,7 @@ import com.bitsmi.springbootshowcase.sampleapps.application.common.UserRegistryA
 import com.bitsmi.springbootshowcase.sampleapps.application.common.UserRetrievalApplicationService;
 import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.common.mapper.PaginationMapper;
 import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.testsupport.user.controller.response.UserObjectMother;
-import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.user.controller.UserApiController;
+import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.user.controller.UsersApiController;
 import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.user.controller.response.User;
 import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.user.mapper.UserApiMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,12 +31,12 @@ class UserApiControllerTests
     @Mock
     private PaginationMapper paginationMapper;
 
-    private UserApiController sut;
+    private UsersApiController sut;
 
     @BeforeEach
     void setUp()
     {
-        sut = new UserApiController(
+        sut = new UsersApiController(
                 userRetrievalApplicationService,
                 userRegistryApplicationService,
                 userApiMapper,

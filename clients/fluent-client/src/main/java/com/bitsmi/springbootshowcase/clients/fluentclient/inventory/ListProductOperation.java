@@ -10,7 +10,7 @@ import java.net.URI;
 
 public class ListProductOperation
 {
-    public static final String ENDPOINT_PATH = "/api/category/{categoryId}/product";
+    public static final String ENDPOINT_PATH = "/api/categories/{categoryId}/products";
 
     private final RestClient restClient;
     private final Long categoryId;

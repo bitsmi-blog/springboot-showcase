@@ -3,7 +3,14 @@ package com.bitsmi.springbootshowcase.sampleapps.webmvc.web.auth.controller;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.config.JWTProperties;
+import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.config.OpenApiConfig;
 import io.micrometer.observation.annotation.Observed;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -20,9 +27,10 @@ import java.time.temporal.ChronoUnit;
 
 @RestController
 @RequestMapping(value = "/auth")
+@Tag(name = "Authentication API", description = "Authenticate to access API")
 @Observed(name = "auth.jwt")
-public class JwtAuthController
-{
+public class JwtAuthController {
+
     private static final String AUTHORIZATION_HEADER = "Authorization";
 
     @Autowired
@@ -35,8 +43,13 @@ public class JwtAuthController
     private JWTProperties jwtProperties;
 
     @PostMapping(produces = MediaType.TEXT_PLAIN_VALUE)
-    public ResponseEntity<String> postAuth(@AuthenticationPrincipal UserDetails userDetails)
-    {
+    @Operation(summary = "Obtain an API access token")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "API Access token"),
+            @ApiResponse(responseCode = "401", description = "Invalid credentials", content = @Content())
+    })
+    @SecurityRequirement(name = OpenApiConfig.BASIC_SECURITY_SCHEME_NAME)
+    public ResponseEntity<String> postAuth(@AuthenticationPrincipal UserDetails userDetails) {
         String token = JWT.create()
                 .withSubject(userDetails.getUsername())
                 .withExpiresAt(Instant.now().plus(jwtProperties.getExpirationTime(), ChronoUnit.MILLIS))

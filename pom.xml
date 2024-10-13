@@ -40,6 +40,7 @@
         <dependency.version.testcontainers>1.20.1</dependency.version.testcontainers>
         <dependency.version.spring.boot>3.3.3</dependency.version.spring.boot>
         <dependency.version.spring.cloud>2023.0.3</dependency.version.spring.cloud>
+        <dependency.version.springdoc>2.6.0</dependency.version.springdoc>
         <dependency.version.wiremock>3.9.1</dependency.version.wiremock>
     </properties>
 
@@ -123,6 +124,11 @@
                 <groupId>org.mapstruct</groupId>
                 <artifactId>mapstruct</artifactId>
                 <version>${dependency.version.mapstructs}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+                <version>${dependency.version.springdoc}</version>
             </dependency>
 
             <!-- TEST -->

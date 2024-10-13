@@ -2,7 +2,7 @@
     "priority": 10,
     "request": {
         "method": "GET",
-        "urlPath": "/api/category",
+        "urlPath": "/api/categories",
         "queryParameters": {
             "selector": {
                 "or": [{

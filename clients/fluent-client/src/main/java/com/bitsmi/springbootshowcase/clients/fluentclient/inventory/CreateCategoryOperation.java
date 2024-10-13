@@ -14,7 +14,7 @@ import java.util.Set;
 
 public class CreateCategoryOperation
 {
-    public static final String ENDPOINT_PATH = "/api/category";
+    public static final String ENDPOINT_PATH = "/api/categories";
 
     private final RestClient restClient;
     private final Validator validator;
