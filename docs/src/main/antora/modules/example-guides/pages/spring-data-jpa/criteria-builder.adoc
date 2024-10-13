@@ -1,0 +1,6 @@
+= Criteria Builder
+
+== Features
+
+* Spring Data predicate filters through Specification interface
+* Integration test using H2 database
