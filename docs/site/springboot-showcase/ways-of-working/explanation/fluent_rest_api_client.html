@@ -236,14 +236,14 @@
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Resource</strong>: Full path to the resource. E.G. <code>/category/1</code></p>
+<p><strong>Resource</strong>: Full path to the resource. E.G. <code>/categories/1</code></p>
 </li>
 <li>
-<p><strong>(Sub)domain</strong>: URL path that groups resources. E.G. The <code>/category/1</code> resource is defined under <code>/category</code> domain.
-Also, we can define subdomains under a main domain. E.G.  we can have <code>/product</code> subdomain under <code>/category/{id}</code> domain (<code>/category/{id}/product</code>)</p>
+<p><strong>(Sub)collection</strong>: URL path that groups resources. E.G. The <code>/categories/1</code> resource is defined under <code>/categories</code> collection.
+Also, we can define sub-collections under a main collection. E.G.  we can have <code>/products</code> sub-collection under <code>/categories/{id}</code> main collection (<code>/categories/{id}/products</code>)</p>
 </li>
 <li>
-<p><strong>Operation</strong>: Action to be done on the resource or (sub)domain, usually a CRUD operation.</p>
+<p><strong>Operation</strong>: Action to be done on the resource or (sub)collection, usually a CRUD operation.</p>
 </li>
 </ul>
 </div>
@@ -253,10 +253,10 @@ Also, we can define subdomains under a main domain. E.G.  we can have <code>/pro
 <div class="ulist">
 <ul>
 <li>
-<p>We have a remote service API that defines 2 main domains: <code>/info</code> and <code>/category</code>:</p>
+<p>We have a remote service API that defines 2 main collections: <code>/info</code> and <code>/categories</code>:</p>
 </li>
 <li>
-<p><code>/info</code> domain defines the following operation:</p>
+<p><code>/info</code> collection defines the following operation:</p>
 <div class="ulist">
 <ul>
 <li>
@@ -266,36 +266,36 @@ Also, we can define subdomains under a main domain. E.G.  we can have <code>/pro
 </div>
 </li>
 <li>
-<p><code>/category</code> domain defines the following operations:</p>
+<p><code>/categories</code> collection defines the following operations:</p>
 <div class="ulist">
 <ul>
 <li>
-<p><code>list</code> categories doing a <code>GET</code> request to the <code>/category</code> endpoint</p>
+<p><code>list</code> categories doing a <code>GET</code> request to the <code>/categories</code> endpoint</p>
 </li>
 <li>
-<p>get an specific category <code>detail</code> doing a <code>GET</code> request to the <code>/category/{id}</code> endpoint</p>
+<p>get a specific category <code>detail</code> doing a <code>GET</code> request to the <code>/categories/{id}</code> endpoint</p>
 </li>
 <li>
-<p><code>create</code> a new category doing a <code>POST</code> request to the <code>/category</code> endpoint</p>
+<p><code>create</code> a new category doing a <code>POST</code> request to the <code>/categories</code> endpoint</p>
 </li>
 <li>
-<p><code>update</code> an existent category doing a <code>PUT</code> request to the <code>/category/{id}</code> endpoint</p>
+<p><code>update</code> an existent category doing a <code>PUT</code> request to the <code>/categories/{id}</code> endpoint</p>
 </li>
 <li>
-<p><code>delete</code> an existent category doing a <code>DELETE</code> request to the <code>/category/{id}</code> endpoint</p>
+<p><code>delete</code> an existent category doing a <code>DELETE</code> request to the <code>/categories/{id}</code> endpoint</p>
 </li>
 </ul>
 </div>
 </li>
 <li>
-<p><code>/category</code> domain defines the subdomain <code>/product</code> for each element on it</p>
+<p><code>/categories</code> domain defines the sub-collection <code>/products</code> for each element on it</p>
 </li>
 <li>
-<p><code>/category/product</code> subdomain defines the following operations:</p>
+<p><code>/categories/products</code> subdomain defines the following operations:</p>
 <div class="ulist">
 <ul>
 <li>
-<p><code>list</code> fields belonging to a product doing a <code>GET</code> request to the <code>/category/{category id}/product</code> endpoint</p>
+<p><code>list</code> fields belonging to a product doing a <code>GET</code> request to the <code>/categories/{category id}/products</code> endpoint</p>
 </li>
 </ul>
 </div>
@@ -307,7 +307,7 @@ Also, we can define subdomains under a main domain. E.G.  we can have <code>/pro
 </div>
 <div class="imageblock kroki">
 <div class="content">
-<img src="../_images/diag-ccbf1ceebce42efd9430faf2a929cd736bc32f64.svg" alt="Diagram">
+<img src="../_images/diag-8563d65ed9fae2c7d655f44e80ff420ae531743f.svg" alt="Diagram">
 </div>
 </div>
 <div class="paragraph">
@@ -316,7 +316,7 @@ Also, we can define subdomains under a main domain. E.G.  we can have <code>/pro
 <div class="sect2">
 <h3 id="client"><a class="anchor" href="#client"></a>Client</h3>
 <div class="paragraph">
-<p>Used as entrypoint to the client API providing access to implemented <code>API Builders</code> for service API domains.</p>
+<p>Used as entrypoint to the client API providing access to implemented <code>API Builders</code> for service API collections.</p>
 </div>
 <div class="paragraph">
 <p>Wraps the underlying client that will be used to consume the service API, providing also a builder to create and configure it. This client wrapper creates an independent layer that makes possible
@@ -327,11 +327,11 @@ maintaining the same API.</p>
 <div class="sect2">
 <h3 id="api-builders"><a class="anchor" href="#api-builders"></a>API Builders</h3>
 <div class="paragraph">
-<p><code>API Builders</code> provide methods to access and configure operations to be executed on the different domains or resources supported
+<p><code>API Builders</code> provide methods to access and configure operations to be executed on the different collections or resources supported
 by the <code>Client</code> using its top level API methods.</p>
 </div>
 <div class="paragraph">
-<p>An <code>API Builder</code> should be usually created using domain related data and then select the operation that should be executed.
+<p>An <code>API Builder</code> should be usually created using collection related data and then select the operation that should be executed.
 If the operation does not define additional intermediate methods, the operation selection method can execute directly the operation,
 returning the resulting data directly (if any). E.G.</p>
 </div>
@@ -356,7 +356,7 @@ public SomeElement update(SomeElementInputData newData) {
 The builder may or may not receive as input a filter / selector to limit the dataset affected.</p>
 </li>
 <li>
-<p><code>CreationApiBuilder</code>: Meant to be used for element creation operations targeting a specific (sub)domain. The builder will receive
+<p><code>CreationApiBuilder</code>: Meant to be used for element creation operations targeting a specific (sub)collection. The builder will receive
 the data to send to the server as input.</p>
 </li>
 <li>
@@ -365,8 +365,8 @@ the data to send to the server as input.</p>
 </ul>
 </div>
 <div class="paragraph">
-<p>An <code>ApiBuilder</code> can also be used to group other `ApiBuilder`s, at top level or nested domain level.
-In that case it will contain calls to other builders if it&#8217;s needed to access to a grouped / nested domain builder or operation API.</p>
+<p>An <code>ApiBuilder</code> can also be used to group other `ApiBuilder`s, at top level or nested collection level.
+In that case it will contain calls to other builders if it&#8217;s needed to access to a grouped / nested collection builder or operation API.</p>
 </div>
 </div>
 <div class="sect2">
@@ -390,7 +390,7 @@ or <code>sort(&#8230;&#8203;)</code> that configure the pagination parameters of
 <div class="sect2">
 <h3 id="client-2"><a class="anchor" href="#client-2"></a>Client</h3>
 <div class="paragraph">
-<p>Entrypoint of client API. Provides methods to give access to the <code>API Builders</code> that group operations by domain.</p>
+<p>Entrypoint of client API. Provides methods to give access to the <code>API Builders</code> that group operations by collection.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -412,7 +412,7 @@ or <code>sort(&#8230;&#8203;)</code> that configure the pagination parameters of
         return new InfoApiBuilder(restClient);
     }
 
-    public CategoryApiBuilder categoryApi() {
+    public CategoriesApiBuilder categoriesApi() {
         return new CategoryApiBuilder(restClient);
     }
 
@@ -438,7 +438,7 @@ or <code>sort(&#8230;&#8203;)</code> that configure the pagination parameters of
 <div class="sect2">
 <h3 id="info-api"><a class="anchor" href="#info-api"></a>Info API</h3>
 <div class="paragraph">
-<p><code>Info API Builder</code> provides access to every operation defined by the implemented domain. In this case it only have an operation, accessible through <code>serviceVersion()</code> method.</p>
+<p><code>Info API Builder</code> provides access to every operation defined by the implemented collection. In this case it only have an operation, accessible through <code>serviceVersion()</code> method.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -492,8 +492,8 @@ or <code>sort(&#8230;&#8203;)</code> that configure the pagination parameters of
 <div class="sect2">
 <h3 id="category-api"><a class="anchor" href="#category-api"></a>Category API</h3>
 <div class="paragraph">
-<p><code>CategoryApiBuilder</code> example shows how to group nested <code>ApiBuilders</code> by domain.
-It serves as an accessor to the specific <code>ApiBuilders</code> implementing <code>Category</code> domain:</p>
+<p><code>CategoryApiBuilder</code> example shows how to group nested <code>ApiBuilders</code> by collection.
+It serves as an accessor to the specific <code>ApiBuilders</code> implementing <code>Category</code> collection:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -542,7 +542,7 @@ It serves as an accessor to the specific <code>ApiBuilders</code> implementing <
         this.selector = selector;
     }
 
-    /* Selects the domain operation to execute
+    /* Selects the collection operation to execute
      */
     public CategoryListOperation list() {
         return new CategoryListOperation(restClient, validator, selector);
@@ -553,7 +553,7 @@ It serves as an accessor to the specific <code>ApiBuilders</code> implementing <
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class CategoryListOperation {
-    public static final String ENDPOINT_PATH = "/api/category";
+    public static final String ENDPOINT_PATH = "/api/categories";
 
     private final RestClient restClient;
     private final CategorySetSelector selector;
@@ -603,7 +603,7 @@ It serves as an accessor to the specific <code>ApiBuilders</code> implementing <
 </div>
 </div>
 <div class="paragraph">
-<p><code>CategoryElementApiBuilder</code> is an example of how we can implement multiple operations, with the possibility to bypass the operation, and subdomain `API Builder`s</p>
+<p><code>CategoryElementApiBuilder</code> is an example of how we can implement multiple operations, with the possibility to bypass the operation, and subcollection `API Builder`s</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -633,7 +633,7 @@ It serves as an accessor to the specific <code>ApiBuilders</code> implementing <
                 .execute();
     }
 
-    /* Provide access to "product" subdomain API Builder. Parameters
+    /* Provide access to "product" subcollection API Builder. Parameters
      * received by this API Builder are propagated to the downstream API Builder
      */
     public ProductSetApiBuilder products() {
@@ -648,7 +648,7 @@ It serves as an accessor to the specific <code>ApiBuilders</code> implementing <
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class CategoryGetOperation {
-    public static final String ENDPOINT_PATH = "/api/category/{id}";
+    public static final String ENDPOINT_PATH = "/api/categories/{id}";
 
     private final RestClient restClient;
     private final Long id;
@@ -677,7 +677,7 @@ It serves as an accessor to the specific <code>ApiBuilders</code> implementing <
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class CategoryUpdateOperation {
-    public static final String ENDPOINT_PATH = "/api/category/{id}";
+    public static final String ENDPOINT_PATH = "/api/categories/{id}";
 
     private final RestClient restClient;
     private final Long id;
@@ -707,7 +707,7 @@ It serves as an accessor to the specific <code>ApiBuilders</code> implementing <
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class CategoryDeleteOperation {
-    public static final String ENDPOINT_PATH = "/api/category/{id}";
+    public static final String ENDPOINT_PATH = "/api/categories/{id}";
 
     private final RestClient restClient;
     private final Long id;
@@ -732,7 +732,7 @@ It serves as an accessor to the specific <code>ApiBuilders</code> implementing <
 </div>
 </div>
 <div class="paragraph">
-<p>Here we have the subdomain <code>API Builder</code> that is called from the main domain <code>API Builder</code>. It receives the needed parameters from it and configure `Operation`s according to them.</p>
+<p>Here we have the sub-collection <code>API Builder</code> that is called from the main collection <code>API Builder</code>. It receives the needed parameters from it and configure `Operation`s according to them.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -755,7 +755,7 @@ It serves as an accessor to the specific <code>ApiBuilders</code> implementing <
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class ProductListOperation
 {
-    public static final String ENDPOINT_PATH = "/api/category/{categoryId}/product";
+    public static final String ENDPOINT_PATH = "/api/categories/{categoryId}/product";
 
     private final RestClient restClient;
     private final Long categoryId;
@@ -805,7 +805,7 @@ It serves as an accessor to the specific <code>ApiBuilders</code> implementing <
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class CategoryCreateOperation {
-    public static final String ENDPOINT_PATH = "/api/category";
+    public static final String ENDPOINT_PATH = "/api/categories";
 
     private final RestClient restClient;
     private final CategoryData data;
