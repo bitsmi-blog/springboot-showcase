@@ -1,0 +1,45 @@
+= Properties load precedence
+
+Properties are considered in the following order, from more to less precedence:
+
+- Devtools global settings properties on your home directory (`~/.spring-boot-devtools.properties` when devtools is active).
+- `@TestPropertySource` annotations on your tests.
+- properties attribute on your tests. Available on `@SpringBootTest` and the test annotations for testing a particular slice of your application.
+- Command line arguments.
+- Properties from `SPRING_APPLICATION_JSON` (inline JSON embedded in an environment variable or system property). E.G.
++
+[source,sh]
+----
+`SPRING_APPLICATION_JSON='{"environment":{"name":"production"}}' java -jar app.jar`
+----
+- `ServletConfig` init parameters.
+- `ServletContext` init parameters.
+- JNDI attributes from `java:comp/env`.
+- Java System properties (`System.getProperties()`).
+- OS environment variables.
+- A `RandomValuePropertySource` that has properties defined as `random.*`. E.G.
++
+.sample.properties
+[source,properties]
+----
+# Random int
+random.prop1=${random.int}
+# Random int with a maximum value
+random.prop2=${random.int(1000)}
+# Random int in a range
+random.prop3=${random.int[0, 9999])}
+# Random long with a maximum value
+random.prop4=${random.long(100000000000000000)}
+# Random long in a close-open range
+random.prop5=${random.long[10000, 999999999999999999)}
+# Random 32 bytes value
+random.prop6=${random.value}
+# Random UUID
+random.prop7=${random.uuid}
+----
+- Profile-specific application properties outside your packaged jar (`application-{profile}.properties` and YAML variants).
+- Profile-specific application properties packaged inside your jar (`application-{profile}.properties` and YAML variants).
+- Application properties outside your packaged jar (`application.properties` and YAML variants).
+- Application properties packaged inside your jar (`application.properties` and YAML variants).
+- `@PropertySource` annotations on your `@Configuration` classes.
+- Default properties (specified by setting `SpringApplication.setDefaultProperties`).

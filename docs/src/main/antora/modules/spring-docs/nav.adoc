@@ -8,6 +8,7 @@
 *** xref:how-to/testing.adoc[Testing]
 
 ** References
+*** xref:reference/properties_load_precedence.adoc[Properties load precedence]
 *** xref:reference/spring_data.adoc[Spring Data]
 
 ** xref:tutorial/index.adoc[Tutorials]

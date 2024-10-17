@@ -3,8 +3,9 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Tutorials :: Springboot-Showcase // Docs</title>
-    <link rel="prev" href="../reference/spring_data.html">
+    <title>Properties load precedence :: Springboot-Showcase // Docs</title>
+    <link rel="prev" href="../how-to/testing.html">
+    <link rel="next" href="spring_data.html">
     <meta name="generator" content="Antora 3.1.7">
     <link rel="stylesheet" href="../../../_/css/site.css">
   </head>
@@ -186,16 +187,16 @@
     <button class="nav-item-toggle"></button>
     <span class="nav-text">References</span>
 <ul class="nav-list">
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../reference/properties_load_precedence.html">Properties load precedence</a>
+  <li class="nav-item is-current-page" data-depth="3">
+    <a class="nav-link" href="properties_load_precedence.html">Properties load precedence</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../reference/spring_data.html">Spring Data</a>
+    <a class="nav-link" href="spring_data.html">Spring Data</a>
   </li>
 </ul>
   </li>
-  <li class="nav-item is-current-page" data-depth="2">
-    <a class="nav-link" href="index.html">Tutorials</a>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../tutorial/index.html">Tutorials</a>
   </li>
 </ul>
   </li>
@@ -215,7 +216,8 @@
   <ul>
     <li><a href="../../index.html">Springboot Showcase</a></li>
     <li>Spring guides</li>
-    <li><a href="index.html">Tutorials</a></li>
+    <li>References</li>
+    <li><a href="properties_load_precedence.html">Properties load precedence</a></li>
   </ul>
 </nav>
 </div>
@@ -224,21 +226,96 @@
   <div class="toc-menu"></div>
 </aside>
 <article class="doc">
-<h1 class="page">Tutorials</h1>
-<div class="sect1">
-<h2 id="testing"><a class="anchor" href="#testing"></a>Testing</h2>
+<h1 class="page">Properties load precedence</h1>
+<div id="preamble">
 <div class="sectionbody">
+<div class="paragraph">
+<p>Properties are considered in the following order, from more to less precedence:</p>
+</div>
 <div class="ulist">
 <ul>
 <li>
-<p><a href="testing/review_database_status_after_test.html" class="xref page">Review database status after test</a></p>
+<p>Devtools global settings properties on your home directory (<code>~/.spring-boot-devtools.properties</code> when devtools is active).</p>
+</li>
+<li>
+<p><code>@TestPropertySource</code> annotations on your tests.</p>
+</li>
+<li>
+<p>properties attribute on your tests. Available on <code>@SpringBootTest</code> and the test annotations for testing a particular slice of your application.</p>
+</li>
+<li>
+<p>Command line arguments.</p>
+</li>
+<li>
+<p>Properties from <code>SPRING_APPLICATION_JSON</code> (inline JSON embedded in an environment variable or system property). E.G.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">`SPRING_APPLICATION_JSON='{"environment":{"name":"production"}}' java -jar app.jar`</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p><code>ServletConfig</code> init parameters.</p>
+</li>
+<li>
+<p><code>ServletContext</code> init parameters.</p>
+</li>
+<li>
+<p>JNDI attributes from <code>java:comp/env</code>.</p>
+</li>
+<li>
+<p>Java System properties (<code>System.getProperties()</code>).</p>
+</li>
+<li>
+<p>OS environment variables.</p>
+</li>
+<li>
+<p>A <code>RandomValuePropertySource</code> that has properties defined as <code>random.*</code>. E.G.</p>
+<div class="listingblock">
+<div class="title">sample.properties</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-properties hljs" data-lang="properties"># Random int
+random.prop1=${random.int}
+# Random int with a maximum value
+random.prop2=${random.int(1000)}
+# Random int in a range
+random.prop3=${random.int[0, 9999])}
+# Random long with a maximum value
+random.prop4=${random.long(100000000000000000)}
+# Random long in a close-open range
+random.prop5=${random.long[10000, 999999999999999999)}
+# Random 32 bytes value
+random.prop6=${random.value}
+# Random UUID
+random.prop7=${random.uuid}</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Profile-specific application properties outside your packaged jar (<code>application-{profile}.properties</code> and YAML variants).</p>
+</li>
+<li>
+<p>Profile-specific application properties packaged inside your jar (<code>application-{profile}.properties</code> and YAML variants).</p>
+</li>
+<li>
+<p>Application properties outside your packaged jar (<code>application.properties</code> and YAML variants).</p>
+</li>
+<li>
+<p>Application properties packaged inside your jar (<code>application.properties</code> and YAML variants).</p>
+</li>
+<li>
+<p><code>@PropertySource</code> annotations on your <code>@Configuration</code> classes.</p>
+</li>
+<li>
+<p>Default properties (specified by setting <code>SpringApplication.setDefaultProperties</code>).</p>
 </li>
 </ul>
 </div>
 </div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="../reference/spring_data.html">Spring Data</a></span>
+  <span class="prev"><a href="../how-to/testing.html">Testing</a></span>
+  <span class="next"><a href="spring_data.html">Spring Data</a></span>
 </nav>
 </article>
   </div>
