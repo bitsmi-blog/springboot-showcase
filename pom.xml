@@ -60,7 +60,7 @@
         <module>spring-core/validation</module>
 
         <module>spring-data-jpa/repository-extension</module>
-		<module>spring-data-jpa/criteria-builder</module>
+		<module>spring-data-jpa/queries</module>
 
         <module>spring-mvc/api-versioning</module>
 
