@@ -25,7 +25,10 @@ import java.lang.annotation.Target;
 
 @ExtendWith({SpringExtension.class})
 @WebAppConfiguration
-@ContextConfiguration(loader = AnnotationConfigWebContextLoader.class)
+@ContextConfiguration(
+        loader = AnnotationConfigWebContextLoader.class,
+        classes = ControllerIntegrationTestConfig.class
+)
 @EnableAutoConfiguration
 @AutoConfigureMockMvc
 @AutoConfigureTestDatabase
@@ -35,7 +38,6 @@ import java.lang.annotation.Target;
 )
 
 @Tag("IntegrationTest")
-public @interface ControllerIntegrationTest
-{
+public @interface ControllerIntegrationTest {
 
 }

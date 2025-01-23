@@ -29,7 +29,10 @@ import java.lang.annotation.Target;
 @Inherited
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(loader = AnnotationConfigContextLoader.class)
+@ContextConfiguration(
+        loader = AnnotationConfigContextLoader.class,
+        classes = ServiceIntegrationTestConfig.class
+)
 @Transactional
 // Test-managed transaction should be rolled back after the test method has completed.
 @Rollback

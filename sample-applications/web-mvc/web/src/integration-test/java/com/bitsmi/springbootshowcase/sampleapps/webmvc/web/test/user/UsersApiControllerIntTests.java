@@ -1,24 +1,11 @@
 package com.bitsmi.springbootshowcase.sampleapps.webmvc.web.test.user;
 
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.testSecurityContext;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import com.bitsmi.springbootshowcase.sampleapps.application.testsupport.common.UserRegistryApplicationServiceMocker;
 import com.bitsmi.springbootshowcase.sampleapps.application.testsupport.common.UserRetrievalApplicationServiceMocker;
 import com.bitsmi.springbootshowcase.sampleapps.domain.common.dto.PaginatedData;
 import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.common.controller.response.PaginatedResponse;
 import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.common.controller.response.Pagination;
 import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.common.controller.response.Sort;
-import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.config.WebModuleConfig;
-import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.test.config.ApplicationModuleMockConfig;
-import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.test.config.DomainModuleMockConfig;
-import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.test.config.UserDetailsTestConfig;
 import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.testsupport.internal.ControllerIntegrationTest;
 import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.testsupport.user.controller.request.CreateUserRequestObjectMother;
 import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.testsupport.user.controller.request.UpdateUserRequestObjectMother;
@@ -27,22 +14,29 @@ import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.user.controller.reque
 import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.user.controller.request.CreateUserRequest;
 import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.user.controller.request.UpdateUserRequest;
 import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.user.controller.response.User;
-import com.bitsmi.springbootshowcase.utils.IgnoreOnComponentScan;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.security.web.FilterChainProxy;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+
+import java.util.List;
+
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.testSecurityContext;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ControllerIntegrationTest
 @WithUserDetails("john.doe")
@@ -381,21 +375,5 @@ class UsersApiControllerIntTests {
                     .andDo(print())
                     .andExpect(status().isNoContent());
         }
-    }
-
-    /*---------------------------*
-     * CONFIG AND HELPERS
-     *---------------------------*/
-    @TestConfiguration
-    @Import({
-            WebModuleConfig.class,
-            ApplicationModuleMockConfig.class,
-            DomainModuleMockConfig.class,
-            UserDetailsTestConfig.class
-    })
-    @IgnoreOnComponentScan
-    static class TestConfig
-    {
-
     }
 }

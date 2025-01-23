@@ -1,9 +1,8 @@
-package com.bitsmi.springbootshowcase.sampleapps.webmvc.main;
+package com.bitsmi.springbootshowcase.sampleapps.kafka.messaging;
 
 /**
  * Marker interface used by {@link org.springframework.context.annotation.ComponentScan} basePackages configurations
  */
-public interface MainPackage
-{
+public interface MessagingModulePackage {
 
 }

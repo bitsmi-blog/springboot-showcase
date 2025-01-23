@@ -1,9 +1,8 @@
-package com.bitsmi.springbootshowcase.sampleapps.infrastructure;
+package com.bitsmi.springbootshowcase.sampleapps.webmvc.main;
 
 /**
  * Marker interface used by {@link org.springframework.context.annotation.ComponentScan} basePackages configurations
  */
-public interface InfrastructurePackage
-{
+public interface MainModulePackage {
 
 }

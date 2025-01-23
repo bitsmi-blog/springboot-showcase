@@ -9,16 +9,12 @@ import com.bitsmi.springbootshowcase.sampleapps.domain.testsupport.common.model.
 import com.bitsmi.springbootshowcase.sampleapps.domain.testsupport.common.model.UserObjectMother;
 import com.bitsmi.springbootshowcase.sampleapps.infrastructure.common.entity.UserEntity;
 import com.bitsmi.springbootshowcase.sampleapps.infrastructure.common.repository.UserRepository;
-import com.bitsmi.springbootshowcase.sampleapps.infrastructure.config.InfrastructureModuleConfig;
 import com.bitsmi.springbootshowcase.sampleapps.infrastructure.testsupport.internal.ServiceIntegrationTest;
-import com.bitsmi.springbootshowcase.utils.IgnoreOnComponentScan;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.context.annotation.Import;
 import org.springframework.test.context.TestPropertySource;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.utility.DockerImageName;
@@ -217,16 +213,8 @@ class UserDomainRepositoryIntTests
     }
 
     /*---------------------------*
-     * TEST CONFIG AND HELPERS
+     * HELPERS
      *---------------------------*/
-    @TestConfiguration
-    @Import({ InfrastructureModuleConfig.class })
-    @IgnoreOnComponentScan
-    static class TestConfig
-    {
-
-    }
-
     private void assertUser1001(User user)
     {
         LocalDateTime controlDate = LocalDateTime.of(LocalDate.of(2024, 1, 1), LocalTime.MIN);

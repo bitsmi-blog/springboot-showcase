@@ -2,10 +2,6 @@ package com.bitsmi.springbootshowcase.sampleapps.webmvc.web.test.auth;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.config.WebModuleConfig;
-import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.test.config.ApplicationModuleMockConfig;
-import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.test.config.DomainModuleMockConfig;
-import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.test.config.UserDetailsTestConfig;
 import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.testsupport.internal.ControllerIntegrationTest;
 import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.testsupport.user.controller.response.UserObjectMother;
 import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.user.controller.response.User;
@@ -16,8 +12,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.context.annotation.Import;
 import org.springframework.security.web.FilterChainProxy;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -125,19 +119,5 @@ class JwtAuthIntTests {
                         .header("Authorization", "Bearer " + token)
                 )
                 .andExpect(status().isForbidden());
-    }
-
-    /*---------------------------*
-     * TEST CONFIG AND HELPERS
-     *---------------------------*/
-    @TestConfiguration()
-    @Import({
-            WebModuleConfig.class,
-            ApplicationModuleMockConfig.class,
-            DomainModuleMockConfig.class,
-            UserDetailsTestConfig.class
-    })
-    static class TestConfig {
-
     }
 }

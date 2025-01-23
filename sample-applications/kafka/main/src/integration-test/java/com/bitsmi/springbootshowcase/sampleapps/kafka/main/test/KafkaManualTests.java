@@ -16,15 +16,14 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 
 @Tag("ManualTest")
-class KafkaManualTests
-{
+class KafkaManualTests {
+
     private static final Logger LOGGER = LoggerFactory.getLogger(KafkaManualTests.class);
 
     private KafkaTemplate<String, Object> kafkaTemplate;
 
     @BeforeEach
-    void setUp()
-    {
+    void setUp() {
         var configProps = new HashMap<String, Object>();
         configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
         configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
@@ -34,8 +33,7 @@ class KafkaManualTests
     }
 
     @Test
-    void kafkaTest1() throws Exception
-    {
+    void kafkaTest1() throws Exception {
         var messageTemplate = """
                     {
                         "oneName": "name_%1$s",

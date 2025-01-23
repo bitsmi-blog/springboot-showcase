@@ -1,9 +1,7 @@
 package com.bitsmi.springbootshowcase.sampleapps.kafka.messaging.config;
 
-import com.bitsmi.springbootshowcase.sampleapps.kafka.messaging.MessagingPackage;
 import com.bitsmi.springbootshowcase.sampleapps.kafka.messaging.sample.message.SampleOneMessage;
 import com.bitsmi.springbootshowcase.sampleapps.kafka.messaging.sample.message.SampleTwoMessage;
-import com.bitsmi.springbootshowcase.utils.IgnoreOnComponentScan;
 import org.apache.kafka.clients.admin.AdminClientConfig;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
@@ -12,9 +10,7 @@ import org.apache.kafka.common.serialization.StringDeserializer;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.FilterType;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.config.KafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
@@ -38,18 +34,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
-@ComponentScan(
-        basePackageClasses = { MessagingPackage.class },
-        excludeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION, classes = IgnoreOnComponentScan.class)
-)
-public class MessagingModuleConfig
-{
+public class MessagingModuleConfig {
+
     @Value(value = "${spring.kafka.bootstrap-servers}")
     private String bootstrapAddress;
 
     @Bean
-    public KafkaAdmin kafkaAdmin()
-    {
+    public KafkaAdmin kafkaAdmin() {
         Map<String, Object> configs = new HashMap<>();
         configs.put(AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
         return new KafkaAdmin(configs);
@@ -59,14 +50,12 @@ public class MessagingModuleConfig
      * TOPICS
      *----------------------------*/
     @Bean("test-topic1Topic")
-    public NewTopic testTopic1()
-    {
+    public NewTopic testTopic1() {
         return new NewTopic("test-topic1", 1, (short) 1);
     }
 
     @Bean("test-topic2Topic")
-    public NewTopic testTopic2()
-    {
+    public NewTopic testTopic2() {
         return new NewTopic("test-topic2", 1, (short) 1);
     }
 
@@ -74,8 +63,7 @@ public class MessagingModuleConfig
      * PRODUCER
      *----------------------------*/
     @Bean
-    public ProducerFactory<String, Object> producerFactory()
-    {
+    public ProducerFactory<String, Object> producerFactory() {
         Map<String, Object> props = new HashMap<>();
         props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
         props.put(ProducerConfig.TRANSACTIONAL_ID_CONFIG, "tx-");
@@ -92,8 +80,7 @@ public class MessagingModuleConfig
     }
 
     @Bean
-    public KafkaTemplate<String, Object> kafkaTemplate()
-    {
+    public KafkaTemplate<String, Object> kafkaTemplate() {
         return new KafkaTemplate<>(producerFactory());
     }
 
@@ -101,8 +88,7 @@ public class MessagingModuleConfig
      * CONSUMER
      *----------------------------*/
     @Bean
-    public ConsumerFactory<Integer, String> consumerFactory()
-    {
+    public ConsumerFactory<Integer, String> consumerFactory() {
         Map<String, Object> props = new HashMap<>();
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
         props.put(ConsumerConfig.ISOLATION_LEVEL_CONFIG, "read_committed");
@@ -113,8 +99,7 @@ public class MessagingModuleConfig
     }
 
     @Bean
-    public RecordMessageConverter multiTypeConverter()
-    {
+    public RecordMessageConverter multiTypeConverter() {
         StringJsonMessageConverter converter = new StringJsonMessageConverter();
         DefaultJackson2JavaTypeMapper typeMapper = new DefaultJackson2JavaTypeMapper();
         typeMapper.setTypePrecedence(Jackson2JavaTypeMapper.TypePrecedence.TYPE_ID);
@@ -131,8 +116,7 @@ public class MessagingModuleConfig
     }
 
     @Bean
-    public DefaultErrorHandler errorHandler()
-    {
+    public DefaultErrorHandler errorHandler() {
         BackOff fixedBackOff = new FixedBackOff(1_000, 0);
         return new DefaultErrorHandler((consumerRecord, exception) -> {
                 // logic to execute when all retry attempts are exhausted
@@ -141,8 +125,7 @@ public class MessagingModuleConfig
     }
 
     @Bean
-    public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<Integer, String>> kafkaListenerContainerFactory()
-    {
+    public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<Integer, String>> kafkaListenerContainerFactory() {
         ConcurrentKafkaListenerContainerFactory<Integer, String> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
         factory.setConcurrency(1);
