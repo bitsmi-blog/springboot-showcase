@@ -1,6 +1,6 @@
 package com.bitsmi.springbootshowcase.springdatajpa.repositoryextension.test.infrastructure.inventory;
 
-import com.bitsmi.springbootshowcase.springdatajpa.repositoryextension.infrastructure.config.InfrastructureModuleConfig;
+import com.bitsmi.springbootshowcase.springdatajpa.repositoryextension.infrastructure.InfrastructurePackage;
 import com.bitsmi.springbootshowcase.springdatajpa.repositoryextension.infrastructure.inventory.entity.ProductEntity;
 import com.bitsmi.springbootshowcase.springdatajpa.repositoryextension.infrastructure.inventory.projection.ProductStockProjection;
 import com.bitsmi.springbootshowcase.springdatajpa.repositoryextension.infrastructure.inventory.projection.ProductSummaryProjection;
@@ -17,7 +17,8 @@ import org.springframework.boot.test.autoconfigure.core.AutoConfigureCache;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
 import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
@@ -145,8 +146,10 @@ class ProductRepositoryTestContainersTests
      * TEST CONFIG AND HELPERS
      *---------------------------*/
     @TestConfiguration
-    @Import({ InfrastructureModuleConfig.class })
-    @IgnoreOnComponentScan
+    @ComponentScan(
+            basePackageClasses = { InfrastructurePackage.class },
+            excludeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION, classes = IgnoreOnComponentScan.class)
+    )
     static class TestConfig
     {
 

@@ -1,7 +1,7 @@
 package com.bitsmi.springbootshowcase.springcore.dependencyinjection.test.product.service;
 
 import com.bitsmi.springbootshowcase.springcore.dependencyinjection.Constants;
-import com.bitsmi.springbootshowcase.springcore.dependencyinjection.product.config.ProductServiceConfig;
+import com.bitsmi.springbootshowcase.springcore.dependencyinjection.product.ProductPackage;
 import com.bitsmi.springbootshowcase.springcore.dependencyinjection.product.service.ProductService;
 import com.bitsmi.springbootshowcase.utils.IgnoreOnComponentScan;
 import org.assertj.core.api.SoftAssertions;
@@ -15,7 +15,8 @@ import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
@@ -26,8 +27,8 @@ import java.util.Optional;
 @ExtendWith({SpringExtension.class, SoftAssertionsExtension.class})
 @ContextConfiguration(loader = AnnotationConfigContextLoader.class)
 @Tag("IntegrationTest")
-class ProductServicesIntTests
-{
+class ProductServicesIntTests {
+
     @Autowired
     private ProductService defaultProductService;
     @Autowired
@@ -54,8 +55,7 @@ class ProductServicesIntTests
 
     @Test
     @DisplayName("should inject the main product service")
-    void productServiceInjectionTest1()
-    {
+    void productServiceInjectionTest1() {
         String actualProductName = defaultProductService.getProductName();
         softly.assertThat(actualProductName)
                 .as("Actual product name")
@@ -64,8 +64,7 @@ class ProductServicesIntTests
 
     @Test
     @DisplayName("should inject the qualified product service")
-    void productServiceInjectionTest2()
-    {
+    void productServiceInjectionTest2() {
         String actualProductName = alternativeProductService.getProductName();
         softly.assertThat(actualProductName)
                 .as("Actual product name")
@@ -74,8 +73,7 @@ class ProductServicesIntTests
 
     @Test
     @DisplayName("should inject multiple product services when list is used")
-    void productServiceInjectionTest3()
-    {
+    void productServiceInjectionTest3() {
         List<String> actualProducts = allProductServicesAsList.stream()
                 .map(ProductService::getProductName)
                 .toList();
@@ -88,8 +86,7 @@ class ProductServicesIntTests
 
     @Test
     @DisplayName("should inject multiple product services when provider is used")
-    void productServiceInjectionTest4()
-    {
+    void productServiceInjectionTest4() {
         List<String> actualProducts = allProductServicesProvider.stream()
                 .map(ProductService::getProductName)
                 .toList();
@@ -102,8 +99,7 @@ class ProductServicesIntTests
 
     @Test
     @DisplayName("should not inject optional service given no OPTIONAL profile")
-    void productServiceInjectionTest5()
-    {
+    void productServiceInjectionTest5() {
         softly.assertThat(optionalProductService)
                 .as("Instance")
                 .isNull();
@@ -119,10 +115,11 @@ class ProductServicesIntTests
      * TEST CONFIG AND HELPERS
      *---------------------------*/
     @TestConfiguration
-    @Import({ ProductServiceConfig.class })
-    @IgnoreOnComponentScan
-    static class TestConfig
-    {
+    @ComponentScan(
+            basePackageClasses = { ProductPackage.class },
+            excludeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION, classes = IgnoreOnComponentScan.class)
+    )
+    static class TestConfig {
 
     }
 }

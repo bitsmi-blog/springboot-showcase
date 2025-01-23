@@ -1,6 +1,6 @@
 package com.bitsmi.springbootshowcase.clients.openfeign.server.test.application.controller;
 
-import com.bitsmi.springbootshowcase.clients.openfeign.server.ServerModuleConfig;
+import com.bitsmi.springbootshowcase.clients.openfeign.server.ServerModulePackage;
 import com.bitsmi.springbootshowcase.utils.IgnoreOnComponentScan;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -11,7 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.AnnotationConfigWebContextLoader;
@@ -31,16 +32,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 
 @Tag("IntegrationTest")
-class ApplicationApiControllerIntTests
-{
+class ApplicationApiControllerIntTests {
+
     @Autowired
     private WebApplicationContext context;
 
     private MockMvc mockMvc;
 
     @BeforeEach
-    void setup()
-    {
+    void setup() {
         this.mockMvc = MockMvcBuilders
                 .webAppContextSetup(this.context)
                 .build();
@@ -48,8 +48,7 @@ class ApplicationApiControllerIntTests
 
     @Test
     @DisplayName("Get Hello should return Hello message")
-    void getHelloTest1() throws Exception
-    {
+    void getHelloTest1() throws Exception {
         this.mockMvc.perform(get("/api/application/hello"))
                 .andExpect(status().isOk())
                 .andExpect(content().string("Hello from SpringBoot Showcase application"));
@@ -59,12 +58,11 @@ class ApplicationApiControllerIntTests
      * SETUP AND HELPERS
      *---------------------------*/
     @TestConfiguration
-    @Import({
-            ServerModuleConfig.class
-    })
-    @IgnoreOnComponentScan
-    static class TestConfig
-    {
+    @ComponentScan(
+            basePackageClasses = { ServerModulePackage.class },
+            excludeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION, classes = IgnoreOnComponentScan.class)
+    )
+    static class TestConfig {
 
     }
 }

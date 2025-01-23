@@ -1,6 +1,6 @@
 package com.bitsmi.springbootshowcase.springcore.validation.test.application.inventory;
 
-import com.bitsmi.springbootshowcase.springcore.validation.application.config.ApplicationModuleConfig;
+import com.bitsmi.springbootshowcase.springcore.validation.application.ApplicationPackage;
 import com.bitsmi.springbootshowcase.springcore.validation.application.inventory.InventoryService;
 import com.bitsmi.springbootshowcase.springcore.validation.application.inventory.dto.CategoryDto;
 import com.bitsmi.springbootshowcase.springcore.validation.application.inventory.dto.ProductDto;
@@ -17,7 +17,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
@@ -33,14 +34,15 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader = AnnotationConfigContextLoader.class)
 @Tag("IntegrationTest")
-class SpringValidationIntTests
-{
+class SpringValidationIntTests {
+
     @Autowired
     private InventoryService inventoryService;
 
     @Nested
     @DisplayName("Parameter default validation")
     class DefaultGroupValidationTests {
+
         @Test
         @DisplayName("Should succeed when a valid product is provided")
         void successTest1() {
@@ -62,8 +64,7 @@ class SpringValidationIntTests
 
         @Test
         @DisplayName("Should fail when an invalid product is provided")
-        void failTest1()
-        {
+        void failTest1() {
             final ProductDto providedProduct = ProductDto.builder()
                     // Validation fail: Missing externalId
                     .name("Product 1")
@@ -101,10 +102,10 @@ class SpringValidationIntTests
             """
     )
     class MandatoryGroupValidationTests {
+
         @Test
         @DisplayName("Should success when only mandatory fields are provided")
-        void mandatoryValidationGroupTest1()
-        {
+        void mandatoryValidationGroupTest1() {
             final StoreDto providedStore = StoreDto.builder()
                     .externalId("store-1")
                     .name("Store 1")
@@ -118,8 +119,7 @@ class SpringValidationIntTests
 
         @Test
         @DisplayName("Should fail when only mandatory fields are missing")
-        void mandatoryValidationGroupTest2()
-        {
+        void mandatoryValidationGroupTest2() {
             final StoreDto providedStore = StoreDto.builder()
                     .externalId("store-1")
                     // missing mandatory `name`
@@ -144,10 +144,10 @@ class SpringValidationIntTests
             """
     )
     class FullGroupValidationTests {
+
         @Test
         @DisplayName("Should fail when a mandatory field is missing")
-        void fullValidationGroupTest1()
-        {
+        void fullValidationGroupTest1() {
             final StoreDto providedStore = StoreDto.builder()
                     .externalId("store-1")
                     // missing mandatory `name`
@@ -170,8 +170,7 @@ class SpringValidationIntTests
 
         @Test
         @DisplayName("Should fail when an optional field is missing")
-        void validateStoreFullDataTest2()
-        {
+        void validateStoreFullDataTest2() {
             final StoreDto providedStore = StoreDto.builder()
                     .externalId("store-1")
                     .name("Store 1")
@@ -195,11 +194,12 @@ class SpringValidationIntTests
      * TEST CONFIG AND HELPERS
      *---------------------------*/
     @TestConfiguration
-    @Import({ ApplicationModuleConfig.class })
+    @ComponentScan(
+            basePackageClasses = { ApplicationPackage.class },
+            excludeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION, classes = IgnoreOnComponentScan.class)
+    )
     @EnableAutoConfiguration
-    @IgnoreOnComponentScan
-    static class TestConfig
-    {
+    static class TestConfig {
 
     }
 }

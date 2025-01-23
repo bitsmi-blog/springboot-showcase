@@ -1,7 +1,7 @@
 package com.bitsmi.springbootshowcase.springcore.aop.test.aspect;
 
+import com.bitsmi.springbootshowcase.springcore.aop.AopModulePackage;
 import com.bitsmi.springbootshowcase.springcore.aop.aspect.StringEnhancer;
-import com.bitsmi.springbootshowcase.springcore.aop.config.AopModuleConfig;
 import com.bitsmi.springbootshowcase.springcore.aop.service.ProductService;
 import com.bitsmi.springbootshowcase.utils.IgnoreOnComponentScan;
 import org.assertj.core.api.SoftAssertions;
@@ -15,7 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.SpyBean;
-import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
@@ -26,8 +27,8 @@ import static org.mockito.Mockito.verifyNoInteractions;
 @ExtendWith({SpringExtension.class, SoftAssertionsExtension.class})
 @ContextConfiguration(loader = AnnotationConfigContextLoader.class)
 @Tag("IntegrationTest")
-class EnhancedAspectIntTests
-{
+class EnhancedAspectIntTests {
+
     @Autowired
     private ProductService productService;
 
@@ -39,8 +40,7 @@ class EnhancedAspectIntTests
 
     @Test
     @DisplayName("aspect should be executed given an enhanced method")
-    void enhancedMethodTest1()
-    {
+    void enhancedMethodTest1() {
         String actualProductName = productService.getProductName();
 
         softly.assertThat(actualProductName)
@@ -52,8 +52,7 @@ class EnhancedAspectIntTests
 
     @Test
     @DisplayName("aspect should not be executed given a not enhanced method")
-    void notEnhancedMethodTest1()
-    {
+    void notEnhancedMethodTest1() {
         String actualProductName = productService.getProductReference();
 
         softly.assertThat(actualProductName)
@@ -67,12 +66,13 @@ class EnhancedAspectIntTests
      * TEST CONFIG AND HELPERS
      *---------------------------*/
     @TestConfiguration
-    @Import({ AopModuleConfig.class })
-    @IgnoreOnComponentScan
+    @ComponentScan(
+            basePackageClasses = { AopModulePackage.class },
+            excludeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION, classes = IgnoreOnComponentScan.class)
+    )
     // Enable autoconfiguration of AOP starter
     @EnableAutoConfiguration
-    static class TestConfig
-    {
+    static class TestConfig {
 
     }
 }

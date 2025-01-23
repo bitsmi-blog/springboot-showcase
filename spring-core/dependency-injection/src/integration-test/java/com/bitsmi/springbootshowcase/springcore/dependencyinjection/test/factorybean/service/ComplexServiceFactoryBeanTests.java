@@ -2,7 +2,7 @@ package com.bitsmi.springbootshowcase.springcore.dependencyinjection.test.factor
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.bitsmi.springbootshowcase.springcore.dependencyinjection.factorybean.config.FactoryBeanConfig;
+import com.bitsmi.springbootshowcase.springcore.dependencyinjection.factorybean.FactoryBeanPackage;
 import com.bitsmi.springbootshowcase.springcore.dependencyinjection.factorybean.service.ComplexService;
 import com.bitsmi.springbootshowcase.springcore.dependencyinjection.factorybean.service.impl.ComplexServiceFactoryBean;
 import com.bitsmi.springbootshowcase.utils.IgnoreOnComponentScan;
@@ -13,7 +13,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
@@ -60,10 +61,11 @@ class ComplexServiceFactoryBeanTests {
      * TEST CONFIG AND HELPERS
      *---------------------------*/
     @TestConfiguration
-    @Import({ FactoryBeanConfig.class })
-    @IgnoreOnComponentScan
-    static class TestConfig
-    {
+    @ComponentScan(
+            basePackageClasses = { FactoryBeanPackage.class },
+            excludeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION, classes = IgnoreOnComponentScan.class)
+    )
+    static class TestConfig {
 
     }
 }

@@ -1,8 +1,8 @@
 package com.bitsmi.springbootshowcase.springcore.cache.test.infrastructure.inventory;
 
-import com.bitsmi.springbootshowcase.springcore.cache.domain.inventory.model.Product;
 import com.bitsmi.springbootshowcase.springcore.cache.domain.inventory.ProductDomainRepository;
-import com.bitsmi.springbootshowcase.springcore.cache.infrastructure.config.InfrastructureModuleConfig;
+import com.bitsmi.springbootshowcase.springcore.cache.domain.inventory.model.Product;
+import com.bitsmi.springbootshowcase.springcore.cache.infrastructure.InfrastructureModulePackage;
 import com.bitsmi.springbootshowcase.springcore.cache.infrastructure.inventory.entity.ProductEntity;
 import com.bitsmi.springbootshowcase.springcore.cache.infrastructure.inventory.repository.ProductRepository;
 import com.bitsmi.springbootshowcase.springcore.cache.testsupport.infrastructure.inventory.entity.ProductEntityObjectMother;
@@ -22,6 +22,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureTestEnti
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.cache.CacheManager;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
@@ -50,8 +52,8 @@ import static org.mockito.Mockito.when;
 @Import({ ValidationAutoConfiguration.class })
 
 @Tag("IntegrationTest")
-class ProductDomainRepositoryIntTests
-{
+class ProductDomainRepositoryIntTests {
+
     @MockBean
     private ProductRepository productRepository;
 
@@ -62,8 +64,7 @@ class ProductDomainRepositoryIntTests
     private CacheManager cacheManager;
 
     @AfterEach
-    void tearDown()
-    {
+    void tearDown() {
         // Clear caches so each test finds an empty cache
         cacheManager.getCacheNames()
                 .forEach(name -> cacheManager.getCache(name).clear());
@@ -71,8 +72,7 @@ class ProductDomainRepositoryIntTests
 
     @Test
     @DisplayName("findProductByExternalId should cache results when executed multiple times for same provided externalId")
-    void findProductByExternalIdCacheTest1()
-    {
+    void findProductByExternalIdCacheTest1() {
         final String providedProduct1ExternalId = ProductEntityObjectMother.EXTERNAL_ID_PRODUCT1;
         final String providedProduct2ExternalId = ProductEntityObjectMother.EXTERNAL_ID_PRODUCT2;
         final ProductEntity expectedProductEntity1 = ProductEntityObjectMother.product1();
@@ -99,8 +99,7 @@ class ProductDomainRepositoryIntTests
 
     @Test
     @DisplayName("updateProduct should evict cache given cached product when its externalId is provided")
-    void findProductByExternalIdCacheTest2()
-    {
+    void findProductByExternalIdCacheTest2() {
         final Product providedProduct = Product.builder()
                 .id(ProductEntityObjectMother.ID_PRODUCT1)
                 .externalId(ProductEntityObjectMother.EXTERNAL_ID_PRODUCT1)
@@ -127,10 +126,13 @@ class ProductDomainRepositoryIntTests
      * TEST CONFIG AND HELPERS
      *---------------------------*/
     @TestConfiguration
-    @Import({ InfrastructureModuleConfig.class })
-    @IgnoreOnComponentScan
-    static class TestConfig
-    {
+    @ComponentScan(
+            basePackageClasses = {
+                    InfrastructureModulePackage.class
+            },
+            excludeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION, classes = IgnoreOnComponentScan.class)
+    )
+    static class TestConfig {
 
     }
 }

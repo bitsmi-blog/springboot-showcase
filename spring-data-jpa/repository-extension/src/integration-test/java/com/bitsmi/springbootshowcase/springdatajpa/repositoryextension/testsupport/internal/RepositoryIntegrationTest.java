@@ -42,7 +42,6 @@ import java.lang.annotation.Target;
 @Import({ValidationAutoConfiguration.class})
 
 @Tag("IntegrationTest")
-public @interface RepositoryIntegrationTest
-{
+public @interface RepositoryIntegrationTest {
 
 }

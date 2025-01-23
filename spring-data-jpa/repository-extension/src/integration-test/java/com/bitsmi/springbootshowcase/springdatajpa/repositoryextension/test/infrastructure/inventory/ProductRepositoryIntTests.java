@@ -1,6 +1,6 @@
 package com.bitsmi.springbootshowcase.springdatajpa.repositoryextension.test.infrastructure.inventory;
 
-import com.bitsmi.springbootshowcase.springdatajpa.repositoryextension.infrastructure.config.InfrastructureModuleConfig;
+import com.bitsmi.springbootshowcase.springdatajpa.repositoryextension.infrastructure.InfrastructurePackage;
 import com.bitsmi.springbootshowcase.springdatajpa.repositoryextension.infrastructure.inventory.entity.ProductEntity;
 import com.bitsmi.springbootshowcase.springdatajpa.repositoryextension.infrastructure.inventory.projection.ProductStockProjection;
 import com.bitsmi.springbootshowcase.springdatajpa.repositoryextension.infrastructure.inventory.projection.ProductSummaryProjection;
@@ -11,7 +11,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
 import org.springframework.test.context.TestPropertySource;
 
 import java.util.List;
@@ -25,15 +26,14 @@ import static org.assertj.core.api.Assertions.assertThat;
         "spring.liquibase.change-log=classpath:db/changelogs/test/infrastructure/inventory/product_repository_tests_main.xml"
     }
 )
-class ProductRepositoryIntTests
-{
+class ProductRepositoryIntTests {
+
     @Autowired
     private ProductRepository productRepository;
 
     @Test
     @DisplayName("findAll should return all products")
-    void findAllTest1()
-    {
+    void findAllTest1() {
         List<ProductEntity> products = productRepository.findAll();
 
         assertThat(products).hasSize(5);
@@ -41,8 +41,7 @@ class ProductRepositoryIntTests
 
     @Test
     @DisplayName("findByField should return corresponding products given existing products when their field value is provided")
-    void findByFieldTest1()
-    {
+    void findByFieldTest1() {
         List<ProductEntity> actualProducts = productRepository.findByField("externalId", "product-1.1");
 
         assertThat(actualProducts).hasSize(1)
@@ -56,8 +55,7 @@ class ProductRepositoryIntTests
 
     @Test
     @DisplayName("findByField should return unique product given an existing product when its field value is provided")
-    void findUniqueByFieldTest1()
-    {
+    void findUniqueByFieldTest1() {
         Optional<ProductEntity> actualProduct = productRepository.findUniqueByField("externalId", "product-1.1");
 
         assertThat(actualProduct).isPresent()
@@ -71,8 +69,7 @@ class ProductRepositoryIntTests
 
     @Test
     @DisplayName("findStockProjectionByExternalId should return product stock given an existing product when its externalId is provided")
-    void findStockProjectionByExternalIdTest1()
-    {
+    void findStockProjectionByExternalIdTest1() {
         Optional<ProductStockProjection> actualProduct = productRepository.findStockProjectionByExternalId("product-1.1");
 
         assertThat(actualProduct).isPresent()
@@ -86,8 +83,7 @@ class ProductRepositoryIntTests
 
     @Test
     @DisplayName("findSummaryProjectionByExternalId should return product summary given an existing product when its externalId is provided")
-    void findSummaryProjectionByExternalIdTest1()
-    {
+    void findSummaryProjectionByExternalIdTest1() {
         Optional<ProductSummaryProjection> actualProduct = productRepository.findSummaryProjectionByExternalId("product-1.1");
 
         assertThat(actualProduct).isPresent()
@@ -103,10 +99,11 @@ class ProductRepositoryIntTests
      * TEST CONFIG AND HELPERS
      *---------------------------*/
     @TestConfiguration
-    @Import({ InfrastructureModuleConfig.class })
-    @IgnoreOnComponentScan
-    static class TestConfig
-    {
+    @ComponentScan(
+            basePackageClasses = { InfrastructurePackage.class },
+            excludeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION, classes = IgnoreOnComponentScan.class)
+    )
+    static class TestConfig {
 
     }
 }

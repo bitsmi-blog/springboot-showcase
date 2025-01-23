@@ -1,9 +1,7 @@
-package com.bitsmi.springbootshowcase.clients.openfeign.server;
+package com.bitsmi.springbootshowcase.springcore.cache.application;
 
 /**
  * Marker interface used by {@link org.springframework.context.annotation.ComponentScan} basePackages configurations
  */
-public interface ServerPackage
-{
-
+public interface ApplicationModulePackage {
 }

@@ -1,7 +1,7 @@
 package com.bitsmi.springbootshowcase.clients.openfeign.server.test.user.controller;
 
 import com.bitsmi.springbootshowcase.clients.openfeign.api.user.response.UserDetailsResponse;
-import com.bitsmi.springbootshowcase.clients.openfeign.server.ServerModuleConfig;
+import com.bitsmi.springbootshowcase.clients.openfeign.server.ServerModulePackage;
 import com.bitsmi.springbootshowcase.utils.IgnoreOnComponentScan;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,7 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.AnnotationConfigWebContextLoader;
@@ -33,8 +34,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 
 @Tag("IntegrationTest")
-class UserApiControllerIntTests
-{
+class UserApiControllerIntTests {
+
     @Autowired
     private WebApplicationContext context;
 
@@ -44,8 +45,7 @@ class UserApiControllerIntTests
     private MockMvc mockMvc;
 
     @BeforeEach
-    void setup()
-    {
+    void setup() {
         this.mockMvc = MockMvcBuilders
                 .webAppContextSetup(this.context)
                 .build();
@@ -53,8 +53,7 @@ class UserApiControllerIntTests
 
     @Test
     @DisplayName("Get user details should return user details given a logged user")
-    void getUserDetailsTest1() throws Exception
-    {
+    void getUserDetailsTest1() throws Exception {
         final UserDetailsResponse expectedResponse = UserDetailsResponse.builder()
                 .username("john.doe")
                 .completeName("John Doe")
@@ -67,8 +66,7 @@ class UserApiControllerIntTests
 
     @Test
     @DisplayName("Get user details should return forbidden status given a non logged user")
-    void getAdminDetailsTest1() throws Exception
-    {
+    void getAdminDetailsTest1() throws Exception {
         final String username = "admin";
         final UserDetailsResponse expectedResponse = UserDetailsResponse.builder()
                 .username(username)
@@ -83,12 +81,11 @@ class UserApiControllerIntTests
      * SETUP AND HELPERS
      *---------------------------*/
     @TestConfiguration
-    @Import({
-            ServerModuleConfig.class
-    })
-    @IgnoreOnComponentScan
-    static class TestConfig
-    {
+    @ComponentScan(
+            basePackageClasses = { ServerModulePackage.class },
+            excludeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION, classes = IgnoreOnComponentScan.class)
+    )
+    static class TestConfig {
 
     }
 }

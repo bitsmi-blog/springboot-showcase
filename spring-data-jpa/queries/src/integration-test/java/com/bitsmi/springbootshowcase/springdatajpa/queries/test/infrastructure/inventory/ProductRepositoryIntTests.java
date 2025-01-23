@@ -1,6 +1,6 @@
 package com.bitsmi.springbootshowcase.springdatajpa.queries.test.infrastructure.inventory;
 
-import com.bitsmi.springbootshowcase.springdatajpa.queries.infrastructure.config.InfrastructureModuleConfig;
+import com.bitsmi.springbootshowcase.springdatajpa.queries.infrastructure.InfrastructurePackage;
 import com.bitsmi.springbootshowcase.springdatajpa.queries.infrastructure.inventory.entity.ProductEntity;
 import com.bitsmi.springbootshowcase.springdatajpa.queries.infrastructure.inventory.repository.ProductRepository;
 import com.bitsmi.springbootshowcase.springdatajpa.queries.testsupport.internal.RepositoryIntegrationTest;
@@ -9,7 +9,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
 import org.springframework.test.context.TestPropertySource;
 
 import java.time.LocalDateTime;
@@ -86,8 +87,10 @@ class ProductRepositoryIntTests {
      * TEST CONFIG AND HELPERS
      *---------------------------*/
     @TestConfiguration
-    @Import({ InfrastructureModuleConfig.class })
-    @IgnoreOnComponentScan
+    @ComponentScan(
+            basePackageClasses = { InfrastructurePackage.class },
+            excludeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION, classes = IgnoreOnComponentScan.class)
+    )
     static class TestConfig {
 
     }

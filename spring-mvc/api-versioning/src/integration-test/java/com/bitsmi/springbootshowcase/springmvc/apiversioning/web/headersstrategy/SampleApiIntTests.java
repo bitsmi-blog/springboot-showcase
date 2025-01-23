@@ -1,6 +1,6 @@
 package com.bitsmi.springbootshowcase.springmvc.apiversioning.web.headersstrategy;
 
-import com.bitsmi.springbootshowcase.springmvc.apiversioning.web.config.WebModuleConfig;
+import com.bitsmi.springbootshowcase.springmvc.apiversioning.web.WebPackage;
 import com.bitsmi.springbootshowcase.utils.IgnoreOnComponentScan;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -11,7 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.AnnotationConfigWebContextLoader;
@@ -33,16 +34,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 
 @Tag("IntegrationTest")
-class SampleApiIntTests
-{
+class SampleApiIntTests {
+
     @Autowired
     private WebApplicationContext context;
 
     private MockMvc mockMvc;
 
     @BeforeEach
-    void setup()
-    {
+    void setup() {
         this.mockMvc = MockMvcBuilders
                 .webAppContextSetup(this.context)
                 .build();
@@ -50,8 +50,7 @@ class SampleApiIntTests
 
     @Test
     @DisplayName("get sample should return V1 result when API V1 version header is provider")
-    void getSampleTest1() throws Exception
-    {
+    void getSampleTest1() throws Exception {
         this.mockMvc.perform(get("/api/headers-strategy/sample")
                         .header("X-Showcase-Api-Version", "V1")
                 )
@@ -62,8 +61,7 @@ class SampleApiIntTests
 
     @Test
     @DisplayName("get sample should return V2 result when API V2 version header is provider")
-    void getSampleTest2() throws Exception
-    {
+    void getSampleTest2() throws Exception {
         this.mockMvc.perform(get("/api/headers-strategy/sample")
                         .header("X-Showcase-Api-Version", "V2")
                 )
@@ -74,8 +72,7 @@ class SampleApiIntTests
 
     @Test
     @DisplayName("get sample should return bad request error when API version header is not provided")
-    void getSampleTest3() throws Exception
-    {
+    void getSampleTest3() throws Exception {
         this.mockMvc.perform(get("/api/headers-strategy/sample"))
                 .andExpect(status().isBadRequest())
                 .andDo(print())
@@ -86,12 +83,11 @@ class SampleApiIntTests
      * TEST CONFIG AND HELPERS
      *---------------------------*/
     @TestConfiguration
-    @Import({
-            WebModuleConfig.class
-    })
-    @IgnoreOnComponentScan
-    static class TestConfig
-    {
+    @ComponentScan(
+            basePackageClasses = { WebPackage.class },
+            excludeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION, classes = IgnoreOnComponentScan.class)
+    )
+    static class TestConfig {
 
     }
 }

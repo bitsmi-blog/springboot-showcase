@@ -2,8 +2,8 @@ package com.bitsmi.springbootshowcase.springcore.aop.test.aspect;
 
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.Logger;
+import com.bitsmi.springbootshowcase.springcore.aop.AopModulePackage;
 import com.bitsmi.springbootshowcase.springcore.aop.aspect.ProductServiceAspect;
-import com.bitsmi.springbootshowcase.springcore.aop.config.AopModuleConfig;
 import com.bitsmi.springbootshowcase.springcore.aop.service.ProductService;
 import com.bitsmi.springbootshowcase.springcore.aop.testsupport.TestLoggerAppender;
 import com.bitsmi.springbootshowcase.utils.IgnoreOnComponentScan;
@@ -21,7 +21,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
@@ -145,8 +146,10 @@ class ProductServiceAspectIntTests
      * TEST CONFIG AND HELPERS
      *---------------------------*/
     @TestConfiguration
-    @Import({ AopModuleConfig.class })
-    @IgnoreOnComponentScan
+    @ComponentScan(
+            basePackageClasses = { AopModulePackage.class },
+            excludeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION, classes = IgnoreOnComponentScan.class)
+    )
     // Enable autoconfiguration of AOP starter
     @EnableAutoConfiguration
     static class TestConfig

@@ -1,6 +1,6 @@
 package com.bitsmi.springbootshowcase.springcore.dependencyinjection.test.prototype.service;
 
-import com.bitsmi.springbootshowcase.springcore.dependencyinjection.scoped.config.ScopedServiceConfig;
+import com.bitsmi.springbootshowcase.springcore.dependencyinjection.scoped.ScopedPackage;
 import com.bitsmi.springbootshowcase.springcore.dependencyinjection.scoped.service.ParameterizedService;
 import com.bitsmi.springbootshowcase.springcore.dependencyinjection.scoped.service.ParameterizedServicePrototypeFactory;
 import com.bitsmi.springbootshowcase.springcore.dependencyinjection.scoped.service.PrototypeService;
@@ -13,7 +13,8 @@ import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
@@ -23,8 +24,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ExtendWith({ SpringExtension.class })
 @ContextConfiguration(loader = AnnotationConfigContextLoader.class)
 @Tag("IntegrationTest")
-class PrototypeServicesIntTests
-{
+class PrototypeServicesIntTests {
+
     @Autowired
     private PrototypeService prototypeService1;
     @Autowired
@@ -52,8 +53,7 @@ class PrototypeServicesIntTests
 
     @Test
     @DisplayName("prototypeServiceObjectProvider should provide a new instance when call getObject method")
-    void prototypeServiceObjectProviderTest1()
-    {
+    void prototypeServiceObjectProviderTest1() {
         final PrototypeService actualInstance1 = prototypeServiceObjectProvider.getObject();
         final PrototypeService actualInstance2 = prototypeServiceObjectProvider.getObject();
 
@@ -62,8 +62,7 @@ class PrototypeServicesIntTests
 
     @Test
     @DisplayName("applicationContext should provide a new instance when call getBean method")
-    void applicationContextTest1()
-    {
+    void applicationContextTest1() {
         final PrototypeService actualInstance1 = applicationContext.getBean(PrototypeService.class);
         final PrototypeService actualInstance2 = applicationContext.getBean(PrototypeService.class);
 
@@ -72,8 +71,7 @@ class PrototypeServicesIntTests
 
     @Test
     @DisplayName("parameterizedServicePrototypeFactory should provide a new instance when call get method")
-    void parameterizedServicePrototypeFactoryTest1()
-    {
+    void parameterizedServicePrototypeFactoryTest1() {
         final String providedName1 = "NAME_1";
         final String providedName2 = "NAME_2";
 
@@ -86,8 +84,7 @@ class PrototypeServicesIntTests
 
     @Test
     @DisplayName("parameterizedServicePrototypeFactory should provide always new instances when call multiple times with same value")
-    void parameterizedServicePrototypeFactoryTest2()
-    {
+    void parameterizedServicePrototypeFactoryTest2() {
         final String providedName = "A_NAME";
 
         final ParameterizedService actualInstance1 = parameterizedServicePrototypeFactory.get(providedName);
@@ -101,8 +98,7 @@ class PrototypeServicesIntTests
 
     @Test
     @DisplayName("parameterizedServiceObjectProvider should return new instances when call getObject method with different values")
-    void parameterizedServiceObjectProviderTest1()
-    {
+    void parameterizedServiceObjectProviderTest1() {
         final String providedName1 = "NAME_1";
         final String providedName2 = "NAME_2";
 
@@ -115,8 +111,7 @@ class PrototypeServicesIntTests
 
     @Test
     @DisplayName("parameterizedServiceObjectProvider should return always new instances when call getObject method multiple times with same value")
-    void parameterizedServiceObjectProviderTest2()
-    {
+    void parameterizedServiceObjectProviderTest2() {
         final String providedName = "A_NAME";
 
         final ParameterizedService actualInstance1 = parameterizedServiceObjectProvider.getObject(providedName);
@@ -132,10 +127,11 @@ class PrototypeServicesIntTests
      * TEST CONFIG AND HELPERS
      *---------------------------*/
     @TestConfiguration
-    @Import({ ScopedServiceConfig.class })
-    @IgnoreOnComponentScan
-    static class TestConfig
-    {
+    @ComponentScan(
+            basePackageClasses = { ScopedPackage.class },
+            excludeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION, classes = IgnoreOnComponentScan.class)
+    )
+    static class TestConfig {
 
     }
 }

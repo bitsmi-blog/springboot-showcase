@@ -1,7 +1,7 @@
 package com.bitsmi.springbootshowcase.springcore.dependencyinjection.test.product.service;
 
 import com.bitsmi.springbootshowcase.springcore.dependencyinjection.Constants;
-import com.bitsmi.springbootshowcase.springcore.dependencyinjection.product.config.ProductServiceConfig;
+import com.bitsmi.springbootshowcase.springcore.dependencyinjection.product.ProductPackage;
 import com.bitsmi.springbootshowcase.springcore.dependencyinjection.product.service.ProductService;
 import com.bitsmi.springbootshowcase.utils.IgnoreOnComponentScan;
 import org.assertj.core.api.SoftAssertions;
@@ -15,7 +15,8 @@ import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -28,8 +29,8 @@ import java.util.Optional;
 @ContextConfiguration(loader = AnnotationConfigContextLoader.class)
 @ActiveProfiles({ Constants.PROFILE_OPTIONAL })
 @Tag("IntegrationTest")
-class ProfileServicesOptionalProfileIntTests
-{
+class ProfileServicesOptionalProfileIntTests {
+
     @Autowired
     private List<ProductService> allProductServices;
 
@@ -49,8 +50,7 @@ class ProfileServicesOptionalProfileIntTests
 
     @Test
     @DisplayName("should inject multiple product services when list is used")
-    void productServiceInjectionTest1()
-    {
+    void productServiceInjectionTest1() {
         List<String> actualProducts = allProductServices.stream()
                 .map(ProductService::getProductName)
                 .toList();
@@ -63,8 +63,7 @@ class ProfileServicesOptionalProfileIntTests
 
     @Test
     @DisplayName("should inject the qualified product service")
-    void productServiceInjectionTest2()
-    {
+    void productServiceInjectionTest2() {
         String actualProductName = optionalProductService.getProductName();
         softly.assertThat(actualProductName)
                 .as("Actual product name")
@@ -73,8 +72,7 @@ class ProfileServicesOptionalProfileIntTests
 
     @Test
     @DisplayName("should inject optional service given OPTIONAL profile")
-    void productServiceInjectionTest5()
-    {
+    void productServiceInjectionTest5() {
         softly.assertThat(optionalProductService)
                 .as("Instance")
                 .isNotNull();
@@ -88,8 +86,7 @@ class ProfileServicesOptionalProfileIntTests
 
     @Test
     @DisplayName("optionalProductServiceProvider should return same instance when call multiple times")
-    void test()
-    {
+    void test() {
         ProductService actualInstance1 = optionalProductServiceProvider.getObject();
         ProductService actualInstance2 = optionalProductServiceProvider.getObject();
 
@@ -103,10 +100,11 @@ class ProfileServicesOptionalProfileIntTests
      * TEST CONFIG AND HELPERS
      *---------------------------*/
     @TestConfiguration
-    @Import({ ProductServiceConfig.class })
-    @IgnoreOnComponentScan
-    static class TestConfig
-    {
+    @ComponentScan(
+            basePackageClasses = { ProductPackage.class },
+            excludeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION, classes = IgnoreOnComponentScan.class)
+    )
+    static class TestConfig {
 
     }
 }
