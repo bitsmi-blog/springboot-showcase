@@ -28,11 +28,11 @@ import java.util.Objects;
 @Table(name="APP_AUTHORITY")
 @Getter
 @Setter
-@Builder(toBuilder = true)
+@Builder(toBuilder = true, builderClassName = "Builder")
 @NoArgsConstructor
 @AllArgsConstructor
-public class AuthorityEntity implements Serializable
-{
+public class AuthorityEntity implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator="AUTHORITY_ID_GENERATOR")
     private Long id;
@@ -52,18 +52,16 @@ public class AuthorityEntity implements Serializable
 
     @PreUpdate
     @PrePersist
-    public void updateDefaultValues()
-    {
+    public void updateDefaultValues() {
         LocalDateTime currentDate = LocalDateTime.now();
-        if(creationDate==null){
+        if (creationDate == null) {
             creationDate = currentDate;
         }
         lastUpdated = currentDate;
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return new ToStringBuilder(this)
                 .append("id", id)
                 .append("version", version)
@@ -75,14 +73,12 @@ public class AuthorityEntity implements Serializable
     }
 
     @Override
-    public int hashCode()
-    {
+    public int hashCode() {
         return Objects.hash(name);
     }
 
     @Override
-    public boolean equals(Object o)
-    {
+    public boolean equals(Object o) {
         return this == o
                 || o instanceof AuthorityEntity other
                     && Objects.equals(name, other.name);

@@ -29,11 +29,11 @@ import java.util.Objects;
 @Table(name="STORE")
 @Getter
 @Setter
-@Builder(toBuilder = true)
+@Builder(toBuilder = true, builderClassName = "Builder")
 @NoArgsConstructor
 @AllArgsConstructor
-public class StoreEntity implements Serializable
-{
+public class StoreEntity implements Serializable {
+
     @Id
     @GeneratedValue(strategy= GenerationType.SEQUENCE, generator="STORE_ID_GENERATOR")
     private Long id;
@@ -54,18 +54,16 @@ public class StoreEntity implements Serializable
 
     @PreUpdate
     @PrePersist
-    public void updateDefaultValues()
-    {
+    public void updateDefaultValues() {
         LocalDateTime currentDate = LocalDateTime.now();
-        if(creationDate==null){
+        if (creationDate == null) {
             creationDate = currentDate;
         }
         lastUpdated = currentDate;
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return new ToStringBuilder(this)
                 .append("id", id)
                 .append("version", version)
@@ -77,14 +75,12 @@ public class StoreEntity implements Serializable
     }
 
     @Override
-    public int hashCode()
-    {
+    public int hashCode() {
         return Objects.hash(id);
     }
 
     @Override
-    public boolean equals(Object o)
-    {
+    public boolean equals(Object o) {
         return this == o
                 || o instanceof StoreEntity other
                 && Objects.equals(id, other.id);

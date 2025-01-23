@@ -34,11 +34,11 @@ import java.util.Set;
 @Table(name="APP_USER_GROUP")
 @Getter
 @Setter
-@Builder(toBuilder = true)
+@Builder(toBuilder = true, builderClassName = "Builder")
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserGroupEntity implements Serializable
-{
+public class UserGroupEntity implements Serializable {
+
     @Id
     @GeneratedValue(strategy= GenerationType.SEQUENCE, generator="USER_GROUP_ID_GENERATOR")
     private Long id;
@@ -66,18 +66,16 @@ public class UserGroupEntity implements Serializable
 
     @PreUpdate
     @PrePersist
-    public void updateDefaultValues()
-    {
+    public void updateDefaultValues() {
         LocalDateTime currentDate = LocalDateTime.now();
-        if(creationDate==null){
+        if (creationDate == null) {
             creationDate = currentDate;
         }
         lastUpdated = currentDate;
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return new ToStringBuilder(this)
                 .append("id", id)
                 .append("version", version)
@@ -90,14 +88,12 @@ public class UserGroupEntity implements Serializable
     }
 
     @Override
-    public int hashCode()
-    {
+    public int hashCode() {
         return Objects.hash(name);
     }
 
     @Override
-    public boolean equals(Object o)
-    {
+    public boolean equals(Object o) {
         return this == o
                 || o instanceof UserGroupEntity other
                     && Objects.equals(name, other.name);
