@@ -11,10 +11,10 @@
             </column>
             <column name="VERSION" type="BIGINT"/>
             <column name="EXTERNAL_ID" type="VARCHAR(255)">
-                <constraints nullable="false" unique="true"/>
+                <constraints nullable="false" unique="true" notNullConstraintName="C_CATEGORY_EXT_ID" uniqueConstraintName="C_CATEGORY_EXT_ID_UNIQUE"/>
             </column>
             <column name="NAME" type="VARCHAR(255)">
-                <constraints nullable="false"/>
+                <constraints nullable="false" notNullConstraintName="C_CATEGORY_NAME"/>
             </column>
             <column name="CREATION_DATE" type="TIMESTAMP"/>
             <column name="LAST_UPDATED" type="TIMESTAMP"/>
@@ -26,13 +26,13 @@
             </column>
             <column name="VERSION" type="BIGINT"/>
             <column name="EXTERNAL_ID" type="VARCHAR(255)">
-                <constraints nullable="false" unique="true"/>
+                <constraints nullable="false" unique="true" notNullConstraintName="C_PRODUCT_EXT_ID" uniqueConstraintName="C_PRODUCT_EXT_ID_UNIQUE"/>
             </column>
             <column name="NAME" type="VARCHAR(255)">
-                <constraints nullable="false"/>
+                <constraints nullable="false" notNullConstraintName="C_PRODUCT_NAME"/>
             </column>
             <column name="CATEGORY_ID" type="BIGINT">
-                <constraints nullable="false"/>
+                <constraints nullable="false" notNullConstraintName="C_PRODUCT_CATEGORY"/>
             </column>
             <column name="CREATION_DATE" type="TIMESTAMP"/>
             <column name="LAST_UPDATED" type="TIMESTAMP"/>
@@ -44,10 +44,10 @@
             </column>
             <column name="VERSION" type="BIGINT"/>
             <column name="EXTERNAL_ID" type="VARCHAR(255)">
-                <constraints nullable="false" unique="true"/>
+                <constraints nullable="false" unique="true" notNullConstraintName="C_STORE_EXT_ID" uniqueConstraintName="C_STORE_EXT_ID_UNIQUE"/>
             </column>
             <column name="NAME" type="VARCHAR(255)">
-                <constraints nullable="false"/>
+                <constraints nullable="false" notNullConstraintName="C_STORE_NAME"/>
             </column>
             <column name="CREATION_DATE" type="TIMESTAMP"/>
             <column name="LAST_UPDATED" type="TIMESTAMP"/>
@@ -59,10 +59,10 @@
             </column>
             <column name="VERSION" type="BIGINT"/>
             <column name="PRODUCT_ID" type="BIGINT">
-                <constraints nullable="false"/>
+                <constraints nullable="false" notNullConstraintName="C_STORE_PRODUCT"/>
             </column>
             <column name="STORE_ID" type="BIGINT">
-                <constraints nullable="false"/>
+                <constraints nullable="false" notNullConstraintName="C_STOCK_STORE"/>
             </column>
             <column name="QUANTITY" type="INT"/>
             <column name="CREATION_DATE" type="TIMESTAMP"/>

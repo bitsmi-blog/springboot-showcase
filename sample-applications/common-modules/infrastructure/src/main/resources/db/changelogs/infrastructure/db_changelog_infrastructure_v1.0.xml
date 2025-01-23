@@ -23,7 +23,9 @@
                 <constraints nullable="false" primaryKey="true" primaryKeyName="PK_USER_GROUP"/>
             </column>
             <column name="VERSION" type="BIGINT"/>
-            <column name="NAME" type="VARCHAR(255)"/>
+            <column name="NAME" type="VARCHAR(255)">
+                <constraints unique="true" uniqueConstraintName="C_USER_GROUP_NAME"/>
+            </column>
             <column name="DESCRIPTION" type="VARCHAR(255)"/>
             <column defaultValueBoolean="true" name="ACTIVE" type="BOOLEAN"/>
             <column name="CREATION_DATE" type="TIMESTAMP"/>
@@ -35,7 +37,9 @@
                 <constraints nullable="false" primaryKey="true" primaryKeyName="PK_AUTHORITY"/>
             </column>
             <column name="VERSION" type="BIGINT"/>
-            <column name="NAME" type="VARCHAR(255)"/>
+            <column name="NAME" type="VARCHAR(255)">
+                <constraints unique="true" uniqueConstraintName="C_AUTH_NAME"/>
+            </column>
             <column name="DESCRIPTION" type="VARCHAR(255)"/>
             <column name="CREATION_DATE" type="TIMESTAMP"/>
             <column name="LAST_UPDATED" type="TIMESTAMP"/>
@@ -43,71 +47,69 @@
 
         <createTable tableName="APP_USER_GROUP_AUTH">
             <column name="GROUP_ID" type="BIGINT">
-                <constraints nullable="false"/>
+                <constraints nullable="false" notNullConstraintName="C_USER_GROUP_AUTH_GROUP_ID"/>
             </column>
             <column name="AUTHORITY_ID" type="BIGINT">
-                <constraints nullable="false"/>
+                <constraints nullable="false" notNullConstraintName="C_USER_GROUP_AUTH_AUTH_ID"/>
             </column>
             <column name="CREATION_DATE" type="TIMESTAMP"/>
         </createTable>
 
         <createTable tableName="APP_USER_GROUP_MEMBER">
             <column name="GROUP_ID" type="BIGINT">
-                <constraints nullable="false"/>
+                <constraints nullable="false" notNullConstraintName="C_USER_GROUP_MEMBER_GROUP_ID"/>
             </column>
             <column name="USER_ID" type="BIGINT">
-                <constraints nullable="false"/>
+                <constraints nullable="false" notNullConstraintName="C_USER_GROUP_MEMBER_USER_ID"/>
             </column>
             <column name="CREATION_DATE" type="TIMESTAMP" defaultValueDate="${current_timestamp}"/>
         </createTable>
 
-        <addUniqueConstraint tableName="APP_AUTHORITY" columnNames="NAME" constraintName="C_AUTH_NAME"/>
-        <addUniqueConstraint tableName="APP_USER_GROUP" columnNames="NAME" constraintName="C_USER_GROUP_NAME"/>
         <addUniqueConstraint tableName="APP_USER_GROUP_AUTH" columnNames="GROUP_ID, AUTHORITY_ID" constraintName="C_USER_GROUP_AUTH"/>
         <addUniqueConstraint tableName="APP_USER_GROUP_MEMBER" columnNames="GROUP_ID, USER_ID" constraintName="C_USER_GROUP_MEMBER"/>
 
-        <addForeignKeyConstraint baseColumnNames="GROUP_ID"
+        <addForeignKeyConstraint constraintName="FK_USER_GROUP_AUTH_GROUP"
                                  baseTableName="APP_USER_GROUP_AUTH"
-                                 constraintName="FK_USER_GROUP_AUTH_GROUP"
+                                 baseColumnNames="GROUP_ID"
+                                 referencedTableName="APP_USER_GROUP"
+                                 referencedColumnNames="ID"
                                  deferrable="false"
                                  initiallyDeferred="false"
                                  onDelete="NO ACTION"
                                  onUpdate="NO ACTION"
-                                 referencedColumnNames="ID"
-                                 referencedTableName="APP_USER_GROUP"
                                  referencesUniqueColumn="true"/>
 
-        <addForeignKeyConstraint baseColumnNames="AUTHORITY_ID"
+        <addForeignKeyConstraint constraintName="FK_USER_GROUP_AUTH_AUTH"
                                  baseTableName="APP_USER_GROUP_AUTH"
-                                 constraintName="FK_USER_GROUP_AUTH_AUTH"
-                                 deferrable="false"
-                                 initiallyDeferred="false"
-                                 onDelete="NO ACTION"
-                                 onUpdate="NO ACTION"
-                                 referencedColumnNames="ID"
+                                 baseColumnNames="AUTHORITY_ID"
                                  referencedTableName="APP_AUTHORITY"
-                                 referencesUniqueColumn="true"/>
-
-        <addForeignKeyConstraint baseColumnNames="GROUP_ID"
-                                 baseTableName="APP_USER_GROUP_MEMBER"
-                                 constraintName="FK_USER_GROUP_MEMBER_GROUP"
+                                 referencedColumnNames="ID"
                                  deferrable="false"
                                  initiallyDeferred="false"
                                  onDelete="NO ACTION"
                                  onUpdate="NO ACTION"
-                                 referencedColumnNames="ID"
+                                 referencesUniqueColumn="true"/>
+
+        <addForeignKeyConstraint constraintName="FK_USER_GROUP_MEMBER_GROUP"
+                                 baseTableName="APP_USER_GROUP_MEMBER"
+                                 baseColumnNames="GROUP_ID"
                                  referencedTableName="APP_USER_GROUP"
-                                 referencesUniqueColumn="true"/>
-
-        <addForeignKeyConstraint baseColumnNames="USER_ID"
-                                 baseTableName="APP_USER_GROUP_MEMBER"
-                                 constraintName="FK_USER_GROUP_MEMBER_USER"
+                                 referencedColumnNames="ID"
                                  deferrable="false"
                                  initiallyDeferred="false"
                                  onDelete="NO ACTION"
                                  onUpdate="NO ACTION"
-                                 referencedColumnNames="ID"
+                                 referencesUniqueColumn="true"/>
+
+        <addForeignKeyConstraint constraintName="FK_USER_GROUP_MEMBER_USER"
+                                 baseTableName="APP_USER_GROUP_MEMBER"
+                                 baseColumnNames="USER_ID"
                                  referencedTableName="APP_USER"
+                                 referencedColumnNames="ID"
+                                 deferrable="false"
+                                 initiallyDeferred="false"
+                                 onDelete="NO ACTION"
+                                 onUpdate="NO ACTION"
                                  referencesUniqueColumn="true"/>
 
         <!-- SEQUENCES -->
