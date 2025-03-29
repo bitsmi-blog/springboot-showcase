@@ -1,9 +1,6 @@
 package com.bitsmi.springbootshowcase.testing.test;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import com.bitsmi.springbootshowcase.testing.MeasureUnit;
-import java.util.stream.Stream;
 import lombok.Builder;
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.DisplayName;
@@ -20,12 +17,18 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.EmptySource;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.EnumSource.Mode;
+import org.junit.jupiter.params.provider.FieldSource;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-class ParameterizedTests
-{
+import java.util.List;
+import java.util.stream.Stream;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+class ParameterizedTests {
+
     @DisplayName("Result given @ValueSource should be positive when ")
     @ParameterizedTest(name = "{arguments} is provided")
     @ValueSource(longs = {
@@ -33,8 +36,7 @@ class ParameterizedTests
         200L,
         300L
     })
-    void valueSourceTest1(Long param)
-    {
+    void valueSourceTest1(Long param) {
         final Long actualResult = param * -1;
 
         assertThat(actualResult)
@@ -53,8 +55,7 @@ class ParameterizedTests
         "300L"
     })
     @EmptySource
-    void valueSourceTest2(String param)
-    {
+    void valueSourceTest2(String param) {
         assertThat(param)
             .describedAs("actualResult")
             .isNotNull()
@@ -64,8 +65,7 @@ class ParameterizedTests
     @DisplayName("Result given @EnumSource should be true when ")
     @ParameterizedTest(name = "provided measure unit is {arguments}")
     @EnumSource(value = MeasureUnit.class, names = { "KILOMETER", "METER", "CENTIMETER" })
-    void enumSourceTest1(MeasureUnit measureUnit)
-    {
+    void enumSourceTest1(MeasureUnit measureUnit) {
         assertThat(measureUnit)
             .describedAs("measureUnit")
             .extracting(MeasureUnit::isDecimalMetricSystem)
@@ -79,8 +79,7 @@ class ParameterizedTests
     @DisplayName("Result given @EnumSource should be false when ")
     @ParameterizedTest(name = "provided measure unit is {arguments}")
     @EnumSource(value = MeasureUnit.class, mode = Mode.EXCLUDE, names = { "KILOMETER", "METER", "CENTIMETER" })
-    void enumSourceTest2(MeasureUnit measureUnit)
-    {
+    void enumSourceTest2(MeasureUnit measureUnit) {
         assertThat(measureUnit)
             .describedAs("measureUnit")
             .extracting(MeasureUnit::isDecimalMetricSystem)
@@ -98,8 +97,7 @@ class ParameterizedTests
     @DisplayName("Result given @NullAndEmptySource should be null when")
     @ParameterizedTest(name = "param is ''{0}''")
     @NullAndEmptySource
-    void nullOrEmptySourceTest1(String param)
-    {
+    void nullOrEmptySourceTest1(String param) {
         String expectedResult = "DEFAULT";
 
         final String actualResult = param==null || param.isEmpty() ? expectedResult : param;
@@ -125,8 +123,7 @@ class ParameterizedTests
         String providedKey,
         String providedValue,
         String expectedResult
-    )
-    {
+    ) {
         final String actualResult = "%s:%s".formatted(providedKey, providedValue);
 
         assertThat(actualResult)
@@ -149,8 +146,7 @@ class ParameterizedTests
               "TestDataMethod3";  "Value3";   "TestDataMethod3:Value3"
             """
     )
-    void csvSourceTest2(ArgumentsAccessor accessor)
-    {
+    void csvSourceTest2(ArgumentsAccessor accessor) {
         final String providedKey = accessor.getString(0);
         final String providedValue = accessor.getString(1);
         final String expectedResult = "%s:%s".formatted(providedKey, providedValue);
@@ -177,8 +173,7 @@ class ParameterizedTests
               "TestDataMethod3";  "Value3";   "TestDataMethod3:Value3"
             """
     )
-    void csvSourceTest3(@AggregateWith(ProvidedValueDtoAggregator.class) ProvidedValueDto providedValueDto)
-    {
+    void csvSourceTest3(@AggregateWith(ProvidedValueDtoAggregator.class) ProvidedValueDto providedValueDto) {
         final String actualResult = "%s:%s".formatted(providedValueDto.key, providedValueDto.value);
 
         assertThat(actualResult)
@@ -202,13 +197,23 @@ class ParameterizedTests
         String providedKey,
         String providedValue,
         String expectedResult
-    )
-    {
+    ) {
         final String actualResult = "%s:%s".formatted(providedKey, providedValue);
 
         assertThat(actualResult)
             .describedAs("actualResult")
             .isEqualTo(expectedResult);
+    }
+
+    private static final List<String> fieldSourceTestData = List.of("VALUE1", "VALUE2", "VALUE3");
+
+    @DisplayName("fieldSource should be")
+    @ParameterizedTest(name = "{index} - {0}")
+    // If no field names are declared, a field within the test class that has the same name as the test method will be used as the field by default.
+    @FieldSource("fieldSourceTestData")
+    void fieldSourceTest1(String providedKey) {
+        assertThat(providedKey)
+                .isIn(fieldSourceTestData);
     }
 
     @DisplayName("Formatted result given @MethodSource should be")
@@ -218,13 +223,28 @@ class ParameterizedTests
         String providedKey,
         String providedValue,
         String expectedResult
-    )
-    {
+    ) {
         final String actualResult = "%s:%s".formatted(providedKey, providedValue);
 
         assertThat(actualResult)
             .describedAs("actualResult")
             .isEqualTo(expectedResult);
+    }
+
+    @DisplayName("Formatted result given @MethodSource should be")
+    @ParameterizedTest(name = "{index} - {2} when key = {0} and value = {1} are provided")
+    // @MethodSource with no name will search for an static provider method with same name (methodSourceTest2)
+    @MethodSource
+    void methodSourceTest2(
+            String providedKey,
+            String providedValue,
+            String expectedResult
+    ) {
+        final String actualResult = "%s:%s".formatted(providedKey, providedValue);
+
+        assertThat(actualResult)
+                .describedAs("actualResult")
+                .isEqualTo(expectedResult);
     }
 
     /**
@@ -238,8 +258,7 @@ class ParameterizedTests
         String providedKey,
         String providedValue,
         String expectedResult
-    )
-    {
+    ) {
         final String actualResult = "%s:%s".formatted(providedKey, providedValue);
 
         assertThat(actualResult)
@@ -254,8 +273,7 @@ class ParameterizedTests
         String providedKey,
         String providedValue,
         String expectedResult
-    )
-    {
+    ) {
         final String actualResult = "%s:%s".formatted(providedKey, providedValue);
 
         assertThat(actualResult)
@@ -283,6 +301,10 @@ class ParameterizedTests
         );
     }
 
+    private static Stream<Arguments> methodSourceTest2() {
+        return provideTestData();
+    }
+
     @Builder(builderClassName = "Builder", toBuilder = true)
     record ProvidedValueDto(
         String key,
@@ -292,11 +314,9 @@ class ParameterizedTests
 
     }
 
-    static class ProvidedValueDtoAggregator implements ArgumentsAggregator
-    {
+    static class ProvidedValueDtoAggregator implements ArgumentsAggregator {
         @Override
-        public Object aggregateArguments(ArgumentsAccessor accessor, ParameterContext context) throws ArgumentsAggregationException
-        {
+        public Object aggregateArguments(ArgumentsAccessor accessor, ParameterContext context) throws ArgumentsAggregationException {
             final String providedKey = accessor.getString(0);
             final String providedValue = accessor.getString(1);
             final String expectedResult = "%s:%s".formatted(providedKey, providedValue);
