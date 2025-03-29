@@ -6,15 +6,12 @@ import com.bitsmi.springbootshowcase.sampleapps.application.testsupport.common.C
 import com.bitsmi.springbootshowcase.sampleapps.application.testsupport.common.UserRegistryApplicationServiceMocker;
 import com.bitsmi.springbootshowcase.sampleapps.application.testsupport.common.UserRetrievalApplicationServiceMocker;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@MockBean(UserRetrievalApplicationService.class)
-@MockBean(UserRegistryApplicationService.class)
-public class ApplicationModuleMockConfig
-{
+public class ApplicationModuleMockConfig {
+
     /*-----------------------------*
      * COMMON
      *-----------------------------*/

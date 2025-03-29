@@ -15,33 +15,36 @@
 
 		<node.version>v20.12.2</node.version>
 
-        <plugin.version.build-helper-maven-plugin>3.6.0</plugin.version.build-helper-maven-plugin>
-        <plugin.version.frontend-maven-plugin>1.15.0</plugin.version.frontend-maven-plugin>
-        <plugin.version.exec-maven-plugin>3.4.1</plugin.version.exec-maven-plugin>
-        <plugin.version.jacoco-maven-plugin>0.8.12</plugin.version.jacoco-maven-plugin>
-        <plugin.version.maven-antrun-plugin>3.1.0</plugin.version.maven-antrun-plugin>
-        <plugin.version.maven-assembly-plugin>3.7.1</plugin.version.maven-assembly-plugin>
-        <plugin.version.maven-compiler-plugin>3.13.0</plugin.version.maven-compiler-plugin>
-        <plugin.version.maven-dependency-plugin>3.6.1</plugin.version.maven-dependency-plugin>
-        <plugin.version.maven-jar-plugin>3.4.2</plugin.version.maven-jar-plugin>
-        <plugin.version.maven-source-plugin>3.3.1</plugin.version.maven-source-plugin>
-        <plugin.version.maven-surefire-plugin>3.4.0</plugin.version.maven-surefire-plugin>
+        <!-- DEPENDENCIES -->
+        <commons-beanutils.version>1.10.0</commons-beanutils.version>
+        <commons-collections4.version>4.4</commons-collections4.version>
+        <commons-io.version>2.18.0</commons-io.version>
+        <instancio.version>5.0.1</instancio.version>
+        <java-jwt.version>4.5.0</java-jwt.version>
+        <lombok.version>1.18.36</lombok.version>
+        <lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
+        <mapstruct.version>1.6.3</mapstruct.version>
+        <postgresql.version>42.7.5</postgresql.version>
+        <retrofit.version>2.11.0</retrofit.version>
+        <testcontainers.version>1.20.4</testcontainers.version>
+        <spring-boot.version>3.4.2</spring-boot.version>
+        <spring-cloud.version>2024.0.0</spring-cloud.version>
+        <springdoc.version>2.8.4</springdoc.version>
+        <wiremock.version>3.11.0</wiremock.version>
 
-        <dependency.version.commons-beanutils>1.9.4</dependency.version.commons-beanutils>
-        <dependency.version.commons-collections4>4.4</dependency.version.commons-collections4>
-        <dependency.version.commons-io>2.16.1</dependency.version.commons-io>
-        <dependency.version.instancio>5.0.1</dependency.version.instancio>
-        <dependency.version.java-jwt>4.4.0</dependency.version.java-jwt>
-        <dependency.version.lombok>1.18.34</dependency.version.lombok>
-        <dependency.version.lombok-mapstruct-binding>0.2.0</dependency.version.lombok-mapstruct-binding>
-        <dependency.version.mapstructs>1.6.0</dependency.version.mapstructs>
-        <dependency.version.postgresql>42.7.4</dependency.version.postgresql>
-        <dependency.version.retrofit>2.11.0</dependency.version.retrofit>
-        <dependency.version.testcontainers>1.20.1</dependency.version.testcontainers>
-        <dependency.version.spring.boot>3.3.3</dependency.version.spring.boot>
-        <dependency.version.spring.cloud>2023.0.3</dependency.version.spring.cloud>
-        <dependency.version.springdoc>2.6.0</dependency.version.springdoc>
-        <dependency.version.wiremock>3.9.1</dependency.version.wiremock>
+        <!-- PLUGINS -->
+        <build-helper-maven-plugin.version>3.6.0</build-helper-maven-plugin.version>
+        <frontend-maven-plugin.version>1.15.1</frontend-maven-plugin.version>
+        <exec-maven-plugin.version>3.5.0</exec-maven-plugin.version>
+        <jacoco-maven-plugin.version>0.8.12</jacoco-maven-plugin.version>
+        <maven-antrun-plugin.version>3.1.0</maven-antrun-plugin.version>
+        <maven-assembly-plugin.version>3.7.1</maven-assembly-plugin.version>
+        <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
+        <maven-dependency-plugin.version>3.8.1</maven-dependency-plugin.version>
+        <maven-jar-plugin.version>3.4.2</maven-jar-plugin.version>
+        <maven-resources-plugin.version>3.3.1</maven-resources-plugin.version>
+        <maven-source-plugin.version>3.3.1</maven-source-plugin.version>
+        <maven-surefire-plugin.version>3.5.0</maven-surefire-plugin.version>
     </properties>
 
     <modules>
@@ -76,14 +79,14 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-parent</artifactId>
-                <version>${dependency.version.spring.boot}</version>
+                <version>${spring-boot.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
-                <version>${dependency.version.spring.cloud}</version>
+                <version>${spring-cloud.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -92,76 +95,76 @@
             <dependency>
                 <groupId>commons-beanutils</groupId>
                 <artifactId>commons-beanutils</artifactId>
-                <version>${dependency.version.commons-beanutils}</version>
+                <version>${commons-beanutils.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-collections4</artifactId>
-                <version>${dependency.version.commons-collections4}</version>
+                <version>${commons-collections4.version}</version>
             </dependency>
             <dependency>
                 <groupId>commons-io</groupId>
                 <artifactId>commons-io</artifactId>
-                <version>${dependency.version.commons-io}</version>
+                <version>${commons-io.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.auth0</groupId>
                 <artifactId>java-jwt</artifactId>
-                <version>${dependency.version.java-jwt}</version>
+                <version>${java-jwt.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
-                <version>${dependency.version.lombok}</version>
+                <version>${lombok.version}</version>
                 <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok-mapstruct-binding</artifactId>
-                <version>${dependency.version.lombok-mapstruct-binding}</version>
+                <version>${lombok-mapstruct-binding.version}</version>
                 <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>org.mapstruct</groupId>
                 <artifactId>mapstruct</artifactId>
-                <version>${dependency.version.mapstructs}</version>
+                <version>${mapstruct.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.springdoc</groupId>
                 <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-                <version>${dependency.version.springdoc}</version>
+                <version>${springdoc.version}</version>
             </dependency>
 
             <!-- TEST -->
             <dependency>
                 <groupId>org.instancio</groupId>
                 <artifactId>instancio-junit</artifactId>
-                <version>${dependency.version.instancio}</version>
+                <version>${instancio.version}</version>
                 <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>org.testcontainers</groupId>
                 <artifactId>junit-jupiter</artifactId>
-                <version>${dependency.version.testcontainers}</version>
+                <version>${testcontainers.version}</version>
                 <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>org.testcontainers</groupId>
                 <artifactId>postgresql</artifactId>
-                <version>${dependency.version.testcontainers}</version>
+                <version>${testcontainers.version}</version>
                 <scope>test</scope>
             </dependency>
             <dependency>
                 <groupId>org.postgresql</groupId>
                 <artifactId>postgresql</artifactId>
-                <version>${dependency.version.postgresql}</version>
+                <version>${postgresql.version}</version>
                 <scope>runtime</scope>
             </dependency>
             <!-- Use standalone artifact to not having conflicts between Wiremock's & Spring's Jetty -->
             <dependency>
                 <groupId>org.wiremock</groupId>
                 <artifactId>wiremock-standalone</artifactId>
-                <version>${dependency.version.wiremock}</version>
+                <version>${wiremock.version}</version>
                 <scope>test</scope>
             </dependency>
         </dependencies>
@@ -173,13 +176,13 @@
 				<plugin>
 					<groupId>org.springframework.boot</groupId>
 					<artifactId>spring-boot-maven-plugin</artifactId>
-					<version>${dependency.version.spring.boot}</version>
+					<version>${spring-boot.version}</version>
 				</plugin>
 
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>build-helper-maven-plugin</artifactId>
-                    <version>${plugin.version.build-helper-maven-plugin}</version>
+                    <version>${build-helper-maven-plugin.version}</version>
                     <executions>
                         <execution>
                             <id>add-integration-test-source</id>
@@ -213,7 +216,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
-                    <version>${plugin.version.maven-compiler-plugin}</version>
+                    <version>${maven-compiler-plugin.version}</version>
                     <configuration>
                         <compilerArgs>
                             <arg>-parameters</arg>
@@ -222,17 +225,17 @@
                             <path>
                                 <groupId>org.mapstruct</groupId>
                                 <artifactId>mapstruct-processor</artifactId>
-                                <version>${dependency.version.mapstructs}</version>
+                                <version>${mapstruct.version}</version>
                             </path>
                             <path>
                                 <groupId>org.projectlombok</groupId>
                                 <artifactId>lombok</artifactId>
-                                <version>${dependency.version.lombok}</version>
+                                <version>${lombok.version}</version>
                             </path>
                             <dependency>
                                 <groupId>org.projectlombok</groupId>
                                 <artifactId>lombok-mapstruct-binding</artifactId>
-                                <version>${dependency.version.lombok-mapstruct-binding}</version>
+                                <version>${lombok-mapstruct-binding.version}</version>
                             </dependency>
                         </annotationProcessorPaths>
                     </configuration>
@@ -242,7 +245,7 @@
                 <plugin>
                     <groupId>org.jacoco</groupId>
                     <artifactId>jacoco-maven-plugin</artifactId>
-                    <version>${plugin.version.jacoco-maven-plugin}</version>
+                    <version>${jacoco-maven-plugin.version}</version>
                     <executions>
                         <!-- Unit tests -->
                         <execution>
@@ -327,13 +330,13 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-jar-plugin</artifactId>
-                    <version>${plugin.version.maven-jar-plugin}</version>
+                    <version>${maven-jar-plugin.version}</version>
                 </plugin>
 
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
-                    <version>3.2.1</version>
+                    <version>${maven-surefire-plugin.version}</version>
                     <executions>
                         <execution>
                             <id>default-test</id>
@@ -358,13 +361,13 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-assembly-plugin</artifactId>
-                    <version>${plugin.version.maven-assembly-plugin}</version>
+                    <version>${maven-assembly-plugin.version}</version>
                 </plugin>
 
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-source-plugin</artifactId>
-                    <version>${plugin.version.maven-source-plugin}</version>
+                    <version>${maven-source-plugin.version}</version>
                     <executions>
                         <execution>
                             <id>attach-sources</id>
@@ -379,7 +382,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-dependency-plugin</artifactId>
-                    <version>${plugin.version.maven-dependency-plugin}</version>
+                    <version>${maven-dependency-plugin.version}</version>
                 </plugin>
 
                 <!-- DOCS -->
@@ -395,17 +398,17 @@
                 <plugin>
 					<groupId>com.github.eirslett</groupId>
 					<artifactId>frontend-maven-plugin</artifactId>
-					<version>${plugin.version.frontend-maven-plugin}</version>
+					<version>${frontend-maven-plugin.version}</version>
 					<executions>
 						<execution>
-							<id>install node and npm</id>
+                            <id>install-node-and-npm</id>
 							<goals>
 								<goal>install-node-and-npm</goal>
 							</goals>
 							<phase>initialize</phase>
 						</execution>
 						<execution>
-							<id>npm install antora</id>
+                            <id>npm-install-antora</id>
 							<goals>
 								<goal>npm</goal>
 							</goals>
@@ -422,9 +425,10 @@
 				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
 					<artifactId>exec-maven-plugin</artifactId>
-					<version>${plugin.version.exec-maven-plugin}</version>
+					<version>${exec-maven-plugin.version}</version>
 					<executions>
 						<execution>
+                            <id>antora-build</id>
 							<goals>
 								<goal>exec</goal>
 							</goals>
@@ -446,7 +450,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-antrun-plugin</artifactId>
-                    <version>${plugin.version.maven-antrun-plugin}</version>
+                    <version>${maven-antrun-plugin.version}</version>
                     <executions>
                         <execution>
                             <id>clean-docs</id>
@@ -466,6 +470,7 @@
                 </plugin>
                 <plugin>
                     <artifactId>maven-resources-plugin</artifactId>
+                    <version>${maven-resources-plugin.version}</version>
                     <executions>
                         <execution>
                             <id>copy-docs</id>
@@ -506,7 +511,7 @@
             </properties>
         </profile>
 		<profile>
-            <id>windows-profile</id>
+        <id>windows-profile</id>
             <activation>
                 <os>
                     <family>windows</family>

@@ -6,6 +6,7 @@ import com.bitsmi.springbootshowcase.sampleapps.domain.common.dto.PaginatedData;
 import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.common.controller.response.PaginatedResponse;
 import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.common.controller.response.Pagination;
 import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.common.controller.response.Sort;
+import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.test.WebTestBase;
 import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.testsupport.internal.ControllerIntegrationTest;
 import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.testsupport.user.controller.request.CreateUserRequestObjectMother;
 import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.testsupport.user.controller.request.UpdateUserRequestObjectMother;
@@ -40,7 +41,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ControllerIntegrationTest
 @WithUserDetails("john.doe")
-class UsersApiControllerIntTests {
+class UsersApiControllerIntTests extends WebTestBase {
 
     private static final String USERS_ENDPOINT = "/api/users";
 
@@ -62,8 +63,7 @@ class UsersApiControllerIntTests {
     private MockMvc mockMvc;
 
     @BeforeEach
-    void setup()
-    {
+    void setup() {
         this.mockMvc = MockMvcBuilders
                 .webAppContextSetup(this.context)
                 .addFilter(springSecurityFilterChain)
@@ -72,8 +72,8 @@ class UsersApiControllerIntTests {
 
     @Nested
     @DisplayName("Get users")
-    class GetUsersTests
-    {
+    class GetUsersTests {
+
         @Test
         @DisplayName("""
             given existing users
@@ -81,8 +81,7 @@ class UsersApiControllerIntTests {
              when no pagination provided
             """
         )
-        void test1() throws Exception
-        {
+        void test1() throws Exception {
             var expectedResponse = PaginatedResponse.<User>builder()
                     .data(
                             List.of(
@@ -131,8 +130,7 @@ class UsersApiControllerIntTests {
              when provided page and size
             """
         )
-        void test2() throws Exception
-        {
+        void test2() throws Exception {
             var expectedResponse = PaginatedResponse.<User>builder()
                     .data(
                             List.of(
@@ -161,8 +159,8 @@ class UsersApiControllerIntTests {
 
     @Nested
     @DisplayName("Get user")
-    class GetUserTests
-    {
+    class GetUserTests {
+
         @Test
         @DisplayName("""
             given an existing user
@@ -170,8 +168,7 @@ class UsersApiControllerIntTests {
              when its ID is provided
             """
         )
-        void test1() throws Exception
-        {
+        void test1() throws Exception {
             final User expectedResponse = UserObjectMother.fromModel(com.bitsmi.springbootshowcase.sampleapps.domain.testsupport.common.model.UserObjectMother.aNormalUser());
             final String expectedResponseAsString = jsonMapper.writeValueAsString(expectedResponse);
 
@@ -189,8 +186,7 @@ class UsersApiControllerIntTests {
              when an unknown ID is provided
             """
         )
-        void test2() throws Exception
-        {
+        void test2() throws Exception {
             mockMvc.perform(get(USERS_ENDPOINT + "/{id}", 9999L)
                             .with(testSecurityContext())
                     )
@@ -201,16 +197,14 @@ class UsersApiControllerIntTests {
 
     @Nested
     @DisplayName("Create user")
-    class CreateUserPasswordTests
-    {
+    class CreateUserPasswordTests {
         @Test
         @DisplayName("""
             given a non existing user
              should return created
             """
         )
-        void test1() throws Exception
-        {
+        void test1() throws Exception {
             final com.bitsmi.springbootshowcase.sampleapps.domain.common.model.User user = com.bitsmi.springbootshowcase.sampleapps.domain.testsupport.common.model.UserObjectMother.aNonExistingUser();
             final User expectedResponse = UserObjectMother.fromModel(user);
             final String expectedResponseAsString = jsonMapper.writeValueAsString(expectedResponse);
@@ -233,8 +227,7 @@ class UsersApiControllerIntTests {
              should return conflict
             """
         )
-        void test2() throws Exception
-        {
+        void test2() throws Exception {
             final CreateUserRequest request = CreateUserRequestObjectMother.fromModelWithPassword(
                     com.bitsmi.springbootshowcase.sampleapps.domain.testsupport.common.model.UserObjectMother.aNonExistingUser(),
                     "foobar"
@@ -257,16 +250,15 @@ class UsersApiControllerIntTests {
 
     @Nested
     @DisplayName("Update user")
-    class UpdateUserPasswordTests
-    {
+    class UpdateUserPasswordTests {
+
         @Test
         @DisplayName("""
             given a existing user
              should return ok
             """
         )
-        void test1() throws Exception
-        {
+        void test1() throws Exception {
             final com.bitsmi.springbootshowcase.sampleapps.domain.common.model.User user = com.bitsmi.springbootshowcase.sampleapps.domain.testsupport.common.model.UserObjectMother.aNormalUser();
             final User expectedResponse = UserObjectMother.fromModel(user);
             final String expectedResponseAsString = jsonMapper.writeValueAsString(expectedResponse);
@@ -289,8 +281,7 @@ class UsersApiControllerIntTests {
              should return not found
             """
         )
-        void test2() throws Exception
-        {
+        void test2() throws Exception {
             final com.bitsmi.springbootshowcase.sampleapps.domain.common.model.User user = com.bitsmi.springbootshowcase.sampleapps.domain.testsupport.common.model.UserObjectMother.aNonExistingUser();
             final UpdateUserRequest request = UpdateUserRequestObjectMother.fromModel(user);
             final String requestAsString = jsonMapper.writeValueAsString(request);
@@ -309,16 +300,15 @@ class UsersApiControllerIntTests {
 
     @Nested
     @DisplayName("Change user password")
-    class ChangeUserPasswordTests
-    {
+    class ChangeUserPasswordTests {
+
         @Test
         @DisplayName("""
             given an existing user
              should return no content
             """
         )
-        void test1() throws Exception
-        {
+        void test1() throws Exception {
             final ChangeUserPasswordRequest request = ChangeUserPasswordRequest.builder()
                     .password("foobar".toCharArray())
                     .build();
@@ -338,8 +328,7 @@ class UsersApiControllerIntTests {
              should return not found
             """
         )
-        void test2() throws Exception
-        {
+        void test2() throws Exception {
             final Long providedUserId = com.bitsmi.springbootshowcase.sampleapps.domain.testsupport.common.model.UserObjectMother.A_NON_EXISTING_USER.id();
             final ChangeUserPasswordRequest request = ChangeUserPasswordRequest.builder()
                     .password("foobar".toCharArray())
@@ -359,15 +348,13 @@ class UsersApiControllerIntTests {
 
     @Nested
     @DisplayName("Delete user")
-    class DeleteUserTests
-    {
+    class DeleteUserTests {
         @Test
         @DisplayName("""
             should return no content
             """
         )
-        void test1() throws Exception
-        {
+        void test1() throws Exception {
             final Long providedUserId = com.bitsmi.springbootshowcase.sampleapps.domain.testsupport.common.model.UserObjectMother.A_NORMAL_USER.id();
             mockMvc.perform(delete(USERS_ENDPOINT + "/{id}", providedUserId)
                             .with(testSecurityContext())

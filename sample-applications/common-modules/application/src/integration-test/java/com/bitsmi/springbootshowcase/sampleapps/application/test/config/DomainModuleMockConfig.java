@@ -4,16 +4,14 @@ import com.bitsmi.springbootshowcase.sampleapps.domain.common.UserDomainReposito
 import com.bitsmi.springbootshowcase.sampleapps.domain.testsupport.common.CommonDomainTestFixture;
 import com.bitsmi.springbootshowcase.sampleapps.domain.testsupport.common.UserDomainRepositoryMocker;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
-@MockBean(UserDomainRepository.class)
-public class DomainModuleMockConfig
-{
+public class DomainModuleMockConfig {
+
     @Bean
     PasswordEncoder passwordEncoder()
     {

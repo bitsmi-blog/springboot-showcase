@@ -2,6 +2,7 @@ package com.bitsmi.springbootshowcase.sampleapps.webmvc.web.test.auth;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.test.WebTestBase;
 import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.testsupport.internal.ControllerIntegrationTest;
 import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.testsupport.user.controller.response.UserObjectMother;
 import com.bitsmi.springbootshowcase.sampleapps.webmvc.web.user.controller.response.User;
@@ -30,7 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ControllerIntegrationTest
-class JwtAuthIntTests {
+class JwtAuthIntTests extends WebTestBase {
 
     @Autowired
     private WebApplicationContext context;
