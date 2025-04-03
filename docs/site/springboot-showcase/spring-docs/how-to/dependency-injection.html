@@ -202,6 +202,25 @@
   </li>
 </ul>
   </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Testing</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">JUnit</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../testing/how-to/junit/parameterized-tests.html">Parameterized tests</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
 </ul>
   </nav>
 </div>
@@ -277,8 +296,8 @@ to be injected in single injection points.</p>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Service
 @Primary
-public class MainProductServiceImpl implements ProductService
-{
+public class MainProductServiceImpl implements ProductService {
+
     // . . .
 }</code></pre>
 </div>
@@ -289,8 +308,8 @@ public class MainProductServiceImpl implements ProductService
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Service
-public class Store
-{
+public class Store {
+
     @Autowired
     private ProductService defaultProductService;
 
@@ -304,8 +323,8 @@ public class Store
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Service
-public class Store
-{
+public class Store {
+
     private final ProductService productService;
 
     public Store(ProductService productService) {
@@ -331,8 +350,8 @@ and injection points.</p>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Service
 @Qualifier("ADDITIONAL_PRODUCT")
-public class AdditionalProductServiceImpl implements ProductService
-{
+public class AdditionalProductServiceImpl implements ProductService {
+
     // . . .
 }</code></pre>
 </div>
@@ -343,8 +362,8 @@ public class AdditionalProductServiceImpl implements ProductService
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Service
-public class Store
-{
+public class Store {
+
     @Autowired
     @Qualifier("ADDITIONAL_PRODUCT")
     private ProductService additionalProductService;
@@ -359,8 +378,8 @@ public class Store
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Service
-public class Store
-{
+public class Store {
+
     private final ProductService additionalProductService;
 
     public Store(@Qualifier("ADDITIONAL_PRODUCT") ProductService additionalProductService) {
@@ -383,8 +402,8 @@ public class Store
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Service
-public class Store
-{
+public class Store {
+
     @Autowired(required = false)
     private ProductService defaultProductService;
 
@@ -398,8 +417,8 @@ public class Store
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Service
-public class Store
-{
+public class Store {
+
     private final ProductService productService;
 
     public Store(@Autowired(required = false) ProductService productService) {
@@ -420,8 +439,8 @@ Alternatively, we can wrap the bean instance with an <code>Optional</code> or <c
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Service
-public class Store
-{
+public class Store {
+
     @Autowired
     private Optional&lt;ProductService&gt; productService;
 
@@ -440,8 +459,8 @@ public class Store
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Service
-public class Store
-{
+public class Store {
+
     @Autowired
     private ObjectProvider&lt;ProductService&gt; productService;
 
@@ -464,8 +483,8 @@ public class Store
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Service
-public class Store
-{
+public class Store {
+
     @Autowired
     private ObjectProvider&lt;ProductService&gt; productService;
 
@@ -485,8 +504,8 @@ public class Store
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Service
-public class Store
-{
+public class Store {
+
     @Autowired
     private List&lt;ProductService&gt; productService;
 
@@ -900,12 +919,11 @@ public class PrototypeServiceImpl implements PrototypeService {
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Configuration
-public class ServiceConfig
-{
+public class ServiceConfig {
+
     @Bean
     @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-    public PrototypeService simplePrototypeService()
-    {
+    public PrototypeService simplePrototypeService() {
         return new PrototypeServiceImpl();
     }
 }</code></pre>
@@ -942,6 +960,7 @@ class ExampleService {
 
 @Service
 class ExampleService {
+
     @Autowired
     private ObjectProvider&lt;PrototypeService&gt; prototypeServices;
 
@@ -961,6 +980,7 @@ class ExampleService {
 
 @Service
 class ExampleService {
+
     @Autowired
     private ObjectProvider&lt;PrototypeService&gt; prototypeServices;
 
@@ -981,12 +1001,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Scope;
 
 @Configuration
-public class ParameterizedServicePrototypeFactory
-{
+public class ParameterizedServicePrototypeFactory {
+
     @Bean
     @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-    public ParameterizedService get(String parameter)
-    {
+    public ParameterizedService get(String parameter) {
         return new ParameterizedServiceImpl(parameter);
     }
 }</code></pre>

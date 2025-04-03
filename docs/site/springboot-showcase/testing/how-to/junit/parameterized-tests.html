@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Parameterized tests :: Springboot-Showcase // Docs</title>
+    <link rel="prev" href="../../../spring-docs/tutorial/index.html">
+    <meta name="generator" content="Antora 3.1.7">
+    <link rel="stylesheet" href="../../../../_/css/site.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="../../../..">Springboot-Showcase // Docs</a>
+      <div class="navbar-item search hide-for-print">
+        <div id="search-field" class="field">
+          <input id="search-input" type="text" placeholder="Search the docs">
+        </div>
+      </div>
+      <button class="navbar-burger" aria-controls="topbar-nav" aria-expanded="false" aria-label="Toggle main menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="springboot-showcase" data-version="">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
+    <h3 class="title"><a href="../../../index.html">Springboot Showcase</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../../index.html">Index</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Example guides</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Clients</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../example-guides/clients/fluent-client.html">Fluent API client</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../example-guides/clients/openfeign.html">OpenFeign</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Sample applications</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../example-guides/sample-applications/kafka.html">Kafka</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../example-guides/sample-applications/web-mvc.html">Web MVC</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Spring Core</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../example-guides/spring-core/aop.html">AOP</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../example-guides/spring-core/cache.html">Cache</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../example-guides/spring-core/dependency-injection.html">Dependency injection</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../example-guides/spring-core/validation.html">Validation</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Spring Data JPA</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../example-guides/spring-data-jpa/repository-extension.html">Repository extension</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Spring MVC</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../example-guides/spring-mvc/api-versioning.html">API versioning</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Testing</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../example-guides/testing/testing.html">Testing</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Ways of working</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Explanation guides</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../ways-of-working/explanation/architecture.html">Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../ways-of-working/explanation/fluent_rest_api_client.html">Fluent REST API client</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">How-to guides</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../ways-of-working/how-to/mocking_an_external_service.html">Mocking an external client</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Spring guides</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">How-to guides</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../spring-docs/how-to/actuators.html">Actuators</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../spring-docs/how-to/aop.html">AOP</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../spring-docs/how-to/dependency-injection.html">Dependency injection</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../spring-docs/how-to/observability.html">Observability</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../spring-docs/how-to/testing.html">Testing</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">References</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../spring-docs/reference/properties_load_precedence.html">Properties load precedence</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../spring-docs/reference/spring_data.html">Spring Data</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../spring-docs/tutorial/index.html">Tutorials</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Testing</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">JUnit</span>
+<ul class="nav-list">
+  <li class="nav-item is-current-page" data-depth="3">
+    <a class="nav-link" href="parameterized-tests.html">Parameterized tests</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../../../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../../../index.html">Springboot Showcase</a></li>
+    <li>Testing</li>
+    <li>JUnit</li>
+    <li><a href="parameterized-tests.html">Parameterized tests</a></li>
+  </ul>
+</nav>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Parameterized tests</h1>
+<div class="sect1">
+<h2 id="introduction"><a class="anchor" href="#introduction"></a>Introduction</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>JUnit provides mechanisms to execute a test multiple times with different input values. Here is a basic quick guide on how to create a more reusable test code base using these capabilities.</p>
+</div>
+<div class="paragraph">
+<p>JUnits <strong>parameterized tests</strong> requires the <code>junit-jupiter-params</code> dependency:</p>
+</div>
+<div class="listingblock">
+<div class="title">pom.xml</div>
+<div class="content">
+<pre>&lt;dependency&gt;
+    &lt;groupId&gt;org.junit.jupiter&lt;/groupId&gt;
+    &lt;artifactId&gt;junit-jupiter-params&lt;/artifactId&gt;
+    &lt;scope&gt;test&lt;/scope&gt;
+&lt;/dependency&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Once included, <code>@Test</code> methods can be transformed into <code>@ParameterizedTest</code> to allow test input parameters
+that can be used to provide different fixture or expected values to each test execution. Depending on the <strong>source</strong>
+specified (<code>@*Source</code>) annotation we will be able to specify these values from using different data sources.</p>
+</div>
+<div class="listingblock">
+<div class="title">Example of parameterized test using a simple numeric data source:</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@ParameterizedTest
+@ValueSource(longs = {
+    100L,
+    200L,
+    300L
+})
+void valueSourceTest1(Long param) {
+    // . . .
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="parameter-source-types"><a class="anchor" href="#parameter-source-types"></a>Parameter source types</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="single-parameter"><a class="anchor" href="#single-parameter"></a>Single parameter</h3>
+<div class="sect3">
+<h4 id="valuesource"><a class="anchor" href="#valuesource"></a>@ValueSource</h4>
+<div class="paragraph">
+<p>Allow specifying a single parameter to the test method.
+Supported types include <code>shorts</code>, <code>bytes</code>, <code>ints</code>, <code>longs</code>, <code>floats</code>, <code>doubles</code>, <code>chars</code>, <code>booleans</code>, <code>strings</code> and <code>classes</code>.
+Only one of the supported types may be specified per declaration.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@ParameterizedTest
+@ValueSource(strings = {
+    "Foo",
+    "Bar",
+    "Baz"
+})
+void valueSourceTest(String param) {
+    assertThat(param)
+        .describedAs("actualResult")
+        .isNotNull()
+        .hasSizeGreaterThanOrEqualTo(0);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>@ValueSource</code> annotation doesn’t accept null values. You can use <code>@NullSource</code> to provide a null argument for the test</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="emptysource"><a class="anchor" href="#emptysource"></a>@EmptySource</h4>
+<div class="paragraph">
+<p>Provides an empty value to compatible types, including:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>String</code></p>
+</li>
+<li>
+<p><code>java.util.Collection</code> and concrete subtypes with a public no-arg constructor</p>
+</li>
+<li>
+<p><code>java.util.List</code></p>
+</li>
+<li>
+<p><code>java.util.Set</code></p>
+</li>
+<li>
+<p><code>java.util.SortedSet</code></p>
+</li>
+<li>
+<p><code>java.util.NavigableSet</code></p>
+</li>
+<li>
+<p><code>java.util.Map</code> and concrete subtypes with a public no-arg constructor</p>
+</li>
+<li>
+<p><code>java.util.SortedMap</code></p>
+</li>
+<li>
+<p><code>java.util.NavigableMap</code></p>
+</li>
+<li>
+<p>Primitive arrays, for example <code>int[]</code>, <code>char[][]</code></p>
+</li>
+<li>
+<p>Object arrays, for example <code>String[]</code>, <code>Integer[][]</code></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="nullsource"><a class="anchor" href="#nullsource"></a>@NullSource</h4>
+<div class="paragraph">
+<p>Provides a <strong>null</strong> parameter value to compatible types. Cannot be used for an argument that has a primitive type.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="nullandemptysource"><a class="anchor" href="#nullandemptysource"></a>@NullAndEmptySource</h4>
+<div class="paragraph">
+<p>Combines <code>@EmptySource</code> and <code>@NullSource</code> in one annotation, providing both <strong>null</strong> and <strong>empty</strong> values to compatible parameters</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="enumsource"><a class="anchor" href="#enumsource"></a>@EnumSource</h4>
+<div class="paragraph">
+<p>Allow specifying Enum constant values as test input parameter, optionally restricting it to a set of them using
+<code>names</code> and <code>mode</code> annotation fields. For example, in the following test method, a value of the <code>MeasureUnit</code> enum
+is provided in each execution. Values are restricted to the provided names as default mode is <code>INCLUDE</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@ParameterizedTest
+@EnumSource(value = MeasureUnit.class, names = { "KILOMETER", "METER", "CENTIMETER" })
+void enumSourceTest(MeasureUnit measureUnit) {
+    // . . .
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="combining-multiple-annotations"><a class="anchor" href="#combining-multiple-annotations"></a>Combining multiple annotations</h4>
+<div class="paragraph">
+<p>Annotations described above can be combined to provide multiple parameters to the test. For example, to add
+<strong>null</strong> and <strong>empty</strong> cases to <code>String</code> test inputs:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@ParameterizedTest
+@ValueSource(strings = {
+    "Foo",
+    "Bar",
+    "Baz"
+})
+@EmptySource
+@NullSource
+void valueSourceTest(String param) {
+    // . . .
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="multiple-parameters"><a class="anchor" href="#multiple-parameters"></a>Multiple parameters</h3>
+<div class="sect3">
+<h4 id="csvsource"><a class="anchor" href="#csvsource"></a>@CsvSource</h4>
+<div class="paragraph">
+<p>Allows to specify <code>@ParameterizedTest</code> method parameter as inline CSV on every row is a set
+of parameter values that will be supplied as parameters. <code>@CsvSource</code> allows specifying content
+as a text block for <strong>Java 17</strong>+ or as an array.</p>
+</div>
+<div class="listingblock">
+<div class="title">@CsvSource using an array of Strings</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@ParameterizedTest
+@CsvSource(
+    delimiterString = ";",
+    value = {
+        "# KEY;     VALUE;     RESULT",
+        "Key1;      1;         'TestDataMethod1:1'",
+        "Key2;      2;         'TestDataMethod2:2'",
+        "Key3;      3;         'TestDataMethod3:3'"
+    }
+)
+void csvSourceTest(
+    String providedKey,
+    Integer providedValue,
+    String expectedResult
+) {
+    // . . .
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">@CsvSource using a text block</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@ParameterizedTest
+@CsvSource(
+    delimiterString = ";",
+    quoteCharacter = '"',
+    textBlock = """
+        # KEY;     VALUE;      RESULT
+          "Key1";  1;          "TestDataMethod1:1"
+          "Key2";  2;          "TestDataMethod2:2"
+          "Key3";  3;          "TestDataMethod3:3"
+        """
+)
+void csvSourceTest(
+    String providedKey,
+    Integer providedValue,
+    String expectedResult
+) {
+    // . . .
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We can use <code>#</code> character to include a header with column names that will be ignored but is useful to identify every column.
+It also provides attributes to customize the format of the CSV, like the delimiter (<code>,</code> by default) and quote character (<code>'</code> by default) used.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="csvfilesource"><a class="anchor" href="#csvfilesource"></a>@CsvFileSource</h4>
+<div class="paragraph">
+<p>Same as <code>@CsvSource</code> but the values are located in a file in the classpath or project&#8217;s root folder. As with <code>@CsvSource</code> using a text block,
+any line beginning with a # symbol will be interpreted as a comment and will be ignored.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@ParameterizedTest
+@CsvFileSource(
+    delimiterString = ";",
+    quoteCharacter = '"',
+    // Skip header
+    numLinesToSkip = 1,
+    // Use files to search in project root folder
+//        files = { "./parameterized_tests_csv_file_source.csv" }
+    // Use resources to search in classpath
+    resources = { "/parameterized_tests_csv_file_source.csv" }
+)
+void csvFileSourceTest1(
+    String providedKey,
+    Integer providedValue,
+    String expectedResult
+) {
+    // . . .
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="methodsource"><a class="anchor" href="#methodsource"></a>@MethodSource</h4>
+<div class="paragraph">
+<p><code>@MethodSource</code> annotation allow us to define complex test parameters using a static method as provider.
+We have to specify the provider method name as the annotation value attribute or leave it unspecified
+if the provider method has the same name as the test method.</p>
+</div>
+<div class="paragraph">
+<p>Provider method should return a <code>Stream&lt;org.junit.jupiter.params.provider.Arguments&gt;</code> where every element
+is a tuple of parameter for a single test method invocation.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">@ParameterizedTest
+@MethodSource("provideTestData")
+void methodSourceTest(
+    String providedKey,
+    Integer providedValue,
+    String expectedResult
+) {
+    // . . .
+}
+
+private static Stream&lt;Arguments&gt; provideTestData() {
+    return Stream.of(
+        Arguments.of("Key1", 1, "Result1"),
+        Arguments.of("Key2", 2, "Result2"),
+        Arguments.of("Key3", 3, "Result3")
+    );
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title"><code>@MethodSource</code> data provider method is inferred from test name if not specified</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@ParameterizedTest
+@MethodSource
+void methodSourceTest(
+    String providedKey,
+    Integer providedValue,
+    String expectedResult
+) {
+    // . . .
+}
+
+private static Stream&lt;Arguments&gt; methodSourceTest() {
+    return Stream.of(
+        // . . .
+    );
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="fieldsource"><a class="anchor" href="#fieldsource"></a>@FieldSource</h4>
+<div class="paragraph">
+<p>Since <strong>JUnit 5.11</strong> we can use <code>@FieldSource</code> experimental annotation to define <code>@ParameterizedTest</code> parameters using a static
+class field which name is referenced in the annotation.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">private static final List&lt;String&gt; fieldSourceTestData = List.of("VALUE1", "VALUE2", "VALUE3");
+
+@ParameterizedTest
+@FieldSource("fieldSourceTestData")
+void fieldSourceTest(String providedKey) {
+    // . . .
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If no field names are declared, a field within the test class that has the same name as the test method will be used as the field by default.</p>
+</div>
+<div class="paragraph">
+<p>Static fields can be defined as:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 66.6667%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">@ParameterizedTest method</th>
+<th class="tableblock halign-left valign-top">static field</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">void test(String)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">static List&lt;String&gt; params</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">void test(String)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">static String[] params</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">void test(int)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">static int[] params</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">void test(int[])</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">static int[][] params</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">void test(String, String)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">static String[][] params</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">void test(String, int)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">static Object[][] params</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">void test(int)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">static Supplier&lt;IntStream&gt; paramSupplier</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">void test(String)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">static Supplier&lt;Stream&lt;String&gt;&gt; paramSupplier</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">void test(String, int)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">static Supplier&lt;Stream&lt;Object[]&gt;&gt; paramSupplier</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">void test(String, int)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">static Supplier&lt;Stream&lt;Arguments&gt;&gt; paramSupplier</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">void test(int[])</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">static Supplier&lt;Stream&lt;int[]&gt;&gt; paramSupplier</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">void test(int[][])</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">static Supplier&lt;Stream&lt;int[][]&gt;&gt; paramSupplier</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">void test(Object[][])</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">static Supplier&lt;Stream&lt;Object[][]&gt;&gt; paramSupplier</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="custom-annotated-source"><a class="anchor" href="#custom-annotated-source"></a>Custom annotated source</h4>
+<div class="paragraph">
+<p>Custom annotations can be defined to provide your own way to define <code>@ParameterizedTest</code> parameters.
+For example, the following custom annotation allows defining a fixed number of sample parameters that will be provided to the test method.
+The implementation in charge of generating these parameters is specified by the <code>@ArgumentsSource</code> annotation</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@Documented
+@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.RUNTIME)
+@ArgumentsSource(SamplesArgumentProvider.class)
+public @interface SamplesSource
+{
+    int DEFAULT_NUMBER_OF_SAMPLES = 3;
+
+    int value() default DEFAULT_NUMBER_OF_SAMPLES;
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And the implementation of the provider, implementing the <code>AnnotationConsumer</code> interface for the previous annotation</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class SamplesArgumentProvider implements ArgumentsProvider, AnnotationConsumer&lt;SamplesSource&gt; {
+
+    private int numberOfSamples = SamplesSource.DEFAULT_NUMBER_OF_SAMPLES;
+
+    /**
+     * Access the annotation definition in the test method
+     */
+    @Override
+    public void accept(SamplesSource samplesSource) {
+        validateSampleSource(samplesSource);
+
+        this.numberOfSamples = samplesSource.value();
+    }
+
+    /**
+     * Provide test method parameters as a Stream of arguments (like in @MethodSource)
+     */
+    @Override
+    public Stream&lt;? extends Arguments&gt; provideArguments(ExtensionContext context) throws Exception {
+        return IntStream.range(0, numberOfSamples)
+            .mapToObj(this::buildSample);
+    }
+
+    private void validateSampleSource(SamplesSource samplesSource) {
+        if (samplesSource.value() &lt; 1) {
+            throw new IllegalArgumentException("Samples value must be greater than 0");
+        }
+    }
+
+    private Arguments buildSample(int index) {
+        final String key = "TestDataMethod" + index;
+        final String value = "Value" + index;
+        final String result = "%s:%s".formatted(key, value);
+
+        return Arguments.of(key, value, result);
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then, test method can be defined as this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@ParameterizedTest
+@SamplesSource(5)
+void argumentsSourceTest2(
+    String providedKey,
+    String providedValue,
+    String expectedResult
+) {
+    final String actualResult = "%s:%s".formatted(providedKey, providedValue);
+
+    assertThat(actualResult)
+        .describedAs("actualResult")
+        .isEqualTo(expectedResult);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If we don&#8217;t need to pass configuration attributes to the provider through a custom annotation, we can set the <code>@ArgumentSource</code> on the test:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@ParameterizedTest
+@ArgumentsSource(SimpleArgumentProvider.class)
+void argumentsSourceTest1(
+    String providedKey,
+    String providedValue,
+    String expectedResult
+) {
+    // . . .
+}</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Argument providers implementing <code>org.junit.jupiter.params.support.AnnotationConsumer</code>
+cannot be used with <code>@ArgumentsSource</code> as they require an annotation</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="access-arguments"><a class="anchor" href="#access-arguments"></a>Access arguments</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In addition to simply defining test method parameters, <strong>JUnit</strong> provide other ways to
+retrieve parameters inside test methods.</p>
+</div>
+<div class="sect2">
+<h3 id="argumentsaccessor"><a class="anchor" href="#argumentsaccessor"></a>ArgumentsAccessor</h3>
+<div class="paragraph">
+<p><code>ArgumentsAccessor</code> can be used with <code>@CsvSource</code>, <code>@CsvFileSource</code> and <code>@MethodSource</code>, exposing a public API for accessing arguments of a <code>@ParameterizedTest</code>
+that allows accessing them in a type-safe manner with support for automatic type conversion.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@ParameterizedTest
+@CsvSource(
+    delimiterString = ";",
+    quoteCharacter = '"',
+    textBlock = """
+        # KEY;     VALUE;   RESULT
+          "Key1";  1;       "TestDataMethod1:1"
+          "Key2";  2;       "TestDataMethod2:2"
+          "Key2";  3;       "TestDataMethod3:3"
+        """
+)
+void csvSourceTest(ArgumentsAccessor accessor) {
+    final String providedKey = accessor.getString(0);
+    final Integer providedValue = accessor.getInteger(1);
+    final String expectedResult = accessor.getString(2);
+
+    // . . .
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="aggregatewith"><a class="anchor" href="#aggregatewith"></a>AggregateWith</h3>
+<div class="paragraph">
+<p><code>@AggregateWith</code> annotation allows</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@ParameterizedTest
+@CsvSource(
+    delimiterString = ";",
+    quoteCharacter = '"',
+    textBlock = """
+        # KEY;     VALUE;   RESULT
+          "Key1";  1;       "TestDataMethod1:1"
+          "Key2";  2;       "TestDataMethod2:2"
+          "Key3";  3;       "TestDataMethod3:3"
+        """
+)
+void csvSourceTest3(@AggregateWith(ProvidedValueDtoAggregator.class) ProvidedValueDto providedValueDto) {
+    final String actualResult = "%s:%s".formatted(providedValueDto.key, providedValueDto.value);
+
+    assertThat(actualResult)
+        .describedAs("actualResult")
+        .isEqualTo(providedValueDto.expectedResult);
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="display-name-and-test-name"><a class="anchor" href="#display-name-and-test-name"></a>Display name and test name</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>@ParameterizedTest</code> allows to display a custom name for each method execution, including information about test execution index or parameter values.
+Can be combined with <code>@DisplayName</code>, using it to provide the common part of test name and including the specific part for
+method execution, such as parameter values, in <code>@Parameterized</code> 's <code>name</code> attribute using placeholders.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@DisplayName("tested method should return ")
+@ParameterizedTest(name = "{index} - {2} when key = {0} and value = {1} are provided")
+@MethodSource
+void methodSourceTest(
+        String providedKey,
+        String providedValue,
+        String expectedResult
+) {
+    // . . .
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>@Parameterized</code> 's <code>name</code> attribute allowed placeholders include:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>{index}</code>: Current invocation index of a @ParameterizedTest method (1-based)</p>
+</li>
+<li>
+<p><code>{arguments}</code>: Complete, comma-separated arguments list of the current invocation</p>
+</li>
+<li>
+<p><code>{displayName}</code>: Placeholder for the display name of the test</p>
+</li>
+<li>
+<p><code>{0}</code>, <code>{1}</code>, etc.: Individual argument (0-based)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>In the example above, the final name for test execution will something like:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">tested method should return 1 - Result2 when key = key1 and value = 1 are provided</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If we provide a parameter using the <code>org.junit.jupiter.api.Named</code> class, we can provide a descriptive name
+to the parameter value that will replace the value in the test name.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">@DisplayName("tested method should return ")
+@ParameterizedTest(name = "{index} - {2} when key = {0} and value = {1} are provided")
+@MethodSource
+void methodSourceTest(
+        String providedKey,
+        String providedValue,
+        String expectedResult
+) {
+    // . . .
+}
+
+private static Stream&lt;Arguments&gt; methodSourceTest() {
+    return Stream.of(
+        Arguments.of(Named.of("Sample key 1", "Key1"), 1, Named.of("A sample result 1", "Result1")),
+        Arguments.of(Named.of("Sample key 2", "Key2"), 1, Named.of("A sample result 2", "Result2")),
+        Arguments.of(Named.of("Sample key 3", "Key3"), 1, Named.of("A sample result 3", "Result3"))
+    );
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In that case test name will be like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">tested method should return 1 - A sample result 2 when key = Sample key 1 and value = 1 are provided</code></pre>
+</div>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="../../../spring-docs/tutorial/index.html">Tutorials</a></span>
+</nav>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script id="site-script" src="../../../../_/js/site.js" data-ui-root-path="../../../../_"></script>
+<script async src="../../../../_/js/vendor/highlight.js"></script>
+<script src="../../../../_/js/vendor/lunr.js"></script>
+<script src="../../../../_/js/vendor/lunr-languages.js"></script>
+<script src="../../../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../../../.." data-snippet-length="100" data-stylesheet="../../../../_/css/search.css"></script>
+<script async src="../../../../search-index.js"></script>
+  </body>
+</html>

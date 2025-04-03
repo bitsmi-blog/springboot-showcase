@@ -8,6 +8,7 @@ nav:
 - modules/example-guides/nav.adoc
 - modules/ways-of-working/nav.adoc
 - modules/spring-docs/nav.adoc
+- modules/testing/nav.adoc
 ext:
   collector:
     run:
