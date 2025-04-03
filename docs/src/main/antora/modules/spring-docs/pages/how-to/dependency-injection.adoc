@@ -27,8 +27,8 @@ to be injected in single injection points.
 ----
 @Service
 @Primary
-public class MainProductServiceImpl implements ProductService
-{
+public class MainProductServiceImpl implements ProductService {
+
     // . . .
 }
 ----
@@ -37,8 +37,8 @@ public class MainProductServiceImpl implements ProductService
 [source,java]
 ----
 @Service
-public class Store
-{
+public class Store {
+
     @Autowired
     private ProductService defaultProductService;
 
@@ -50,8 +50,8 @@ public class Store
 [source,java]
 ----
 @Service
-public class Store
-{
+public class Store {
+
     private final ProductService productService;
 
     public Store(ProductService productService) {
@@ -73,8 +73,8 @@ and injection points.
 ----
 @Service
 @Qualifier("ADDITIONAL_PRODUCT")
-public class AdditionalProductServiceImpl implements ProductService
-{
+public class AdditionalProductServiceImpl implements ProductService {
+
     // . . .
 }
 
@@ -84,8 +84,8 @@ public class AdditionalProductServiceImpl implements ProductService
 [source,java]
 ----
 @Service
-public class Store
-{
+public class Store {
+
     @Autowired
     @Qualifier("ADDITIONAL_PRODUCT")
     private ProductService additionalProductService;
@@ -98,8 +98,8 @@ public class Store
 [source,java]
 ----
 @Service
-public class Store
-{
+public class Store {
+
     private final ProductService additionalProductService;
 
     public Store(@Qualifier("ADDITIONAL_PRODUCT") ProductService additionalProductService) {
@@ -118,8 +118,8 @@ In case we have no bean candidates for a type, it is required to use the `requir
 [source,java]
 ----
 @Service
-public class Store
-{
+public class Store {
+
     @Autowired(required = false)
     private ProductService defaultProductService;
 
@@ -131,8 +131,8 @@ public class Store
 [source,java]
 ----
 @Service
-public class Store
-{
+public class Store {
+
     private final ProductService productService;
 
     public Store(@Autowired(required = false) ProductService productService) {
@@ -150,8 +150,8 @@ Alternatively, we can wrap the bean instance with an `Optional` or `ObjectProvid
 [source,java]
 ----
 @Service
-public class Store
-{
+public class Store {
+
     @Autowired
     private Optional<ProductService> productService;
 
@@ -168,8 +168,8 @@ public class Store
 [source,java]
 ----
 @Service
-public class Store
-{
+public class Store {
+
     @Autowired
     private ObjectProvider<ProductService> productService;
 
@@ -189,8 +189,8 @@ We can also use `ObjectProvider` and a `Collection` when we have multiple beans 
 [source,java]
 ----
 @Service
-public class Store
-{
+public class Store {
+
     @Autowired
     private ObjectProvider<ProductService> productService;
 
@@ -208,8 +208,8 @@ public class Store
 [source,java]
 ----
 @Service
-public class Store
-{
+public class Store {
+
     @Autowired
     private List<ProductService> productService;
 
@@ -568,12 +568,11 @@ public class PrototypeServiceImpl implements PrototypeService {
 [source,java]
 ----
 @Configuration
-public class ServiceConfig
-{
+public class ServiceConfig {
+
     @Bean
     @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-    public PrototypeService simplePrototypeService()
-    {
+    public PrototypeService simplePrototypeService() {
         return new PrototypeServiceImpl();
     }
 }
@@ -605,6 +604,7 @@ import org.springframework.beans.factory.ObjectProvider;
 
 @Service
 class ExampleService {
+
     @Autowired
     private ObjectProvider<PrototypeService> prototypeServices;
 
@@ -623,6 +623,7 @@ import org.springframework.context.ApplicationContext;
 
 @Service
 class ExampleService {
+
     @Autowired
     private ObjectProvider<PrototypeService> prototypeServices;
 
@@ -642,12 +643,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Scope;
 
 @Configuration
-public class ParameterizedServicePrototypeFactory
-{
+public class ParameterizedServicePrototypeFactory {
+
     @Bean
     @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-    public ParameterizedService get(String parameter)
-    {
+    public ParameterizedService get(String parameter) {	
         return new ParameterizedServiceImpl(parameter);
     }
 }

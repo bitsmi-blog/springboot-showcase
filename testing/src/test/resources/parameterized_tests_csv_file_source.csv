@@ -1,4 +1,4 @@
 KEY;                VALUE;      RESULT
-"TestDataMethod1";  "Value1";   "TestDataMethod1:Value1"
-"TestDataMethod2";  "Value2";   "TestDataMethod2:Value2"
-"TestDataMethod3";  "Value3";   "TestDataMethod3:Value3"
+"TestDataMethod1";  1;   "TestDataMethod1:1"
+"TestDataMethod2";  2;   "TestDataMethod2:2"
+"TestDataMethod3";  3;   "TestDataMethod3:3"

@@ -4,6 +4,7 @@ import com.bitsmi.springbootshowcase.testing.MeasureUnit;
 import lombok.Builder;
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Named;
 import org.junit.jupiter.api.extension.ParameterContext;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.aggregator.AggregateWith;
@@ -114,14 +115,14 @@ class ParameterizedTests {
         quoteCharacter = '"',
         textBlock = """
             # KEY;                VALUE;      RESULT
-              "TestDataMethod1";  "Value1";   "TestDataMethod1:Value1"
-              "TestDataMethod2";  "Value2";   "TestDataMethod2:Value2"
-              "TestDataMethod3";  "Value3";   "TestDataMethod3:Value3"
+              "TestDataMethod1";  1;   "TestDataMethod1:1"
+              "TestDataMethod2";  2;   "TestDataMethod2:2"
+              "TestDataMethod3";  3;   "TestDataMethod3:3"
             """
     )
     void csvSourceTest1(
         String providedKey,
-        String providedValue,
+        Integer providedValue,
         String expectedResult
     ) {
         final String actualResult = "%s:%s".formatted(providedKey, providedValue);
@@ -141,15 +142,15 @@ class ParameterizedTests {
         quoteCharacter = '"',
         textBlock = """
             # KEY;                VALUE;      RESULT
-              "TestDataMethod1";  "Value1";   "TestDataMethod1:Value1"
-              "TestDataMethod2";  "Value2";   "TestDataMethod2:Value2"
-              "TestDataMethod3";  "Value3";   "TestDataMethod3:Value3"
+              "TestDataMethod1";  1;   "TestDataMethod1:1"
+              "TestDataMethod2";  2;   "TestDataMethod2:2"
+              "TestDataMethod3";  3;   "TestDataMethod3:3"
             """
     )
     void csvSourceTest2(ArgumentsAccessor accessor) {
         final String providedKey = accessor.getString(0);
-        final String providedValue = accessor.getString(1);
-        final String expectedResult = "%s:%s".formatted(providedKey, providedValue);
+        final Integer providedValue = accessor.getInteger(1);
+        final String expectedResult = accessor.getString(2);
 
         final String actualResult = "%s:%s".formatted(providedKey, providedValue);
 
@@ -158,9 +159,6 @@ class ParameterizedTests {
             .isEqualTo(expectedResult);
     }
 
-    /**
-     * {@link ArgumentsAccessor} can be used with {@link CsvSource}, {@link CsvFileSource} and {@link MethodSource}
-     */
     @DisplayName("Formatted result given @CsvSource and ArgumentsAggregator should be")
     @ParameterizedTest(name = "{index} - {2} when key = {0} and value = {1} are provided")
     @CsvSource(
@@ -168,9 +166,9 @@ class ParameterizedTests {
         quoteCharacter = '"',
         textBlock = """
             # KEY;                VALUE;      RESULT
-              "TestDataMethod1";  "Value1";   "TestDataMethod1:Value1"
-              "TestDataMethod2";  "Value2";   "TestDataMethod2:Value2"
-              "TestDataMethod3";  "Value3";   "TestDataMethod3:Value3"
+              "TestDataMethod1";  1;   "TestDataMethod1:1"
+              "TestDataMethod2";  2;   "TestDataMethod2:2"
+              "TestDataMethod3";  3;   "TestDataMethod3:3"
             """
     )
     void csvSourceTest3(@AggregateWith(ProvidedValueDtoAggregator.class) ProvidedValueDto providedValueDto) {
@@ -195,7 +193,7 @@ class ParameterizedTests {
     )
     void csvFileSourceTest1(
         String providedKey,
-        String providedValue,
+        Integer providedValue,
         String expectedResult
     ) {
         final String actualResult = "%s:%s".formatted(providedKey, providedValue);
@@ -284,17 +282,17 @@ class ParameterizedTests {
     private static Stream<Arguments> provideTestData() {
         return Stream.of(
             Arguments.of(
-                "TestDataMethod1",
+                    Named.of("Key 1", "TestDataMethod1"),
                 "Value1",
                 "TestDataMethod1:Value1"
             ),
             Arguments.of(
-                "TestDataMethod2",
+                    Named.of("Key 2", "TestDataMethod2"),
                 "Value2",
                 "TestDataMethod2:Value2"
             ),
             Arguments.of(
-                "TestDataMethod3",
+                    Named.of("Key 3", "TestDataMethod3"),
                 "Value3",
                 "TestDataMethod3:Value3"
             )
@@ -308,7 +306,7 @@ class ParameterizedTests {
     @Builder(builderClassName = "Builder", toBuilder = true)
     record ProvidedValueDto(
         String key,
-        String value,
+        Integer value,
         String expectedResult
     ) {
 
@@ -318,7 +316,7 @@ class ParameterizedTests {
         @Override
         public Object aggregateArguments(ArgumentsAccessor accessor, ParameterContext context) throws ArgumentsAggregationException {
             final String providedKey = accessor.getString(0);
-            final String providedValue = accessor.getString(1);
+            final Integer providedValue = accessor.getInteger(1);
             final String expectedResult = "%s:%s".formatted(providedKey, providedValue);
 
             return ProvidedValueDto.builder()

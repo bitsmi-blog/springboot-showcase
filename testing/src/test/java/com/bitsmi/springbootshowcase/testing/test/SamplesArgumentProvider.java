@@ -7,8 +7,8 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.ArgumentsProvider;
 import org.junit.jupiter.params.support.AnnotationConsumer;
 
-public class SamplesArgumentProvider implements ArgumentsProvider, AnnotationConsumer<SamplesSource>
-{
+public class SamplesArgumentProvider implements ArgumentsProvider, AnnotationConsumer<SamplesSource> {
+
     private int numberOfSamples = SamplesSource.DEFAULT_NUMBER_OF_SAMPLES;
 
     @Override
