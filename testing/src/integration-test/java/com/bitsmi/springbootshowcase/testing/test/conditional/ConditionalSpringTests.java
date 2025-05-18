@@ -1,4 +1,4 @@
-package com.bitsmi.springbootshowcase.testing.test;
+package com.bitsmi.springbootshowcase.testing.test.conditional;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;

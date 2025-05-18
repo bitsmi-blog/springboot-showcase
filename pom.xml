@@ -137,6 +137,12 @@
 
             <!-- TEST -->
             <dependency>
+                <groupId>org.assertj</groupId>
+                <artifactId>assertj-db</artifactId>
+                <version>3.0.0</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
                 <groupId>org.instancio</groupId>
                 <artifactId>instancio-junit</artifactId>
                 <version>${instancio.version}</version>

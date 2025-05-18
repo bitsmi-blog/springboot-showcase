@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.17.xsd">
+
+    <changeSet author="aarchilla (generated)" id="STOCK_BASE_1">
+        <loadData file="db/changelogs/test/stock_base.csv"
+                  relativeToChangelogFile="false"
+                  encoding="UTF-8"
+                  quotchar="'"
+                  separator=";"
+                  tableName="STOCK">
+            <column header="ID" name="ID" type="NUMERIC"/>
+            <column header="VERSION" name="VERSION" type="NUMERIC"/>
+            <column header="PRODUCT_ID" name="PRODUCT_ID" type="NUMERIC"/>
+            <column header="STORE_ID" name="STORE_ID" type="NUMERIC"/>
+            <column header="QUANTITY" name="QUANTITY" type="NUMERIC"/>
+            <column header="CREATION_DATE" name="CREATION_DATE" type="TIMESTAMP"/>
+            <column header="LAST_UPDATED" name="LAST_UPDATED" type="TIMESTAMP"/>
+        </loadData>
+    </changeSet>
+
+</databaseChangeLog>

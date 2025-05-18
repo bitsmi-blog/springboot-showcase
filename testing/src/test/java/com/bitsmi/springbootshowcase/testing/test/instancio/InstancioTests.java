@@ -1,9 +1,9 @@
-package com.bitsmi.springbootshowcase.testing.test;
+package com.bitsmi.springbootshowcase.testing.test.instancio;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.bitsmi.springbootshowcase.testing.Product;
-import com.bitsmi.springbootshowcase.testing.testsupport.ProductObjectMother;
+import com.bitsmi.springbootshowcase.testing.testsupport.instancio.ProductObjectMother;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

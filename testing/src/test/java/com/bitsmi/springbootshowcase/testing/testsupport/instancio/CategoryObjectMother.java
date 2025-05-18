@@ -1,4 +1,4 @@
-package com.bitsmi.springbootshowcase.testing.testsupport;
+package com.bitsmi.springbootshowcase.testing.testsupport.instancio;
 
 import static org.instancio.Select.all;
 

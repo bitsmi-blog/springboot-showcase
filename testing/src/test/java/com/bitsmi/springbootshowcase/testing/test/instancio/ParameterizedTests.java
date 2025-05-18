@@ -1,4 +1,4 @@
-package com.bitsmi.springbootshowcase.testing.test;
+package com.bitsmi.springbootshowcase.testing.test.instancio;
 
 import com.bitsmi.springbootshowcase.testing.MeasureUnit;
 import lombok.Builder;

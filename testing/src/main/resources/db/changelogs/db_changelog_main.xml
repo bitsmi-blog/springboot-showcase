@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.17.xsd">
+
+    <changeSet author="aarchilla (generated)" id="1.0/CH1">
+        <comment>Create content CATEGORY, PRODUCT, STORE and STOCK tables</comment>
+        <createTable tableName="CATEGORY">
+            <column name="ID" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_CATEGORY"/>
+            </column>
+            <column name="VERSION" type="BIGINT"/>
+            <column name="EXTERNAL_ID" type="VARCHAR(255)">
+                <constraints nullable="false" unique="true" notNullConstraintName="C_CATEGORY_EXT_ID" uniqueConstraintName="C_CATEGORY_EXT_ID_UNIQUE"/>
+            </column>
+            <column name="NAME" type="VARCHAR(255)">
+                <constraints nullable="false" notNullConstraintName="C_CATEGORY_NAME"/>
+            </column>
+            <column name="CREATION_DATE" type="TIMESTAMP"/>
+            <column name="LAST_UPDATED" type="TIMESTAMP"/>
+        </createTable>
+
+        <createTable tableName="PRODUCT">
+            <column name="ID" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_PRODUCT"/>
+            </column>
+            <column name="VERSION" type="BIGINT"/>
+            <column name="EXTERNAL_ID" type="VARCHAR(255)">
+                <constraints nullable="false" unique="true" notNullConstraintName="C_PRODUCT_EXT_ID" uniqueConstraintName="C_PRODUCT_EXT_ID_UNIQUE"/>
+            </column>
+            <column name="NAME" type="VARCHAR(255)">
+                <constraints nullable="false" notNullConstraintName="C_PRODUCT_NAME"/>
+            </column>
+            <column name="CATEGORY_ID" type="BIGINT">
+                <constraints nullable="false" notNullConstraintName="C_PRODUCT_CATEGORY"/>
+            </column>
+            <column name="CREATION_DATE" type="TIMESTAMP"/>
+            <column name="LAST_UPDATED" type="TIMESTAMP"/>
+        </createTable>
+
+        <createTable tableName="STORE">
+            <column name="ID" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_STORE"/>
+            </column>
+            <column name="VERSION" type="BIGINT"/>
+            <column name="EXTERNAL_ID" type="VARCHAR(255)">
+                <constraints nullable="false" unique="true" notNullConstraintName="C_STORE_EXT_ID" uniqueConstraintName="C_STORE_EXT_ID_UNIQUE"/>
+            </column>
+            <column name="NAME" type="VARCHAR(255)">
+                <constraints nullable="false" notNullConstraintName="C_STORE_NAME"/>
+            </column>
+            <column name="CREATION_DATE" type="TIMESTAMP"/>
+            <column name="LAST_UPDATED" type="TIMESTAMP"/>
+        </createTable>
+
+        <createTable tableName="STOCK">
+            <column name="ID" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_STOCK"/>
+            </column>
+            <column name="VERSION" type="BIGINT"/>
+            <column name="PRODUCT_ID" type="BIGINT">
+                <constraints nullable="false" notNullConstraintName="C_STORE_PRODUCT"/>
+            </column>
+            <column name="STORE_ID" type="BIGINT">
+                <constraints nullable="false" notNullConstraintName="C_STOCK_STORE"/>
+            </column>
+            <column name="QUANTITY" type="INT"/>
+            <column name="CREATION_DATE" type="TIMESTAMP"/>
+            <column name="LAST_UPDATED" type="TIMESTAMP"/>
+        </createTable>
+
+        <!-- Sequences -->
+        <createSequence sequenceName="SEQ_CATEGORY"
+                        startValue="1"
+                        incrementBy="1"
+                        cycle="false"/>
+        <createSequence sequenceName="SEQ_PRODUCT"
+                        startValue="1"
+                        incrementBy="1"
+                        cycle="false"/>
+        <createSequence sequenceName="SEQ_STORE"
+                        startValue="1"
+                        incrementBy="1"
+                        cycle="false"/>
+        <createSequence sequenceName="SEQ_STOCK"
+                        startValue="1"
+                        incrementBy="1"
+                        cycle="false"/>
+
+        <!-- Constraints -->
+        <addUniqueConstraint constraintName="C_STOCK_UNIQUE"
+                             tableName="STOCK"
+                             columnNames="PRODUCT_ID, STORE_ID"
+                             disabled="false"
+                             initiallyDeferred="false"
+                             deferrable="false"/>
+
+        <addForeignKeyConstraint constraintName="FK_PRODUCT_CATEGORY"
+                                 baseTableName="PRODUCT"
+                                 baseColumnNames="CATEGORY_ID"
+                                 referencedTableName="CATEGORY"
+                                 referencedColumnNames="ID"
+                                 deferrable="false"
+                                 initiallyDeferred="false"
+                                 onDelete="NO ACTION"
+                                 onUpdate="NO ACTION"
+                                 referencesUniqueColumn="true"/>
+
+        <addForeignKeyConstraint constraintName="FK_STOCK_PRODUCT"
+                                 baseTableName="STOCK"
+                                 baseColumnNames="PRODUCT_ID"
+                                 referencedTableName="PRODUCT"
+                                 referencedColumnNames="ID"
+                                 deferrable="false"
+                                 initiallyDeferred="false"
+                                 onDelete="NO ACTION"
+                                 onUpdate="NO ACTION"
+                                 referencesUniqueColumn="true"/>
+
+        <addForeignKeyConstraint constraintName="FK_STOCK_STORE"
+                                 baseTableName="STOCK"
+                                 baseColumnNames="STORE_ID"
+                                 referencedTableName="STORE"
+                                 referencedColumnNames="ID"
+                                 deferrable="false"
+                                 initiallyDeferred="false"
+                                 onDelete="NO ACTION"
+                                 onUpdate="NO ACTION"
+                                 referencesUniqueColumn="true"/>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,4 +1,4 @@
-package com.bitsmi.springbootshowcase.testing.test;
+package com.bitsmi.springbootshowcase.testing.test.instancio;
 
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
