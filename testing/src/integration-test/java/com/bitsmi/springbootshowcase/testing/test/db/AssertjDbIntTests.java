@@ -10,6 +10,7 @@ import org.assertj.db.type.AssertDbConnection;
 import org.assertj.db.type.AssertDbConnectionFactory;
 import org.assertj.db.type.Changes;
 import org.assertj.db.type.DateTimeValue;
+import org.assertj.db.type.Request;
 import org.assertj.db.type.Table;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -104,13 +105,13 @@ class AssertjDbIntTests {
                 .hasNumberOfRows(6)
                 // As inserted PK is lesser than table test data PKs, it will be the first row
                 .row(0)
-                .value("ID").isNotNull()
-                .value("VERSION").isNotNull()
-                .value("EXTERNAL_ID").isEqualTo("test-product")
-                .value("NAME").isEqualTo("Test product")
-                .value("CATEGORY_ID").isEqualTo(1001L)
-                .value("CREATION_DATE").isAfter(DateTimeValue.from(referenceDateTime))
-                .value("LAST_UPDATED").isAfter(DateTimeValue.from(referenceDateTime));
+                    .value("ID").isNotNull()
+                    .value("VERSION").isNotNull()
+                    .value("EXTERNAL_ID").isEqualTo("test-product")
+                    .value("NAME").isEqualTo("Test product")
+                    .value("CATEGORY_ID").isEqualTo(1001L)
+                    .value("CREATION_DATE").isAfter(DateTimeValue.from(referenceDateTime))
+                    .value("LAST_UPDATED").isAfter(DateTimeValue.from(referenceDateTime));
     }
 
     @Test
@@ -138,14 +139,86 @@ class AssertjDbIntTests {
                 .ofCreationOnTable("PRODUCT")
                     .hasNumberOfChanges(1)
                     .changeOfCreationOnTable("PRODUCT")
-                    .rowAtEndPoint()
-                        .value("ID").isNotNull()
-                        .value("VERSION").isNotNull()
-                        .value("EXTERNAL_ID").isEqualTo("test-product")
-                        .value("NAME").isEqualTo("Test product")
-                        .value("CATEGORY_ID").isEqualTo(1001L)
-                        .value("CREATION_DATE").isAfter(DateTimeValue.from(referenceDateTime))
-                        .value("LAST_UPDATED").isAfter(DateTimeValue.from(referenceDateTime));
+                        .rowAtEndPoint()
+                            .value("ID").isNotNull()
+                            .value("VERSION").isNotNull()
+                            .value("EXTERNAL_ID").isEqualTo("test-product")
+                            .value("NAME").isEqualTo("Test product")
+                            .value("CATEGORY_ID").isEqualTo(1001L)
+                            .value("CREATION_DATE").isAfter(DateTimeValue.from(referenceDateTime))
+                            .value("LAST_UPDATED").isAfter(DateTimeValue.from(referenceDateTime));
+    }
+
+    @Test
+    @DisplayName("Check changes using restraining changes using a request")
+    void changeApiTest2() {
+        final String modifiedName = "Modified category";
+
+        final Changes changes = connection.changes()
+                .request(
+                        "select * from CATEGORY where ID = ?",
+                        customizer -> customizer.parameters(1001L).pksName("ID")
+                )
+                .build();
+        changes.setStartPointNow();
+
+        CategoryEntity categoryEntity = categoryRepository.findById(1001L)
+                .orElseThrow();
+        categoryEntity.setName(modifiedName);
+        categoryRepository.save(categoryEntity);
+        ProductEntity productEntity = ProductEntity.builder()
+                .externalId("test-product")
+                .name("Test product")
+                .category(categoryEntity)
+                .build();
+        productRepository.save(productEntity);
+
+        entityManager.flush();
+        changes.setEndPointNow();
+
+        assertThat(changes)
+                .hasNumberOfChanges(1)
+                // No changes registered in PRODUCT as we are only observing CATEGORY
+                .ofCreationOnTable("PRODUCT")
+                    .hasNumberOfChanges(0)
+                // Check changes on CATEGORY
+                .ofModificationOnTable("CATEGORY")
+                    .changeOfModification()
+                        .hasModifiedColumns("NAME", "VERSION", "LAST_UPDATED")
+                        .columnAmongTheModifiedOnes("NAME")
+                            .valueAtEndPoint()
+                            .isEqualTo(modifiedName);
+    }
+
+    @Test
+    @DisplayName("Check table values using request API")
+    void requestApiTest1() {
+        final LocalDateTime referenceDateTime = LocalDateTime.now();
+
+        CategoryEntity categoryEntity = categoryRepository.findById(1001L)
+                .orElseThrow();
+        ProductEntity productEntity = ProductEntity.builder()
+                .externalId("test-product")
+                .name("Test product")
+                .category(categoryEntity)
+                .build();
+        productRepository.save(productEntity);
+
+        entityManager.flush();
+        Request request = connection.request("""
+                select p.EXTERNAL_ID as PROD_EXTID, c.EXTERNAL_ID as CAT_EXTID 
+                from PRODUCT p, CATEGORY c
+                where p.CATEGORY_ID = c.ID
+                    and p.id = ?
+                """)
+                .parameters(1001L)
+                .build();
+        assertThat(request)
+                .hasNumberOfRows(1)
+                .column("PROD_EXTID")
+                    .hasValues("product-1.1")
+                .column("CAT_EXTID")
+                    .hasValues("category-1");
     }
 
     /*---------------------------*
