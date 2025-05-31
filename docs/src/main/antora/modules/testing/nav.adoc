@@ -1,4 +1,7 @@
 * Testing
 
+** Assertj
+*** xref:how-to/assertj/assertj-db.adoc[Assertj-DB]
+
 ** JUnit
 *** xref:how-to/junit/parameterized-tests.adoc[Parameterized tests]

@@ -4,7 +4,9 @@
 
 * Conditional Spring tests using `org.springframework.test.context.junit.jupiter.EnabledIf`
 * Parameterized tests using **JUnit**'s `@ValueSource`, `@EnumSource`, `@EmptySource`, `@NullSource`, `@EmptySource`, `@CsvSource`, `@CsvFileSource`, `@FieldSource`, `@MethodSource`, `@ArgumentsSource` and **custom annotated source**
+* Assert database data using **Assertj-DB**
 
 == Related documentation
 
 * xref:testing:how-to/junit/parameterized-tests.adoc[Parameterized tests]
+* xref:testing:how-to/assertj/assertj-db.adoc[Assertj-DB]

@@ -85,8 +85,19 @@ class AssertjDbIntTests {
     }
 
     @Test
-    @DisplayName("Check an inserted row by its row index using row API")
-    void rowApiTest1() {
+    @DisplayName("Check table columns using table API")
+    void tableApiTest1() {
+        Table productTable = connection.table("PRODUCT").build();
+        assertThat(productTable)
+                .column("EXTERNAL_ID")
+                    .hasValues("product-1.1", "product-1.2", "product-2.1", "product-2.2", "product-3.1")
+                .column("NAME")
+                    .hasValues("Product 1.1", "Product 1.2", "Product 2.1", "Product 2.2", "Product 3.1");
+    }
+
+    @Test
+    @DisplayName("Check an inserted row by its row index using table API")
+    void tableApiTest2() {
         final LocalDateTime referenceDateTime = LocalDateTime.now();
 
         CategoryEntity categoryEntity = categoryRepository.findById(1001L)
@@ -105,13 +116,13 @@ class AssertjDbIntTests {
                 .hasNumberOfRows(6)
                 // As inserted PK is lesser than table test data PKs, it will be the first row
                 .row(0)
-                    .value("ID").isNotNull()
-                    .value("VERSION").isNotNull()
-                    .value("EXTERNAL_ID").isEqualTo("test-product")
-                    .value("NAME").isEqualTo("Test product")
-                    .value("CATEGORY_ID").isEqualTo(1001L)
-                    .value("CREATION_DATE").isAfter(DateTimeValue.from(referenceDateTime))
-                    .value("LAST_UPDATED").isAfter(DateTimeValue.from(referenceDateTime));
+                .value("ID").isNotNull()
+                .value("VERSION").isNotNull()
+                .value("EXTERNAL_ID").isEqualTo("test-product")
+                .value("NAME").isEqualTo("Test product")
+                .value("CATEGORY_ID").isEqualTo(1001L)
+                .value("CREATION_DATE").isAfter(DateTimeValue.from(referenceDateTime))
+                .value("LAST_UPDATED").isAfter(DateTimeValue.from(referenceDateTime));
     }
 
     @Test
@@ -136,9 +147,9 @@ class AssertjDbIntTests {
 
         assertThat(changes)
                 .hasNumberOfChanges(1)
-                .ofCreationOnTable("PRODUCT")
+                .onTable("PRODUCT")
                     .hasNumberOfChanges(1)
-                    .changeOfCreationOnTable("PRODUCT")
+                    .changeOfCreation()
                         .rowAtEndPoint()
                             .value("ID").isNotNull()
                             .value("VERSION").isNotNull()

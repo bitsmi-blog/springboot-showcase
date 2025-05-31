@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Assertj-DB :: Springboot-Showcase // Docs</title>
+    <link rel="prev" href="../../../spring-docs/tutorial/index.html">
+    <link rel="next" href="../junit/parameterized-tests.html">
+    <meta name="generator" content="Antora 3.1.7">
+    <link rel="stylesheet" href="../../../../_/css/site.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="../../../..">Springboot-Showcase // Docs</a>
+      <div class="navbar-item search hide-for-print">
+        <div id="search-field" class="field">
+          <input id="search-input" type="text" placeholder="Search the docs">
+        </div>
+      </div>
+      <button class="navbar-burger" aria-controls="topbar-nav" aria-expanded="false" aria-label="Toggle main menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="springboot-showcase" data-version="">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
+    <h3 class="title"><a href="../../../index.html">Springboot Showcase</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../../../index.html">Index</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Example guides</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Clients</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../example-guides/clients/fluent-client.html">Fluent API client</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../example-guides/clients/openfeign.html">OpenFeign</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Sample applications</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../example-guides/sample-applications/kafka.html">Kafka</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../example-guides/sample-applications/web-mvc.html">Web MVC</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Spring Core</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../example-guides/spring-core/aop.html">AOP</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../example-guides/spring-core/cache.html">Cache</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../example-guides/spring-core/dependency-injection.html">Dependency injection</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../example-guides/spring-core/validation.html">Validation</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Spring Data JPA</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../example-guides/spring-data-jpa/repository-extension.html">Repository extension</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Spring MVC</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../example-guides/spring-mvc/api-versioning.html">API versioning</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Testing</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../example-guides/testing/testing.html">Testing</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Ways of working</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Explanation guides</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../ways-of-working/explanation/architecture.html">Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../ways-of-working/explanation/fluent_rest_api_client.html">Fluent REST API client</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">How-to guides</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../ways-of-working/how-to/mocking_an_external_service.html">Mocking an external client</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Spring guides</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">How-to guides</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../spring-docs/how-to/actuators.html">Actuators</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../spring-docs/how-to/aop.html">AOP</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../spring-docs/how-to/dependency-injection.html">Dependency injection</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../spring-docs/how-to/observability.html">Observability</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../spring-docs/how-to/testing.html">Testing</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">References</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../spring-docs/reference/properties_load_precedence.html">Properties load precedence</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../spring-docs/reference/spring_data.html">Spring Data</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../spring-docs/tutorial/index.html">Tutorials</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Testing</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Assertj</span>
+<ul class="nav-list">
+  <li class="nav-item is-current-page" data-depth="3">
+    <a class="nav-link" href="assertj-db.html">Assertj-DB</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">JUnit</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../junit/parameterized-tests.html">Parameterized tests</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../../../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../../../index.html">Springboot Showcase</a></li>
+    <li>Testing</li>
+    <li>Assertj</li>
+    <li><a href="assertj-db.html">Assertj-DB</a></li>
+  </ul>
+</nav>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Assertj-DB</h1>
+<div class="sect1">
+<h2 id="introduction"><a class="anchor" href="#introduction"></a>Introduction</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://github.com/assertj/assertj"><strong>Assertj</strong></a> is a popular Java library that provides useful testing assertions that can be used in test implementations
+with <strong>Junit</strong>, <strong>TestNG</strong> or any other testing library.</p>
+</div>
+<div class="paragraph">
+<p>Along with <strong>Assertj Core</strong>, that implement general purpose assertions,
+<strong>Asserj</strong> provides other useful modules that provide assertions to be used with data structures provided by other technologies, like <strong>Neo4J</strong>, <strong>Joda Time</strong>, <strong>Guava</strong>&#8230;&#8203;</p>
+</div>
+<div class="paragraph">
+<p>This guide is focused on the <a href="https://assertj.github.io/doc/#assertj-db">Assertj-DB</a> module that provides assertions to access a DB and check directly the data stored inside.</p>
+</div>
+<div class="paragraph">
+<p>To start using <strong>Assertj-db</strong> it is needed to add the following dependency to the project</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-xml hljs" data-lang="xml">&lt;dependency&gt;
+  &lt;groupId&gt;org.assertj&lt;/groupId&gt;
+  &lt;artifactId&gt;assertj-db&lt;/artifactId&gt;
+  &lt;version&gt;3.0.0&lt;/version&gt;
+  &lt;scope&gt;test&lt;/scope&gt;
+&lt;/dependency&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>3.0.0</code> is the last version published at the time of writing this guide. It also includes the <code>assertj-core</code> module dependency.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="connection"><a class="anchor" href="#connection"></a>Connection</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>To make use of the assertions provided by the library on the database data, first of all we need to configure a <code>AssertDbConnection</code>.</p>
+</div>
+<div class="paragraph">
+<p>For simple tests through JDBC statements, it is enough to configure it using the <strong>connection URL</strong>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">AssertDbConnection connection = AssertDbConnectionFactory.of("jdbc:h2:mem:test", "sa", "").create();</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Or if we have a <code>javax.sql.DataSource</code> available:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">AssertDbConnection connection = AssertDbConnectionFactory.of(dataSource).create();</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For <strong>Spring JPA</strong> tests involving transactions is a bit more tricky since we need that the connection obtained by <strong>Assertj-db</strong> is the one involved in the transaction.
+For that reason, we need to use a <strong>proxy</strong>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy;
+
+// . . .
+
+private AssertDbConnection connection;
+
+@BeforeEach
+void setUp() {
+	/* It is needed to wrap dataSource to allow access to current transaction connection.
+	 * Otherwise, &lt;code&gt;AssertDbConnection&lt;/code&gt; won't be allowed to access uncommitted changes
+	 */
+	connection = AssertDbConnectionFactory.of(new TransactionAwareDataSourceProxy(dataSource))
+			.create();
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="apis"><a class="anchor" href="#apis"></a>APIs</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>After that, we can make use of the different APIs that the library provide us to assert the data stored in the database. We can access data in three ways:</p>
+</div>
+<div class="sect2">
+<h3 id="table-api"><a class="anchor" href="#table-api"></a>Table API</h3>
+<div class="paragraph">
+<p>We can access directly a table and inspect its rows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import static org.assertj.db.api.Assertions.assertThat;
+
+// . . .
+
+final LocalDateTime referenceDateTime = LocalDateTime.now();
+
+Table productTable = connection.table("PRODUCT").build();
+assertThat(productTable)
+    .hasNumberOfRows(6)
+    .row(0)
+        .value("ID").isNotNull()
+        .value("VERSION").isNotNull()
+        .value("EXTERNAL_ID").isEqualTo("test-product")
+        .value("NAME").isEqualTo("Test product")
+        .value("CATEGORY_ID").isEqualTo(1001L)
+        .value("CREATION_DATE").isAfter(DateTimeValue.from(referenceDateTime))
+        .value("LAST_UPDATED").isAfter(DateTimeValue.from(referenceDateTime));</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In this example we assert that the table has exactly a number of rows and that the values of the first one are
+the ones that we expect.</p>
+</div>
+<div class="paragraph">
+<p>It is also possible to inspect a single column values using the <code>column()</code> selector:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Table productTable = connection.table("PRODUCT").build();
+assertThat(productTable)
+    .column("EXTERNAL_ID")
+        .hasValues("product-1.1", "product-1.2", "product-2.1", "product-2.2", "product-3.1")
+    .column("NAME")
+        .hasValues("Product 1.1", "Product 1.2", "Product 2.1", "Product 2.2", "Product 3.1");</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="request-api"><a class="anchor" href="#request-api"></a>Request API</h3>
+<div class="paragraph">
+<p>If we need to data involving multiple tables, we can inspect a specific set of data using a <code>Request</code> with a query:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">Request request = connection.request("""
+        select p.EXTERNAL_ID as PROD_EXTID, c.EXTERNAL_ID as CAT_EXTID
+        from PRODUCT p, CATEGORY c
+        where p.CATEGORY_ID = c.ID
+            and p.id = ?
+        """)
+        .parameters(1001L)
+        .build();
+assertThat(request)
+        .hasNumberOfRows(1)
+        .column("PROD_EXTID")
+            .hasValues("product-1.1")
+        .column("CAT_EXTID")
+            .hasValues("category-1");</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="changes-api"><a class="anchor" href="#changes-api"></a>Changes API</h3>
+<div class="paragraph">
+<p>When the test requires insert, update or delete data from the database, we can use the <strong>changes API</strong>
+as it allows to assert specifically the changed data. To do that, we need to mark a checkpoint before and after
+the changes are made to  the database using the methods <code>setStartPointNow()</code> and <code>setEndPointNow()</code>
+after obtaining a <code>Changes</code> instance that we will use in the assertions</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">final Changes changes = connection.changes().build();
+changes.setStartPointNow();
+
+// Do some modifications
+
+changes.setEndPointNow();
+
+assertThat(changes)
+    .hasNumberOfChanges(1) <i class="conum" data-value="1"></i><b>(1)</b>
+    .onTable("PRODUCT") <i class="conum" data-value="2"></i><b>(2)</b>
+        .hasNumberOfChanges(1)
+        .changeOfCreation() <i class="conum" data-value="3"></i><b>(3)</b>
+            .rowAtEndPoint() <i class="conum" data-value="4"></i><b>(4)</b>
+                .value("ID").isNotNull()
+                .value("VERSION").isNotNull()
+                .value("EXTERNAL_ID").isEqualTo("test-product")
+                .value("NAME").isEqualTo("Test product")
+                .value("CATEGORY_ID").isEqualTo(1001L)
+                .value("CREATION_DATE").isAfter(DateTimeValue.from(referenceDateTime))
+                .value("LAST_UPDATED").isAfter(DateTimeValue.from(referenceDateTime));</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>We can check the total number of changes made in the database</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Or the number of changes in a specific table</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>It is possible to also discriminate by change type (<code>changeOfCreation()</code>, <code>changeOfModification()</code> or <code>changeOfDeletion()</code>)</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>And then check the data after the change</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="note-about-using-assertj-db-in-spring-jpa-tests"><a class="anchor" href="#note-about-using-assertj-db-in-spring-jpa-tests"></a>Note about using Assertj-DB in Spring JPA tests</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>When it is needed to assert database changes made by <strong>Spring JPA</strong> repositories, or generalizing, made with an ORM like <strong>Hibernate</strong>
+we have to take into consideration when the changes are available to be read by the assert statements. As we said previously,
+if we have an uncommited transaction, the used connection should be the same involved in the transaction and in case of using a ORM
+the entity manager must have flushed changes. In this example we show an example of the whole case of make changes through a <strong>Spring JPA</strong>
+repository and assert these changes using <code>Assertj-DB</code></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import jakarta.persistence.EntityManager;
+import javax.sql.DataSource;
+import org.assertj.db.type.AssertDbConnection;
+import org.assertj.db.type.AssertDbConnectionFactory;
+
+// . . .
+
+@Autowired
+private DataSource dataSource;
+@Autowired
+private EntityManager entityManager;
+
+@Autowired
+private ProductRepository productRepository;
+@Autowired
+private CategoryRepository categoryRepository;
+
+private AssertDbConnection connection;
+
+@BeforeEach
+void setUp() {
+    /* It is needed to wrap datasource to allow access to current transaction connection.
+     * Otherwise, &lt;code&gt;AssertDbConnection&lt;/code&gt; won't be allowed to access uncommited changes
+     */
+    connection = AssertDbConnectionFactory.of(new TransactionAwareDataSourceProxy(dataSource))
+            .create();
+}
+
+@Test
+@DisplayName("Check an inserted row using change API")
+@Transactional
+void changeApiTest1() {
+    final LocalDateTime referenceDateTime = LocalDateTime.now();
+
+    final Changes changes = connection.changes().build();
+    changes.setStartPointNow();
+
+    CategoryEntity categoryEntity = categoryRepository.findById(1001L)
+            .orElseThrow();
+    ProductEntity productEntity = ProductEntity.builder()
+            .externalId("test-product")
+            .name("Test product")
+            .category(categoryEntity)
+            .build();
+    productRepository.save(productEntity); <i class="conum" data-value="1"></i><b>(1)</b>
+
+    entityManager.flush(); <i class="conum" data-value="2"></i><b>(2)</b>
+    changes.setEndPointNow();
+
+    assertThat(changes)
+        .hasNumberOfChanges(1)
+        .onTable("PRODUCT")
+            .hasNumberOfChanges(1)
+            .changeOfCreation()
+                .rowAtEndPoint()
+                    .value("ID").isNotNull()
+                    .value("VERSION").isNotNull()
+                    .value("EXTERNAL_ID").isEqualTo("test-product")
+                    .value("NAME").isEqualTo("Test product")
+                    .value("CATEGORY_ID").isEqualTo(1001L)
+                    .value("CREATION_DATE").isAfter(DateTimeValue.from(referenceDateTime))
+                    .value("LAST_UPDATED").isAfter(DateTimeValue.from(referenceDateTime));
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Do some changes in the database</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Flush those changes so they are visible when the assertions are executed</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="datevalue-timevalue-and-datetimevalue"><a class="anchor" href="#datevalue-timevalue-and-datetimevalue"></a>DateValue, TimeValue and DateTimeValue</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Since <strong>2.0.0</strong>, <strong>AssertJ-DB</strong> baseline is Java 8. The preferred way to compare values with date, time and date/time is to use <code>java.time.LocalDate</code>, <code>java.time.LocalTime</code>, <code>java.time.LocalDateTime</code> directly.</p>
+</div>
+<div class="paragraph">
+<p>For the backward compatibility, it’s always possible to use <strong>AssertJ-DB</strong> <code>DateValue</code>, <code>TimeValue</code> and <code>DateTimeValue</code> utilities:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">final LocalDateTime referenceDateTime = LocalDateTime.now();
+
+Table productTable = connection.table("PRODUCT").build();
+assertThat(productTable)
+    .row(0)
+    // . . .
+    .value("CREATION_DATE").isAfter(DateTimeValue.from(referenceDateTime)) <i class="conum" data-value="1"></i><b>(1)</b>
+    .value("LAST_UPDATED").isAfter(DateTimeValue.from(referenceDateTime));</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Timestamp columns are compared using Java&#8217;s <code>LocalDateTime</code> through <code>DateTimeValue</code> utility class</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="references"><a class="anchor" href="#references"></a>References</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://github.com/assertj/assertj">Assertj GitHub repository</a></p>
+</li>
+<li>
+<p><a href="https://assertj.github.io/doc/#assertj-db">Assertj-DB home page</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="../../../spring-docs/tutorial/index.html">Tutorials</a></span>
+  <span class="next"><a href="../junit/parameterized-tests.html">Parameterized tests</a></span>
+</nav>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script id="site-script" src="../../../../_/js/site.js" data-ui-root-path="../../../../_"></script>
+<script async src="../../../../_/js/vendor/highlight.js"></script>
+<script src="../../../../_/js/vendor/lunr.js"></script>
+<script src="../../../../_/js/vendor/lunr-languages.js"></script>
+<script src="../../../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../../../.." data-snippet-length="100" data-stylesheet="../../../../_/css/search.css"></script>
+<script async src="../../../../search-index.js"></script>
+  </body>
+</html>
